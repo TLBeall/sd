@@ -20,5 +20,19 @@ export class TestComponent implements OnInit {
       this.ClientArr = data
     });
   }
-
+  
 }
+class simpleCounter{
+  public count(){
+    let count = 5;
+
+    for(let i = 1; i <=7; i++){
+      document.write(i.toString() + '<br>');
+    }
+    console.log('all done')
+  }
+}
+
+let count = new simpleCounter();
+count.count();
+

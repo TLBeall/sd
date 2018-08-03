@@ -32,3 +32,4 @@ export class AuthService {
     return this.http.get(GetListAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 }
+

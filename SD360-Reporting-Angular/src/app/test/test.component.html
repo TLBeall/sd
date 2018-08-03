@@ -1,6 +1,8 @@
+<p> Here is the data </p>
+<p> {{ tokenParam?.access_token }} </p>
 <table>
-  <tr *ngFor="let client of ClientList">
-    <td>{{ client.gClientAcronym }}</td>
-    <td>{{ client.gClientName }}</td>
+  <tr *ngFor="let client of ClientArr">
+    <td> {{ client.gClientAcronym }} </td>
+    <td> {{ client.gClientName }} </td>
   </tr>
 </table>

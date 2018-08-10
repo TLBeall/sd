@@ -1,0 +1,139 @@
+<div class="toolbar">
+  <div id="alphabetToolbar" class="col-md-12">
+    <ul class="alphabet nav nav-pills">
+      <li class="active nav-item" id="showAllClientsLi">
+        <a class="nav-link" data-toggle="pill">All</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">#</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">A</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">B</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">C</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">D</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">E</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">F</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">G</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">H</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">I</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">J</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">K</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">L</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">M</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">N</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">O</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">P</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">Q</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">R</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">S</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">T</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">U</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">V</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">W</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">X</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">Y</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">Z</a>
+      </li>
+      <li id="alphabetResult"></li>
+    </ul>
+  </div>
+</div>
+
+<div id="dictionaryHeader">
+  <ul class="nav nav-pills" id="reportMenuPills">
+    <li class="dictionaryTimeHeader nav-item">
+      <a class="nav-link" class="nav-link active" data-toggle="pill" href="#">Live Data</a>
+    </li>
+    <li class="dictionaryTimeHeader nav-item">
+      <a class="nav-link" class="nav-link" data-toggle="pill" href="#">Cached Reports</a>
+    </li>
+    <li class="dictionaryTimeHeader nav-item">
+      <a class="nav-link" class="nav-link" data-toggle="pill" href="#">Active w/ Archived Phases</a>
+    </li>
+    <li class="dictionaryTimeHeader nav-item">
+      <a class="nav-link" class="nav-link" data-toggle="pill" href="#">Inactive</a>
+    </li>
+    <li class="dictionaryTimeHeader dropdown nav-item">
+      <a class="nav-link" class="dropdown-toggle" id="yearDropdown" data-toggle="dropdown" href="#">By Calendar Year
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu" id="pillYearDropdownMenu">
+        <li>
+          <a class="nav-link" data-toggle="pill" href="#">2018</a>
+        </li>
+        <li>
+          <a class="nav-link" data-toggle="pill" href="#">2017</a>
+        </li>
+        <li>
+          <a class="nav-link" data-toggle="pill" href="#">2016</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div class='mainContent'>
+    <p> {{ tokenParam?.access_token }} </p>
+<ul class='dictionary'>
+    <li *ngFor="let client of ClientArr" class="clientNameLI"><a>{{ client.gClientName }}</a></li>
+
+
+
+    <!-- <p> {{ tokenParam?.access_token }} </p> -->
+    <!-- <table>
+      <tr *ngFor="let client of ClientArr">
+        <td> {{ client.gClientAcronym }} </td>
+        <td> {{ client.gClientName }} </td>
+      </tr>
+    </table> -->

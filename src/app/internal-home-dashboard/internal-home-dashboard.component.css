@@ -1,0 +1,158 @@
+/*********************************************************************/
+/*This file contains the css styling for internal home page/dashboard*/
+/*********************************************************************/
+
+.toolbar {
+    width: 100%;
+    background-color: 	#DCDCDC;
+    position:fixed;
+    top:46px !important;
+    z-index: 90;
+    min-height:46px;
+    box-shadow: 0px 0px 16px 0px #686868;
+}
+
+
+#reportMenuPills > li > a {
+    color: #585858;
+}
+
+.mainContent {
+    padding-top: 25px;
+    width: 92%;
+    margin: auto;
+    -moz-column-width: 25em; /*Multi-columns Firefox */
+    -webkit-column-width: 25em; /*Multi-columns webkit, Safari, Chrome */
+    column-width: 25em; /*Multi-columns*/
+}
+
+#dictionaryHeader {
+    width: 92%;
+    margin: auto;
+    padding-top: 100px; 
+    border-bottom: 3px solid #eee;
+}
+
+#reportMenuPills {
+    padding-top: 10px;
+}
+
+#pillYearDropdownMenu {
+    width: 100%;
+}
+
+#reportMenuPills > li.active > a {
+    color:white;
+}
+
+/* .clientNameLI{
+    padding: 5px 0px 5px 5px;
+    border-radius:5px;
+}
+
+.clientNameLI:hover{
+    background-color:#BEBEBE
+} */
+
+/*<><><><> Alphabetical toolbar Settings Start <><><><>*/
+/*Be specific otherwise the ul properties override the home page/nav bar*/
+.alphabet.nav-pills li a {
+    padding: 4px 8px;
+    font-weight: bold;
+}
+
+.alphabet.nav-pills li a:hover {
+    background-color: #BEBEBE;
+}
+
+#alphabetToolbar {
+    text-align: center;
+    top:10px;
+}
+
+.alphabet {
+    display: inline-table;
+    margin-bottom:0px;
+}
+
+ul.alphabet {
+    list-style: none;
+}
+
+ul.alphabet li {
+    font-size: 11pt;
+    float: left;
+    margin:0px;
+}
+
+ul.alphabet li a {
+    cursor: pointer;
+    color: #1279C0;
+}
+
+ul.dictionary li {
+    float: none;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 11pt;
+    padding: 5px 0px 5px 5px;
+    border-radius:5px;
+}
+
+ul.dictionary li:hover{
+    background-color:#BEBEBE;
+    cursor: pointer;
+}
+
+#showAllClientsLi {
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+li.dictionary:active {
+    background-color: white;
+}
+
+.dictionaryTimeHeader > a:active {
+    background-color: white;
+}
+#alphabetResult {
+    margin: 4px 0px 0px 4px;
+}
+/*<><><><> Alphabetical Settings End <><><><>*/
+
+
+/*<><><><><> TABLET AND PHONE START <><><><><>*/
+@media screen and (max-width: 900px) {
+    .dictionaryTimeHeader {
+        width: 49%;
+    }
+
+    #dictionaryHeader > span {
+        width: 100%;
+    }
+    #dictionaryHeader {
+        padding-top: 114px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .dictionaryTimeHeader {
+        width: 100%;
+    }
+    #dictionaryHeader {
+        padding-top: 130px;
+    }
+}
+@media screen and (max-width: 500px) {
+    #dictionaryHeader {
+        padding-top: 154px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    #dictionaryHeader {
+        padding-top: 174px;
+    }
+}
+/*<><><><><> TABLET AND PHONE END <><><><><>*/

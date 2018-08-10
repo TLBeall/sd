@@ -1,0 +1,20 @@
+<table style="margin-top:10px">
+    <tr *ngFor="let mailType of MailTypeList">
+      <td>{{ mailType?.MailType }}</td>
+      <td>{{ mailType?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
+      <td>{{ mailType?.Measure.Caged | date: 'MM/dd/yy' }}</td>
+      <td>{{ mailType?.Measure.Quantity | number : '1.0-0' }}</td>
+      <td>{{ mailType?.Measure.Donors | number : '1.0-0' }}</td>
+      <td>{{ mailType?.Measure.NonDonors | number : '1.0-0' }}</td>
+      <td>{{ mailType?.Measure.NewDonors | number : '1.0-0' }}</td>
+      <td>{{ mailType?.Measure.RSP | percent:'1.2-2'}}</td>
+      <td>{{ mailType?.Measure.AVG | number : '1.0-2' }}</td>
+      <td>{{ mailType?.Measure.Gross | number : '1.0-0' }}</td>
+      <td>{{ mailType?.Measure.Cost | number : '1.0-0' }}</td>
+      <td>{{ mailType?.Measure.Net | number : '1.0-0' }}</td>
+      <td>{{ mailType?.Measure.GPP | number : '1.0-2' }}</td>
+      <td>{{ mailType?.Measure.CLM | number : '1.0-2' }}</td>
+      <td>{{ mailType?.Measure.NLM | number : '1.0-2' }}</td>
+      <td>{{ mailType?.Measure.IO | number : '1.0-2' }}</td>
+    </tr>
+  </table>

@@ -124,10 +124,10 @@
 </div>
 
 <div class='mainContent'>
-    <p> {{ tokenParam?.access_token }} </p>
 <ul class='dictionary'>
-    <li *ngFor="let client of ClientArr" class="clientNameLI"><a>{{ client.gClientName }}</a></li>
-
+    <li *ngFor="let client of ClientArr" class="clientNameLI"><a>{{ client?.gClientName }}</a></li>
+</ul>
+</div>
 
 
     <!-- <p> {{ tokenParam?.access_token }} </p> -->

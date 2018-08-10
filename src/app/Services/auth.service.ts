@@ -5,6 +5,7 @@ import { Headers, Http, HttpModule } from '@angular/http';
 import { HttpHeaders } from '@angular/common/http';
 import { TokenParams } from '../Models/TokenParams';
 import { ClientList } from '../Models/ClientList';
+import { RootReturns } from '../Models/RootReturns';
 
 @Injectable()
 export class AuthService {
@@ -22,14 +23,20 @@ export class AuthService {
   getClientList():Observable<ClientList []> {
     var Token = "";
     var GetListAPI = "https://sd360.sunrisedataservices.com/api/getClientList";
-
     //this.getToken("nls@sunrisedataservices.com","NLSjkas!@%kd15jf%#$@")
     //.subscribe(data => {
     //  Token = data.access_token
     //});
-
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
     return this.http.get(GetListAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  }
+
+  getReturns():Observable<RootReturns> {
+    var Token = "";
+    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/MainReturns?ClientAcronym=amac";
+
+    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 }
 

@@ -1,21 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TestComponent } from './test.component';
+import { MailtypeReturnsComponent } from './mailtype-returns.component';
 
-
-describe('TestComponent', () => {
-  let component: TestComponent;
-  let fixture: ComponentFixture<TestComponent>;
+describe('MailtypeReturnsComponent', () => {
+  let component: MailtypeReturnsComponent;
+  let fixture: ComponentFixture<MailtypeReturnsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TestComponent ]
+      declarations: [ MailtypeReturnsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestComponent);
+    fixture = TestBed.createComponent(MailtypeReturnsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

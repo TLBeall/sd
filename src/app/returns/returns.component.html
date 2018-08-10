@@ -1,0 +1,24 @@
+
+<h1 style="margin-top:50px">{{ RootReturns?.Client }}</h1>
+<app-mailtype-returns [MailTypeList]="RootReturns?.MailTypeList"></app-mailtype-returns>
+<table >
+  <tr>
+    <td>{{ RootReturns?.Client }}</td>
+    <td>{{ RootReturns?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
+    <td>{{ RootReturns?.Measure.Caged | date: 'MM/dd/yy' }}</td>
+    <td>{{ RootReturns?.Measure.Quantity | number : '1.0-0' }}</td>
+    <td>{{ RootReturns?.Measure.Donors | number : '1.0-0' }}</td>
+    <td>{{ RootReturns?.Measure.NonDonors | number : '1.0-0' }}</td>
+    <td>{{ RootReturns?.Measure.NewDonors | number : '1.0-0' }}</td>
+    <td>{{ RootReturns?.Measure.RSP | percent:'1.2-2'}}</td>
+    <td>{{ RootReturns?.Measure.AVG | number : '1.0-2' }}</td>
+    <td>{{ RootReturns?.Measure.Gross | number : '1.0-0' }}</td>
+    <td>{{ RootReturns?.Measure.Cost | number : '1.0-0' }}</td>
+    <td>{{ RootReturns?.Measure.Net | number : '1.0-0' }}</td>
+    <td>{{ RootReturns?.Measure.GPP | number : '1.0-2' }}</td>
+    <td>{{ RootReturns?.Measure.CLM | number : '1.0-2' }}</td>
+    <td>{{ RootReturns?.Measure.NLM | number : '1.0-2' }}</td>
+    <td>{{ RootReturns?.Measure.IO | number : '1.0-2' }}</td>
+  </tr>
+</table>
+

@@ -23,10 +23,10 @@ export class AuthService {
     var Token = "";
     var GetListAPI = "https://sd360.sunrisedataservices.com/api/getClientList";
 
-    this.getToken("nls@sunrisedataservices.com","NLSjkas!@%kd15jf%#$@")
-    .subscribe(data => {
-      Token = data.access_token
-    });
+    //this.getToken("nls@sunrisedataservices.com","NLSjkas!@%kd15jf%#$@")
+    //.subscribe(data => {
+    //  Token = data.access_token
+    //});
 
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
     return this.http.get(GetListAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));

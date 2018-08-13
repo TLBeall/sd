@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../Services/auth.service'
 import { TokenParams } from '../Models/TokenParams';
 import { ClientList } from '../Models/ClientList';
-
-declare var $:any;
-//import * as $ from 'jquery';
+import * as $ from 'jquery';
 
 
 @Component({
@@ -30,7 +28,7 @@ export class InternalHomeDashboardComponent implements OnInit {
 
       this.triggers =  $('ul.alphabet li a');
       $('#showAllClientsLi').click(function () {
-        this.filters.parent().fadeIn(222);
+       // this.filters.parent().fadeIn(222);
         $('#alphabetResult').html('');
     });
 

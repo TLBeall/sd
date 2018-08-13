@@ -3,6 +3,8 @@ import { AuthService } from '../Services/auth.service';
 import { delay, share } from 'rxjs/operators';
 import { RootReturns } from '../Models/RootReturns';
 import { MailtypeReturnsComponent } from '../mailtype-returns/mailtype-returns.component'
+import 'datatables.net';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-returns',
@@ -12,7 +14,7 @@ import { MailtypeReturnsComponent } from '../mailtype-returns/mailtype-returns.c
 export class ReturnsComponent implements OnInit {
 
   public RootReturns : RootReturns;
-
+  public tableWidget: any;
   constructor(private _authService: AuthService) {     
   }
 
@@ -23,4 +25,14 @@ export class ReturnsComponent implements OnInit {
     });  
   }
 
+  ngAfterViewInit() {
+    this.initDatatable()
+  }
+
+  private initDatatable(): void {
+    let exampleId: any = $('#example');
+    this.tableWidget = exampleId.DataTable({
+      select: true
+    });
+  }
 }

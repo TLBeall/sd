@@ -1,24 +1,45 @@
-
-<h1 style="margin-top:50px">{{ RootReturns?.Client }}</h1>
+<h1 style="margin-top:50px">
+  {{ RootReturns?.Client }}</h1>
 <app-mailtype-returns [MailTypeList]="RootReturns?.MailTypeList"></app-mailtype-returns>
 <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-  <tr>
-    <td>{{ RootReturns?.Client }}</td>
-    <td>{{ RootReturns?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
-    <td>{{ RootReturns?.Measure.Caged | date: 'MM/dd/yy' }}</td>
-    <td>{{ RootReturns?.Measure.Quantity | number : '1.0-0' }}</td>
-    <td>{{ RootReturns?.Measure.Donors | number : '1.0-0' }}</td>
-    <td>{{ RootReturns?.Measure.NonDonors | number : '1.0-0' }}</td>
-    <td>{{ RootReturns?.Measure.NewDonors | number : '1.0-0' }}</td>
-    <td>{{ RootReturns?.Measure.RSP | percent:'1.2-2'}}</td>
-    <td>{{ RootReturns?.Measure.AVG | number : '1.0-2' }}</td>
-    <td>{{ RootReturns?.Measure.Gross | number : '1.0-0' }}</td>
-    <td>{{ RootReturns?.Measure.Cost | number : '1.0-0' }}</td>
-    <td>{{ RootReturns?.Measure.Net | number : '1.0-0' }}</td>
-    <td>{{ RootReturns?.Measure.GPP | number : '1.0-2' }}</td>
-    <td>{{ RootReturns?.Measure.CLM | number : '1.0-2' }}</td>
-    <td>{{ RootReturns?.Measure.NLM | number : '1.0-2' }}</td>
-    <td>{{ RootReturns?.Measure.IO | number : '1.0-2' }}</td>
-  </tr>
+  <thead>
+    <tr>
+      <td>Client</td>
+      <td>Mailed</td>
+      <td>Caged</td>
+      <td>Quantity</td>
+      <td>Donors</td>
+      <td>NonDonors</td>
+      <td>NewDonors</td>
+      <td>RSP</td>
+      <td>AVG</td>
+      <td>Gross</td>
+      <td>Cost</td>
+      <td>Net</td>
+      <td>GPP</td>
+      <td>CLM</td>
+      <td>NLM</td>
+      <td>IO</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ RootReturns?.Client }}</td>
+      <td>{{ RootReturns?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
+      <td>{{ RootReturns?.Measure.Caged | date: 'MM/dd/yy' }}</td>
+      <td>{{ RootReturns?.Measure.Quantity | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.Donors | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.NonDonors | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.NewDonors | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.RSP | percent:'1.2-2'}}</td>
+      <td>{{ RootReturns?.Measure.AVG | number : '1.0-2' }}</td>
+      <td>{{ RootReturns?.Measure.Gross | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.Cost | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.Net | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.GPP | number : '1.0-2' }}</td>
+      <td>{{ RootReturns?.Measure.CLM | number : '1.0-2' }}</td>
+      <td>{{ RootReturns?.Measure.NLM | number : '1.0-2' }}</td>
+      <td>{{ RootReturns?.Measure.IO | number : '1.0-2' }}</td>
+    </tr>
+  </tbody>
 </table>
-

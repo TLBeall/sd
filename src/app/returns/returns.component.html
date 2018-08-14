@@ -1,29 +1,31 @@
+<div id="returnsDiv">
 <h1 style="margin-top:50px">
   {{ RootReturns?.Client }}</h1>
-<app-mailtype-returns [MailTypeList]="RootReturns?.MailTypeList"></app-mailtype-returns>
-<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-  <thead>
+<table id="" class="table clientTable table-striped table-bordered" cellspacing="0" width="100%">
+  <thead class='clientTableHeader' style='text-decoration: underline;'>
     <tr>
-      <td>Client</td>
-      <td>Mailed</td>
-      <td>Caged</td>
-      <td>Quantity</td>
-      <td>Donors</td>
-      <td>NonDonors</td>
-      <td>NewDonors</td>
-      <td>RSP</td>
-      <td>AVG</td>
-      <td>Gross</td>
-      <td>Cost</td>
-      <td>Net</td>
-      <td>GPP</td>
-      <td>CLM</td>
-      <td>NLM</td>
-      <td>IO</td>
+      <th></th>
+      <th>Client</th>
+      <th>Mailed</th>
+      <th>Caged</th>
+      <th>Quantity</th>
+      <th>Donors</th>
+      <th>NonDonors</th>
+      <th>NewDonors</th>
+      <th>RSP</th>
+      <th>AVG</th>
+      <th>Gross</th>
+      <th>Cost</th>
+      <th>Net</th>
+      <th>GPP</th>
+      <th>CLM</th>
+      <th>NLM</th>
+      <th>IO</th>
     </tr>
   </thead>
   <tbody>
     <tr>
+      <td id='clientDropdownBtn' class='btnCol details-control btn btn-sm btn-primary glyphicon glyphicon-menu-hamburger'></td>      
       <td>{{ RootReturns?.Client }}</td>
       <td>{{ RootReturns?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
       <td>{{ RootReturns?.Measure.Caged | date: 'MM/dd/yy' }}</td>
@@ -43,3 +45,5 @@
     </tr>
   </tbody>
 </table>
+<app-mailtype-returns style="visibility: hidden" #myMailTypeChild [MailTypeList]="RootReturns?.MailTypeList"></app-mailtype-returns>
+</div>

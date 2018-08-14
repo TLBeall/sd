@@ -14,6 +14,7 @@ import { NavigationBarComponent } from './navigation-bar/navigation-bar.componen
 import { InternalHomeDashboardComponent } from './internal-home-dashboard/internal-home-dashboard.component';
 import { ReturnsComponent } from './returns/returns.component';
 import { MailtypeReturnsComponent } from './mailtype-returns/mailtype-returns.component';
+import { CampaignReturnsComponent } from './campaign-returns/campaign-returns.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MailtypeReturnsComponent } from './mailtype-returns/mailtype-returns.co
     NavigationBarComponent,
     InternalHomeDashboardComponent,
     ReturnsComponent,
-    MailtypeReturnsComponent
+    MailtypeReturnsComponent,
+    CampaignReturnsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,4 @@
+<div id="mailTypeDiv" class="slider">
 <table class="table mailTypeTable table-striped table-bordered" cellspacing="0" width="100%">
   <thead class='mailTypeTableHeader' style='text-decoration: underline;'>
     <tr>
@@ -22,7 +23,9 @@
   </thead>
   <tbody>
     <tr *ngFor="let mailType of MailTypeList">
-      <td id='mailTypeDropdownBtn' class='btnCol details-control btn btn-sm btn-primary glyphicon glyphicon-menu-hamburger'></td>
+      <td id='mailTypeDropdownBtn' class='btnCol details-control btn btn-sm btn-primary glyphicon glyphicon-menu-hamburger'>
+         <!-- <app-campaign-returns style="visibility: hidden" [CampaignList]="mailType.CampaignList" [MailType]="mailType"></app-campaign-returns>  -->
+      </td>
       <td>{{ mailType?.MailType }}</td>
       <td>{{ mailType?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
       <td>{{ mailType?.Measure.Caged | date: 'MM/dd/yy' }}</td>
@@ -41,4 +44,25 @@
       <td>{{ mailType?.Measure.IO | number : '1.0-2' }}</td>
     </tr>
   </tbody>
+  <tfoot class='clientTableFooter'>
+      <tr>        
+        <td colspan="2">{{ RootReturns?.Client | uppercase }}</td>
+        <td>{{ RootReturns?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
+        <td>{{ RootReturns?.Measure.Caged | date: 'MM/dd/yy' }}</td>
+        <td>{{ RootReturns?.Measure.Quantity | number : '1.0-0' }}</td>
+        <td>{{ RootReturns?.Measure.Donors | number : '1.0-0' }}</td>
+        <td>{{ RootReturns?.Measure.NonDonors | number : '1.0-0' }}</td>
+        <td>{{ RootReturns?.Measure.NewDonors | number : '1.0-0' }}</td>
+        <td>{{ RootReturns?.Measure.RSP | percent:'1.2-2'}}</td>
+        <td>{{ RootReturns?.Measure.AVG | number : '1.0-2' }}</td>
+        <td>{{ RootReturns?.Measure.Gross | number : '1.0-0' }}</td>
+        <td>{{ RootReturns?.Measure.Cost | number : '1.0-0' }}</td>
+        <td>{{ RootReturns?.Measure.Net | number : '1.0-0' }}</td>
+        <td>{{ RootReturns?.Measure.GPP | number : '1.0-2' }}</td>
+        <td>{{ RootReturns?.Measure.CLM | number : '1.0-2' }}</td>
+        <td>{{ RootReturns?.Measure.NLM | number : '1.0-2' }}</td>
+        <td>{{ RootReturns?.Measure.IO | number : '1.0-2' }}</td>
+      </tr>
+    </tfoot>  
 </table>
+</div>

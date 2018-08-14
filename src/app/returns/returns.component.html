@@ -1,11 +1,11 @@
-<div id="returnsDiv">
-<h1 style="margin-top:50px">
-  {{ RootReturns?.Client }}</h1>
+<div id="returnsDiv" class="slider">
+<h1>
+  {{ RootReturns?.Client | uppercase }}</h1>
 <table id="" class="table clientTable table-striped table-bordered" cellspacing="0" width="100%">
   <thead class='clientTableHeader' style='text-decoration: underline;'>
     <tr>
       <th></th>
-      <th>Client</th>
+      <th> Client </th>
       <th>Mailed</th>
       <th>Caged</th>
       <th>Quantity</th>
@@ -25,8 +25,10 @@
   </thead>
   <tbody>
     <tr>
-      <td id='clientDropdownBtn' class='btnCol details-control btn btn-sm btn-primary glyphicon glyphicon-menu-hamburger'></td>      
-      <td>{{ RootReturns?.Client }}</td>
+      <td id='clientDropdownBtn' class='btnCol details-control btn btn-sm btn-primary glyphicon glyphicon-menu-hamburger'>
+          <app-mailtype-returns style="visibility: hidden" [MailTypeList]="RootReturns?.MailTypeList" [RootReturns]="RootReturns"></app-mailtype-returns>
+      </td>      
+      <td>{{ RootReturns?.Client | uppercase }}</td>
       <td>{{ RootReturns?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
       <td>{{ RootReturns?.Measure.Caged | date: 'MM/dd/yy' }}</td>
       <td>{{ RootReturns?.Measure.Quantity | number : '1.0-0' }}</td>
@@ -45,5 +47,4 @@
     </tr>
   </tbody>
 </table>
-<app-mailtype-returns style="visibility: hidden" #myMailTypeChild [MailTypeList]="RootReturns?.MailTypeList"></app-mailtype-returns>
 </div>

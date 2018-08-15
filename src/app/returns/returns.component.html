@@ -1,50 +1,55 @@
 <div id="returnsDiv" class="slider">
-<h1>
-  {{ RootReturns?.Client | uppercase }}</h1>
-<table id="" class="table clientTable table-striped table-bordered" cellspacing="0" width="100%">
-  <thead class='clientTableHeader' style='text-decoration: underline;'>
-    <tr>
-      <th></th>
-      <th> Client </th>
-      <th>Mailed</th>
-      <th>Caged</th>
-      <th>Quantity</th>
-      <th>Donors</th>
-      <th>NonDonors</th>
-      <th>NewDonors</th>
-      <th>RSP</th>
-      <th>AVG</th>
-      <th>Gross</th>
-      <th>Cost</th>
-      <th>Net</th>
-      <th>GPP</th>
-      <th>CLM</th>
-      <th>NLM</th>
-      <th>IO</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td id='clientDropdownBtn' class='btnCol details-control btn btn-sm btn-primary glyphicon glyphicon-menu-hamburger'>
-          <app-mailtype-returns style="visibility: hidden" [MailTypeList]="RootReturns?.MailTypeList" [RootReturns]="RootReturns"></app-mailtype-returns>
-      </td>      
-      <td>{{ RootReturns?.Client | uppercase }}</td>
-      <td>{{ RootReturns?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
-      <td>{{ RootReturns?.Measure.Caged | date: 'MM/dd/yy' }}</td>
-      <td>{{ RootReturns?.Measure.Quantity | number : '1.0-0' }}</td>
-      <td>{{ RootReturns?.Measure.Donors | number : '1.0-0' }}</td>
-      <td>{{ RootReturns?.Measure.NonDonors | number : '1.0-0' }}</td>
-      <td>{{ RootReturns?.Measure.NewDonors | number : '1.0-0' }}</td>
-      <td>{{ RootReturns?.Measure.RSP | percent:'1.2-2'}}</td>
-      <td>{{ RootReturns?.Measure.AVG | number : '1.0-2' }}</td>
-      <td>{{ RootReturns?.Measure.Gross | number : '1.0-0' }}</td>
-      <td>{{ RootReturns?.Measure.Cost | number : '1.0-0' }}</td>
-      <td>{{ RootReturns?.Measure.Net | number : '1.0-0' }}</td>
-      <td>{{ RootReturns?.Measure.GPP | number : '1.0-2' }}</td>
-      <td>{{ RootReturns?.Measure.CLM | number : '1.0-2' }}</td>
-      <td>{{ RootReturns?.Measure.NLM | number : '1.0-2' }}</td>
-      <td>{{ RootReturns?.Measure.IO | number : '1.0-2' }}</td>
-    </tr>
-  </tbody>
-</table>
+  <h1>
+    {{ RootReturns?.Client | uppercase }}</h1>
+  <table class="table clientTable table-striped table-bordered" cellspacing="0" width="100%">
+    <thead class='clientTableHeader' style='text-decoration: underline;'>
+      <tr>
+        <th></th>
+        <th> Client </th>
+        <th>Mailed</th>
+        <th>Caged</th>
+        <th>Quantity</th>
+        <th>Donors</th>
+        <th>NonDonors</th>
+        <th>NewDonors</th>
+        <th>RSP</th>
+        <th>AVG</th>
+        <th>Gross</th>
+        <th>Cost</th>
+        <th>Net</th>
+        <th>GPP</th>
+        <th>CLM</th>
+        <th>NLM</th>
+        <th>IO</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class='btnCol details-control btn btn-sm btn-primary glyphicon glyphicon-menu-hamburger'>
+        </td>
+        <td>{{ RootReturns.Client | uppercase }}</td>
+        <td>{{ RootReturns.Measure.Mailed | date: 'MM/dd/yy'}}</td>
+        <td>{{ RootReturns.Measure.Caged | date: 'MM/dd/yy' }}</td>
+        <td>{{ RootReturns.Measure.Quantity | number : '1.0-0' }}</td>
+        <td>{{ RootReturns.Measure.Donors | number : '1.0-0' }}</td>
+        <td>{{ RootReturns.Measure.NonDonors | number : '1.0-0' }}</td>
+        <td>{{ RootReturns.Measure.NewDonors | number : '1.0-0' }}</td>
+        <td>{{ RootReturns.Measure.RSP | percent:'1.2-2'}}</td>
+        <td>{{ RootReturns.Measure.AVG | number : '1.0-2' }}</td>
+        <td>{{ RootReturns.Measure.Gross | number : '1.0-0' }}</td>
+        <td>{{ RootReturns.Measure.Cost | number : '1.0-0' }}</td>
+        <td>{{ RootReturns.Measure.Net | number : '1.0-0' }}</td>
+        <td>{{ RootReturns.Measure.GPP | number : '1.0-2' }}</td>
+        <td>{{ RootReturns.Measure.CLM | number : '1.0-2' }}</td>
+        <td>{{ RootReturns.Measure.NLM | number : '1.0-2' }}</td>
+        <td>{{ RootReturns.Measure.IO | number : '1.0-2' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="visibility: hidden">
+    <app-mailtype-returns [RootReturns]="RootReturns" [MailTypeList]="RootReturns.MailTypeList" title="{{ RootReturns.Client }}"></app-mailtype-returns>
+    <ng-container *ngFor="let mailType of RootReturns.MailTypeList">
+      <app-campaign-returns [MailType]="mailType" [CampaignList]="mailType.CampaignList" title="{{ mailType.MailType }}"></app-campaign-returns>
+    </ng-container>
+  </div>
 </div>

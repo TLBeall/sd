@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CampaignReturns } from '../Models/CampaignReturns';
+import { MailTypeReturns } from '../Models/MailTypeReturns';
 
 @Component({
   selector: 'app-campaign-returns',
@@ -7,8 +9,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CampaignReturnsComponent implements OnInit {
 
-  @Input() public CampaignList;
-  @Input() public MailType;
+    @Input() public CampaignList: CampaignReturns[];
+    @Input() public MailType: MailTypeReturns;
 
   constructor() { }
 

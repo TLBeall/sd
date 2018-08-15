@@ -3,7 +3,6 @@ import 'datatables.net';
 import * as $ from 'jquery';
 import { RootReturns } from '../Models/RootReturns';
 import { MailTypeReturns } from '../Models/MailTypeReturns';
-import { CampaignReturnsComponent } from '../campaign-returns/campaign-returns.component';
 
 @Component({
   selector: 'app-mailtype-returns',
@@ -22,67 +21,5 @@ export class MailtypeReturnsComponent implements OnInit {
 
   ngAfterViewInit() {
   }
-
-  private initDatatable(): void {
-
-    // let mailTypeTable: any = $('table.mailTypeTable');
-    // var tableWidget: any;
-
-    // tableWidget = mailTypeTable.DataTable({
-    //   select: true,
-    //   autoWidth: false,
-    //   paging: false,
-    //   info: false,
-    //   searching: false,
-    //   initComplete: function () {
-    //   }
-    // });
-
-    // var el: HTMLElement = this.campaignChild.nativeElement;
-    // var childTable = el.getElementsByClassName('campaignTable');
-    
-    // tableWidget.rows().every(function () {
-    //   var tableHeader = $('.mailTypeTableHeader');
-    //   var tableFooter = $('.clientTableFooter');
-    //   var tr = $(this.node());
-    //   var row = this.row(tr);
-    //   row.child(childTable[row.index()]).show();
-    //   tableHeader.css("visibility", "collapse");
-    //   for (var j = 2; j < 25; j++) {
-    //     var nodes = this.column(j).nodes();
-    //     $(nodes[row.index()]).addClass('hideParentRow');
-    //   }
-    //   tr.addClass('shown');
-    // });
-
-
-    //  $('table.mailTypeTable tbody').on('click', 'td.details-control', function () {
-    //    var tr = $(this).closest('tr');
-    //    var row = tableWidget.row(tr);
-    //    var tableHeader = $('.mailTypeTableHeader');
-    //    if (row.child.isShown()) {
-    //      this.classList.remove("btn-primary")
-    //      this.classList.add("btn-info")
-    //        row.child.hide();
-    //        tr.removeClass('shown');
-    //        tableHeader.css("visibility", "initial");
-    //      for (var i = 2; i < 25; i++) {
-    //        var nodes = row.column(i).nodes();
-    //        $(nodes[0]).removeClass('hideParentRow');
-    //      }
-    //    }
-    //    else {
-    //      this.classList.remove("btn-info")
-    //      this.classList.add("btn-primary")
-    //      row.child.show();
-    //      tr.addClass('shown');
-    //      tableHeader.css("visibility", "collapse");
-    //      for (var i = 2; i < 25; i++) {
-    //        var nodes = row.column(i).nodes();
-    //        $(nodes[0]).addClass('hideParentRow');
-    //      }
-    //    }
-    //  });
-  }
-
+  
 }

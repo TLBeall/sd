@@ -44,7 +44,7 @@
   </tbody>
   <tfoot class='mailTypeTableFooter'>
     <tr>
-      <td colspan="2">TOTAL {{ MailType?.MailType | uppercase }}</td>
+      <td colspan="2">TOTAL {{ MailType.MailType | uppercase }}</td>
       <td>{{ MailType.Measure.Mailed | date: 'MM/dd/yy'}}</td>
       <td>{{ MailType.Measure.Caged | date: 'MM/dd/yy' }}</td>
       <td>{{ MailType.Measure.Quantity | number : '1.0-0' }}</td>

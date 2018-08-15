@@ -15,6 +15,7 @@ import { InternalHomeDashboardComponent } from './internal-home-dashboard/intern
 import { ReturnsComponent } from './returns/returns.component';
 import { MailtypeReturnsComponent } from './mailtype-returns/mailtype-returns.component';
 import { CampaignReturnsComponent } from './campaign-returns/campaign-returns.component';
+import { PhaseReturnsComponent } from './phase-returns/phase-returns.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { CampaignReturnsComponent } from './campaign-returns/campaign-returns.co
     InternalHomeDashboardComponent,
     ReturnsComponent,
     MailtypeReturnsComponent,
-    CampaignReturnsComponent
+    CampaignReturnsComponent,
+    PhaseReturnsComponent
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import { MailtypeReturnsComponent } from '../mailtype-returns/mailtype-returns.c
 import { CampaignReturnsComponent } from '../campaign-returns/campaign-returns.component';
 import 'datatables.net';
 import * as $ from 'jquery';
+import { PhaseReturnsComponent } from '../phase-returns/phase-returns.component';
 
 @Component({
   selector: 'app-returns',
@@ -13,6 +14,8 @@ import * as $ from 'jquery';
   styleUrls: ['./returns.component.css']
 })
 export class ReturnsComponent implements OnInit {
+  @ViewChildren(PhaseReturnsComponent, {read: ElementRef})
+  public phaseChildren: QueryList<ElementRef>;
 
   @ViewChildren(CampaignReturnsComponent, {read: ElementRef})
   public campaignChildren: QueryList<ElementRef>;
@@ -40,9 +43,9 @@ export class ReturnsComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.campaignChildren.forEach(function (el) {
-      console.log(el.nativeElement);
-  });
+    // this.campaignChildren.forEach(function (el) {
+    //   console.log(el.nativeElement);
+  // });
    this.initDatatable();
 }
 
@@ -50,6 +53,7 @@ export class ReturnsComponent implements OnInit {
 
      let clientTable: any = $('table.clientTable');
      let mailTypeTable: any = $('table.mailTypeTable');
+     let campaignTable: any = $('table.campaignTable');
 
      var clientDataTable = clientTable.DataTable({
       select: true,
@@ -62,6 +66,16 @@ export class ReturnsComponent implements OnInit {
     });
 
      var mailTypeDataTable = mailTypeTable.DataTable({
+        select: true,
+        autoWidth: false,
+        paging: false,
+        info: false,
+        searching: false,
+        initComplete: function () {
+        }
+      });
+
+      var campaignDataTable = campaignTable.DataTable({
         select: true,
         autoWidth: false,
         paging: false,
@@ -95,6 +109,22 @@ export class ReturnsComponent implements OnInit {
       var row = this.row(tr);
       var childHTML = CampaignChildrenData.find(p => p.nativeElement.title == row.data()[1]).nativeElement.getElementsByClassName('campaignTable')[0].innerHTML;
       row.child(childHTML).show();
+      tableHeader.css("visibility", "collapse");
+      for (var j = 2; j < 25; j++) {
+        var nodes = this.column(j).nodes();
+        $(nodes[row.index()]).addClass('hideParentRow');
+      }
+      tr.addClass('shown');
+    });
+
+    var PhaseChildrenData = this.phaseChildren;
+
+    campaignDataTable.rows().every(function () {      // Default expand and create child rows
+      var tableHeader = $('.campaignTableHeader');
+      var tr = $(this.node());
+      var row = this.row(tr);
+      var childHTML = PhaseChildrenData.find(p => p.nativeElement.title == row.data()[1]).nativeElement.getElementsByClassName('phaseTable')[0].innerHTML;
+      row.child('<p> TEST </p>').show();
       tableHeader.css("visibility", "collapse");
       for (var j = 2; j < 25; j++) {
         var nodes = this.column(j).nodes();
@@ -149,7 +179,35 @@ export class ReturnsComponent implements OnInit {
       else {
         this.classList.remove("btn-info")
         this.classList.add("btn-primary")
-        row.child.show('<p> TEST TEST TEST </p>');
+        row.child.show();
+        tr.addClass('shown');
+        //tableHeader.css("visibility", "collapse");
+        for (var i = 2; i < 25; i++) {
+          var nodes = row.column(i).nodes();
+          $(nodes[row.index()]).addClass('hideParentRow');
+        }
+      }
+    });
+
+    $('table.campaignTable tbody').on('click', 'td.details-control', function () { // Handle expand/collapse
+      var tr = $(this).closest('tr');
+      var row = campaignDataTable.row(tr);
+      //var tableHeader = $('.clientTableHeader');
+      if (row.child.isShown()) {
+        this.classList.remove("btn-primary")
+        this.classList.add("btn-info")
+        row.child.hide();
+        tr.removeClass('shown');
+        //tableHeader.css("visibility", "initial");
+        for (var i = 2; i < 25; i++) {
+          var nodes = row.column(i).nodes();
+          $(nodes[row.index()]).removeClass('hideParentRow');
+        }
+      }
+      else {
+        this.classList.remove("btn-info")
+        this.classList.add("btn-primary")
+        row.child.show();
         tr.addClass('shown');
         //tableHeader.css("visibility", "collapse");
         for (var i = 2; i < 25; i++) {

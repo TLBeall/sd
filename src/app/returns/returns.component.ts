@@ -111,7 +111,8 @@ export class ReturnsComponent implements OnInit {
         var tableHeader = $('.phaseTableHeader');
         var tr = $(this.node());
         var row = this.row(tr);
-        var childHTML = MailListChildrenData.find(p => p.nativeElement.title == row.data()[1]).nativeElement.getElementsByClassName('maillistTable')[0].innerHTML;
+        var MyElement = MailListChildrenData.find(p => p.nativeElement.title == row.data()[1]).nativeElement.getElementsByClassName('maillistTable')[0];
+        var childHTML = '<table class="'+ MyElement.className +'">' + MyElement.innerHTML + '</table>';
         row.child(childHTML).show();
         tableHeader.css("visibility", "collapse");
         for (var j = 2; j < 25; j++) {
@@ -129,7 +130,8 @@ export class ReturnsComponent implements OnInit {
         var tableHeader = $('.campaignTableHeader');
         var tr = $(this.node());
         var row = this.row(tr);
-        var childHTML = PhaseChildrenData.find(p => p.nativeElement.title == row.data()[1]).nativeElement.getElementsByClassName('phaseTable')[0].innerHTML;
+        var MyElement = PhaseChildrenData.find(p => p.nativeElement.title == row.data()[1]).nativeElement.getElementsByClassName('phaseTable')[0];
+        var childHTML = '<table class="'+ MyElement.className +'">' + MyElement.innerHTML + '</table>';
         row.child(childHTML).show();
         tableHeader.css("visibility", "collapse");
         for (var j = 2; j < 25; j++) {
@@ -146,7 +148,8 @@ export class ReturnsComponent implements OnInit {
       var tableHeader = $('.mailTypeTableHeader');
       var tr = $(this.node());
       var row = this.row(tr);
-      var childHTML = CampaignChildrenData.find(p => p.nativeElement.title == row.data()[1]).nativeElement.getElementsByClassName('campaignTable')[0].innerHTML;
+      var MyElement = CampaignChildrenData.find(p => p.nativeElement.title == row.data()[1]).nativeElement.getElementsByClassName('campaignTable')[0]
+      var childHTML = '<table class="'+ MyElement.className +'">' + MyElement.innerHTML + '</table>';
       row.child(childHTML).show();
       tableHeader.css("visibility", "collapse");
       for (var j = 2; j < 25; j++) {
@@ -226,7 +229,6 @@ export class ReturnsComponent implements OnInit {
     });
 
     $('tbody').on('click', 'td.cdetails-control', function () { // Handle expand/collapse
-      alert('test');
       var tr = $(this).closest('tr');
       var row = campaignDataTable.row(tr);
       //var tableHeader = $('.clientTableHeader');
@@ -234,7 +236,7 @@ export class ReturnsComponent implements OnInit {
         this.classList.remove("btn-primary")
         this.classList.add("btn-info")
         row.child.hide();
-        tr.removeClass('shown');
+        $(tr).removeClass('shown');
         //tableHeader.css("visibility", "initial");
         for (var i = 2; i < 25; i++) {
           var nodes = row.column(i).nodes();

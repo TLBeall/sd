@@ -14,7 +14,6 @@ export class CampaignReturnsComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() {    
   }
-
 }

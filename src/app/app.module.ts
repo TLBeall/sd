@@ -16,6 +16,7 @@ import { ReturnsComponent } from './returns/returns.component';
 import { MailtypeReturnsComponent } from './mailtype-returns/mailtype-returns.component';
 import { CampaignReturnsComponent } from './campaign-returns/campaign-returns.component';
 import { PhaseReturnsComponent } from './phase-returns/phase-returns.component';
+import { MaillistReturnsComponent } from './maillist-returns/maillist-returns.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PhaseReturnsComponent } from './phase-returns/phase-returns.component';
     ReturnsComponent,
     MailtypeReturnsComponent,
     CampaignReturnsComponent,
-    PhaseReturnsComponent
+    PhaseReturnsComponent,
+    MaillistReturnsComponent
   ],
   imports: [
     BrowserModule,

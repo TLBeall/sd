@@ -1,59 +1,62 @@
-  <h1>
-    {{ RootReturns?.Client | uppercase }}</h1>    
-  <table class="table clientTable table-striped table-bordered" cellspacing="0" width="100%">
-    <thead class='clientTableHeader' style='text-decoration: underline;'>
-      <tr>
-        <th></th>
-        <th> Client </th>
-        <th>Mailed</th>
-        <th>Caged</th>
-        <th>Quantity</th>
-        <th>Donors</th>
-        <th>NonDonors</th>
-        <th>NewDonors</th>
-        <th>RSP</th>
-        <th>AVG</th>
-        <th>Gross</th>
-        <th>Cost</th>
-        <th>Net</th>
-        <th>GPP</th>
-        <th>CLM</th>
-        <th>NLM</th>
-        <th>IO</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class='btnCol details-control btn btn-sm btn-primary glyphicon glyphicon-menu-hamburger'>
-        </td>
-        <td>{{ RootReturns?.Client | uppercase }}</td>
-        <td>{{ RootReturns?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
-        <td>{{ RootReturns?.Measure.Caged | date: 'MM/dd/yy' }}</td>
-        <td>{{ RootReturns?.Measure.Quantity | number : '1.0-0' }}</td>
-        <td>{{ RootReturns?.Measure.Donors | number : '1.0-0' }}</td>
-        <td>{{ RootReturns?.Measure.NonDonors | number : '1.0-0' }}</td>
-        <td>{{ RootReturns?.Measure.NewDonors | number : '1.0-0' }}</td>
-        <td>{{ RootReturns?.Measure.RSP | percent:'1.2-2'}}</td>
-        <td>{{ RootReturns?.Measure.AVG | number : '1.0-2' }}</td>
-        <td>{{ RootReturns?.Measure.Gross | number : '1.0-0' }}</td>
-        <td>{{ RootReturns?.Measure.Cost | number : '1.0-0' }}</td>
-        <td>{{ RootReturns?.Measure.Net | number : '1.0-0' }}</td>
-        <td>{{ RootReturns?.Measure.GPP | number : '1.0-2' }}</td>
-        <td>{{ RootReturns?.Measure.CLM | number : '1.0-2' }}</td>
-        <td>{{ RootReturns?.Measure.NLM | number : '1.0-2' }}</td>
-        <td>{{ RootReturns?.Measure.IO | number : '1.0-2' }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div style="visibility: collapse">
+<h1>
+  {{ RootReturns?.Client | uppercase }}</h1>
+<table class="table clientTable table-striped table-bordered" cellspacing="0" width="100%">
+  <thead class='clientTableHeader' style='text-decoration: underline;'>
+    <tr>
+      <th></th>
+      <th> Client </th>
+      <th>Mailed</th>
+      <th>Caged</th>
+      <th>Quantity</th>
+      <th>Donors</th>
+      <th>NonDonors</th>
+      <th>NewDonors</th>
+      <th>RSP</th>
+      <th>AVG</th>
+      <th>Gross</th>
+      <th>Cost</th>
+      <th>Net</th>
+      <th>GPP</th>
+      <th>CLM</th>
+      <th>NLM</th>
+      <th>IO</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class='btnCol details-control btn btn-sm btn-primary glyphicon glyphicon-menu-hamburger'>
+      </td>
+      <td>{{ RootReturns?.Client | uppercase }}</td>
+      <td>{{ RootReturns?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
+      <td>{{ RootReturns?.Measure.Caged | date: 'MM/dd/yy' }}</td>
+      <td>{{ RootReturns?.Measure.Quantity | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.Donors | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.NonDonors | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.NewDonors | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.RSP | percent:'1.2-2'}}</td>
+      <td>{{ RootReturns?.Measure.AVG | number : '1.0-2' }}</td>
+      <td>{{ RootReturns?.Measure.Gross | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.Cost | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.Net | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.GPP | number : '1.0-2' }}</td>
+      <td>{{ RootReturns?.Measure.CLM | number : '1.0-2' }}</td>
+      <td>{{ RootReturns?.Measure.NLM | number : '1.0-2' }}</td>
+      <td>{{ RootReturns?.Measure.IO | number : '1.0-2' }}</td>
+    </tr>
+  </tbody>
+</table>
+<div style="visibility: collapse">
+  <div>
     <app-mailtype-returns [RootReturns]="RootReturns" [MailTypeList]="RootReturns?.MailTypeList" title="{{ RootReturns?.Client }}"></app-mailtype-returns>
+
     <div *ngFor="let mailType of RootReturns.MailTypeList">
-      <app-campaign-returns [MailType]="mailType" [CampaignList]="mailType.CampaignList" title="{{ mailType.MailType }}"></app-campaign-returns>
+      <app-campaign-returns [MailType]="mailType" [CampaignList]="mailType?.CampaignList" title="{{ mailType.MailType }}"></app-campaign-returns>
       <ng-container *ngFor="let campaign of mailType.CampaignList">
-        <app-phase-returns [Campaign]="campaign" [PhaseList]="campaign.PhaseList" title="{{ campaign.CampaignName }}"></app-phase-returns>
+        <app-phase-returns [Campaign]="campaign" [PhaseList]="campaign?.PhaseList" title="{{ campaign.CampaignName }}"></app-phase-returns>
         <ng-container *ngFor="let phase of campaign.PhaseList">
-          <app-maillist-returns [Phase]="phase" [MailList]="phase.MailList" title="{{ phase.PhaseName }}"></app-maillist-returns>
-        </ng-container>        
+          <app-maillist-returns [Phase]="phase" [MailList]="phase?.MailList" title="{{ phase.PhaseName }}"></app-maillist-returns>
+        </ng-container>
       </ng-container>
     </div>
+
   </div>

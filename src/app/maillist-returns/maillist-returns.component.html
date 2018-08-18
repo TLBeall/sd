@@ -1,7 +1,7 @@
 <table class="table maillistTable table-striped table-bordered" cellspacing="0" width="100%">
   <thead class='maillistTableHeader' style='text-decoration: underline;'>
     <tr>
-      <th></th>
+      <!-- <th></th> -->
       <th>Mail Details</th>
       <th>Mailed</th>
       <th>Caged</th>
@@ -22,8 +22,8 @@
   </thead>
   <tbody>
     <tr *ngFor="let mail of MailList">
-      <td class='btnCol cdetails-control btn btn-sm btn-primary glyphicon glyphicon-menu-hamburger'></td>
-      <td>{{ mail?.MailCode }} : {{ mail.Description }}</td>
+      <!-- <td class='btnCol cdetails-control btn btn-sm btn-primary glyphicon glyphicon-menu-hamburger'></td> -->
+      <td>{{ mail?.MailCode }} : {{ mail.MailDescription }}</td>
       <td>{{ mail?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
       <td>{{ mail?.Measure.Caged | date: 'MM/dd/yy' }}</td>
       <td>{{ mail?.Measure.Quantity | number : '1.0-0' }}</td>
@@ -43,7 +43,7 @@
   </tbody>
   <tfoot class='phaseTableFooter'>
     <tr>
-      <td colspan="2">TOTAL {{ Phase?.PhaseName | uppercase }}</td>
+      <td>TOTAL {{ Phase?.PhaseName | uppercase }}</td>
       <td>{{ Phase?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
       <td>{{ Phase?.Measure.Caged | date: 'MM/dd/yy' }}</td>
       <td>{{ Phase?.Measure.Quantity | number : '1.0-0' }}</td>

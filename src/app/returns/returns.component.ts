@@ -9,6 +9,7 @@ import * as $ from 'jquery';
 import { PhaseReturnsComponent } from '../phase-returns/phase-returns.component';
 import { MaillistReturnsComponent } from '../maillist-returns/maillist-returns.component';
 import { ChildElement } from 'src/app/Models/childElement';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-returns',
@@ -43,14 +44,17 @@ export class ReturnsComponent implements OnInit {
 
   public RootReturns: RootReturns;
 
-  constructor(private _authService: AuthService) {
+  public activeClient: string;
+
+  constructor(private _authService: AuthService, route: ActivatedRoute) {
+    route.params.subscribe( params => this.activeClient = params["id"] );
   }
 
   // API Call
 
   ngOnInit() {
     $(".clientTable").toggle(false);
-    this._authService.getReturns()
+    this._authService.getReturns(this.activeClient)
       .subscribe(data => {
         this.RootReturns = data;
         $(".clientTable").toggle(true);

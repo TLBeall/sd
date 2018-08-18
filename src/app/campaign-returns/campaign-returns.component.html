@@ -7,8 +7,8 @@
       <th>Caged</th>
       <th>Quantity</th>
       <th>Donors</th>
-      <th>NonDonors</th>
-      <th>NewDonors</th>
+      <th>Non</th>
+      <th>New</th>
       <th>RSP</th>
       <th>AVG</th>
       <th>Gross</th>
@@ -22,7 +22,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let campaign of CampaignList">
-      <td class='btnCol cdetails-control btn btn-sm btn-primary glyphicon glyphicon-menu-hamburger'></td>
+      <td class='btnCol cdetails-control'></td>
       <td>{{ campaign?.CampaignName }}</td>
       <td>{{ campaign?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
       <td>{{ campaign?.Measure.Caged | date: 'MM/dd/yy' }}</td>

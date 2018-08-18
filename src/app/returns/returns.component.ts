@@ -18,28 +18,35 @@ import { ChildElement } from 'src/app/Models/childElement';
 
 export class ReturnsComponent implements OnInit {
 
-  
-  
-  @ViewChildren(MaillistReturnsComponent, {read: ElementRef})
+  // Capturing child components MailType, Campaign, Phase, Mailist
+
+  @ViewChildren(MaillistReturnsComponent, { read: ElementRef })
   public maillistChildren: QueryList<ElementRef>;
   public maillistArr: ChildElement[] = []; // title, className, innerHTML
 
-  @ViewChildren(PhaseReturnsComponent, {read: ElementRef})
+  @ViewChildren(PhaseReturnsComponent, { read: ElementRef })
   public phaseChildren: QueryList<ElementRef>;
   public phaseArr: ChildElement[] = [];
 
-  @ViewChildren(CampaignReturnsComponent, {read: ElementRef})
+  @ViewChildren(CampaignReturnsComponent, { read: ElementRef })
   public campaignChildren: QueryList<ElementRef>;
   public campaignArr: ChildElement[] = [];
 
   @ViewChild(MailtypeReturnsComponent, { read: ElementRef })
   public mailTypeChild: ElementRef;
   public mailTypeArr: ChildElement[] = [];
-  
+
+  public clientDataTable: any;
+  public mailTypeDataTable: any;
+  public campaignDataTable: any;
+  public phaseDataTable: any;
+
   public RootReturns: RootReturns;
 
   constructor(private _authService: AuthService) {
   }
+
+  // API Call
 
   ngOnInit() {
     $(".clientTable").toggle(false);
@@ -47,279 +54,441 @@ export class ReturnsComponent implements OnInit {
       .subscribe(data => {
         this.RootReturns = data;
         $(".clientTable").toggle(true);
-          });
+      });
   }
 
   ngAfterViewInit() {
-  this.PrepArrays();
-  this.GeneratePage();
-}
+    this.PrepArrays();
+    this.GeneratePage();
+  }
 
-private PrepArrays(): void {
-  var MailTypeChild = this.mailTypeChild;
-  this.mailTypeArr.push({'title': MailTypeChild.nativeElement.title, 'className': MailTypeChild.nativeElement.getElementsByClassName('mailTypeTable')[0].className,  'innerHTML' : MailTypeChild.nativeElement.getElementsByClassName('mailTypeTable')[0].innerHTML});
+  // Expand All, iterating through all tables
 
-  var CampaignChildrenData = this.campaignChildren;
-  CampaignChildrenData.forEach(p => {
-    this.campaignArr.push({'title': p.nativeElement.title, 'className': p.nativeElement.getElementsByClassName('campaignTable')[0].className,  'innerHTML' : p.nativeElement.getElementsByClassName('campaignTable')[0].innerHTML});
-  });
-
-  var PhaseChildrenData = this.phaseChildren;
-  PhaseChildrenData.forEach(p => {
-    this.phaseArr.push({'title': p.nativeElement.title, 'className': p.nativeElement.getElementsByClassName('phaseTable')[0].className,  'innerHTML' : p.nativeElement.getElementsByClassName('phaseTable')[0].innerHTML});
-  });
-
-  var MailListChildrenData = this.maillistChildren;
-  MailListChildrenData.forEach(p => {
-    this.maillistArr.push({'title': p.nativeElement.title, 'className': p.nativeElement.getElementsByClassName('maillistTable')[0].className,  'innerHTML' : p.nativeElement.getElementsByClassName('maillistTable')[0].innerHTML});
-  });
-
-   var id = this.campaignArr.findIndex(p => p.title == "House");
-}
-
-private GeneratePage(): void {
-  let clientTable: any = $('table.clientTable');
-
-  var clientDataTable = clientTable.DataTable({
-   select: true,
-   autoWidth: false,
-   paging: false,
-   info: false,
-   searching: false,
-   initComplete: function () {
-   }
- });
-
-
-
-   $("table.mailTypeTable").remove();
-   $("table.campaignTable").remove();
-   $("table.phaseTable").remove();
-   $("table.maillistTable").remove();
-
-   var mailTypeArr = this.mailTypeArr;
-   clientDataTable.rows().every(function () {      // Default expand single client row and create child row
-    var tableHeader = $('.clientTableHeader');
-    var tr = $(this.node());
-    var row = this.row(tr);
-    var id = mailTypeArr.findIndex(p => p.title == row.data()[1]);
-    var childHTML = '<table class="'+ mailTypeArr[id].className +'">' + mailTypeArr[id].innerHTML + '</table>'; 
-    row.child(childHTML).show();
-    tableHeader.css("visibility", "collapse");
-    for (var j = 2; j < 25; j++) {
-      var nodes = this.column(j).nodes();
-      $(nodes[row.index()]).addClass('hideParentRow');
-    }
-    tr.addClass('shown');
-  });
-
-  let mailTypeTable: any = $('table.mailTypeTable');
-
-  var mailTypeDataTable = mailTypeTable.DataTable({
-     select: true,
-     autoWidth: false,
-     paging: false,
-     info: false,
-     searching: false,
-     initComplete: function () {
-     }
-   });
-
-  var CampaignArr = this.campaignArr;
-
-   mailTypeDataTable.rows().every(function () {      // Default expand and create child rows
-    var tableHeader = $('.mailTypeTableHeader');
-    var tr = $(this.node());
-    var row = this.row(tr);
-    var id = CampaignArr.findIndex(p => p.title == row.data()[1]);
-    var childHTML = '<table class="'+ CampaignArr[id].className +'">' + CampaignArr[id].innerHTML + '</table>'; 
-    row.child(childHTML).show();
-    tableHeader.css("visibility", "collapse");
-    for (var j = 2; j < 25; j++) {
-      var nodes = this.column(j).nodes();
-      $(nodes[row.index()]).addClass('hideParentRow');
-    }
-    tr.addClass('shown');
-  });
-
-  let campaignTable: any = $('table.campaignTable');
-
-   var campaignDataTable = campaignTable.DataTable({
-     select: true,
-     autoWidth: false,
-     paging: false,
-     info: false,
-     searching: false,
-     initComplete: function () {
-     }
-   });
-
-   var PhaseArr = this.phaseArr;
-
-   for (var campaignIdx = 0; campaignIdx < $('table.campaignTable').length; campaignIdx++) { // multiple campaign tables
-    campaignDataTable.tables(campaignIdx).rows().every(function () {      // Default expand and create child rows
-      var tableHeader = $('.campaignTableHeader');
+  ExpandAll() {
+    this.clientDataTable.rows().every(function () {      // Default expand single client row and create child row
+      var tableHeader = $('.clientTableHeader');
       var tr = $(this.node());
       var row = this.row(tr);
-      var id = PhaseArr.findIndex(p => p.title == row.data()[1]);
-      var childHTML = '<table class="'+ PhaseArr[id].className +'">' + PhaseArr[id].innerHTML + '</table>'; 
-      row.child(childHTML).show();
-      tableHeader.css("visibility", "collapse");
+      row.child.show();
+      tableHeader.css("visibility", "hidden");
       for (var j = 2; j < 25; j++) {
         var nodes = this.column(j).nodes();
         $(nodes[row.index()]).addClass('hideParentRow');
       }
       tr.addClass('shown');
     });
+
+    for (var mailTypeIdx = 0; mailTypeIdx < $('table.mailTypeTable').length; mailTypeIdx++) { // multiple campaign tables
+      this.mailTypeDataTable.tables(mailTypeIdx).rows().every(function () {      // Default expand and create child rows
+        var tableHeader = $('.mailTypeTableHeader');
+        var tr = $(this.node());
+        var row = this.row(tr);
+        row.child.show();
+        tableHeader.css("visibility", "collapse");
+        for (var j = 2; j < 25; j++) {
+          var nodes = this.column(j).nodes();
+          $(nodes[row.index()]).addClass('hideParentRow');
+        }
+        tr.addClass('shown');
+      });
+    }
+
+    for (var campaignIdx = 0; campaignIdx < $('table.campaignTable').length; campaignIdx++) { // multiple campaign tables
+      this.campaignDataTable.tables(campaignIdx).rows().every(function () {      // Default expand and create child rows
+        var tableHeader = $('.campaignTableHeader');
+        var tr = $(this.node());
+        var row = this.row(tr);
+        row.child.show();
+        tableHeader.css("visibility", "collapse");
+        for (var j = 2; j < 25; j++) {
+          var nodes = this.column(j).nodes();
+          $(nodes[row.index()]).addClass('hideParentRow');
+        }
+        tr.addClass('shown');
+      });
+    }
+
+    for (var phaseIdx = 0; phaseIdx < $('table.phaseTable').length; phaseIdx++) { // multiple campaign tables
+      this.phaseDataTable.tables(phaseIdx).rows().every(function () {      // Default expand and create child rows
+        var tableHeader = $('.phaseTableHeader');
+        var tr = $(this.node());
+        var row = this.row(tr);
+        row.child.show();
+        tableHeader.css("visibility", "collapse");
+        for (var j = 2; j < 25; j++) {
+          var nodes = this.column(j).nodes();
+          $(nodes[row.index()]).addClass('hideParentRow');
+        }
+        tr.addClass('shown');
+      });
+    }
   }
 
-  let phaseTable: any = $('table.phaseTable');
+  // Collapse all, iterating through all tables
 
-  var phaseDataTable = phaseTable.DataTable({
-    select: true,
-    autoWidth: false,
-    paging: false,
-    info: false,
-    searching: false,
-    initComplete: function () {
+  CollapseAll() {
+
+    for (var phaseIdx = 0; phaseIdx < $('table.phaseTable').length; phaseIdx++) { // multiple campaign tables
+      this.phaseDataTable.tables(phaseIdx).rows().every(function () {      // Default expand and create child rows
+        var tableHeader = $('.phaseTableHeader');
+        var tr = $(this.node());
+        var row = this.row(tr);
+        row.child.hide();
+        tableHeader.css("visibility", "initial");
+        for (var j = 2; j < 25; j++) {
+          var nodes = this.column(j).nodes();
+          $(nodes[row.index()]).removeClass('hideParentRow');
+        }
+        tr.removeClass('shown');
+      });
     }
-  });
 
-  var maillistArr = this.maillistArr;
+    for (var campaignIdx = 0; campaignIdx < $('table.campaignTable').length; campaignIdx++) { // multiple campaign tables
+      this.campaignDataTable.tables(campaignIdx).rows().every(function () {      // Default expand and create child rows
+        var tableHeader = $('.campaignTableHeader');
+        var tr = $(this.node());
+        var row = this.row(tr);
+        row.child.hide();
+        tableHeader.css("visibility", "initial");
+        for (var j = 2; j < 25; j++) {
+          var nodes = this.column(j).nodes();
+          $(nodes[row.index()]).removeClass('hideParentRow');
+        }
+        tr.removeClass('shown');
+      });
+    }
 
-  for (var phaseIdx = 0; phaseIdx < $('table.phaseTable').length; phaseIdx++) { // multiple campaign tables
-    phaseDataTable.tables(phaseIdx).rows().every(function () {      // Default expand and create child rows
-      var tableHeader = $('.phaseTableHeader');
+    for (var mailTypeIdx = 0; mailTypeIdx < $('table.mailTypeTable').length; mailTypeIdx++) { // multiple campaign tables
+      this.mailTypeDataTable.tables(mailTypeIdx).rows().every(function () {      // Default expand and create child rows
+        var tableHeader = $('.mailTypeTableHeader');
+        var tr = $(this.node());
+        var row = this.row(tr);
+        row.child.hide();
+        tableHeader.css("visibility", "initial");
+        for (var j = 2; j < 25; j++) {
+          var nodes = this.column(j).nodes();
+          $(nodes[row.index()]).removeClass('hideParentRow');
+        }
+        tr.removeClass('shown');
+      });
+    }
+
+    this.clientDataTable.rows().every(function () {      // Default expand single client row and create child row
+      var tableHeader = $('.clientTableHeader');
       var tr = $(this.node());
       var row = this.row(tr);
-      var id = maillistArr.findIndex(p => p.title == row.data()[1]);
-      var childHTML = '<table class="'+ maillistArr[id].className +'">' + maillistArr[id].innerHTML + '</table>'; 
-      row.child(childHTML).show();
-      tableHeader.css("visibility", "collapse");
-      for (var j = 2; j < 25; j++) {
-        var nodes = this.column(j).nodes();
-        $(nodes[row.index()]).addClass('hideParentRow');
-      }
-      tr.addClass('shown');
-    });
-  }
-
-  $('table.clientTable tbody').on('click', 'td.details-control', function () { // Handle expand/collapse
-    var tr = $(this).closest('tr');
-    var row = clientDataTable.row(tr);
-    var tableHeader = $('.clientTableHeader');
-    if (row.child.isShown()) {
-      this.classList.remove("btn-primary")
-      this.classList.add("btn-info")
       row.child.hide();
-      tr.removeClass('shown');
-      if (row.index() == 0)
-          tableHeader.css("visibility", "initial");
-      for (var i = 2; i < 25; i++) {
-        var nodes = row.column(i).nodes();
+      tableHeader.css("visibility", "initial");
+      for (var j = 2; j < 25; j++) {
+        var nodes = this.column(j).nodes();
         $(nodes[row.index()]).removeClass('hideParentRow');
       }
-    }
-    else {
-      this.classList.remove("btn-info")
-      this.classList.add("btn-primary")
-      row.child.show();
-      tr.addClass('shown');
-      tableHeader.css("visibility", "collapse");
-      for (var i = 2; i < 25; i++) {
-        var nodes = row.column(i).nodes();
+      tr.removeClass('shown');
+    });
+
+  }
+
+  // Storing all descendants (child components) in array
+
+  private PrepArrays(): void {
+    var MailTypeChild = this.mailTypeChild;
+    this.mailTypeArr.push({ 'title': MailTypeChild.nativeElement.title, 'className': MailTypeChild.nativeElement.getElementsByClassName('mailTypeTable')[0].className, 'innerHTML': MailTypeChild.nativeElement.getElementsByClassName('mailTypeTable')[0].innerHTML });
+
+    var CampaignChildrenData = this.campaignChildren;
+    CampaignChildrenData.forEach(p => {
+      this.campaignArr.push({ 'title': p.nativeElement.title, 'className': p.nativeElement.getElementsByClassName('campaignTable')[0].className, 'innerHTML': p.nativeElement.getElementsByClassName('campaignTable')[0].innerHTML });
+    });
+
+    var PhaseChildrenData = this.phaseChildren;
+    PhaseChildrenData.forEach(p => {
+      this.phaseArr.push({ 'title': p.nativeElement.title, 'className': p.nativeElement.getElementsByClassName('phaseTable')[0].className, 'innerHTML': p.nativeElement.getElementsByClassName('phaseTable')[0].innerHTML });
+    });
+
+    var MailListChildrenData = this.maillistChildren;
+    MailListChildrenData.forEach(p => {
+      this.maillistArr.push({ 'title': p.nativeElement.title, 'className': p.nativeElement.getElementsByClassName('maillistTable')[0].className, 'innerHTML': p.nativeElement.getElementsByClassName('maillistTable')[0].innerHTML });
+    });
+
+    var id = this.campaignArr.findIndex(p => p.title == "House");
+  }
+
+  // Main function to generate all page
+
+  private GeneratePage(): void {
+    let clientTable: any = $('table.clientTable');
+
+    this.clientDataTable = clientTable.DataTable({
+      "select": true,
+      "autoWidth": false,
+      "paging": false,
+      "info": false,
+      "searching": false,
+      "ordering": true,
+      initComplete: function () {
+      }
+    });
+
+    $("table.mailTypeTable").remove();
+    $("table.campaignTable").remove();
+    $("table.phaseTable").remove();
+    $("table.maillistTable").remove();
+
+    var mailTypeArr = this.mailTypeArr;
+    this.clientDataTable.rows().every(function () {      // Default expand single client row and create child row
+      var tableHeader = $('.clientTableHeader');
+      var tr = $(this.node());
+      var row = this.row(tr);
+      var id = mailTypeArr.findIndex(p => p.title == row.data()[1]);
+      var childHTML = '<table class="' + mailTypeArr[id].className + '">' + mailTypeArr[id].innerHTML + '</table>';
+      row.child(childHTML).show();
+      tableHeader.css("visibility", "hidden");
+      for (var j = 2; j < 25; j++) {
+        var nodes = this.column(j).nodes();
         $(nodes[row.index()]).addClass('hideParentRow');
       }
+      tr.addClass('shown');
+    });
+
+    let mailTypeTable: any = $('table.mailTypeTable');
+
+    this.mailTypeDataTable = mailTypeTable.DataTable({
+      "select": true,
+      "autoWidth": false,
+      "paging": false,
+      "info": false,
+      "searching": false,
+      "ordering": true,
+      initComplete: function () {
+      }
+    });
+
+    var CampaignArr = this.campaignArr;
+
+    this.mailTypeDataTable.rows().every(function () {      // Default expand and create child rows
+      var tableHeader = $('.mailTypeTableHeader');
+      var tr = $(this.node());
+      var row = this.row(tr);
+      var id = CampaignArr.findIndex(p => p.title == row.data()[1]);
+      var childHTML = '<table class="' + CampaignArr[id].className + '">' + CampaignArr[id].innerHTML + '</table>';
+      row.child(childHTML).show();
+      tableHeader.css("visibility", "collapse");
+      for (var j = 2; j < 25; j++) {
+        var nodes = this.column(j).nodes();
+        $(nodes[row.index()]).addClass('hideParentRow');
+      }
+      tr.addClass('shown');
+    });
+
+    let campaignTable: any = $('table.campaignTable');
+
+    this.campaignDataTable = campaignTable.DataTable({
+      "select": true,
+      "autoWidth": false,
+      "paging": false,
+      "info": false,
+      "searching": false,
+      "ordering": true,
+      initComplete: function () {
+      }
+    });
+
+    var PhaseArr = this.phaseArr;
+
+    for (var campaignIdx = 0; campaignIdx < $('table.campaignTable').length; campaignIdx++) { // multiple campaign tables
+      this.campaignDataTable.tables(campaignIdx).rows().every(function () {      // Default expand and create child rows
+        var tableHeader = $('.campaignTableHeader');
+        var tr = $(this.node());
+        var row = this.row(tr);
+        var id = PhaseArr.findIndex(p => p.title == row.data()[1]);
+        var childHTML = '<table class="' + PhaseArr[id].className + '">' + PhaseArr[id].innerHTML + '</table>';
+        row.child(childHTML).show();
+        tableHeader.css("visibility", "collapse");
+        for (var j = 2; j < 25; j++) {
+          var nodes = this.column(j).nodes();
+          $(nodes[row.index()]).addClass('hideParentRow');
+        }
+        tr.addClass('shown');
+      });
     }
-  });
 
-  $('table.mailTypeTable tbody').on('click', 'td.mdetails-control', function () { // Handle expand/collapse
-   var tr = $(this).closest('tr');
-   var row = mailTypeDataTable.row(tr);
-   var tableHeader = $('.mailTypeTableHeader');
-   if (row.child.isShown()) {
-     this.classList.remove("btn-primary")
-     this.classList.add("btn-info")
-     row.child.hide();
-     tr.removeClass('shown');
-     if (row.index() == 0)
-        tableHeader.css("visibility", "initial");
-     for (var i = 2; i < 25; i++) {
-       var nodes = row.column(i).nodes();
-       $(nodes[row.index()]).removeClass('hideParentRow');
-     }
-   }
-   else {
-     this.classList.remove("btn-info")
-     this.classList.add("btn-primary")
-     row.child.show();
-     tr.addClass('shown');
-     tableHeader.css("visibility", "collapse");
-     for (var i = 2; i < 25; i++) {
-       var nodes = row.column(i).nodes();
-       $(nodes[row.index()]).addClass('hideParentRow');
-     }
-   }
- });
+    let phaseTable: any = $('table.phaseTable');
 
- $('table.campaignTable tbody').on('click', 'td.cdetails-control', function () { // Handle expand/collapse
-   var tr = $(this).closest('tr');
-   var row = campaignDataTable.tables().row(tr);
-   var tableHeader = $('.campaignTableHeader');
-   if (row.child.isShown()) {
-     this.classList.remove("btn-primary")
-     this.classList.add("btn-info")
-     row.child.hide();
-     $(tr).removeClass('shown');
-     if (row.index() == 0)
-        tableHeader.css("visibility", "initial");
-     for (var i = 2; i < 25; i++) {
-       var nodes = row.column(i).nodes();
-       $(nodes[row.index()]).removeClass('hideParentRow');
-     }
-   }
-   else {
-     this.classList.remove("btn-info")
-     this.classList.add("btn-primary")
-     row.child.show();
-     tr.addClass('shown');
-     tableHeader.css("visibility", "collapse");
-     for (var i = 2; i < 25; i++) {
-       var nodes = row.column(i).nodes();
-       $(nodes[row.index()]).addClass('hideParentRow');
-     }
-   }
- });
+    this.phaseDataTable = phaseTable.DataTable({
+      "select": true,
+      "autoWidth": false,
+      "paging": false,
+      "info": false,
+      "searching": false,
+      "ordering": true,
+      initComplete: function () {
+      }
+    });
 
- $('table.phaseTable tbody').on('click', 'td.pdetails-control', function () { // Handle expand/collapse
-  var tr = $(this).closest('tr');
-  var row = phaseDataTable.tables().row(tr);
-  var tableHeader = $('.phaseTableHeader');
-  if (row.child.isShown()) {
-    this.classList.remove("btn-primary")
-    this.classList.add("btn-info")
-    row.child.hide();
-    $(tr).removeClass('shown');
-    if (row.index() == 0)
-      tableHeader.css("visibility", "initial");
-    for (var i = 2; i < 25; i++) {
-      var nodes = row.column(i).nodes();
-      $(nodes[row.index()]).removeClass('hideParentRow');
+    var maillistArr = this.maillistArr;
+
+    for (var phaseIdx = 0; phaseIdx < $('table.phaseTable').length; phaseIdx++) { // multiple campaign tables
+      this.phaseDataTable.tables(phaseIdx).rows().every(function () {      // Default expand and create child rows
+        var tableHeader = $('.phaseTableHeader');
+        var tr = $(this.node());
+        var row = this.row(tr);
+        var id = maillistArr.findIndex(p => p.title == row.data()[1]);
+        var childHTML = '<table class="' + maillistArr[id].className + '">' + maillistArr[id].innerHTML + '</table>';
+        row.child(childHTML).show();
+        tableHeader.css("visibility", "collapse");
+        for (var j = 2; j < 25; j++) {
+          var nodes = this.column(j).nodes();
+          $(nodes[row.index()]).addClass('hideParentRow');
+        }
+        tr.addClass('shown');
+      });
     }
+
+    let maillistTable: any = $('table.maillistTable');
+
+    maillistTable.DataTable({
+      "select": true,
+      "autoWidth": false,
+      "paging": false,
+      "info": false,
+      "searching": false,
+      "ordering": true,
+      initComplete: function () {
+      }
+    });
+
+    var clientDataTable = this.clientDataTable;
+    $('table.clientTable tbody').on('click', 'td.details-control', function () { // Handle expand/collapse
+      var tr = $(this).closest('tr');
+      var row = clientDataTable.row(tr);
+      var tableHeader = $('.clientTableHeader');
+      if (row.child.isShown()) {
+        row.child.hide();
+        tr.removeClass('shown');
+        if (row.index() == 0)
+          tableHeader.css("visibility", "initial");
+        for (var i = 2; i < 25; i++) {
+          var nodes = row.column(i).nodes();
+          $(nodes[row.index()]).removeClass('hideParentRow');
+        }
+      }
+      else {
+        row.child.show();
+        tr.addClass('shown');
+        tableHeader.css("visibility", "hidden");
+        for (var i = 2; i < 25; i++) {
+          var nodes = row.column(i).nodes();
+          $(nodes[row.index()]).addClass('hideParentRow');
+        }
+      }
+    });
+
+    var mailTypeDataTable = this.mailTypeDataTable;
+    $('table.mailTypeTable tbody').on('click', 'td.mdetails-control', function () { // Handle expand/collapse
+      var tr = $(this).closest('tr');
+      var row = mailTypeDataTable.row(tr);
+      var tableHeader = $('.mailTypeTableHeader');
+      var mailType = row.data()[1];
+      var index = 0;
+      for (var idx = 0; idx < row.column(i).nodes().length; idx++) {
+        if (row.column(1).nodes()[idx].innerHTML == mailType) {
+          index = idx;
+          break;
+        }
+      }
+
+      if (row.child.isShown()) {
+        row.child.hide();
+        tr.removeClass('shown');
+        if (row.index() == 0)
+          tableHeader.css("visibility", "initial");
+        for (var i = 2; i < 25; i++) {
+          var nodes = row.column(i).nodes();
+          $(nodes[index]).removeClass('hideParentRow');
+        }
+      }
+      else {
+        row.child.show();
+        tr.addClass('shown');
+        tableHeader.css("visibility", "collapse");
+        for (var i = 2; i < 25; i++) {
+          var nodes = row.column(i).nodes();
+          $(nodes[index]).addClass('hideParentRow');
+        }
+      }
+    });
+
+    var campaignDataTable = this.campaignDataTable;
+    $('table.campaignTable tbody').on('click', 'td.cdetails-control', function () { // Handle expand/collapse
+      var tr = $(this).closest('tr');
+      var row = campaignDataTable.tables().row(tr);
+      var tableHeader = $('.campaignTableHeader');
+
+      var campaign = row.data()[1];
+      var index = 0;
+      for (var idx = 0; idx < row.column(i).nodes().length; idx++) {
+        if (row.column(1).nodes()[idx].innerHTML == campaign) {
+          index = idx;
+          break;
+        }
+      }
+
+      if (row.child.isShown()) {
+        row.child.hide();
+        tr.removeClass('shown');
+        if (row.index() == 0)
+          tableHeader.css("visibility", "initial");
+        for (var i = 2; i < 25; i++) {
+          var nodes = row.column(i).nodes();
+          $(nodes[index]).removeClass('hideParentRow');
+        }
+      }
+      else {
+        row.child.show();
+        tr.addClass('shown');
+        tableHeader.css("visibility", "collapse");
+        for (var i = 2; i < 25; i++) {
+          var nodes = row.column(i).nodes();
+          $(nodes[index]).addClass('hideParentRow');
+        }
+      }
+    });
+
+    var phaseDataTable = this.phaseDataTable;
+    $('table.phaseTable tbody').on('click', 'td.pdetails-control', function () { // Handle expand/collapse
+      var tr = $(this).closest('tr');
+      var row = phaseDataTable.tables().row(tr);
+      var tableHeader = $('.phaseTableHeader');
+
+      var phase = row.data()[1];
+      var index = 0;
+      for (var idx = 0; idx < row.column(i).nodes().length; idx++) {
+        if (row.column(1).nodes()[idx].innerHTML == phase) {
+          index = idx;
+          break;
+        }
+      }
+
+      if (row.child.isShown()) {
+        row.child.hide();
+        tr.removeClass('shown');
+        if (row.index() == 0)
+          tableHeader.css("visibility", "initial");
+        for (var i = 2; i < 25; i++) {
+          var nodes = row.column(i).nodes();
+          $(nodes[index]).removeClass('hideParentRow');
+        }
+      }
+      else {
+        row.child.show();
+        tr.addClass('shown');
+        tableHeader.css("visibility", "collapse");
+        for (var i = 2; i < 25; i++) {
+          var nodes = row.column(i).nodes();
+          $(nodes[index]).addClass('hideParentRow');
+        }
+      }
+    });
+
   }
-  else {
-    this.classList.remove("btn-info")
-    this.classList.add("btn-primary")
-    row.child.show();
-    tr.addClass('shown');
-    tableHeader.css("visibility", "collapse");
-    for (var i = 2; i < 25; i++) {
-      var nodes = row.column(i).nodes();
-      $(nodes[row.index()]).addClass('hideParentRow');
-    }
-  }
-});
-
-}
 
 }

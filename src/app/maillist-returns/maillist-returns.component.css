@@ -1,0 +1,132 @@
+.toolbar .row > div {
+    margin-top: 5px;
+}
+
+
+#returnsDiv{
+    padding-top:66px;
+    width:94%;
+    margin:auto;
+}
+
+div.dataTables_wrapper {
+    margin-bottom: 12px;
+}
+
+/*REQUIRED TO USE FIXED WIDTH IN DATATABLE -- Do not delete for datatable to load*/
+table.campaignTable, table.listTable {
+    margin: 0 auto;
+    width: 100%;
+    clear: both;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.tableSmallColumns {
+    text-align: center;
+    /*width:50px !important;*/
+}
+
+#phaseDropdownBtn {
+    font-size: 10pt;
+    padding: 1px 6px 0px 6px;
+    margin: 3px 0px 5px 0px;
+}
+
+.listDropdownBtn {
+    font-size: 12pt;
+    padding: 1px 6px 0px 6px;
+    margin: 3px 0px 5px 0px;
+}
+
+table.dataTable tfoot td {
+    padding: 8px 0px 0px 0px;
+    text-align: center;
+}
+
+/*<><><> These Datatables would not take the ColumnDef widths - manual CSS required... Keep classes together <><><>*/
+.FooterBtnColumn {
+    width: 37px !important;
+}
+
+.FooterWideColumns {
+    width: 112px !important;
+}
+
+.FooterThinColumns {
+    width: 60px !important;
+}
+/*<><><><><><><><><> END <><><><><><><><><>*/
+
+/*Removes bottom border bar from footer tables*/
+.campaignType tfoot td, .clientSummaryTable tfoot td {
+    border-top: 0 !important;
+    font-weight: bold;
+}
+
+.campaignTable tfoot td {
+    font-weight: bold;
+}
+
+table.dataTable {
+    font-size: 75%;
+}
+
+/*Otherwise font-size of 75% is applied twice to the nested table*/
+table.listTable {
+    font-size: inherit !important;
+}
+
+/*Removes thin gray border in between rows of table*/
+.table > tbody > tr > td {
+    border-top: none;
+}
+
+table.dataTable tbody td.no-padding {
+    padding: 0;
+}
+
+/*Text Align addition to boostrap for the format description for each package*/
+@media screen and (max-width: 1200px) {
+    .formatHeaderDiv {
+        text-align: left;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .formatHeaderDiv {
+        text-align: right;
+    }
+}
+
+/*Handles visibility of parent row when a detail row of the datatable is expanded*/
+.hideParentRow {
+    visibility: collapse;
+}
+
+/*Allows sliding action for datatable to process*/
+.slider {
+    display: none;
+}
+
+/*Removes thick header bar at the top of each table*/
+table.dataTable thead th {
+    border-bottom: 0;
+}
+
+table.dataTable thead th {
+    background: transparent !important;
+    white-space: nowrap;
+}
+
+ul.ui-menu {
+    max-height: 250px !important;
+}
+
+td.details-control, td.mdetails-control, td.cdetails-control, td.pdetails-control {
+    background: url('../resources/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control,tr.shown td.mdetails-control,tr.shown td.cdetails-control,tr.shown td.pdetails-control {
+    background: url('../resources/details_close.png') no-repeat center center;
+}

@@ -222,7 +222,7 @@ private GeneratePage(): void {
 
   var maillistArr = this.maillistArr;
 
-  for (var phaseIdx = 0; phaseIdx < $('table.campaignTable').length; phaseIdx++) { // multiple campaign tables
+  for (var phaseIdx = 0; phaseIdx < $('table.phaseTable').length; phaseIdx++) { // multiple campaign tables
     phaseDataTable.tables(phaseIdx).rows().every(function () {      // Default expand and create child rows
       var tableHeader = $('.phaseTableHeader');
       var tr = $(this.node());

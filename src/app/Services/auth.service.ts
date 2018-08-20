@@ -31,9 +31,9 @@ export class AuthService {
     return this.http.get(GetListAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 
-  getReturns():Observable<RootReturns> {
+  getReturns(client: string):Observable<RootReturns> {
     var Token = "";
-    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/MainReturns?ClientAcronym=amac";
+    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/MainReturns?ClientAcronym="+ client;
 
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
     return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));

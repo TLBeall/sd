@@ -165,6 +165,11 @@
       </ul> -->
     </div>
 
+<div class='mainContent'>
+<ul class='dictionary'>
+    <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}'>{{ client?.gClientName }}</a></li>
+</ul>
+</div>
 
     <div class='dictionaryContent'>
       <ul class='dictionary'>

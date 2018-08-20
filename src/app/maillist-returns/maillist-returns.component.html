@@ -1,0 +1,64 @@
+<table class="table maillistTable table-striped table-bordered" cellspacing="0" width="100%">
+  <thead class='maillistTableHeader' style='text-decoration: underline;'>
+    <tr>
+      <!-- <th></th> -->
+      <th>Mail Details</th>
+      <th>Mailed</th>
+      <th>Caged</th>
+      <th>Quantity</th>
+      <th>Donors</th>
+      <th>Non</th>
+      <th>New</th>
+      <th>RSP</th>
+      <th>AVG</th>
+      <th>Gross</th>
+      <th>Cost</th>
+      <th>Net</th>
+      <th>GPP</th>
+      <th>CLM</th>
+      <th>NLM</th>
+      <th>IO</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let mail of MailList">
+      <!-- <td class='btnCol cdetails-control btn btn-sm btn-primary glyphicon glyphicon-menu-hamburger'></td> -->
+      <td>{{ mail?.MailCode }} : {{ mail.MailDescription }}</td>
+      <td>{{ mail?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
+      <td>{{ mail?.Measure.Caged | date: 'MM/dd/yy' }}</td>
+      <td>{{ mail?.Measure.Quantity | number : '1.0-0' }}</td>
+      <td>{{ mail?.Measure.Donors | number : '1.0-0' }}</td>
+      <td>{{ mail?.Measure.NonDonors | number : '1.0-0' }}</td>
+      <td>{{ mail?.Measure.NewDonors | number : '1.0-0' }}</td>
+      <td>{{ mail?.Measure.RSP | percent:'1.2-2'}}</td>
+      <td>{{ mail?.Measure.AVG | number : '1.0-2' }}</td>
+      <td>{{ mail?.Measure.Gross | number : '1.0-0' }}</td>
+      <td>{{ mail?.Measure.Cost | number : '1.0-0' }}</td>
+      <td>{{ mail?.Measure.Net | number : '1.0-0' }}</td>
+      <td>{{ mail?.Measure.GPP | number : '1.0-2' }}</td>
+      <td>{{ mail?.Measure.CLM | number : '1.0-2' }}</td>
+      <td>{{ mail?.Measure.NLM | number : '1.0-2' }}</td>
+      <td>{{ mail?.Measure.IO | number : '1.0-2' }}</td>
+    </tr>
+  </tbody>
+  <tfoot class='phaseTableFooter'>
+    <tr>
+      <td>TOTAL {{ Phase?.PhaseName | uppercase }}</td>
+      <td>{{ Phase?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
+      <td>{{ Phase?.Measure.Caged | date: 'MM/dd/yy' }}</td>
+      <td>{{ Phase?.Measure.Quantity | number : '1.0-0' }}</td>
+      <td>{{ Phase?.Measure.Donors | number : '1.0-0' }}</td>
+      <td>{{ Phase?.Measure.NonDonors | number : '1.0-0' }}</td>
+      <td>{{ Phase?.Measure.NewDonors | number : '1.0-0' }}</td>
+      <td>{{ Phase?.Measure.RSP | percent:'1.2-2'}}</td>
+      <td>{{ Phase?.Measure.AVG | number : '1.0-2' }}</td>
+      <td>{{ Phase?.Measure.Gross | number : '1.0-0' }}</td>
+      <td>{{ Phase?.Measure.Cost | number : '1.0-0' }}</td>
+      <td>{{ Phase?.Measure.Net | number : '1.0-0' }}</td>
+      <td>{{ Phase?.Measure.GPP | number : '1.0-2' }}</td>
+      <td>{{ Phase?.Measure.CLM | number : '1.0-2' }}</td>
+      <td>{{ Phase?.Measure.NLM | number : '1.0-2' }}</td>
+      <td>{{ Phase?.Measure.IO | number : '1.0-2' }}</td>
+    </tr>
+  </tfoot> 
+</table>

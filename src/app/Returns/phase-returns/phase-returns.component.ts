@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { PhaseReturns } from '../Models/PhaseReturns';
-import { CampaignReturns } from '../Models/CampaignReturns';
+import { PhaseReturns } from '../../Models/PhaseReturns';
+import { CampaignReturns } from '../../Models/CampaignReturns';
 
 @Component({
   selector: 'app-phase-returns',

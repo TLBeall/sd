@@ -4,7 +4,7 @@ import {Routes, RouterModule} from '@angular/router';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { InternalHomeDashboardComponent } from './internal-home-dashboard/internal-home-dashboard.component';
-import { ReturnsComponent } from './returns/returns.component';
+import { ReturnsComponent } from './Returns/main-returns/main-returns.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/homepage', pathMatch: 'full'},  // this is how to set up the default page

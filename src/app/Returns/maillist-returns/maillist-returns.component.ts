@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { PhaseReturns } from '../Models/PhaseReturns';
-import { MailReturns } from '../Models/MailReturns';
+import { PhaseReturns } from '../../Models/PhaseReturns';
+import { MailReturns } from '../../Models/MailReturns';
 
 @Component({
   selector: 'app-maillist-returns',

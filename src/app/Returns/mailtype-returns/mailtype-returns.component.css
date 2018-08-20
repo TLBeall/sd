@@ -124,9 +124,9 @@ ul.ui-menu {
 }
 
 td.details-control, td.mdetails-control, td.cdetails-control, td.pdetails-control {
-    background: url('../resources/details_open.png') no-repeat center center;
+    background: url('../../resources/details_open.png') no-repeat center center;
     cursor: pointer;
 }
 tr.shown td.details-control,tr.shown td.mdetails-control,tr.shown td.cdetails-control,tr.shown td.pdetails-control {
-    background: url('../resources/details_close.png') no-repeat center center;
+    background: url('../../resources/details_close.png') no-repeat center center;
 }

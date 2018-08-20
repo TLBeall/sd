@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReturnsComponent } from './returns.component';
+import { ReturnsComponent } from './main-returns.component';
 
 describe('ReturnsComponent', () => {
   let component: ReturnsComponent;

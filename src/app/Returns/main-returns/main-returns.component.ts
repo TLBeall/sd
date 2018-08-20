@@ -1,20 +1,20 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ContentChildren } from '@angular/core';
-import { AuthService } from '../Services/auth.service';
+import { AuthService } from '../../Services/auth.service';
 import { delay, share } from 'rxjs/operators';
-import { RootReturns } from '../Models/RootReturns';
+import { RootReturns } from '../../Models/RootReturns';
 import { MailtypeReturnsComponent } from '../mailtype-returns/mailtype-returns.component'
 import { CampaignReturnsComponent } from '../campaign-returns/campaign-returns.component';
 import 'datatables.net';
 import * as $ from 'jquery';
 import { PhaseReturnsComponent } from '../phase-returns/phase-returns.component';
 import { MaillistReturnsComponent } from '../maillist-returns/maillist-returns.component';
-import { ChildElement } from 'src/app/Models/childElement';
+import { ChildElement } from '../../Models/childElement';
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
-  selector: 'app-returns',
-  templateUrl: './returns.component.html',
-  styleUrls: ['./returns.component.css']
+  selector: 'app-main-returns',
+  templateUrl: './main-returns.component.html',
+  styleUrls: ['./main-returns.component.css']
 })
 
 export class ReturnsComponent implements OnInit {

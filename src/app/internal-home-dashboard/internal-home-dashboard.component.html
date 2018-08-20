@@ -1,7 +1,7 @@
 <div class="toolbar">
   <div id="alphabetToolbar" class="col-md-12">
     <ul class="alphabet nav nav-pills">
-      <li class="active nav-item" id="showAllClientsLi">
+      <li class="nav-item" id="showAllClientsLi">
         <a class="nav-link" data-toggle="pill">All</a>
       </li>
       <li class="nav-item">
@@ -90,41 +90,104 @@
   </div>
 </div>
 
-<div id="dictionaryHeader">
-  <ul class="nav nav-pills" id="reportMenuPills">
-    <li class="dictionaryTimeHeader nav-item">
-      <a class="nav-link" class="nav-link active" data-toggle="pill" href="#">Live Data</a>
-    </li>
-    <li class="dictionaryTimeHeader nav-item">
-      <a class="nav-link" class="nav-link" data-toggle="pill" href="#">Cached Reports</a>
-    </li>
-    <li class="dictionaryTimeHeader nav-item">
-      <a class="nav-link" class="nav-link" data-toggle="pill" href="#">Active w/ Archived Phases</a>
-    </li>
-    <li class="dictionaryTimeHeader nav-item">
-      <a class="nav-link" class="nav-link" data-toggle="pill" href="#">Inactive</a>
-    </li>
-    <li class="dictionaryTimeHeader dropdown nav-item">
-      <a class="nav-link" class="dropdown-toggle" id="yearDropdown" data-toggle="dropdown" href="#">By Calendar Year
-        <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu" id="pillYearDropdownMenu">
-        <li>
-          <a class="nav-link" data-toggle="pill" href="#">2018</a>
-        </li>
-        <li>
-          <a class="nav-link" data-toggle="pill" href="#">2017</a>
-        </li>
-        <li>
-          <a class="nav-link" data-toggle="pill" href="#">2016</a>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
+  <div class="mainContent">
+    <div id="dictionaryHeader">
 
-<div class='mainContent'>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">Live</button>
+            <button type="button" class="btn btn-primary">Cached</button>
+            <button type="button" class="btn btn-primary">Active w/Archived</button>
+            <button type="button" class="btn btn-primary">Inactive</button>
+            <div class="btn-group dropdown">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 By Year
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item">2018</a>
+                <a class="dropdown-item">2017</a>
+                <a class="dropdown-item">2018</a>
+              </div>
+            </div>
+          
+          </div>
+
+          <!-- <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+              <span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <li><a href="#">HTML</a></li>
+                <li><a href="#">CSS</a></li>
+                <li><a href="#">JavaScript</a></li>
+              </ul>
+            </div> -->
+
+
+      <!-- <div class="reportEntranceType">Live Data</div>
+      <div class="reportEntranceType">Cached</div>
+      <div class="reportEntranceType">Active w/Archived Phases</div>
+      <div class="reportEntranceType">Inactive</div>
+      <ul class="dropdown-menu" id="YearDropdownMenu">By Calendar Year<span
+          <li>2018</li>
+          <li>2017</li>
+          <li>2016</li>
+        </ul> -->
+
+
+      <!-- <ul class="nav nav-pills" id="reportMenuPills">
+        <li class="dictionaryTimeHeader nav-item" >
+          <a data-toggle="pill">Live Data</a>
+        </li>
+        <li class="dictionaryTimeHeader nav-item">
+          <a data-toggle="pill">Cached Reports</a>
+        </li>
+        <li class="dictionaryTimeHeader nav-item">
+          <a data-toggle="pill">Active w/ Archived Phases</a>
+        </li>
+        <li class="dictionaryTimeHeader nav-item">
+          <a data-toggle="pill">Inactive</a>
+        </li>
+        <li class="dictionaryTimeHeader dropdown nav-item">
+          <a class="dropdown-toggle" id="yearDropdown" data-toggle="dropdown">By Calendar Year
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" id="pillYearDropdownMenu">
+            <li>
+              <a data-toggle="pill">2018</a>
+            </li>
+            <li>
+              <a data-toggle="pill">2017</a>
+            </li>
+            <li>
+              <a data-toggle="pill">2016</a>
+            </li>
+          </ul>
+        </li>
+      </ul> -->
+    </div>
+
+<div class='dictionaryContent'>
 <ul class='dictionary'>
     <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}'>{{ client?.gClientName }}</a></li>
 </ul>
+<<<<<<< HEAD
 </div>
+=======
+</div>
+
+    <!-- <div class='dictionaryContent'>
+      <ul class='dictionary'>
+        <li *ngFor="let client of ClientArr" class="clientNameLI">
+          <a #dictionaryItem>{{ client?.gClientName }}</a>
+        </li>
+      </ul>
+    </div> -->
+</div>
+
+<!-- <p> {{ tokenParam?.access_token }} </p> -->
+<!-- <table>
+      <tr *ngFor="let client of ClientArr">
+        <td> {{ client.gClientAcronym }} </td>
+        <td> {{ client.gClientName }} </td>
+      </tr>
+    </table> -->
+>>>>>>> 8b7f8ea030bcbb25352b9a2acfe341069fcbe967

@@ -10,10 +10,10 @@ import { AppRoutingModule, rountingComponents } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
-import { MailtypeReturnsComponent } from './mailtype-returns/mailtype-returns.component';
-import { CampaignReturnsComponent } from './campaign-returns/campaign-returns.component';
-import { PhaseReturnsComponent } from './phase-returns/phase-returns.component';
-import { MaillistReturnsComponent } from './maillist-returns/maillist-returns.component';
+import { MailtypeReturnsComponent } from './Returns/mailtype-returns/mailtype-returns.component';
+import { CampaignReturnsComponent } from './Returns/campaign-returns/campaign-returns.component';
+import { PhaseReturnsComponent } from './Returns/phase-returns/phase-returns.component';
+import { MaillistReturnsComponent } from './Returns/maillist-returns/maillist-returns.component';
 
 @NgModule({
   declarations: [

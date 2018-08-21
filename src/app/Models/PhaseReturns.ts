@@ -18,5 +18,9 @@ export class PhaseReturns {
     PostageOutType:string;
     PostageInType:string;
     MailList:MailReturns[];
+    DoublingDays: number;
+    ListOwnerName: string;
+    ListManagerName: string;
+    ExchangeFlag: string;
     Measure:Returns;
 }

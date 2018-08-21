@@ -42,6 +42,7 @@ export class ReturnsComponent implements OnInit {
   public mailTypeDataTable: any;
   public campaignDataTable: any;
   public phaseDataTable: any;
+  public dataAvailable: boolean = false;
 
   public RootReturns: RootReturns;
 
@@ -202,21 +203,21 @@ export class ReturnsComponent implements OnInit {
 
   private PrepArrays(): void {
     var MailTypeChild = this.mailTypeChild;
-    this.mailTypeArr.push({ 'title': MailTypeChild.nativeElement.title, 'className': MailTypeChild.nativeElement.getElementsByClassName('mailTypeTable')[0].className, 'innerHTML': MailTypeChild.nativeElement.getElementsByClassName('mailTypeTable')[0].innerHTML });
+    this.mailTypeArr.push({ 'title': MailTypeChild.nativeElement.title, 'innerHTML': MailTypeChild.nativeElement.getElementsByClassName('mailtypediv')[0].innerHTML });
 
     var CampaignChildrenData = this.campaignChildren;
     CampaignChildrenData.forEach(p => {
-      this.campaignArr.push({ 'title': p.nativeElement.title, 'className': p.nativeElement.getElementsByClassName('campaignTable')[0].className, 'innerHTML': p.nativeElement.getElementsByClassName('campaignTable')[0].innerHTML });
+      this.campaignArr.push({ 'title': p.nativeElement.title, 'innerHTML': p.nativeElement.getElementsByClassName('campaigndiv')[0].innerHTML });
     });
 
     var PhaseChildrenData = this.phaseChildren;
     PhaseChildrenData.forEach(p => {
-      this.phaseArr.push({ 'title': p.nativeElement.title, 'className': p.nativeElement.getElementsByClassName('phaseTable')[0].className, 'innerHTML': p.nativeElement.getElementsByClassName('phaseTable')[0].innerHTML });
+      this.phaseArr.push({ 'title': p.nativeElement.title, 'innerHTML': p.nativeElement.getElementsByClassName('phasediv')[0].innerHTML });
     });
 
     var MailListChildrenData = this.maillistChildren;
     MailListChildrenData.forEach(p => {
-      this.maillistArr.push({ 'title': p.nativeElement.title, 'className': p.nativeElement.getElementsByClassName('maillistTable')[0].className, 'innerHTML': p.nativeElement.getElementsByClassName('maillistTable')[0].innerHTML });
+      this.maillistArr.push({ 'title': p.nativeElement.title, 'innerHTML': p.nativeElement.getElementsByClassName('maillistdiv')[0].innerHTML });
     });
 
     var id = this.campaignArr.findIndex(p => p.title == "House");
@@ -249,7 +250,7 @@ export class ReturnsComponent implements OnInit {
       var tr = $(this.node());
       var row = this.row(tr);
       var id = mailTypeArr.findIndex(p => p.title == row.data()[1]);
-      var childHTML = '<table class="' + mailTypeArr[id].className + '">' + mailTypeArr[id].innerHTML + '</table>';
+      var childHTML = mailTypeArr[id].innerHTML;
       row.child(childHTML).show();
       tableHeader.css("visibility", "hidden");
       for (var j = 2; j < 25; j++) {
@@ -279,7 +280,7 @@ export class ReturnsComponent implements OnInit {
       var tr = $(this.node());
       var row = this.row(tr);
       var id = CampaignArr.findIndex(p => p.title == row.data()[1]);
-      var childHTML = '<table class="' + CampaignArr[id].className + '">' + CampaignArr[id].innerHTML + '</table>';
+      var childHTML = CampaignArr[id].innerHTML;
       row.child(childHTML).show();
       tableHeader.css("visibility", "collapse");
       for (var j = 2; j < 25; j++) {
@@ -310,7 +311,7 @@ export class ReturnsComponent implements OnInit {
         var tr = $(this.node());
         var row = this.row(tr);
         var id = PhaseArr.findIndex(p => p.title == row.data()[1]);
-        var childHTML = '<table class="' + PhaseArr[id].className + '">' + PhaseArr[id].innerHTML + '</table>';
+        var childHTML = PhaseArr[id].innerHTML;
         row.child(childHTML).show();
         tableHeader.css("visibility", "collapse");
         for (var j = 2; j < 25; j++) {
@@ -342,7 +343,7 @@ export class ReturnsComponent implements OnInit {
         var tr = $(this.node());
         var row = this.row(tr);
         var id = maillistArr.findIndex(p => p.title == row.data()[1]);
-        var childHTML = '<table class="' + maillistArr[id].className + '">' + maillistArr[id].innerHTML + '</table>';
+        var childHTML = maillistArr[id].innerHTML;
         row.child(childHTML).show();
         tableHeader.css("visibility", "collapse");
         for (var j = 2; j < 25; j++) {

@@ -37,10 +37,14 @@ export class AuthService {
 
   getReturns(client: string):Observable<RootReturns> {
     var Token = "";
+<<<<<<< HEAD
 
     // this.showLoader();
 
     var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/MainReturns?ClientAcronym="+ client;
+=======
+    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/MainReturns?ClientAcronym="+ client + "&startdate=1/1/2018&enddate=12/31/2018";
+>>>>>>> bbbfb0f24bd0e853906b0fdc59515e8316bf6c49
 
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
     return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));

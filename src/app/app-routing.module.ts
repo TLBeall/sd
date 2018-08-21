@@ -31,4 +31,4 @@ const routes: Routes = [
   declarations: []
 })
 export class AppRoutingModule { }
-export const rountingComponents = [InternalHomeDashboardComponent, ReturnsComponent, PageNotFoundComponent];
+export const routingComponents = [InternalHomeDashboardComponent, ReturnsComponent, PageNotFoundComponent];

@@ -10,6 +10,7 @@ import { PhaseReturnsComponent } from '../phase-returns/phase-returns.component'
 import { MaillistReturnsComponent } from '../maillist-returns/maillist-returns.component';
 import { ChildElement } from '../../Models/childElement';
 import {ActivatedRoute} from "@angular/router";
+import { LoaderService } from '../../Loader/loader.service';
 
 @Component({
   selector: 'app-main-returns',
@@ -46,8 +47,9 @@ export class ReturnsComponent implements OnInit {
 
   public activeClient: string;
 
-  constructor(private _authService: AuthService, route: ActivatedRoute) {
+  constructor(private _authService: AuthService, route: ActivatedRoute, private loaderService: LoaderService) {
     route.params.subscribe( params => this.activeClient = params["id"] );
+    this.loaderService.display(true);
   }
 
   // API Call
@@ -58,12 +60,16 @@ export class ReturnsComponent implements OnInit {
       .subscribe(data => {
         this.RootReturns = data;
         $(".clientTable").toggle(true);
+        this.loaderService.display(false);
+
       });
-  }
+      
+    }
 
   ngAfterViewInit() {
     this.PrepArrays();
     this.GeneratePage();
+
   }
 
   // Expand All, iterating through all tables

@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { TokenParams} from './Models/TokenParams';
 import { AuthService } from './Services/auth.service';
 import { HttpModule } from '@angular/http';
-import { AppRoutingModule, rountingComponents } from './app-routing.module';
+import { AppRoutingModule, routingComponents } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
@@ -14,6 +14,9 @@ import { MailtypeReturnsComponent } from './Returns/mailtype-returns/mailtype-re
 import { CampaignReturnsComponent } from './Returns/campaign-returns/campaign-returns.component';
 import { PhaseReturnsComponent } from './Returns/phase-returns/phase-returns.component';
 import { MaillistReturnsComponent } from './Returns/maillist-returns/maillist-returns.component';
+import { LoaderService } from './Loader/loader.service';
+import { LoaderComponent } from './Loader/loader.component';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { MaillistReturnsComponent } from './Returns/maillist-returns/maillist-re
     CampaignReturnsComponent,
     PhaseReturnsComponent,
     MaillistReturnsComponent,
-    rountingComponents
+    routingComponents,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +37,10 @@ import { MaillistReturnsComponent } from './Returns/maillist-returns/maillist-re
     AppRoutingModule,
     AngularFontAwesomeModule
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    LoaderService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

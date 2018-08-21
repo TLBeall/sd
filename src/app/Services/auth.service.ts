@@ -6,12 +6,16 @@ import { HttpHeaders } from '@angular/common/http';
 import { TokenParams } from '../Models/TokenParams';
 import { ClientList } from '../Models/ClientList';
 import { RootReturns } from '../Models/RootReturns';
+// import { LoaderService } from '../loader/loader.service';
 
 @Injectable()
 export class AuthService {
 
   AccessToken:string = "";
-  constructor(private http: Http) { }
+  constructor(
+    private http: Http
+    // private loaderService: LoaderService
+  ) { }
 
   getToken(Username:string, Password:string):Observable<TokenParams> {
     var TokenAPI = "https://sd360.sunrisedataservices.com/token";
@@ -33,10 +37,22 @@ export class AuthService {
 
   getReturns(client: string):Observable<RootReturns> {
     var Token = "";
+
+    // this.showLoader();
+
     var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/MainReturns?ClientAcronym="+ client;
 
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
     return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
+
+//   private showLoader(): void {
+//     this.loaderService.show();
+// }
+
+// private hideLoader(): void {
+//     this.loaderService.hide();
+// }
+
 }
 

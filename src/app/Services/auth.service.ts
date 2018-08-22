@@ -3,9 +3,9 @@ import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { Headers, Http, HttpModule } from '@angular/http';
 import { HttpHeaders } from '@angular/common/http';
-import { TokenParams } from '../Models/TokenParams';
-import { ClientList } from '../Models/ClientList';
-import { RootReturns } from '../Models/RootReturns';
+import { TokenParams } from '../Models/TokenParams.model';
+import { ClientList } from '../Models/ClientList.model';
+import { RootReturns } from '../Models/RootReturns.model';
 // import { LoaderService } from '../loader/loader.service';
 
 @Injectable()

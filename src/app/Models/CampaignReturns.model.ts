@@ -1,5 +1,5 @@
-import { Returns } from "./Returns";
-import { PhaseReturns } from "./PhaseReturns";
+import { Returns } from "./Returns.model";
+import { PhaseReturns } from "./PhaseReturns.model";
 
 export class CampaignReturns {
     CampaignName: string;

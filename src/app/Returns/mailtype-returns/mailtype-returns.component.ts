@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import 'datatables.net';
 import * as $ from 'jquery';
-import { RootReturns } from '../../Models/RootReturns';
-import { MailTypeReturns } from '../../Models/MailTypeReturns';
+import { RootReturns } from '../../Models/RootReturns.model';
+import { MailTypeReturns } from '../../Models/MailTypeReturns.model';
 
 @Component({
   selector: 'app-mailtype-returns',

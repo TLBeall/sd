@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import { Component, OnInit, Input, Type } from '@angular/core';
 import { PhaseReturns } from '../../Models/PhaseReturns';
 import { MailReturns } from '../../Models/MailReturns';
 // import { MailTypeReturns } from '../../Models/MailTypeReturns';
+=======
+import { Component, OnInit, Input } from '@angular/core';
+import { PhaseReturns } from '../../Models/PhaseReturns.model';
+import { MailReturns } from '../../Models/MailReturns.model';
+>>>>>>> 410a2a91437176135598952c34616ab86897287e
 
 @Component({
   selector: 'app-maillist-returns',

@@ -1,5 +1,5 @@
-import { CampaignReturns } from "./CampaignReturns";
-import { Returns } from "./Returns";
+import { CampaignReturns } from "./CampaignReturns.model";
+import { Returns } from "./Returns.model";
 
 export class MailTypeReturns {
     MailType: string;

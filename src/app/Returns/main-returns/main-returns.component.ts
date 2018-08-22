@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ContentChildren } from '@angular/core';
 import { AuthService } from '../../Services/auth.service';
 import { delay, share } from 'rxjs/operators';
-import { RootReturns } from '../../Models/RootReturns';
+import { RootReturns } from '../../Models/RootReturns.model';
 import { MailtypeReturnsComponent } from '../mailtype-returns/mailtype-returns.component'
 import { CampaignReturnsComponent } from '../campaign-returns/campaign-returns.component';
 import 'datatables.net';
 import * as $ from 'jquery';
 import { PhaseReturnsComponent } from '../phase-returns/phase-returns.component';
 import { MaillistReturnsComponent } from '../maillist-returns/maillist-returns.component';
-import { ChildElement } from '../../Models/childElement';
+import { ChildElement } from '../../Models/childElement.model';
 import {ActivatedRoute} from "@angular/router";
 import { LoaderService } from '../../Loader/loader.service';
 

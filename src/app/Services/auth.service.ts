@@ -6,6 +6,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { TokenParams } from '../Models/TokenParams.model';
 import { ClientList } from '../Models/ClientList.model';
 import { RootReturns } from '../Models/RootReturns.model';
+import { ListPerformance } from '../Models/ListPerformance.model';
 // import { LoaderService } from '../loader/loader.service';
 
 @Injectable()
@@ -35,13 +36,20 @@ export class AuthService {
     return this.http.get(GetListAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 
-  getReturns(client: string):Observable<RootReturns> {
+  getReturns(client: string, startDate: Date, endDate: Date):Observable<RootReturns> {
     var Token = "";
-    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/MainReturns?ClientAcronym="+ client + "&startdate=1/1/2018&enddate=12/31/2018";
+    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/MainReturns?ClientAcronym="+ client + "&startdate=" + startDate.toDateString() + "&enddate=" + endDate.toDateString();
 
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
     return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 
+  getListPerformance(ListOwner: number, ListManager: number, Recency: number, startDate: Date, endDate: Date):Observable<ListPerformance[]> {
+    var Token = "";
+    var ListPerformanceAPI = "https://sd360.sunrisedataservices.com/api/ListPerformance?ListOwner=" + ListOwner.toString() + "&ListManager=" + ListManager.toString() + "&Recency=" + Recency.toString() + "&startdate=" + startDate.toDateString() + "&enddate=" + endDate.toDateString();
+
+    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(ListPerformanceAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  }
 }
 

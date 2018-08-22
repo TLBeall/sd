@@ -28,7 +28,7 @@
         <td *ngSwitchCase="'House'">{{mail?.MailDescription}}</td>
         <ng-container *ngSwitchCase="'Prospect'">
           <td *ngIf="mail?.ListOwner == '' || mail?.Manager == ''"><a>{{mail?.MailDescription}}</a></td>
-          <td *ngIf="mail?.ListOwner != '' && mail?.Manager != ''"><a>{{ mail?.ListOwnerAbr }}/</a><a>{{ mail?.ListManagerAbr }} </a><a>{{ mail?.RecencyString }}</a></td>
+          <td *ngIf="mail?.ListOwner != '' && mail?.Manager != ''"><a routerLink='/listperformance/{{mail?.ListOwner}}'>{{ mail?.ListOwnerAbr }}/</a><a routerLink='/listperformance/{{mail?.ListOwner}}/{{mail?.ListManager}}'>{{ mail?.ListManagerAbr }} </a><a routerLink='/listperformance/{{mail?.ListOwner}}/{{mail?.ListManager}}/{{mail?.Recency}}'>{{ mail?.RecencyString }}</a></td>
         </ng-container>
         <td *ngSwitchCase="'Thank You'">{{mail?.MailDescription}}</td>
         <td *ngSwitchCase="'Undetermined'">{{mail?.MailDescription}}</td>

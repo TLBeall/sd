@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../Services/auth.service';
-import {ActivatedRoute} from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { LoaderService } from '../../../Loader/loader.service';
 import { ListPerformance } from '../../../Models/ListPerformance.model';
+import 'datatables.net';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-list-performance',
@@ -12,18 +14,56 @@ import { ListPerformance } from '../../../Models/ListPerformance.model';
 
 export class ListPerformanceComponent implements OnInit {
 
+  public ListOwner: number = 0;
+  public ListManager: number = 0;
+  public Recency: number = 0;
   public ListPerformanceArr: ListPerformance[];
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private loaderService: LoaderService) {
-   }
+    route.params.subscribe(params => {
+      this.ListOwner = +params["listowner"];
+      if (params["listmanager"]) {
+        this.ListManager = +params["listmanager"];
+        if (params["recency"])
+          this.Recency = +params["recency"];
+      }
+    });
+    //loading panel
+    this.loaderService.display(true);
+  }
 
   ngOnInit() {
-    this._authService.getListPerformance(596, 573, 13, new Date("01/01/2018"), new Date("12/31/2018"))
+    var endDate = new Date(); // default to last 2 years
+    var startDate = new Date();
+    var year = endDate.getFullYear() - 2;
+    startDate.setFullYear(year);
+
+    this._authService.getListPerformance(this.ListOwner, this.ListManager, this.Recency, startDate, endDate)
       .subscribe(data => {
         this.ListPerformanceArr = data;
-        $(".clientTable").toggle(true);
         this.loaderService.display(false);
       });
-    }
+  }
 
+  SetDataTable() {
+    let listperformance: any = $('table.listperformance');
+    listperformance.DataTable({
+      "columnDefs": [
+        { targets: 0, width: 50 },
+      ],
+      "select": true,
+      "autoWidth": false,
+      "paging": false,
+      "info": false,
+      "searching": false,
+      "ordering": true,
+      initComplete: function () {
+      }
+    });
+
+  }
+
+  ngAfterViewInit() {
+    this.SetDataTable();
+  }
 }

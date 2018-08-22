@@ -2,7 +2,9 @@
   <table class="maillistTable">
     <thead class='maillistTableHeader' style='text-decoration: underline;'>
       <tr>
+        <th></th>
         <th>Code</th>
+        <th></th>
         <th>Description</th>
         <th>Type</th>
         <th>Mailed</th>
@@ -24,7 +26,9 @@
     </thead>
     <tbody>
       <tr *ngFor="let mail of MailList" [ngSwitch]="MailType">
+        <td></td>
         <td>{{ mail?.MailCode }}</td>
+        <th></th>
         <td *ngSwitchCase="'House'">{{mail?.MailDescription}}</td>
         <ng-container *ngSwitchCase="'Prospect'">
           <td *ngIf="mail?.ListOwner == '' || mail?.Manager == ''"><a>{{mail?.MailDescription}}</a></td>
@@ -52,7 +56,9 @@
     </tbody>
     <tfoot class='phaseTableFooter'>
       <tr>
-        <td>TOTAL {{ Phase?.PhaseName | uppercase }}</td>
+        <td></td>
+        <th></th>
+        <td colspan="3">TOTAL {{ Phase?.PhaseName | uppercase }}</td>
         <td>{{ Phase?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
         <td>{{ Phase?.Measure.Caged | date: 'MM/dd/yy' }}</td>
         <td>{{ Phase?.Measure.Quantity | number : '1.0-0' }}</td>

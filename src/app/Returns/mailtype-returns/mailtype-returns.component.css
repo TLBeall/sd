@@ -1,10 +1,16 @@
 td.mdetails-control {
     background: url('../../resources/plus-solid.svg') no-repeat center center;
+    background-color: green;
+    border-radius: 5px;
+    color:white;
     cursor: pointer;
     font-size:10pt;
 }
 tr.shown td.mdetails-control {
     background: url('../../resources/minus-solid.svg') no-repeat center center;
+    background-color: red;
+    border-radius: 5px;
+    color:white;
     font-size:10pt;
 }
 
@@ -32,6 +38,16 @@ thead.mailTypeTableHeader th{
 
 }
 
-td{
+td, th{
     font-size:9pt;
+}
+
+.tableSmallColumns{
+    width:60px;
+    text-align:center !important;
+}
+
+.mailTypeColumn{
+    width:90px;
+    text-align:right;
 }

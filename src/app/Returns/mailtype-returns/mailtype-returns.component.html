@@ -4,6 +4,7 @@
       <tr>
         <th></th>
         <th>Mail Type</th>
+        <th></th>
         <th>Mailed</th>
         <th>Caged</th>
         <th>Quantity</th>
@@ -25,6 +26,7 @@
       <tr *ngFor="let mailType of MailTypeList">
         <td class='btnCol mdetails-control'></td>
         <td>{{ mailType?.MailType }}</td>
+        <td></td>
         <td>{{ mailType?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
         <td>{{ mailType?.Measure.Caged | date: 'MM/dd/yy' }}</td>
         <td>{{ mailType?.Measure.Quantity | number : '1.0-0' }}</td>
@@ -44,6 +46,7 @@
     </tbody>
     <tfoot class='clientTableFooter'>
       <tr>
+        <td></td>
         <td colspan="2">TOTAL {{ RootReturns?.Client | uppercase }}</td>
         <td>{{ RootReturns?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
         <td>{{ RootReturns?.Measure.Caged | date: 'MM/dd/yy' }}</td>

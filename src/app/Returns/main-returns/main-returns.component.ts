@@ -230,12 +230,12 @@ export class ReturnsComponent implements OnInit {
 
     this.clientDataTable = clientTable.DataTable({
       "columnDefs": [
-        { targets: 0, width: 50 },
-        // { targets: 3, width: 76, className: "tableSmallColumns" },
-        // { targets: [1, 2, 4, 5, 6, 7], visible: false },
-        // {
-        //     targets: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] //, width: 24, className: "tableSmallColumns"
-        // },
+        { targets: 0, width: 20},
+        { targets: 1, className: "clientColumn"},
+        //skip to keep the width flexible on the description column
+        {
+            targets: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], className: "tableSmallColumns"
+        },
     ],
       "select": true,
       "autoWidth": false,
@@ -272,12 +272,12 @@ export class ReturnsComponent implements OnInit {
 
     this.mailTypeDataTable = mailTypeTable.DataTable({
       "columnDefs": [
-        { targets: 0, width: 50 },
-        // { targets: 3, width: 76, className: "tableSmallColumns" },
-        // { targets: [1, 2, 4, 5, 6, 7], visible: false },
-        // {
-        //     targets: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] //, width: 24, className: "tableSmallColumns"
-        // },
+        { targets: 0, width: 20},
+        { targets: 1, className: "mailTypeColumn"},
+        //skip to keep the width flexible on the description column
+        {
+            targets: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], className: "tableSmallColumns"
+        },
     ],
       "select": true,
       "autoWidth": false,
@@ -310,12 +310,12 @@ export class ReturnsComponent implements OnInit {
 
     this.campaignDataTable = campaignTable.DataTable({
       "columnDefs": [
-        { targets: 0, width: 50 },
-        // { targets: 3, width: 76, className: "tableSmallColumns" },
-        // { targets: [1, 2, 4, 5, 6, 7], visible: false },
-        // {
-        //     targets: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] //, width: 24, className: "tableSmallColumns"
-        // },
+        { targets: 0, width: 20},
+        { targets: 1, className: "campaignColumn"},
+        //skip to keep the width flexible on the description column
+        {
+            targets: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], className: "tableSmallColumns"
+        },
     ],
       "select": true,
       "autoWidth": false,
@@ -350,12 +350,12 @@ export class ReturnsComponent implements OnInit {
 
     this.phaseDataTable = phaseTable.DataTable({
       "columnDefs": [
-        { targets: 0, width: 50 },
-        // { targets: 3, width: 76, className: "tableSmallColumns" },
-        // { targets: [1, 2, 4, 5, 6, 7], visible: false },
-        // {
-        //     targets: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] //, width: 24, className: "tableSmallColumns"
-        // },
+        { targets: 0, width: 20},
+        { targets: 1, className: "phaseColumn"},
+        //skip to keep the width flexible on the description column
+        {
+            targets: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], className: "tableSmallColumns"
+        },
     ],
       "select": true,
       "autoWidth": false,
@@ -390,12 +390,14 @@ export class ReturnsComponent implements OnInit {
 
     maillistTable.DataTable({
         "columnDefs": [
-          // { targets: 0, width: 1 },
-          // { targets: 3, width: 76, className: "tableSmallColumns" },
-          // { targets: [1, 2, 4, 5, 6, 7], visible: false },
-          // {
-          //     targets: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] //, width: 24, className: "tableSmallColumns"
-          // },
+          { targets: 0, width: 20},
+          { targets: 1, className: "mailcodeColumn"},
+          { targets: 2, width: 8},
+          //skip to keep the width flexible on the description column
+          { targets: 4, className: "listTypeColumn"},
+          {
+              targets: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], className: "tableSmallColumns"
+          },
       ],
       "select": true,
       "autoWidth": false,

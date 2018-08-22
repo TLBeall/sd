@@ -11,6 +11,7 @@
     <tr>
       <th></th>
       <th> Client </th>
+      <th></th>
       <th>Mailed</th>
       <th>Caged</th>
       <th>Quantity</th>
@@ -32,6 +33,7 @@
     <tr>
       <td class="test btnCol details-control"></td>
       <td>{{ RootReturns?.Client | uppercase }}</td>
+      <td></td>
       <td>{{ RootReturns?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
       <td>{{ RootReturns?.Measure.Caged | date: 'MM/dd/yy' }}</td>
       <td>{{ RootReturns?.Measure.Quantity | number : '1.0-0' }}</td>

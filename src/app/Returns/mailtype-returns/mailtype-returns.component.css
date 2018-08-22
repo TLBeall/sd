@@ -6,7 +6,26 @@ tr.shown td.details-control,tr.shown td.mdetails-control,tr.shown td.cdetails-co
     background: url('../../resources/details_close.png') no-repeat center center;
 }
 
+.mailTypeTable{
+    width:100%;
+
+}
+
 /*Handles visibility of parent row when a detail row of the datatable is expanded*/
 .hideParentRow {
     visibility: collapse;
+}
+
+/*Removes thin gray border in between rows of table*/
+.table > tbody > tr > td {
+    border-top: none;
+}
+
+/* table.dataTable tbody td.no-padding {
+    padding: 0;
+} */
+
+thead.mailTypeTableHeader th{
+    border:none;
+
 }

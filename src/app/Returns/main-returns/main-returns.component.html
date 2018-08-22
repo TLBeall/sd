@@ -6,7 +6,7 @@
 </div>
 
   <h1 style="margin-top:100px;">{{ RootReturns?.Client | uppercase }}</h1>
-<table class="table clientTable table-striped table-bordered" cellspacing="0" width="100%">
+<table class="clientTable" cellspacing="0" cellpadding="0">
   <thead class='clientTableHeader' style='text-decoration: underline;'>
     <tr>
       <th></th>
@@ -59,7 +59,7 @@
       <ng-container *ngFor="let campaign of mailType.CampaignList">
         <app-phase-returns [Campaign]="campaign" [PhaseList]="campaign?.PhaseList" title="{{ campaign.CampaignName }}"></app-phase-returns>
         <ng-container *ngFor="let phase of campaign.PhaseList">
-          <app-maillist-returns [Phase]="phase" [MailList]="phase?.MailList" title="{{ phase.PhaseName }}"></app-maillist-returns>
+          <app-maillist-returns [MailType]="mailType.MailType" [Phase]="phase" [MailList]="phase?.MailList" title="{{ phase.PhaseName }}"></app-maillist-returns>
         </ng-container>
       </ng-container>
     </div>

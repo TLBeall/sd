@@ -9,10 +9,14 @@ import { MailReturns } from '../../Models/MailReturns.model';
 })
 export class MaillistReturnsComponent implements OnInit {
 
+  // displayHouse: boolean = false;
+
   constructor() { }
 
   @Input() public MailList: MailReturns[];
   @Input() public Phase: PhaseReturns;
+  // @Input() public MailTypeList: MailTypeReturns;
+  @Input() public MailType: string;
 
   ngOnInit() {
   }

@@ -1,5 +1,5 @@
 <div class="phasediv">
-  <table class="table phaseTable table-striped table-bordered" cellspacing="0" width="100%">
+  <table class="phaseTable" cellspacing="0" width="100%">
     <thead class='phaseTableHeader' style='text-decoration: underline;'>
       <tr>
         <th></th>
@@ -23,8 +23,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let phase of PhaseList">
-        <td class='btnCol pdetails-control'>
-        </td>
+        <td class='btnCol pdetails-control'></td>
         <td>{{ phase?.PhaseName }}</td>
         <td>{{ phase?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
         <td>{{ phase?.Measure.Caged | date: 'MM/dd/yy' }}</td>

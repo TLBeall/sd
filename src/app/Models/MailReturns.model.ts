@@ -8,6 +8,9 @@ export class MailReturns {
     ListOwnerName: string;
     ListManagerName: string;
     ListManager: number;
+    ListManagerAbr: string;
+    ListOwnerAbr: string;
     Recency: number;
+    RecencyString: string;
     Measure: Returns;
 }

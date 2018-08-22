@@ -36,8 +36,8 @@
         <td *ngSwitchCase="'House'">{{mail?.MailDescription}}</td>
         <td *ngSwitchCase="'Prospect'">
           <ng-container *ngIf="mail.ListOwner == null; then nullBlock; else fullBlock">
-            <ng-container #nullBlock><a>{{mail.MailDescription}}</a></ng-template>
-            <ng-container #fullBlock><a>{{ mail.ListOwnerAbr }}/</a><a>{{ mail.ListManagerAbr }} </a><a>{{ mail.RecencyString }}</a></ng-template>
+            <ng-template #nullBlock><a>{{mail.MailDescription}}</a></ng-template>
+            <ng-template #fullBlock><a>{{ mail.ListOwnerAbr }}/</a><a>{{ mail.ListManagerAbr }} </a><a>{{ mail.RecencyString }}</a></ng-template>
           </ng-container>
           </td>
         <td *ngSwitchCase="'Thank You'">{{mail?.MailDescription}}</td>

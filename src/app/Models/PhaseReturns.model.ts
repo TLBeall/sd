@@ -1,5 +1,5 @@
-import { Returns } from "./Returns";
-import { MailReturns } from "./MailReturns";
+import { Returns } from "./Returns.model";
+import { MailReturns } from "./MailReturns.model";
 
 export class PhaseReturns {
     PhaseName: string;
@@ -21,6 +21,5 @@ export class PhaseReturns {
     DoublingDays: number;
     ListOwnerName: string;
     ListManagerName: string;
-    ExchangeFlag: string;
     Measure:Returns;
 }

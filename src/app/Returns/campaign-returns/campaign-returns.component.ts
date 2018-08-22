@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CampaignReturns } from '../../Models/CampaignReturns';
-import { MailTypeReturns } from '../../Models/MailTypeReturns';
+import { CampaignReturns } from '../../Models/CampaignReturns.model';
+import { MailTypeReturns } from '../../Models/MailTypeReturns.model';
 
 @Component({
   selector: 'app-campaign-returns',

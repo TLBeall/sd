@@ -3,7 +3,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { TokenParams} from './Models/TokenParams';
+import { TokenParams} from './Models/TokenParams.model';
 import { AuthService } from './Services/auth.service';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
@@ -16,6 +16,7 @@ import { PhaseReturnsComponent } from './Returns/phase-returns/phase-returns.com
 import { MaillistReturnsComponent } from './Returns/maillist-returns/maillist-returns.component';
 import { LoaderService } from './Loader/loader.service';
 import { LoaderComponent } from './Loader/loader.component';
+import { ListPerformanceComponent } from './returns/subviews/list-performance/list-performance.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { LoaderComponent } from './Loader/loader.component';
     PhaseReturnsComponent,
     MaillistReturnsComponent,
     routingComponents,
-    LoaderComponent
+    LoaderComponent,
+    ListPerformanceComponent
   ],
   imports: [
     BrowserModule,

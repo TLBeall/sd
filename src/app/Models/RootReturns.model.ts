@@ -1,5 +1,5 @@
-import { MailTypeReturns } from "./MailTypeReturns";
-import { Returns } from "./Returns";
+import { MailTypeReturns } from "./MailTypeReturns.model";
+import { Returns } from "./Returns.model";
 
 export class RootReturns {
     Client: string;

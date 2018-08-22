@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../Services/auth.service'
-import { TokenParams } from '../Models/TokenParams';
-import { ClientList } from '../Models/ClientList';
+import { TokenParams } from '../Models/TokenParams.model';
+import { ClientList } from '../Models/ClientList.model';
 import * as $ from 'jquery';
 
 

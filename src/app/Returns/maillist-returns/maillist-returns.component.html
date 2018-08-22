@@ -1,12 +1,4 @@
 <div class="maillistdiv">
-  <!-- <table>
-    <tr>
-      <td>
-        <h2> test </h2>
-        <h3> here </h3>
-      </td>
-    </tr>
-  </table> -->
   <table class="maillistTable">
     <thead class='maillistTableHeader' style='text-decoration: underline;'>
       <tr>
@@ -34,12 +26,10 @@
       <tr *ngFor="let mail of MailList" [ngSwitch]="MailType">
         <td>{{ mail?.MailCode }}</td>
         <td *ngSwitchCase="'House'">{{mail?.MailDescription}}</td>
-        <td *ngSwitchCase="'Prospect'">
-          <ng-container *ngIf="mail.ListOwner == null; then nullBlock; else fullBlock">
-            <ng-template #nullBlock><a>{{mail.MailDescription}}</a></ng-template>
-            <ng-template #fullBlock><a>{{ mail.ListOwnerAbr }}/</a><a>{{ mail.ListManagerAbr }} </a><a>{{ mail.RecencyString }}</a></ng-template>
-          </ng-container>
-          </td>
+        <ng-container *ngSwitchCase="'Prospect'">
+          <td *ngIf="mail?.ListOwner == '' || mail?.Manager == ''"><a>{{mail?.MailDescription}}</a></td>
+          <td *ngIf="mail?.ListOwner != '' && mail?.Manager != ''"><a>{{ mail?.ListOwnerAbr }}/</a><a>{{ mail?.ListManagerAbr }} </a><a>{{ mail?.RecencyString }}</a></td>
+        </ng-container>
         <td *ngSwitchCase="'Thank You'">{{mail?.MailDescription}}</td>
         <td *ngSwitchCase="'Undetermined'">{{mail?.MailDescription}}</td>
         <td>{{ mail?.ExchangeFlag }}</td>
@@ -82,19 +72,3 @@
     </tfoot>
   </table>
 </div>
-
-<!-- <tr *ngFor="let mail of MailList" *ngIf="mail?.ListOwner == null; then nullBlock; else fullBlock">
-  <ng-template #nullBlock [ngSwitch]="MailType">
-    <td>{{ mail?.MailCode }}</td>
-    <td *ngSwitchCase="'House'">{{mail?.MailDescription}}</td>
-    <td *ngSwitchCase="'Prospect'"><a>{{mail?.MailDescription}}</a></td>
-    <td *ngSwitchCase="'Thank You'">{{mail?.MailDescription}}</td>
-    <td *ngSwitchCase="'Undetermined'">{{mail?.MailDescription}}</td>
-  </ng-template>
-  <ng-template #fullBlock [ngSwitch]="MailType">
-      <td>{{ mail?.MailCode }}</td>
-      <td *ngSwitchCase="'House'">{{mail?.MailDescription}}</td>
-      <td *ngSwitchCase="'Prospect'"><a>{{ mail?.ListOwnerAbr }}/</a><a>{{ mail?.ListManagerAbr }} </a><a>{{ mail?.RecencyString }}</a></td>
-      <td *ngSwitchCase="'Thank You'">{{mail?.MailDescription}}</td>
-      <td *ngSwitchCase="'Undetermined'">{{mail?.MailDescription}}</td>
-    </ng-template> -->

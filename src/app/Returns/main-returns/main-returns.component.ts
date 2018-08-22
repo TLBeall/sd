@@ -229,6 +229,14 @@ export class ReturnsComponent implements OnInit {
     let clientTable: any = $('table.clientTable');
 
     this.clientDataTable = clientTable.DataTable({
+      "columnDefs": [
+        { targets: 0, width: 50 },
+        // { targets: 3, width: 76, className: "tableSmallColumns" },
+        // { targets: [1, 2, 4, 5, 6, 7], visible: false },
+        // {
+        //     targets: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] //, width: 24, className: "tableSmallColumns"
+        // },
+    ],
       "select": true,
       "autoWidth": false,
       "paging": false,
@@ -263,6 +271,14 @@ export class ReturnsComponent implements OnInit {
     let mailTypeTable: any = $('table.mailTypeTable');
 
     this.mailTypeDataTable = mailTypeTable.DataTable({
+      "columnDefs": [
+        { targets: 0, width: 50 },
+        // { targets: 3, width: 76, className: "tableSmallColumns" },
+        // { targets: [1, 2, 4, 5, 6, 7], visible: false },
+        // {
+        //     targets: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] //, width: 24, className: "tableSmallColumns"
+        // },
+    ],
       "select": true,
       "autoWidth": false,
       "paging": false,
@@ -293,6 +309,14 @@ export class ReturnsComponent implements OnInit {
     let campaignTable: any = $('table.campaignTable');
 
     this.campaignDataTable = campaignTable.DataTable({
+      "columnDefs": [
+        { targets: 0, width: 50 },
+        // { targets: 3, width: 76, className: "tableSmallColumns" },
+        // { targets: [1, 2, 4, 5, 6, 7], visible: false },
+        // {
+        //     targets: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] //, width: 24, className: "tableSmallColumns"
+        // },
+    ],
       "select": true,
       "autoWidth": false,
       "paging": false,
@@ -325,6 +349,14 @@ export class ReturnsComponent implements OnInit {
     let phaseTable: any = $('table.phaseTable');
 
     this.phaseDataTable = phaseTable.DataTable({
+      "columnDefs": [
+        { targets: 0, width: 50 },
+        // { targets: 3, width: 76, className: "tableSmallColumns" },
+        // { targets: [1, 2, 4, 5, 6, 7], visible: false },
+        // {
+        //     targets: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] //, width: 24, className: "tableSmallColumns"
+        // },
+    ],
       "select": true,
       "autoWidth": false,
       "paging": false,
@@ -358,12 +390,12 @@ export class ReturnsComponent implements OnInit {
 
     maillistTable.DataTable({
         "columnDefs": [
-          { targets: 0, width: 1 },
-          { targets: 3, width: 76, className: "tableSmallColumns" },
-          { targets: [1, 2, 4, 5, 6, 7], visible: false },
-          {
-              targets: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] //, width: 24, className: "tableSmallColumns"
-          },
+          // { targets: 0, width: 1 },
+          // { targets: 3, width: 76, className: "tableSmallColumns" },
+          // { targets: [1, 2, 4, 5, 6, 7], visible: false },
+          // {
+          //     targets: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] //, width: 24, className: "tableSmallColumns"
+          // },
       ],
       "select": true,
       "autoWidth": false,

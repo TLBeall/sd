@@ -1,12 +1,18 @@
-td.details-control, td.mdetails-control, td.cdetails-control, td.pdetails-control {
-    background: url('../../resources/details_open.png') no-repeat center center;
+td.pdetails-control {
+    background: url('../../resources/plus-solid.svg') no-repeat center center;
     cursor: pointer;
+    font-size:10pt;
 }
-tr.shown td.details-control,tr.shown td.mdetails-control,tr.shown td.cdetails-control,tr.shown td.pdetails-control {
-    background: url('../../resources/details_close.png') no-repeat center center;
+tr.shown td.pdetails-control {
+    background: url('../../resources/minus-solid.svg') no-repeat center center;
+    font-size:10pt;
 }
 
 /*Handles visibility of parent row when a detail row of the datatable is expanded*/
 .hideParentRow {
     visibility: collapse;
+}
+
+td{
+    font-size:9pt;
 }

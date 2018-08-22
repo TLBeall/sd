@@ -8,18 +8,19 @@
     box-shadow: 0px 0px 8px 0px #686868;
 }
 
-
-
-td.details-control, td.mdetails-control, td.cdetails-control, td.pdetails-control {
-    background: url('../../resources/details_open.png') no-repeat center center;
+td.details-control {
+    background: url('../../resources/plus-solid.svg') no-repeat center center;
     cursor: pointer;
-}
-tr.shown td.details-control,tr.shown td.mdetails-control,tr.shown td.cdetails-control,tr.shown td.pdetails-control {
-    background: url('../../resources/details_close.png') no-repeat center center;
+    font-size:10pt;
 }
 
-.clientTableHeader{
-    border:none;
+tr.shown td.details-control {
+    background: url('../../resources/minus-solid.svg') no-repeat center center;
+    font-size:10pt;
+}
+
+.hideParentRow {
+    visibility: collapse;
 }
 
 .clientTable{
@@ -27,15 +28,6 @@ tr.shown td.details-control,tr.shown td.mdetails-control,tr.shown td.cdetails-co
      margin: 0 auto;
 }
 
-/*Removes thin gray border in between rows of table*/
-.table > tbody > tr > td {
-    border-top: none;
-}
-
-/* table.dataTable tbody td.no-padding {
-    padding: 0;
-} */
-
-thead.clientTableHeader th{
-    border:none;
+td{
+    font-size:9pt;
 }

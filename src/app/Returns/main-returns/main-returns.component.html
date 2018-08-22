@@ -1,11 +1,12 @@
 <div class="toolbar">
-<div class="col-md-2">
+  <div class="col-md-2">
     <span style="margin:5px" id='expandAllLists' class='btn btn-sm btn-outline-danger' (click)="ExpandAll()">Expand All</span>
-    <span style="margin:5px" id='collapseAllLists' class='btn btn-sm btn-outline-success' (click)="CollapseAll()">Collapse All</span>
+    <span style="margin:5px" id='collapseAllLists' class='btn btn-sm btn-outline-success' (click)="CollapseAll()">Collapse
+      All</span>
   </div>
 </div>
-
-  <h1 style="margin-top:100px;">{{ RootReturns?.Client | uppercase }}</h1>
+<h1 style="margin-top:100px;">{{ RootReturns?.Client | uppercase }}</h1>
+<app-list-performance style="margin-top:100px"></app-list-performance>
 <table class="clientTable" cellspacing="0" cellpadding="0">
   <thead class='clientTableHeader' style='text-decoration: underline;'>
     <tr>
@@ -64,3 +65,4 @@
       </ng-container>
     </div>
   </div>
+</div>

@@ -6,6 +6,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { TokenParams } from '../Models/TokenParams.model';
 import { ClientList } from '../Models/ClientList.model';
 import { RootReturns } from '../Models/RootReturns.model';
+import { ListPerformance } from '../Models/ListPerformance.model';
 // import { LoaderService } from '../loader/loader.service';
 
 @Injectable()
@@ -43,7 +44,7 @@ export class AuthService {
     return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 
-  getListPerformance(ListOwner: number, ListManager: number, Recency: number, startDate: Date, endDate: Date):Observable<RootReturns> {
+  getListPerformance(ListOwner: number, ListManager: number, Recency: number, startDate: Date, endDate: Date):Observable<ListPerformance[]> {
     var Token = "";
     var ListPerformanceAPI = "https://sd360.sunrisedataservices.com/api/ListPerformance?ListOwner=" + ListOwner.toString() + "&ListManager=" + ListManager.toString() + "&Recency=" + Recency.toString() + "&startdate=" + startDate.toDateString() + "&enddate=" + endDate.toDateString();
 

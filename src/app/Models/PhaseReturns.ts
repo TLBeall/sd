@@ -21,6 +21,5 @@ export class PhaseReturns {
     DoublingDays: number;
     ListOwnerName: string;
     ListManagerName: string;
-    ExchangeFlag: string;
     Measure:Returns;
 }

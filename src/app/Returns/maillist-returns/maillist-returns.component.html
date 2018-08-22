@@ -7,11 +7,12 @@
       </td>
     </tr>
   </table> -->
-  <table class="table maillistTable table-striped table-bordered">
+  <table class="maillistTable">
     <thead class='maillistTableHeader' style='text-decoration: underline;'>
       <tr>
-        <!-- <th></th> -->
-        <th>Mail Details</th>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Type</th>
         <th>Mailed</th>
         <th>Caged</th>
         <th>Quantity</th>
@@ -30,9 +31,18 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let mail of MailList">
-        <!-- <td class='btnCol cdetails-control btn btn-sm btn-primary glyphicon glyphicon-menu-hamburger'></td> -->
-        <td>{{ mail?.MailCode }} : {{ mail.MailDescription }}</td>
+      <tr *ngFor="let mail of MailList" [ngSwitch]="MailType">
+        <td>{{ mail?.MailCode }}</td>
+        <td *ngSwitchCase="'House'">{{mail?.MailDescription}}</td>
+        <td *ngSwitchCase="'Prospect'">
+          <ng-container *ngIf="mail.ListOwner == null; then nullBlock; else fullBlock">
+            <ng-container #nullBlock><a>{{mail.MailDescription}}</a></ng-template>
+            <ng-container #fullBlock><a>{{ mail.ListOwnerAbr }}/</a><a>{{ mail.ListManagerAbr }} </a><a>{{ mail.RecencyString }}</a></ng-template>
+          </ng-container>
+          </td>
+        <td *ngSwitchCase="'Thank You'">{{mail?.MailDescription}}</td>
+        <td *ngSwitchCase="'Undetermined'">{{mail?.MailDescription}}</td>
+        <td>{{ mail?.ExchangeFlag }}</td>
         <td>{{ mail?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
         <td>{{ mail?.Measure.Caged | date: 'MM/dd/yy' }}</td>
         <td>{{ mail?.Measure.Quantity | number : '1.0-0' }}</td>
@@ -72,3 +82,19 @@
     </tfoot>
   </table>
 </div>
+
+<!-- <tr *ngFor="let mail of MailList" *ngIf="mail?.ListOwner == null; then nullBlock; else fullBlock">
+  <ng-template #nullBlock [ngSwitch]="MailType">
+    <td>{{ mail?.MailCode }}</td>
+    <td *ngSwitchCase="'House'">{{mail?.MailDescription}}</td>
+    <td *ngSwitchCase="'Prospect'"><a>{{mail?.MailDescription}}</a></td>
+    <td *ngSwitchCase="'Thank You'">{{mail?.MailDescription}}</td>
+    <td *ngSwitchCase="'Undetermined'">{{mail?.MailDescription}}</td>
+  </ng-template>
+  <ng-template #fullBlock [ngSwitch]="MailType">
+      <td>{{ mail?.MailCode }}</td>
+      <td *ngSwitchCase="'House'">{{mail?.MailDescription}}</td>
+      <td *ngSwitchCase="'Prospect'"><a>{{ mail?.ListOwnerAbr }}/</a><a>{{ mail?.ListManagerAbr }} </a><a>{{ mail?.RecencyString }}</a></td>
+      <td *ngSwitchCase="'Thank You'">{{mail?.MailDescription}}</td>
+      <td *ngSwitchCase="'Undetermined'">{{mail?.MailDescription}}</td>
+    </ng-template> -->

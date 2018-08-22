@@ -57,7 +57,7 @@ export class ReturnsComponent implements OnInit {
 
   ngOnInit() {
     $(".clientTable").toggle(false);
-    this._authService.getReturns(this.activeClient)
+    this._authService.getReturns(this.activeClient, new Date("01/01/2018"), new Date("12/31/2018"))
       .subscribe(data => {
         this.RootReturns = data;
         $(".clientTable").toggle(true);

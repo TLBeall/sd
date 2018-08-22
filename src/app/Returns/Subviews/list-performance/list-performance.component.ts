@@ -9,6 +9,7 @@ import { ListPerformance } from '../../../Models/ListPerformance.model';
   templateUrl: './list-performance.component.html',
   styleUrls: ['./list-performance.component.css']
 })
+
 export class ListPerformanceComponent implements OnInit {
 
   public ListPerformanceArr: ListPerformance[];

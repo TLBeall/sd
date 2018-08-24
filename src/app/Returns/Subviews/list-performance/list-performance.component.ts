@@ -18,6 +18,8 @@ export class ListPerformanceComponent implements OnInit {
   public ListManager: number = 0;
   public Recency: number = 0;
   public ListPerformanceArr: ListPerformance[];
+  public listDataTable: any;
+  public DataReady: boolean = false;
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private loaderService: LoaderService) {
     route.params.subscribe(params => {
@@ -33,6 +35,7 @@ export class ListPerformanceComponent implements OnInit {
   }
 
   ngOnInit() {
+    $('table.listperformance').toggle(false);
     var endDate = new Date(); // default to last 2 years
     var startDate = new Date();
     var year = endDate.getFullYear() - 2;
@@ -41,13 +44,20 @@ export class ListPerformanceComponent implements OnInit {
     this._authService.getListPerformance(this.ListOwner, this.ListManager, this.Recency, startDate, endDate)
       .subscribe(data => {
         this.ListPerformanceArr = data;
+        $('table.listperformance').toggle(true);        
         this.loaderService.display(false);
+        this.DataReady = true;
+        setTimeout(this.SetDataTable(), 2000);
       });
   }
 
+  ngAfterViewInit() {
+  }
+
   SetDataTable() {
+
     let listperformance: any = $('table.listperformance');
-    listperformance.DataTable({
+    this.listDataTable = listperformance.DataTable({
       "columnDefs": [
         { targets: 0, width: 50 },
       ],
@@ -60,10 +70,5 @@ export class ListPerformanceComponent implements OnInit {
       initComplete: function () {
       }
     });
-
-  }
-
-  ngAfterViewInit() {
-    this.SetDataTable();
   }
 }

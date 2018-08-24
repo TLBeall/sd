@@ -1,56 +1,58 @@
-<table class="listperformance" style="margin-top: 100px;">
-  <thead>
-    <th>Client</th>
-    <th>Package</th>
-    <th>Mail Code</th>
-    <th>Description</th>
-    <!-- <th>ListOwner</th>
+<div *ngIf="DataReady">
+  <table class="table listperformance" style="margin-top: 100px;">
+    <thead>
+      <th>Client</th>
+      <th>Package</th>
+      <th>Mail Code</th>
+      <th>Description</th>
+      <!-- <th>ListOwner</th>
     <th>ListManager</th> 
     <th>Recency</th> -->
-    <th>Flag</th>
-    <th>Mailed</th>
-    <th>Caged</th>
-    <th>Quantity</th>
-    <th>Donors</th>
-    <th>Non</th>
-    <th>New</th>
-    <th>RSP</th>
-    <th>AVG</th>
-    <th>Gross</th>
-    <th>Cost</th>
-    <th>Net</th>
-    <th>GPP</th>
-    <th>CLM</th>
-    <th>NLM</th>
-    <th>IO</th>
-    <th>Package</th>
-  </thead>
-  <tbody>
-    <tr *ngFor="let list of ListPerformanceArr">
-      <td> {{ list.Client }} </td>
-      <td> {{ list.Phase }} </td>
-      <td> {{ list.MailCode }} </td>
-      <td> {{ list.Description }} </td>
-      <!-- <td> {{ list.ListOwnerName }} </td>
+      <th>Flag</th>
+      <th>Mailed</th>
+      <th>Caged</th>
+      <th>Quantity</th>
+      <th>Donors</th>
+      <th>Non</th>
+      <th>New</th>
+      <th>RSP</th>
+      <th>AVG</th>
+      <th>Gross</th>
+      <th>Cost</th>
+      <th>Net</th>
+      <th>GPP</th>
+      <th>CLM</th>
+      <th>NLM</th>
+      <th>IO</th>
+      <th>Package</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let list of ListPerformanceArr">
+        <td> {{ list.Client }} </td>
+        <td> {{ list.Phase }} </td>
+        <td> {{ list.MailCode }} </td>
+        <td> {{ list.Description }} </td>
+        <!-- <td> {{ list.ListOwnerName }} </td>
       <td> {{ list.ListManagerName }} </td> 
       <td> {{ list.Recency }} </td> -->
-      <td> {{ list.ExchangeFlag }} </td>
-      <td>{{ list.Measure.Mailed | date: 'MM/dd/yy'}}</td>
-      <td>{{ list.Measure.Caged | date: 'MM/dd/yy' }}</td>
-      <td>{{ list.Measure.Quantity | number : '1.0-0' }}</td>
-      <td>{{ list.Measure.Donors | number : '1.0-0' }}</td>
-      <td>{{ list.Measure.NonDonors | number : '1.0-0' }}</td>
-      <td>{{ list.Measure.NewDonors | number : '1.0-0' }}</td>
-      <td>{{ list.Measure.RSP | percent:'1.2-2'}}</td>
-      <td>{{ list.Measure.AVG | number : '1.0-2' }}</td>
-      <td>{{ list.Measure.Gross | number : '1.0-0' }}</td>
-      <td>{{ list.Measure.Cost | number : '1.0-0' }}</td>
-      <td>{{ list.Measure.Net | number : '1.0-0' }}</td>
-      <td>{{ list.Measure.GPP | number : '1.0-2' }}</td>
-      <td>{{ list.Measure.CLM | number : '1.0-2' }}</td>
-      <td>{{ list.Measure.NLM | number : '1.0-2' }}</td>
-      <td>{{ list.Measure.IO | number : '1.0-2' }}</td>
-      <td>{{ list.AvgPackageIO | number : '1.0-2' }} </td>
-    </tr>
-  </tbody>
-</table>
+        <td> {{ list.ExchangeFlag }} </td>
+        <td>{{ list.Measure.Mailed | date: 'MM/dd/yy'}}</td>
+        <td>{{ list.Measure.Caged | date: 'MM/dd/yy' }}</td>
+        <td>{{ list.Measure.Quantity | number : '1.0-0' }}</td>
+        <td>{{ list.Measure.Donors | number : '1.0-0' }}</td>
+        <td>{{ list.Measure.NonDonors | number : '1.0-0' }}</td>
+        <td>{{ list.Measure.NewDonors | number : '1.0-0' }}</td>
+        <td>{{ list.Measure.RSP | percent:'1.2-2'}}</td>
+        <td>{{ list.Measure.AVG | number : '1.0-2' }}</td>
+        <td>{{ list.Measure.Gross | number : '1.0-0' }}</td>
+        <td>{{ list.Measure.Cost | number : '1.0-0' }}</td>
+        <td>{{ list.Measure.Net | number : '1.0-0' }}</td>
+        <td>{{ list.Measure.GPP | number : '1.0-2' }}</td>
+        <td>{{ list.Measure.CLM | number : '1.0-2' }}</td>
+        <td>{{ list.Measure.NLM | number : '1.0-2' }}</td>
+        <td>{{ list.Measure.IO | number : '1.0-2' }}</td>
+        <td>{{ list.AvgPackageIO | number : '1.0-2' }} </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -247,10 +247,10 @@ export class ReturnsComponent implements OnInit {
       }
     });
 
-    $("table.mailTypeTable").remove();
-    $("table.campaignTable").remove();
-    $("table.phaseTable").remove();
-    $("table.maillistTable").remove();
+    $(".mailtypediv").remove();
+    $(".campaigndiv").remove();
+    $(".phasediv").remove();
+    $(".maillistdiv").remove();
 
     var mailTypeArr = this.mailTypeArr;
     this.clientDataTable.rows().every(function () {      // Default expand single client row and create child row

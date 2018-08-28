@@ -55,14 +55,14 @@
 <!-- <div style="visibility: collapse"> -->
   <div>
     <app-mailtype-returns [RootReturns]="RootReturns" [MailTypeList]="RootReturns?.MailTypeList" title="{{ RootReturns?.Client }}"></app-mailtype-returns>
-    <ng-container *ngFor="let mailType of RootReturns.MailTypeList">
+    <div *ngFor="let mailType of RootReturns.MailTypeList">
       <app-campaign-returns [MailType]="mailType" [CampaignList]="mailType?.CampaignList" title="{{ mailType.MailType }}"></app-campaign-returns>
       <ng-container *ngFor="let campaign of mailType.CampaignList">
         <app-phase-returns [Campaign]="campaign" [PhaseList]="campaign?.PhaseList" title="{{ campaign.CampaignName }}"></app-phase-returns>
-        <ng-container *ngFor="let phase of campaign.PhaseList;">
+        <div class="testClass" *ngFor="let phase of campaign.PhaseList; let last = last" [ngClass]="{ last: last }">
           <app-maillist-returns [MailType]="mailType.MailType" [Phase]="phase" [MailList]="phase?.MailList" title="{{ phase.PhaseName }}"></app-maillist-returns>
-        </ng-container>
+        </div>
       </ng-container>
-    </ng-container>
+    </div>
   </div>
 <!-- </div> -->

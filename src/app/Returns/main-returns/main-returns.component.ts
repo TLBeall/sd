@@ -70,7 +70,6 @@ export class ReturnsComponent implements OnInit {
   ngAfterViewInit() {
     this.PrepArrays();
     this.GeneratePage();
-
   }
 
   // Expand All, iterating through all tables

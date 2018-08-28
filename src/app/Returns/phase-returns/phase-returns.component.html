@@ -1,10 +1,11 @@
 <div class="phasediv">
-  <table class="phaseTable" cellspacing="0">
+  <table class="phaseTable" cellspacing="0" cellpadding="0">
     <thead class='phaseTableHeader' style='text-decoration: underline;'>
       <tr>
         <th></th>
         <th>Phase</th>
         <th></th>
+        <th>Title</th>
         <th>Mailed</th>
         <th>Caged</th>
         <th>Quantity</th>
@@ -24,9 +25,10 @@
     </thead>
     <tbody>
       <tr *ngFor="let phase of PhaseList">
-        <td class='btnCol pdetails-control'></td>
+        <td class='btnCol'><div class="pdetails-control"></div></td>
         <td>{{ phase?.PhaseName }}</td>
         <td></td>
+        <td>{{ phase?.Title }}</td>
         <td>{{ phase?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
         <td>{{ phase?.Measure.Caged | date: 'MM/dd/yy' }}</td>
         <td>{{ phase?.Measure.Quantity | number : '1.0-0' }}</td>
@@ -46,8 +48,7 @@
     </tbody>
     <tfoot class='campaignTableFooter'>
       <tr>
-        <td></td>
-        <td colspan="2">TOTAL {{ Campaign?.CampaignName | uppercase }}</td>
+        <td class="campaignTotalFooterIndicator" colspan="4">TOTAL {{ Campaign?.CampaignName | uppercase }}</td>
         <td>{{ Campaign?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
         <td>{{ Campaign?.Measure.Caged | date: 'MM/dd/yy' }}</td>
         <td>{{ Campaign?.Measure.Quantity | number : '1.0-0' }}</td>

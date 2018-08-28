@@ -1,12 +1,14 @@
-td.cdetails-control {
+div.cdetails-control {
     background: url('../../resources/plus-solid.svg') no-repeat center center;
     background-color: green;
     border-radius: 5px;
     color:white;
     cursor: pointer;
     font-size:10pt;
+    width:20px;
+    height:20px;
 }
-tr.shown td.cdetails-control {
+tr.shown td div.cdetails-control {
     background: url('../../resources/minus-solid.svg') no-repeat center center;
     background-color: red;
     border-radius: 5px;
@@ -27,12 +29,33 @@ td, th{
     font-size:9pt;
 }
 
-.tableSmallColumns{
-    width:60px;
-    text-align:center !important;
-}
-
-.campaignColumn{
+/*NOTE ON COLUMN WIDTHS*/
+/*For tables, min-width works, but use just width instead of max-width*/
+.buttonColumn{
+    width:25px;
+    min-width:25px;
+ }
+ .campaignColumn{
     width:90px;
+    min-width:90px;
     text-align:right;
 }
+.descriptionColumn{
+    min-width:185px; /*Added 10px compared to list level due to missing code-desc-buffer column*/
+    width:425px
+}
+.tableSmallColumns{
+    min-width:55px;
+    text-align:center;
+}
+
+
+.mailTypeTableFooter{
+    font-weight:bold;
+    /* border-top: 1px solid #333; */
+}
+
+.mailTypeTotalFooterIndicator{
+    text-align:center;
+}
+

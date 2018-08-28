@@ -16,7 +16,7 @@ import { PhaseReturnsComponent } from './Returns/phase-returns/phase-returns.com
 import { MaillistReturnsComponent } from './Returns/maillist-returns/maillist-returns.component';
 import { LoaderService } from './Loader/loader.service';
 import { LoaderComponent } from './Loader/loader.component';
-import { ListPerformanceComponent } from './returns/subviews/list-performance/list-performance.component';
+import { ListPerformanceComponent } from './returns/Subviews/list-performance/list-performance.component';
 
 
 @NgModule({

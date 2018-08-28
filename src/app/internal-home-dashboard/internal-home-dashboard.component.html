@@ -94,19 +94,17 @@
     <div id="dictionaryHeader">
 
         <div class="btn-group">
-            <button type="button" class="btn btn-primary">Live</button>
-            <button type="button" class="btn btn-primary">Cached</button>
-            <button type="button" class="btn btn-primary">Active w/Archived</button>
-            <button type="button" class="btn btn-primary">Inactive</button>
+            <button type="button" class="btn btn-primary" (click)="GetArchived('2018')">Live</button>
+            <button type="button" class="btn btn-primary" (click)="GetArchived('ALL')">Archived</button>
             <div class="btn-group dropdown">
-              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button type="button" id="ByYearId" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                  By Year
               </button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item">2018</a>
-                <a class="dropdown-item">2017</a>
-                <a class="dropdown-item">2018</a>
-              </div>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" (click)="GetArchived(2016)">2016</a></li>
+                <li><a class="dropdown-item" (click)="GetArchived(2017)">2017</a></li>
+                <li><a class="dropdown-item" (click)="GetArchived(2018)">2018</a></li>
+              </ul>
             </div>
           
           </div>

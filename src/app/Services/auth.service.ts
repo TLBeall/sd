@@ -25,9 +25,9 @@ export class AuthService {
     return this.http.post(TokenAPI, data, {headers: headersForTokenAPI}).pipe(map(res => res.json()));
   }  
 
-  getClientList():Observable<ClientList []> {
+  getClientList(pYear: string):Observable<ClientList []> {
     var Token = "";
-    var GetListAPI = "https://sd360.sunrisedataservices.com/api/getClientList";
+    var GetListAPI = "https://sd360.sunrisedataservices.com/api/getClientList?Year="+pYear;
     //this.getToken("nls@sunrisedataservices.com","NLSjkas!@%kd15jf%#$@")
     //.subscribe(data => {
     //  Token = data.access_token

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../../../Services/auth.service';
 import { ActivatedRoute } from "@angular/router";
 import { LoaderService } from '../../../Loader/loader.service';
@@ -11,7 +11,6 @@ import * as $ from 'jquery';
   templateUrl: './list-performance.component.html',
   styleUrls: ['./list-performance.component.css']
 })
-
 export class ListPerformanceComponent implements OnInit {
 
   public ListOwner: number = 0;
@@ -21,7 +20,8 @@ export class ListPerformanceComponent implements OnInit {
   public listDataTable: any;
   public DataReady: boolean = false;
 
-  constructor(private _authService: AuthService, route: ActivatedRoute, private loaderService: LoaderService) {
+  constructor(private _authService: AuthService, route: ActivatedRoute, private loaderService: LoaderService, private chRef: ChangeDetectorRef) {
+    $('#page').toggle(false);
     route.params.subscribe(params => {
       this.ListOwner = +params["listowner"];
       if (params["listmanager"]) {
@@ -30,12 +30,6 @@ export class ListPerformanceComponent implements OnInit {
           this.Recency = +params["recency"];
       }
     });
-    //loading panel
-    this.loaderService.display(true);
-  }
-
-  ngOnInit() {
-    $('table.listperformance').toggle(false);
     var endDate = new Date(); // default to last 2 years
     var startDate = new Date();
     var year = endDate.getFullYear() - 2;
@@ -44,31 +38,34 @@ export class ListPerformanceComponent implements OnInit {
     this._authService.getListPerformance(this.ListOwner, this.ListManager, this.Recency, startDate, endDate)
       .subscribe(data => {
         this.ListPerformanceArr = data;
-        $('table.listperformance').toggle(true);        
         this.loaderService.display(false);
+        this.chRef.detectChanges();
         this.DataReady = true;
-        setTimeout(this.SetDataTable(), 2000);
+        this.SetDataTable();
       });
+    //loading panel
+    this.loaderService.display(true);
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
+    $('#page').toggle(false);
   }
 
-  SetDataTable() {
+  SetDataTable(): void {
 
-    let listperformance: any = $('table.listperformance');
-    this.listDataTable = listperformance.DataTable({
-      "columnDefs": [
-        { targets: 0, width: 50 },
-      ],
-      "select": true,
-      "autoWidth": false,
-      "paging": false,
-      "info": false,
-      "searching": false,
-      "ordering": true,
-      initComplete: function () {
-      }
-    });
+    let listperformance: any = $('#listperformance');
+    if (this.DataReady) {
+      listperformance.DataTable({
+        "select": true,
+        "autoWidth": true,
+        "paging": false,
+        "info": false,
+        "searching": true,
+        "ordering": true,
+        initComplete: function () {
+          $('#page').toggle(true);
+        }
+      });
+    }
   }
 }

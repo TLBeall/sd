@@ -59,7 +59,7 @@
       <app-campaign-returns [MailType]="mailType" [CampaignList]="mailType?.CampaignList" title="{{ mailType.MailType }}"></app-campaign-returns>
       <ng-container *ngFor="let campaign of mailType.CampaignList">
         <app-phase-returns [Campaign]="campaign" [PhaseList]="campaign?.PhaseList" title="{{ campaign.CampaignName }}"></app-phase-returns>
-        <div class="testClass" *ngFor="let phase of campaign.PhaseList; let last = last" [ngClass]="{ last: last }">
+        <div *ngFor="let phase of campaign?.PhaseList">
           <app-maillist-returns [MailType]="mailType.MailType" [Phase]="phase" [MailList]="phase?.MailList" title="{{ phase.PhaseName }}"></app-maillist-returns>
         </div>
       </ng-container>

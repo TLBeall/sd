@@ -125,7 +125,7 @@ export class ReturnsComponent implements OnInit {
         var row = this.row(tr);
         row.child.show();
         tableHeader.css("visibility", "collapse");
-        for (var j = 2; j < 25; j++) {
+        for (var j = 1; j < 25; j++) {
           var nodes = this.column(j).nodes();
           $(nodes[row.index()]).addClass('hideParentRow');
         }
@@ -145,7 +145,7 @@ export class ReturnsComponent implements OnInit {
         var row = this.row(tr);
         row.child.hide();
         tableHeader.css("visibility", "initial");
-        for (var j = 2; j < 25; j++) {
+        for (var j = 1; j < 25; j++) {
           var nodes = this.column(j).nodes();
           $(nodes[row.index()]).removeClass('hideParentRow');
         }
@@ -379,7 +379,7 @@ export class ReturnsComponent implements OnInit {
         var childHTML = maillistArr[id].innerHTML;
         row.child(childHTML).show();
         tableHeader.css("visibility", "collapse");
-        for (var j = 1; j < 25; j++) {
+        for (var j = 2; j < 25; j++) {
           var nodes = this.column(j).nodes();
           $(nodes[row.index()]).addClass('hideParentRow');
         }

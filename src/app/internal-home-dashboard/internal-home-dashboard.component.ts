@@ -67,9 +67,14 @@ export class InternalHomeDashboardComponent implements OnInit {
     this._authService.getClientList(pYear)
     .subscribe(data => {
       this.ClientArr = data;
-      $("#ByYearId").html("By Year");
+    //   $("#ByYearId").html("By Year");
       $('#alphabetResult').trigger( "click" );
-      });
-   
+      });   
   }
+
+  GetArchivedAndReset(pYear: string): void {
+      this.GetArchived(pYear);
+      $("#ByYearId").html("By Year");
+  }
+
 }

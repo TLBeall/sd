@@ -1,6 +1,18 @@
 <div class="maillistdiv">
+  <div class="container">
+    <div class="row phaseHeaderRow">
+      <div class="col-md-6 LphaseHeaderBox">
+        <h4>{{Phase?.PhaseName}}</h4>
+        <h5>{{Phase?.Title}}</h5>
+      </div>
+      <div class="col-md-6 RphaseHeaderBox">
+        <h6>{{Phase?.Format}}</h6>
+      </div>
+    </div>
+  </div>
+  <!-- <div>{{Phase?.PhaseName}}</div> -->
   <table class="maillistTable">
-    <thead class='maillistTableHeader' style='text-decoration: underline;'>
+    <thead class='maillistTableHeader'>
       <tr>
         <th></th>
         <th>Code</th>
@@ -56,9 +68,7 @@
     </tbody>
     <tfoot class='phaseTableFooter'>
       <tr>
-        <td></td>
-        <th></th>
-        <td colspan="3">TOTAL {{ Phase?.PhaseName | uppercase }}</td>
+        <td class="phaseTotalFooterIndicator" colspan="5">TOTAL {{ Phase?.PhaseName | uppercase }}</td>
         <td>{{ Phase?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
         <td>{{ Phase?.Measure.Caged | date: 'MM/dd/yy' }}</td>
         <td>{{ Phase?.Measure.Quantity | number : '1.0-0' }}</td>
@@ -75,6 +85,9 @@
         <td>{{ Phase?.Measure.NLM | number : '1.0-2' }}</td>
         <td>{{ Phase?.Measure.IO | number : '1.0-2' }}</td>
       </tr>
+      <!-- <tr class="pseudoFooterMargin" style="background-color:lightcoral; height:50px;">
+        <td colspan="20"></td>
+      </tr> -->
     </tfoot>
   </table>
 </div>

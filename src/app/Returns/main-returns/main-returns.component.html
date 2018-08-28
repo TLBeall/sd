@@ -31,7 +31,7 @@
   </thead>
   <tbody>
     <tr>
-      <td class="test btnCol details-control"></td>
+      <td class="btnCol"><div class="details-control"></div></td>
       <td>{{ RootReturns?.Client | uppercase }}</td>
       <td></td>
       <td>{{ RootReturns?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
@@ -59,9 +59,9 @@
       <app-campaign-returns [MailType]="mailType" [CampaignList]="mailType?.CampaignList" title="{{ mailType.MailType }}"></app-campaign-returns>
       <ng-container *ngFor="let campaign of mailType.CampaignList">
         <app-phase-returns [Campaign]="campaign" [PhaseList]="campaign?.PhaseList" title="{{ campaign.CampaignName }}"></app-phase-returns>
-        <ng-container *ngFor="let phase of campaign.PhaseList">
+        <div *ngFor="let phase of campaign.PhaseList;">
           <app-maillist-returns [MailType]="mailType.MailType" [Phase]="phase" [MailList]="phase?.MailList" title="{{ phase.PhaseName }}"></app-maillist-returns>
-        </ng-container>
+        </div>
       </ng-container>
     </div>
   </div>

@@ -230,9 +230,9 @@ export class ReturnsComponent implements OnInit {
 
     this.clientDataTable = clientTable.DataTable({
       "columnDefs": [
-        { targets: 0, width: 20},
+        { targets: 0, className: "buttonColumn"},
         { targets: 1, className: "clientColumn"},
-        //skip to keep the width flexible on the description column
+        { targets: 2, className: "descriptionColumn"},
         {
             targets: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], className: "tableSmallColumns"
         },
@@ -272,9 +272,9 @@ export class ReturnsComponent implements OnInit {
 
     this.mailTypeDataTable = mailTypeTable.DataTable({
       "columnDefs": [
-        { targets: 0, width: 20},
+        { targets: 0, className: "buttonColumn"},
         { targets: 1, className: "mailTypeColumn"},
-        //skip to keep the width flexible on the description column
+        { targets: 2, className: "descriptionColumn"},
         {
             targets: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], className: "tableSmallColumns"
         },
@@ -310,9 +310,9 @@ export class ReturnsComponent implements OnInit {
 
     this.campaignDataTable = campaignTable.DataTable({
       "columnDefs": [
-        { targets: 0, width: 20},
+        { targets: 0, className: "buttonColumn"},
         { targets: 1, className: "campaignColumn"},
-        //skip to keep the width flexible on the description column
+        { targets: 2, className: "descriptionColumn"},
         {
             targets: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], className: "tableSmallColumns"
         },
@@ -350,11 +350,13 @@ export class ReturnsComponent implements OnInit {
 
     this.phaseDataTable = phaseTable.DataTable({
       "columnDefs": [
-        { targets: 0, width: 20},
+        { targets: 0, className: "buttonColumn"},
         { targets: 1, className: "phaseColumn"},
-        //skip to keep the width flexible on the description column
+        { targets: 2, className: "code-desc-buffer"},
+        { targets: 3, className: "descriptionColumn"},
+        
         {
-            targets: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], className: "tableSmallColumns"
+            targets: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], className: "tableSmallColumns"
         },
     ],
       "select": true,
@@ -378,7 +380,7 @@ export class ReturnsComponent implements OnInit {
         var childHTML = maillistArr[id].innerHTML;
         row.child(childHTML).show();
         tableHeader.css("visibility", "collapse");
-        for (var j = 2; j < 25; j++) {
+        for (var j = 1; j < 25; j++) {
           var nodes = this.column(j).nodes();
           $(nodes[row.index()]).addClass('hideParentRow');
         }
@@ -390,13 +392,12 @@ export class ReturnsComponent implements OnInit {
 
     maillistTable.DataTable({
         "columnDefs": [
-          { targets: 0, width: 20},
+          { targets: 0, className: "buttonColumn"},
           { targets: 1, className: "mailcodeColumn"},
-          { targets: 2, width: 8},
-          //skip to keep the width flexible on the description column
-          { targets: 4, className: "listTypeColumn"},
+          { targets: 2, className: "code-desc-buffer"},
+          { targets: 3, className: "descriptionColumn"},
           {
-              targets: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], className: "tableSmallColumns"
+              targets: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], className: "tableSmallColumns"
           },
       ],
       "select": true,
@@ -410,7 +411,7 @@ export class ReturnsComponent implements OnInit {
     });
 
     var clientDataTable = this.clientDataTable;
-    $('table.clientTable tbody').on('click', 'td.details-control', function () { // Handle expand/collapse
+    $('table.clientTable tbody').on('click', 'div.details-control', function () {// Handle expand/collapse
       var tr = $(this).closest('tr');
       var row = clientDataTable.row(tr);
       var tableHeader = $('.clientTableHeader');
@@ -436,7 +437,7 @@ export class ReturnsComponent implements OnInit {
     });
 
     var mailTypeDataTable = this.mailTypeDataTable;
-    $('table.mailTypeTable tbody').on('click', 'td.mdetails-control', function () { // Handle expand/collapse
+    $('table.mailTypeTable tbody').on('click', 'div.mdetails-control', function () { // Handle expand/collapse
       var tr = $(this).closest('tr');
       var row = mailTypeDataTable.row(tr);
       var tableHeader = $('.mailTypeTableHeader');
@@ -471,7 +472,7 @@ export class ReturnsComponent implements OnInit {
     });
 
     var campaignDataTable = this.campaignDataTable;
-    $('table.campaignTable tbody').on('click', 'td.cdetails-control', function () { // Handle expand/collapse
+    $('table.campaignTable tbody').on('click', 'div.cdetails-control', function () { // Handle expand/collapse
       var tr = $(this).closest('tr');
       var row = campaignDataTable.tables().row(tr);
       var tableHeader = $('.campaignTableHeader');
@@ -507,7 +508,7 @@ export class ReturnsComponent implements OnInit {
     });
 
     var phaseDataTable = this.phaseDataTable;
-    $('table.phaseTable tbody').on('click', 'td.pdetails-control', function () { // Handle expand/collapse
+    $('table.phaseTable tbody').on('click', 'div.pdetails-control', function () { // Handle expand/collapse
       var tr = $(this).closest('tr');
       var row = phaseDataTable.tables().row(tr);
       var tableHeader = $('.phaseTableHeader');
@@ -526,7 +527,7 @@ export class ReturnsComponent implements OnInit {
         tr.removeClass('shown');
         if (row.index() == 0)
           tableHeader.css("visibility", "initial");
-        for (var i = 2; i < 25; i++) {
+        for (var i = 1; i < 25; i++) {
           var nodes = row.column(i).nodes();
           $(nodes[index]).removeClass('hideParentRow');
         }
@@ -535,7 +536,7 @@ export class ReturnsComponent implements OnInit {
         row.child.show();
         tr.addClass('shown');
         tableHeader.css("visibility", "collapse");
-        for (var i = 2; i < 25; i++) {
+        for (var i = 1; i < 25; i++) {
           var nodes = row.column(i).nodes();
           $(nodes[index]).addClass('hideParentRow');
         }

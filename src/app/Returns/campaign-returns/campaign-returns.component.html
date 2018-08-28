@@ -1,5 +1,5 @@
 <div class="campaigndiv">
-  <table class="campaignTable" cellspacing="0">
+  <table class="campaignTable" cellspacing="0" cellpadding="0">
     <thead class='campaignTableHeader' style='text-decoration: underline;'>
       <tr>
         <th></th>
@@ -24,7 +24,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let campaign of CampaignList">
-        <td class='btnCol cdetails-control'></td>
+        <td class='btnCol'><div class="cdetails-control"></div></td>
         <td>{{ campaign?.CampaignName }}</td>
         <td></td>
         <td>{{ campaign?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
@@ -44,10 +44,9 @@
         <td>{{ campaign?.Measure.IO | number : '1.0-2' }}</td>
       </tr>
     </tbody>
-    <tfoot class='mailTypeTableFooter'>
+    <tfoot class="mailTypeTableFooter">
       <tr>
-        <td></td>
-        <td colspan="2">TOTAL {{ MailType?.MailType | uppercase }}</td>
+        <td class="mailTypeTotalFooterIndicator" colspan="3">TOTAL {{ MailType?.MailType | uppercase }}</td>
         <td>{{ MailType?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
         <td>{{ MailType?.Measure.Caged | date: 'MM/dd/yy' }}</td>
         <td>{{ MailType?.Measure.Quantity | number : '1.0-0' }}</td>

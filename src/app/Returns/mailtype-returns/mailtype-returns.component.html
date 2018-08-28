@@ -24,7 +24,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let mailType of MailTypeList">
-        <td class='btnCol mdetails-control'></td>
+        <td class='btnCol'><div class="mdetails-control"></div></td>
         <td>{{ mailType?.MailType }}</td>
         <td></td>
         <td>{{ mailType?.Measure.Mailed | date: 'MM/dd/yy'}}</td>

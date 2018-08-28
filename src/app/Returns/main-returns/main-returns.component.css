@@ -8,16 +8,18 @@
     box-shadow: 0px 0px 8px 0px #686868;
 }
 
-td.details-control {
+div.details-control {
     background: url('../../resources/plus-solid.svg') no-repeat center center;
     background-color: green;
     border-radius: 5px;
     color:white;
     cursor: pointer;
     font-size:10pt;
+    width:20px;
+    height:20px;
 }
 
-tr.shown td.details-control {
+tr.shown td div.details-control {
     background: url('../../resources/minus-solid.svg') no-repeat center center;
     background-color: red;
     border-radius: 5px;
@@ -30,7 +32,7 @@ tr.shown td.details-control {
 }
 
 .clientTable{
-     width:96%;
+     width:96% !important;
      margin: 0 auto;
 }
 
@@ -38,12 +40,30 @@ td, th{
     font-size:9pt;
 }
 
-.tableSmallColumns{
-    width:60px;
-    text-align:center !important;
-}
+/*NOTE ON COLUMN WIDTHS*/
+/*For tables, min-width works, but use just width instead of max-width*/
+.buttonColumn{
+    width:25px;
+    min-width:25px;
+ }
+ .clientColumn{
+     width:90px;
+     min-width:90px;
+     text-align:right;
+ }
+ .descriptionColumn{
+     min-width:185px;  /*Added 10px compared to list level due to missing code-desc-buffer column*/
+     width:425px
+ }
+ .tableSmallColumns{
+     min-width:55px;
+     text-align:center;
+ }
 
-.clientColumn{
-    width:90px;
-    text-align:right;
-}
+
+ /* .testClass{
+background-color:green; }
+
+.last{
+    background-color:red;
+} */

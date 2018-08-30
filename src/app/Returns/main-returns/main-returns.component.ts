@@ -42,6 +42,7 @@ export class ReturnsComponent implements OnInit {
   public mailTypeDataTable: any;
   public campaignDataTable: any;
   public phaseDataTable: any;
+  public selectedYear: string = "";
   public dataAvailable: boolean = false;
 
   public RootReturns: RootReturns;
@@ -49,7 +50,10 @@ export class ReturnsComponent implements OnInit {
   public activeClient: string;
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private loaderService: LoaderService) {
-    route.params.subscribe( params => this.activeClient = params["id"] );
+    route.params.subscribe( params => { 
+      this.activeClient = params["client"]; 
+      this.selectedYear = params["year"];
+    });
     //loading panel
     this.loaderService.display(true);
   }
@@ -58,7 +62,7 @@ export class ReturnsComponent implements OnInit {
 
   ngOnInit() {
     $(".clientTable").toggle(false);
-    this._authService.getReturns(this.activeClient, new Date("01/01/2018"), new Date("12/31/2018"))
+    this._authService.getReturns(this.activeClient, new Date("01/01/" + this.selectedYear), new Date("12/31/" + this.selectedYear))
       .subscribe(data => {
         this.RootReturns = data;
         $(".clientTable").toggle(true);

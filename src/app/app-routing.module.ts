@@ -10,7 +10,7 @@ import { ListPerformanceComponent } from './returns/Subviews/list-performance/li
 const routes: Routes = [
   {path: '', redirectTo: '/homepage', pathMatch: 'full'},  // this is how to set up the default page
   {path: 'homepage', component: InternalHomeDashboardComponent},
-  {path: 'returns/:id', component: ReturnsComponent },
+  {path: 'returns/:client/:year', component: ReturnsComponent },
   {path: 'listperformance/:listowner/:listmanager/:recency', component: ListPerformanceComponent },
   {path: 'listperformance/:listowner/:listmanager', component: ListPerformanceComponent },
   {path: 'listperformance/:listowner', component: ListPerformanceComponent },

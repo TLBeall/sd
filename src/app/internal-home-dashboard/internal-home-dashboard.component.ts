@@ -17,6 +17,7 @@ export class InternalHomeDashboardComponent implements OnInit {
 
   public triggers; 
   public filters; 
+  public selectedYear: string = (new Date()).getFullYear().toString();
 
   constructor(private _authService: AuthService) { }
 
@@ -64,10 +65,10 @@ export class InternalHomeDashboardComponent implements OnInit {
 
 
   GetArchived(pYear: string): void {
+    this.selectedYear = pYear;
     this._authService.getClientList(pYear)
     .subscribe(data => {
       this.ClientArr = data;
-    //   $("#ByYearId").html("By Year");
       $('#alphabetResult').trigger( "click" );
       });   
   }
@@ -75,6 +76,7 @@ export class InternalHomeDashboardComponent implements OnInit {
   GetArchivedAndReset(pYear: string): void {
       this.GetArchived(pYear);
       $("#ByYearId").html("By Year");
-  }
+      this.selectedYear = (new Date()).getFullYear().toString();
+    }
 
 }

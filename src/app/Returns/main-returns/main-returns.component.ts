@@ -44,6 +44,7 @@ export class ReturnsComponent implements OnInit {
   public phaseDataTable: any;
   public selectedYear: string = "";
   public dataAvailable: boolean = false;
+  public ErrorMsg: any;
 
   public RootReturns: RootReturns;
 
@@ -68,7 +69,13 @@ export class ReturnsComponent implements OnInit {
         $(".clientTable").toggle(true);
         //loading panel
         this.loaderService.display(false);
-      });
+      },
+      error => { 
+          this.ErrorMsg = error.statusText;
+          this.loaderService.display(false);
+          alert(this.ErrorMsg);
+      }
+    );
     }
 
   ngAfterViewInit() {

@@ -93,7 +93,6 @@ export class ReturnsComponent implements OnInit {
   ngAfterViewInit() {
     this.PrepArrays();
     this.GeneratePage();
-
   }
 
   // Expand All, iterating through all tables
@@ -404,7 +403,7 @@ export class ReturnsComponent implements OnInit {
         var childHTML = maillistArr[id].innerHTML;
         row.child(childHTML).show();
         tableHeader.css("visibility", "collapse");
-        for (var j = 1; j < 25; j++) {
+        for (var j = 2; j < 25; j++) {
           var nodes = this.column(j).nodes();
           $(nodes[row.index()]).addClass('hideParentRow');
         }

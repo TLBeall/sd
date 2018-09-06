@@ -90,10 +90,6 @@ export class InternalHomeDashboardComponent implements OnInit {
     this._authService.getClientList(pYear)
     .subscribe(data => {
       this.ClientArr = data;
-<<<<<<< HEAD
-=======
-    //   $("#ByYearId").html("By Year");
->>>>>>> bb52bfcadb49b5d64fc751f143aa74b168a1f609
       $('#alphabetResult').trigger( "click" );
       });   
   }

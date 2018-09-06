@@ -69,21 +69,6 @@
   </tbody>
 </table>
 <!-- <div style="visibility: collapse"> -->
-<<<<<<< HEAD
-<div>
-  <app-mailtype-returns [RootReturns]="RootReturns" [MailTypeList]="RootReturns?.MailTypeList" title="{{ RootReturns?.Client }}"></app-mailtype-returns>
-  <ng-container *ngFor="let mailType of RootReturns.MailTypeList">
-    <app-campaign-returns [MailType]="mailType" [CampaignList]="mailType?.CampaignList" title="{{ mailType.MailType }}"></app-campaign-returns>
-    <ng-container *ngFor="let campaign of mailType.CampaignList">
-      <app-phase-returns [Campaign]="campaign" [PhaseList]="campaign?.PhaseList" title="{{ campaign.CampaignName }}"></app-phase-returns>
-      <ng-container *ngFor="let phase of campaign.PhaseList;">
-        <app-maillist-returns [MailType]="mailType.MailType" [Phase]="phase" [MailList]="phase?.MailList" title="{{ phase.PhaseName }}"></app-maillist-returns>
-      </ng-container>
-    </ng-container>
-  </ng-container>
-</div>
-<!-- </div> -->
-=======
   <div>
     <app-mailtype-returns [RootReturns]="RootReturns" [MailTypeList]="RootReturns?.MailTypeList" title="{{ RootReturns?.Client }}"></app-mailtype-returns>
     <div *ngFor="let mailType of RootReturns.MailTypeList">
@@ -97,4 +82,3 @@
     </div>
   </div>
 <!-- </div> -->
->>>>>>> bb52bfcadb49b5d64fc751f143aa74b168a1f609

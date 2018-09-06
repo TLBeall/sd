@@ -2,7 +2,7 @@
   <div id="alphabetToolbar" class="col-md-12">
     <ul class="alphabet nav nav-pills">
       <li class="nav-item" id="showAllClientsLi">
-        <a class="nav-link" data-toggle="pill">All</a>
+        <a class="nav-link active" data-toggle="pill">All</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" data-toggle="pill">#</a>
@@ -85,7 +85,7 @@
       <li class="nav-item">
         <a class="nav-link" data-toggle="pill">Z</a>
       </li>
-      <li id="alphabetResult"></li>
+      <!-- <li id="alphabetResult"></li> -->
     </ul>
   </div>
 </div>
@@ -94,73 +94,18 @@
     <div id="dictionaryHeader">
 
         <div class="btn-group">
-            <button type="button" class="btn btn-primary" (click)="GetArchived('2018')">Live</button>
-            <button type="button" class="btn btn-primary" (click)="GetArchived('ALL')">Archived</button>
-            <div class="btn-group dropdown">
-              <button type="button" id="ByYearId" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                 By Year
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" (click)="GetArchived(2016)">2016</a></li>
-                <li><a class="dropdown-item" (click)="GetArchived(2017)">2017</a></li>
-                <li><a class="dropdown-item" (click)="GetArchived(2018)">2018</a></li>
-              </ul>
-            </div>
-          
+            <button type="button" name="options" class="btn btn-primary" [ngClass]="{'active': selectedItem === 1}" (click)="GetArchived('2018'); setSelectedItem(1)">Live</button>
+            <button type="button" name="options" class="btn btn-primary" [ngClass]="{'active': selectedItem === 2}" (click)="GetArchived('ALL'); setSelectedItem(2)">Archived</button>
+            <button type="button dropdown" name="options" id="ByYearId" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [ngClass]="{'active': selectedItem === 3}" (click)="setSelectedItem(3)">
+                By Year {{ selectedYear }}
+                <i class="fas fa-caret-down"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" (click)="GetArchived(2016); setYear($event)">2016</a></li>
+              <li><a class="dropdown-item" (click)="GetArchived(2017); setYear($event)">2017</a></li>
+              <li><a class="dropdown-item" (click)="GetArchived(2018); setYear($event)">2018</a></li>
+            </ul>
           </div>
-
-          <!-- <div class="dropdown">
-              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
-              <span class="caret"></span></button>
-              <ul class="dropdown-menu">
-                <li><a href="#">HTML</a></li>
-                <li><a href="#">CSS</a></li>
-                <li><a href="#">JavaScript</a></li>
-              </ul>
-            </div> -->
-
-
-      <!-- <div class="reportEntranceType">Live Data</div>
-      <div class="reportEntranceType">Cached</div>
-      <div class="reportEntranceType">Active w/Archived Phases</div>
-      <div class="reportEntranceType">Inactive</div>
-      <ul class="dropdown-menu" id="YearDropdownMenu">By Calendar Year<span
-          <li>2018</li>
-          <li>2017</li>
-          <li>2016</li>
-        </ul> -->
-
-
-      <!-- <ul class="nav nav-pills" id="reportMenuPills">
-        <li class="dictionaryTimeHeader nav-item" >
-          <a data-toggle="pill">Live Data</a>
-        </li>
-        <li class="dictionaryTimeHeader nav-item">
-          <a data-toggle="pill">Cached Reports</a>
-        </li>
-        <li class="dictionaryTimeHeader nav-item">
-          <a data-toggle="pill">Active w/ Archived Phases</a>
-        </li>
-        <li class="dictionaryTimeHeader nav-item">
-          <a data-toggle="pill">Inactive</a>
-        </li>
-        <li class="dictionaryTimeHeader dropdown nav-item">
-          <a class="dropdown-toggle" id="yearDropdown" data-toggle="dropdown">By Calendar Year
-            <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" id="pillYearDropdownMenu">
-            <li>
-              <a data-toggle="pill">2018</a>
-            </li>
-            <li>
-              <a data-toggle="pill">2017</a>
-            </li>
-            <li>
-              <a data-toggle="pill">2016</a>
-            </li>
-          </ul>
-        </li>
-      </ul> -->
     </div>
 
 <div class='dictionaryContent'>

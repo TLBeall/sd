@@ -5,7 +5,7 @@ import { MailReturns } from '../../Models/MailReturns.model';
 @Component({
   selector: 'app-maillist-returns',
   templateUrl: './maillist-returns.component.html',
-  styleUrls: ['./maillist-returns.component.css']
+  styleUrls: ['./maillist-returns.component.scss']
 })
 export class MaillistReturnsComponent implements OnInit {
 

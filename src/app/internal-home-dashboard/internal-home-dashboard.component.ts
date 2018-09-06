@@ -8,9 +8,33 @@ import * as $ from 'jquery';
 @Component({
   selector: 'app-internal-home-dashboard',
   templateUrl: './internal-home-dashboard.component.html',
-  styleUrls: ['./internal-home-dashboard.component.css']
+  styleUrls: ['./internal-home-dashboard.component.scss']
 })
 export class InternalHomeDashboardComponent implements OnInit {
+
+    selectedYear = "";
+    selectedItem = 1;
+
+    setSelectedItem(id: number){
+        this.selectedItem = id;
+        if (id === 1 || id === 2){
+        this.selectedYear = "";
+        this.resetAlphabet();
+        }
+        if (id === 3 && this.selectedYear != ""){
+            this.resetAlphabet()
+        }
+    }
+
+    setYear(event: any){
+        this.selectedYear = event.target.text;
+        this.resetAlphabet();
+    }
+
+    resetAlphabet(){
+        $('ul.alphabet > li > a').removeClass('active');
+        $('#showAllClientsLi > a').addClass('active');
+    }
 
   public ClientArr : ClientList[];
   public tokenParam : TokenParams;
@@ -20,7 +44,10 @@ export class InternalHomeDashboardComponent implements OnInit {
 
   constructor(private _authService: AuthService) { }
 
+  
+
   ngOnInit() {
+
     this._authService.getClientList((new Date()).getFullYear().toString())
     .subscribe(data => {
       this.ClientArr = data;
@@ -32,10 +59,6 @@ export class InternalHomeDashboardComponent implements OnInit {
         $('#alphabetResult').html('');
     });
 
-    $(".dropdown-menu li a").click(function(){
-        $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
-        $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
-      });
     
     this.triggers =  $('ul.alphabet li a');
 
@@ -58,7 +81,7 @@ export class InternalHomeDashboardComponent implements OnInit {
                 }
             }
         });
-        $('#alphabetResult').html('<b>' + (result < 1 ? 'No results found' : result + ' result(s) found') + '</b>');
+        // $('#alphabetResult').html('<b>' + (result < 1 ? 'No results found' : result + ' result(s) found') + '</b>');
     });    
   }
 
@@ -67,9 +90,9 @@ export class InternalHomeDashboardComponent implements OnInit {
     this._authService.getClientList(pYear)
     .subscribe(data => {
       this.ClientArr = data;
-      $("#ByYearId").html("By Year");
       $('#alphabetResult').trigger( "click" );
       });
    
   }
+
 }

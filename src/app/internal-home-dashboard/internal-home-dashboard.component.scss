@@ -1,0 +1,133 @@
+/*********************************************************************/
+/*This file contains the css styling for internal home page/dashboard*/
+/*********************************************************************/
+.toolbar {
+    width: 100%;
+    background-color: 	white;
+    position:fixed;
+    top:50px !important;
+    z-index: 90;
+    min-height:42px;
+    box-shadow: 0px 0px 8px 0px #686868;
+}
+
+
+/*<><><><> Alphabetical toolbar Settings Start <><><><>*/
+/*Be specific otherwise the ul properties override the home page/nav bar*/
+#alphabetToolbar {
+    text-align: center;
+    top:10px;
+}
+
+.alphabet{
+    display: inline-table;
+    margin-bottom:0px;
+    list-style: none;
+    li{
+        font-size: 11pt;
+        float: left;
+        margin:0px;
+        a{
+            padding: 4px 8px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #1279C0;
+        }
+        a:hover{
+            background-color: #F5F5F5;
+            box-shadow: 1px 1px 2px 0px #686868;
+            cursor: pointer;
+        }
+        a.active.show{
+            color:white !important;
+        }
+        a.active{
+            color:white !important;
+        }
+        a.active.show:hover{
+            color:#1279C0 !important;
+        }
+    }
+    li#showAllClientsLi{
+        margin-right: 20px;
+    }
+}
+
+.dictionaryContent {
+    width:96%;
+    padding-top:25px;
+    margin: 0 auto;
+    -moz-column-width: 25em; /*Multi-columns Firefox */
+    -webkit-column-width: 25em; /*Multi-columns webkit, Safari, Chrome */
+    column-width: 25em; /*Multi-columns*/
+}
+
+#dictionaryHeader {
+    width: 92%;
+    margin: auto;
+    padding-top: 120px; 
+    border-bottom: 3px solid #eee;
+}
+
+.dictionary{
+    li{
+        float: none;
+        display: inline-block;
+        width:25em;
+        margin-bottom: 5px;
+        font-size: 11pt;
+        padding: 0;
+        border-radius:5px;
+        a{
+            color:#333;
+            text-decoration: none;
+            display: block;
+            padding: 5px 0px 5px 5px;
+        }
+    }
+    li:hover{
+        background-color: #F5F5F5;
+        box-shadow: 1px 1px 2px 0px #686868;
+        cursor: pointer;
+    }
+}
+// #alphabetResult {
+//     margin: 4px 0px 0px 4px;
+// }
+/*<><><><> Alphabetical Settings End <><><><>*/
+
+
+/*<><><><><> TABLET AND PHONE START <><><><><>*/
+@media screen and (max-width: 900px) {
+    .dictionaryTimeHeader {
+        width: 49%;
+    }
+
+    #dictionaryHeader > span {
+        width: 100%;
+    }
+    #dictionaryHeader {
+        padding-top: 114px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .dictionaryTimeHeader {
+        width: 100%;
+    }
+    #dictionaryHeader {
+        padding-top: 130px;
+    }
+}
+@media screen and (max-width: 500px) {
+    #dictionaryHeader {
+        padding-top: 154px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    #dictionaryHeader {
+        padding-top: 174px;
+    }
+}
+/*<><><><><> TABLET AND PHONE END <><><><><>*/

@@ -9,7 +9,7 @@ import * as $ from 'jquery';
 @Component({
   selector: 'app-list-performance',
   templateUrl: './list-performance.component.html',
-  styleUrls: ['./list-performance.component.css']
+  styleUrls: ['./list-performance.component.scss']
 })
 export class ListPerformanceComponent implements OnInit {
 

@@ -7,7 +7,7 @@ import { MailTypeReturns } from '../../Models/MailTypeReturns.model';
 @Component({
   selector: 'app-mailtype-returns',
   templateUrl: './mailtype-returns.component.html',
-  styleUrls: ['./mailtype-returns.component.css']
+  styleUrls: ['./mailtype-returns.component.scss']
 })
 export class MailtypeReturnsComponent implements OnInit {
 

@@ -1,58 +1,43 @@
-<nav class="topnav navbar navbar-expand-lg fixed-top" id="myTopnav">
-  <a id="logoNavBtn" routerLink="homepage"><span id="spanSD"><b>SD</b></span><span id="span360"><b>360</b></span></a>
-  <button class="navbar-toggler active" id="navBarToggleBtn" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="topnav navbar navbar-expand-lg fixed-top">
+  <a id="logoNavAnchor" routerLink="homepage"><span id="spanSD"><b>SD</b></span><span id="span360"><b>360</b></span></a>
+  <button class="navbar-toggler active" id="navBarToggleBtn" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <i class="fa fa-bars"></i>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+  <div class="collapse navbar-collapse" id="navbarContent" >
     <ul class="navbar-nav mr-auto">
       <li class="nav-item mainNavItem">
-        <button routerLink="returns/AMAC" class="btn navbarBtn">Home</button>
+        <button routerLink="/returns/" class="btn navbarBtn">Reporting</button>
         <!-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
       </li>
       <li class="nav-item mainNavItem">
-          <button routerLink="homepage" class="btn navbarBtn">Internal</button>
+          <button title="Under Construction" disabled="true" class="btn navbarBtn">Production</button>
         </li>
-      <li class="nav-item dropdown mainNavItem">
+        <li class="nav-item mainNavItem">
+          <button title="Under Construction" disabled="true" class="btn navbarBtn">Account Management</button>
+        </li>
+        <li class="nav-item mainNavItem">
+          <button title="Under Construction" disabled="true" class="btn navbarBtn">Accounting</button>
+        </li>
+        <li class="nav-item mainNavItem">
+          <button title="Under Construction" disabled="true" class="btn navbarBtn">Utilities</button>
+        </li>
+        <li class="nav-item mainNavItem">
+          <button title="Under Construction" disabled="true" class="btn navbarBtn">User</button>
+        </li>
+
+        <!--*************************-->
+        <!--This is a working dropdown button similar in style to the current buttons on the home page - do not delete-->
+        <!--*************************-->
+      <!-- <li class="nav-item dropdown mainNavItem">
         <button id="navbarDropdown" class="btn navbarDropdownBtn navbarBtn nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
-        <!-- <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a> -->
         <div class="dropdown-menu navbarDropdownMenu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Action</a>
           <a class="dropdown-item" href="#">Another action</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
-      </li>
+      </li> -->
     </ul>
   </div>
 </nav>
-
-
-
-
-<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">
-    Brand
-  </a>
-
-  <button class="navbar-toggler" type="button"
-          (click)="toggleNavbar()">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-
-  <div class="collapse navbar-collapse"
-       [ngClass]="{ 'show': navbarOpen }">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="#">Item 1</a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="#">Item 2</a>
-      </li>
-    </ul>
-  </div>
-</nav> -->

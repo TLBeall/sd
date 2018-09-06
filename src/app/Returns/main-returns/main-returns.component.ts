@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ContentChildren } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ContentChildren, HostListener } from '@angular/core';
 import { AuthService } from '../../Services/auth.service';
 import { delay, share } from 'rxjs/operators';
 import { RootReturns } from '../../Models/RootReturns.model';
@@ -15,10 +15,22 @@ import { LoaderService } from '../../Loader/loader.service';
 @Component({
   selector: 'app-main-returns',
   templateUrl: './main-returns.component.html',
-  styleUrls: ['./main-returns.component.css']
+  styleUrls: ['./main-returns.component.scss']
 })
 
 export class ReturnsComponent implements OnInit {
+
+  public innerWidth: any;
+  public mobileStatus:boolean;
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+    if (this.innerWidth >= 1050){
+      this.mobileStatus = false;
+    } else {
+      this.mobileStatus = true;
+    }
+  }
 
   // Capturing child components MailType, Campaign, Phase, Mailist
 
@@ -47,8 +59,19 @@ export class ReturnsComponent implements OnInit {
   public ErrorMsg: any;
 
   public RootReturns: RootReturns;
-
   public activeClient: string;
+
+
+  @ViewChild('widgetContent', { read: ElementRef })
+  public widgetsContent: ElementRef<any>;
+  public scrollRight(): void {
+    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft + 150), behavior: 'smooth' });
+  }
+  public scrollLeft(): void {
+    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft - 150), behavior: 'smooth' });
+  }
+
+
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private loaderService: LoaderService) {
     route.params.subscribe( params => { 
@@ -92,7 +115,7 @@ export class ReturnsComponent implements OnInit {
       var row = this.row(tr);
       row.child.show();
       tableHeader.css("visibility", "hidden");
-      for (var j = 2; j < 25; j++) {
+      for (var j = 1; j < 25; j++) {
         var nodes = this.column(j).nodes();
         $(nodes[row.index()]).addClass('hideParentRow');
       }
@@ -106,7 +129,7 @@ export class ReturnsComponent implements OnInit {
         var row = this.row(tr);
         row.child.show();
         tableHeader.css("visibility", "collapse");
-        for (var j = 2; j < 25; j++) {
+        for (var j = 1; j < 25; j++) {
           var nodes = this.column(j).nodes();
           $(nodes[row.index()]).addClass('hideParentRow');
         }
@@ -121,7 +144,7 @@ export class ReturnsComponent implements OnInit {
         var row = this.row(tr);
         row.child.show();
         tableHeader.css("visibility", "collapse");
-        for (var j = 2; j < 25; j++) {
+        for (var j = 1; j < 25; j++) {
           var nodes = this.column(j).nodes();
           $(nodes[row.index()]).addClass('hideParentRow');
         }
@@ -141,6 +164,7 @@ export class ReturnsComponent implements OnInit {
           $(nodes[row.index()]).addClass('hideParentRow');
         }
         tr.addClass('shown');
+        $('div.slider', row.child()).slideDown();
       });
     }
   }
@@ -171,7 +195,7 @@ export class ReturnsComponent implements OnInit {
         var row = this.row(tr);
         row.child.hide();
         tableHeader.css("visibility", "initial");
-        for (var j = 2; j < 25; j++) {
+        for (var j = 1; j < 25; j++) {
           var nodes = this.column(j).nodes();
           $(nodes[row.index()]).removeClass('hideParentRow');
         }
@@ -186,7 +210,7 @@ export class ReturnsComponent implements OnInit {
         var row = this.row(tr);
         row.child.hide();
         tableHeader.css("visibility", "initial");
-        for (var j = 2; j < 25; j++) {
+        for (var j = 1; j < 25; j++) {
           var nodes = this.column(j).nodes();
           $(nodes[row.index()]).removeClass('hideParentRow');
         }
@@ -200,7 +224,7 @@ export class ReturnsComponent implements OnInit {
       var row = this.row(tr);
       row.child.hide();
       tableHeader.css("visibility", "initial");
-      for (var j = 2; j < 25; j++) {
+      for (var j = 1; j < 25; j++) {
         var nodes = this.column(j).nodes();
         $(nodes[row.index()]).removeClass('hideParentRow');
       }
@@ -271,7 +295,7 @@ export class ReturnsComponent implements OnInit {
       var childHTML = mailTypeArr[id].innerHTML;
       row.child(childHTML).show();
       tableHeader.css("visibility", "hidden");
-      for (var j = 2; j < 25; j++) {
+      for (var j = 1; j < 25; j++) {
         var nodes = this.column(j).nodes();
         $(nodes[row.index()]).addClass('hideParentRow');
       }
@@ -309,7 +333,7 @@ export class ReturnsComponent implements OnInit {
       var childHTML = CampaignArr[id].innerHTML;
       row.child(childHTML).show();
       tableHeader.css("visibility", "collapse");
-      for (var j = 2; j < 25; j++) {
+      for (var j = 1; j < 25; j++) {
         var nodes = this.column(j).nodes();
         $(nodes[row.index()]).addClass('hideParentRow');
       }
@@ -348,7 +372,7 @@ export class ReturnsComponent implements OnInit {
         var childHTML = PhaseArr[id].innerHTML;
         row.child(childHTML).show();
         tableHeader.css("visibility", "collapse");
-        for (var j = 2; j < 25; j++) {
+        for (var j = 1; j < 25; j++) {
           var nodes = this.column(j).nodes();
           $(nodes[row.index()]).addClass('hideParentRow');
         }
@@ -420,8 +444,9 @@ export class ReturnsComponent implements OnInit {
       }
     });
 
+    // Handle expand/collapse of Client
     var clientDataTable = this.clientDataTable;
-    $('table.clientTable tbody').on('click', 'div.details-control', function () {// Handle expand/collapse
+    $('table.clientTable tbody').on('click', 'div.details-control', function () {
       var tr = $(this).closest('tr');
       var row = clientDataTable.row(tr);
       var tableHeader = $('.clientTableHeader');
@@ -430,7 +455,7 @@ export class ReturnsComponent implements OnInit {
         tr.removeClass('shown');
         if (row.index() == 0)
           tableHeader.css("visibility", "initial");
-        for (var i = 2; i < 25; i++) {
+        for (var i = 1; i < 25; i++) {
           var nodes = row.column(i).nodes();
           $(nodes[row.index()]).removeClass('hideParentRow');
         }
@@ -438,16 +463,18 @@ export class ReturnsComponent implements OnInit {
       else {
         row.child.show();
         tr.addClass('shown');
+        tr.addClass('testGrey');
         tableHeader.css("visibility", "hidden");
-        for (var i = 2; i < 25; i++) {
+        for (var i = 1; i < 25; i++) {
           var nodes = row.column(i).nodes();
           $(nodes[row.index()]).addClass('hideParentRow');
         }
       }
     });
 
+     // Handle expand/collapse of Mail Type
     var mailTypeDataTable = this.mailTypeDataTable;
-    $('table.mailTypeTable tbody').on('click', 'div.mdetails-control', function () { // Handle expand/collapse
+    $('table.mailTypeTable tbody').on('click', 'div.mdetails-control', function () {
       var tr = $(this).closest('tr');
       var row = mailTypeDataTable.row(tr);
       var tableHeader = $('.mailTypeTableHeader');
@@ -465,7 +492,7 @@ export class ReturnsComponent implements OnInit {
         tr.removeClass('shown');
         if (row.index() == 0)
           tableHeader.css("visibility", "initial");
-        for (var i = 2; i < 25; i++) {
+        for (var i = 1; i < 25; i++) {
           var nodes = row.column(i).nodes();
           $(nodes[index]).removeClass('hideParentRow');
         }
@@ -474,15 +501,16 @@ export class ReturnsComponent implements OnInit {
         row.child.show();
         tr.addClass('shown');
         tableHeader.css("visibility", "collapse");
-        for (var i = 2; i < 25; i++) {
+        for (var i = 1; i < 25; i++) {
           var nodes = row.column(i).nodes();
           $(nodes[index]).addClass('hideParentRow');
         }
       }
     });
 
+    // Handle expand/collapse of Campaign
     var campaignDataTable = this.campaignDataTable;
-    $('table.campaignTable tbody').on('click', 'div.cdetails-control', function () { // Handle expand/collapse
+    $('table.campaignTable tbody').on('click', 'div.cdetails-control', function () { 
       var tr = $(this).closest('tr');
       var row = campaignDataTable.tables().row(tr);
       var tableHeader = $('.campaignTableHeader');
@@ -501,7 +529,7 @@ export class ReturnsComponent implements OnInit {
         tr.removeClass('shown');
         if (row.index() == 0)
           tableHeader.css("visibility", "initial");
-        for (var i = 2; i < 25; i++) {
+        for (var i = 1; i < 25; i++) {
           var nodes = row.column(i).nodes();
           $(nodes[index]).removeClass('hideParentRow');
         }
@@ -510,15 +538,16 @@ export class ReturnsComponent implements OnInit {
         row.child.show();
         tr.addClass('shown');
         tableHeader.css("visibility", "collapse");
-        for (var i = 2; i < 25; i++) {
+        for (var i = 1; i < 25; i++) {
           var nodes = row.column(i).nodes();
           $(nodes[index]).addClass('hideParentRow');
         }
       }
     });
 
+    // Handle expand/collapse of Phase
     var phaseDataTable = this.phaseDataTable;
-    $('table.phaseTable tbody').on('click', 'div.pdetails-control', function () { // Handle expand/collapse
+    $('table.phaseTable tbody').on('click', 'div.pdetails-control', function () {
       var tr = $(this).closest('tr');
       var row = phaseDataTable.tables().row(tr);
       var tableHeader = $('.phaseTableHeader');
@@ -533,23 +562,36 @@ export class ReturnsComponent implements OnInit {
       }
 
       if (row.child.isShown()) {
-        row.child.hide();
-        tr.removeClass('shown');
-        if (row.index() == 0)
+
+        $('div.slider', row.child()).slideUp(function () {
+          row.child.hide();
+          tr.removeClass('shown');
           tableHeader.css("visibility", "initial");
+      });
+
+
+
+        // row.child.hide();
+        // tr.removeClass('shown');
+        // if (row.index() == 0)
+        //   tableHeader.css("visibility", "initial");
         for (var i = 1; i < 25; i++) {
           var nodes = row.column(i).nodes();
           $(nodes[index]).removeClass('hideParentRow');
         }
       }
       else {
+        // row.child.show();
+        
+
         row.child.show();
-        tr.addClass('shown');
         tableHeader.css("visibility", "collapse");
         for (var i = 1; i < 25; i++) {
           var nodes = row.column(i).nodes();
           $(nodes[index]).addClass('hideParentRow');
         }
+        tr.addClass('shown');
+        $('div.slider', row.child()).slideDown();
       }
     });
 

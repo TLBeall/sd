@@ -1,16 +1,14 @@
 <div class="maillistdiv">
-  <div class="container">
-    <div class="row phaseHeaderRow">
+  <div class="slider">
+    <div style="margin-left:10px;" class="row phaseHeaderRow">
       <div class="col-md-6 LphaseHeaderBox">
-        <h4>{{Phase?.PhaseName}}</h4>
-        <h5>{{Phase?.Title}}</h5>
+        <h6>{{Phase?.PhaseName}}</h6>
+        <h6>{{Phase?.Title}}</h6>
       </div>
       <div class="col-md-6 RphaseHeaderBox">
         <h6>{{Phase?.Format}}</h6>
       </div>
     </div>
-  </div>
-  <!-- <div>{{Phase?.PhaseName}}</div> -->
   <table class="maillistTable">
     <thead class='maillistTableHeader'>
       <tr>
@@ -44,7 +42,7 @@
         <td *ngSwitchCase="'House'">{{mail?.MailDescription}}</td>
         <ng-container *ngSwitchCase="'Prospect'">
           <td *ngIf="mail?.ListOwner == '' || mail?.Manager == ''"><a>{{mail?.MailDescription}}</a></td>
-          <td *ngIf="mail?.ListOwner != '' && mail?.Manager != ''"><a routerLink='/listperformance/{{mail?.ListOwner}}'>{{ mail?.ListOwnerAbr }}/</a><a routerLink='/listperformance/{{mail?.ListOwner}}/{{mail?.ListManager}}'>{{ mail?.ListManagerAbr }} </a><a routerLink='/listperformance/{{mail?.ListOwner}}/{{mail?.ListManager}}/{{mail?.Recency}}'>{{ mail?.RecencyString }}</a></td>
+          <td *ngIf="mail?.ListOwner != '' && mail?.Manager != ''"><a routerLink="/listperformance/{{mail?.ListOwner}}">{{ mail?.ListOwnerAbr }}/</a><a routerLink='/listperformance/{{mail?.ListOwner}}/{{mail?.ListManager}}'>{{ mail?.ListManagerAbr }} </a><a routerLink='/listperformance/{{mail?.ListOwner}}/{{mail?.ListManager}}/{{mail?.Recency}}'>{{ mail?.RecencyString }}</a></td>
         </ng-container>
         <td *ngSwitchCase="'Thank You'">{{mail?.MailDescription}}</td>
         <td *ngSwitchCase="'Undetermined'">{{mail?.MailDescription}}</td>
@@ -90,4 +88,5 @@
       </tr> -->
     </tfoot>
   </table>
+  </div>
 </div>

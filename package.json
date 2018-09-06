@@ -34,7 +34,11 @@
     "popper.js": "^1.14.4",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.2.2",
+<<<<<<< HEAD
     "sass": "^1.13.2",
+=======
+    "sass": "^1.13.1",
+>>>>>>> abb0954720397ea38addba2ceaf48557dd143bf6
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

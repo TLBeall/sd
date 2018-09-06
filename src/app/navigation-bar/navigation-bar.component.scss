@@ -1,0 +1,94 @@
+#logoNavAnchor{
+    margin-left:10px;
+    text-decoration:none;
+    padding: 7px 20px 6px 20px;
+    border-radius:5px;
+    font-size:1.2rem;
+    #spanSD{
+        color: #1279C0;  
+    }
+    #span360{
+        color: white;
+    }
+}
+#logoNavAnchor:hover{
+    background-color: white;
+    transform: scale(1.0);
+    transition: all 500ms;
+    #span360{
+        color:#1279C0;
+    }
+    #spanSD{
+        color:#333;
+    }
+}
+
+
+.topnav {
+    background-color: #333;
+    padding:0;
+    min-height: 50px !important;
+    div{
+        margin-left: 10px;
+        ul{
+            li.mainNavItem{
+                margin-left:10px;
+                button{
+                    background-color:#333;
+                    color:white;
+                    font-size:0.9rem;
+                }
+            }
+            li.mainNavItem:hover{
+                // .navbarDropdownMenu{
+                //     display:block;
+                //     margin-left:-6px;
+                //     margin-top:0px;
+                // }
+                button{
+                    background:#1279C0; 
+                    transition: all 500ms;
+                    transform: scale(1.1);
+                }
+            }
+        }
+    }
+    #navBarToggleBtn{
+        color:white;
+    }
+}
+
+
+//This is for the dropdown button if it is needed
+// .navbarDropdownBtn{
+//     padding-top:6px;
+//     padding-bottom:6px;
+// }
+//  .navbarDropdownMenu > .dropdown-item:hover{
+//     background-color:#F5F5F5;
+//  }
+
+
+/*<><><><><> TABLET AND PHONE START <><><><><>*/
+@media screen and (max-width: 992px) {
+
+    .mainNavItem{
+        margin: 2px auto !important;
+        width:80%;
+        text-align:center;
+        
+        .navbarBtn{
+            width:100%;
+        }
+    }
+    // .navbarDropdownMenu{
+    //     width:100%;
+    // }
+    // .navbarDropdownMenu > a{
+    //     width:100%;
+    // }
+    // .mainNavItem:hover > .navbarDropdownMenu{
+    //     margin:0;
+    // }
+}
+/*<><><><><> TABLET AND PHONE END <><><><><>*/

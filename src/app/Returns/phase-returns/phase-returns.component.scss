@@ -1,19 +1,17 @@
 div.pdetails-control {
     background: url('../../resources/plus-solid.svg') no-repeat center center;
-    background-color: green;
+    /* background-color: green; */
     border-radius: 5px;
     color:white;
     cursor: pointer;
-    font-size:10pt;
-    width:20px;
-    height:20px;
+    width:16px;
+    height:16px;
 }
 tr.shown td div.pdetails-control {
-    background: url('../../resources/minus-solid.svg') no-repeat center center;
-    background-color: red;
+    background: url('../../resources/chevron-up-solid.svg') no-repeat center center;
+    /* background-color: red; */
     border-radius: 5px;
     color:white;
-    font-size:10pt;
 }
 
 .phaseTable{

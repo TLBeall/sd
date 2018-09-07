@@ -20,6 +20,9 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
+    "ag-grid": "^18.1.2",
+    "ag-grid-angular": "^18.1.0",
+    "ag-grid-enterprise": "^18.1.1",
     "angular-font-awesome": "^3.1.2",
     "angular-oauth2": "^4.2.0",
     "boostrap": "^2.0.0",
@@ -34,11 +37,7 @@
     "popper.js": "^1.14.4",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.2.2",
-<<<<<<< HEAD
     "sass": "^1.13.2",
-=======
-    "sass": "^1.13.1",
->>>>>>> abb0954720397ea38addba2ceaf48557dd143bf6
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

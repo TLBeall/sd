@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import {enableProdMode} from '@angular/core';
-
+import { enableProdMode } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +9,8 @@ import {enableProdMode} from '@angular/core';
 export class AppComponent {
   title = 'SD360-Reporting-Angular';
 
-
+  constructor() {
+  }
 }
 
 enableProdMode();

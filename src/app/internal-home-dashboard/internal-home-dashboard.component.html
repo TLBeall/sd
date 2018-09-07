@@ -94,7 +94,6 @@
     <div id="dictionaryHeader">
 
         <div class="btn-group">
-<<<<<<< HEAD
             <button type="button" name="options" class="btn btn-primary" [ngClass]="{'active': selectedItem === 1}" (click)="GetArchived('2018'); setSelectedItem(1)">Live</button>
             <button type="button" name="options" class="btn btn-primary" [ngClass]="{'active': selectedItem === 2}" (click)="GetArchived('ALL'); setSelectedItem(2)">Archived</button>
             <button type="button dropdown" name="options" id="ByYearId" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [ngClass]="{'active': selectedItem === 3}" (click)="setSelectedItem(3)">
@@ -106,21 +105,6 @@
               <li><a class="dropdown-item" (click)="GetArchived(2017); setYear($event)">2017</a></li>
               <li><a class="dropdown-item" (click)="GetArchived(2018); setYear($event)">2018</a></li>
             </ul>
-=======
-            <button type="button" class="btn btn-primary" (click)="GetArchivedAndReset('2018')">Live</button>
-            <button type="button" class="btn btn-primary" (click)="GetArchivedAndReset('ALL')">Archived</button>
-            <div class="btn-group dropdown">
-              <button type="button" id="ByYearId" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                 By Year
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" (click)="GetArchived(2016)">2016</a></li>
-                <li><a class="dropdown-item" (click)="GetArchived(2017)">2017</a></li>
-                <li><a class="dropdown-item" (click)="GetArchived(2018)">2018</a></li>
-              </ul>
-            </div>
-          
->>>>>>> bb52bfcadb49b5d64fc751f143aa74b168a1f609
           </div>
     </div>
 

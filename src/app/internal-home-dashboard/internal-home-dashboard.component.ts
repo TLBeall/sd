@@ -12,8 +12,13 @@ import * as $ from 'jquery';
 })
 export class InternalHomeDashboardComponent implements OnInit {
 
-    selectedYear = "";
-    selectedItem = 1;
+    public ClientArr : ClientList[];
+    public tokenParam : TokenParams;
+  
+    public triggers; 
+    public filters; 
+    public selectedYear: string = (new Date()).getFullYear().toString();
+      selectedItem = 1;
 
     setSelectedItem(id: number){
         this.selectedItem = id;
@@ -35,13 +40,6 @@ export class InternalHomeDashboardComponent implements OnInit {
         $('ul.alphabet > li > a').removeClass('active');
         $('#showAllClientsLi > a').addClass('active');
     }
-
-  public ClientArr : ClientList[];
-  public tokenParam : TokenParams;
-
-  public triggers; 
-  public filters; 
-  public selectedYear: string = (new Date()).getFullYear().toString();
 
   constructor(private _authService: AuthService) { }
 
@@ -92,13 +90,6 @@ export class InternalHomeDashboardComponent implements OnInit {
     this._authService.getClientList(pYear)
     .subscribe(data => {
       this.ClientArr = data;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-    //   $("#ByYearId").html("By Year");
->>>>>>> bb52bfcadb49b5d64fc751f143aa74b168a1f609
->>>>>>> abb0954720397ea38addba2ceaf48557dd143bf6
       $('#alphabetResult').trigger( "click" );
       });   
   }

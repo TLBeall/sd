@@ -1,16 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ContentChildren, HostListener } from '@angular/core';
+
+import { Component } from '@angular/core';
+import { enableProdMode } from '@angular/core';
 import { AuthService } from '../../Services/auth.service';
-import { delay, share } from 'rxjs/operators';
-import { RootReturns } from '../../Models/RootReturns.model';
-import { MailtypeReturnsComponent } from '../mailtype-returns/mailtype-returns.component'
-import { CampaignReturnsComponent } from '../campaign-returns/campaign-returns.component';
-import 'datatables.net';
-import * as $ from 'jquery';
-import { PhaseReturnsComponent } from '../phase-returns/phase-returns.component';
-import { MaillistReturnsComponent } from '../maillist-returns/maillist-returns.component';
-import { ChildElement } from '../../Models/childElement.model';
-import {ActivatedRoute} from "@angular/router";
-import { LoaderService } from '../../Loader/loader.service';
+
+import "ag-grid-enterprise";
 
 @Component({
   selector: 'app-main-returns',
@@ -18,583 +11,184 @@ import { LoaderService } from '../../Loader/loader.service';
   styleUrls: ['./main-returns.component.scss']
 })
 
-export class ReturnsComponent implements OnInit {
+export class ReturnsComponent  {
+  title = 'SD360-Reporting-Angular';
 
-  public innerWidth: any;
-  public mobileStatus:boolean;
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.innerWidth = window.innerWidth;
-    if (this.innerWidth >= 1050){
-      this.mobileStatus = false;
-    } else {
-      this.mobileStatus = true;
-    }
+  private gridApi;
+  private gridColumnApi;
+  private rowData: any;
+  private service: AuthService;
+  private MailTypeRender;
+  private CampaignRender;
+  private PhaseRender;
+  private MailRender;
+
+  private columnDefs = [
+    { headerName: 'Client', field: 'Client', cellRenderer: "agGroupCellRenderer"},
+    { headerName: 'Mailed', field: 'Measure.Mailed', valueFormatter: function(data) {
+      return data.value.substring(5,7) + '/' + data.value.substring(8,10) + '/' + data.value.substring(0,4) } },
+    { headerName: 'Caged', field: 'Measure.Caged', valueFormatter: function(data) {
+      return data.value.substring(5,7) + '/' + data.value.substring(8,10) + '/' + data.value.substring(0,4) }},
+    { headerName: 'Quantity', field: 'Measure.Quantity'},
+    { headerName: 'Donors', field: 'Measure.Donors'},
+    { headerName: 'NonDonors', field: 'Measure.NonDonors'},
+    { headerName: 'NewDonors', field: 'Measure.NewDonors'},
+    { headerName: 'RSP', field: 'Measure.RSP'},
+    { headerName: 'AVG', field: 'Measure.AVG'},
+    { headerName: 'Gross', field: 'Measure.Gross'},
+    { headerName: 'Cost', field: 'Measure.Cost'},
+    { headerName: 'Net', field: 'Measure.Net'},
+    { headerName: 'GPP', field: 'Measure.GPP'},
+    { headerName: 'CLM', field: 'Measure.CLM'},
+    { headerName: 'NLM', field: 'Measure.NLM'},
+    { headerName: 'IO', field: 'Measure.IO'}
+  ];
+
+  constructor(service: AuthService) {
+    this.service = service;
+
+    this.MailRender = {
+      detailGridOptions: {
+        columnDefs: [
+          { headerName: 'Code', field: "MailCode"},
+          { headerName: 'Description', field: "MailDescription" },
+          { headerName: 'Mailed', field: 'Measure.Mailed', valueFormatter: function(data) {
+            return data.value.substring(5,7) + '/' + data.value.substring(8,10) + '/' + data.value.substring(0,4) }},
+          { headerName: 'Caged', field: 'Measure.Caged', valueFormatter: function(data) {
+            return data.value.substring(5,7) + '/' + data.value.substring(8,10) + '/' + data.value.substring(0,4) }},
+          { headerName: 'Quantity', field: 'Measure.Quantity'},
+          { headerName: 'Donors', field: 'Measure.Donors'},
+          { headerName: 'NonDonors', field: 'Measure.NonDonors'},
+          { headerName: 'NewDonors', field: 'Measure.NewDonors'},
+          { headerName: 'RSP', field: 'Measure.RSP'},
+          { headerName: 'AVG', field: 'Measure.AVG'},
+          { headerName: 'Gross', field: 'Measure.Gross'},
+          { headerName: 'Cost', field: 'Measure.Cost'},
+          { headerName: 'Net', field: 'Measure.Net'},
+          { headerName: 'GPP', field: 'Measure.GPP'},
+          { headerName: 'CLM', field: 'Measure.CLM'},
+          { headerName: 'NLM', field: 'Measure.NLM'},
+          { headerName: 'IO', field: 'Measure.IO'}          
+        ],
+        enableSorting: true
+      },    
+      getDetailRowData: function(params) {
+        params.successCallback(params.data.MailList);
+      }
+    };    
+
+    this.PhaseRender = {
+      detailGridOptions: {
+        columnDefs: [
+          { headerName: 'Phase', field: "PhaseName", cellRenderer: "agGroupCellRenderer" },
+          { headerName: 'Mailed', field: 'Measure.Mailed', valueFormatter: function(data) {
+            return data.value.substring(5,7) + '/' + data.value.substring(8,10) + '/' + data.value.substring(0,4) }},
+          { headerName: 'Caged', field: 'Measure.Caged', valueFormatter: function(data) {
+            return data.value.substring(5,7) + '/' + data.value.substring(8,10) + '/' + data.value.substring(0,4) }},
+          { headerName: 'Quantity', field: 'Measure.Quantity'},
+          { headerName: 'Donors', field: 'Measure.Donors'},
+          { headerName: 'NonDonors', field: 'Measure.NonDonors'},
+          { headerName: 'NewDonors', field: 'Measure.NewDonors'},
+          { headerName: 'RSP', field: 'Measure.RSP'},
+          { headerName: 'AVG', field: 'Measure.AVG'},
+          { headerName: 'Gross', field: 'Measure.Gross'},
+          { headerName: 'Cost', field: 'Measure.Cost'},
+          { headerName: 'Net', field: 'Measure.Net'},
+          { headerName: 'GPP', field: 'Measure.GPP'},
+          { headerName: 'CLM', field: 'Measure.CLM'},
+          { headerName: 'NLM', field: 'Measure.NLM'},
+          { headerName: 'IO', field: 'Measure.IO'}          
+        ],
+        enableSorting: true,
+        masterDetail: true,  
+        groupDefaultExpanded: -1, 
+        detailCellRendererParams: this.MailRender
+      },    
+      getDetailRowData: function(params) {
+        params.successCallback(params.data.PhaseList);
+      }
+    };
+
+    this.CampaignRender = {
+      detailGridOptions: {
+        columnDefs: [
+          { headerName: 'Campaign', field: "CampaignName", cellRenderer: "agGroupCellRenderer" },
+          { headerName: 'Mailed', field: 'Measure.Mailed', cellRenderer: function(data) { return '<div _ngcontent-c4=""> Test Click...</div>' + data.value + '</b></div>'}, valueFormatter: function(data) {
+            return data.value.substring(5,7) + '/' + data.value.substring(8,10) + '/' + data.value.substring(0,4) }},
+          { headerName: 'Caged', field: 'Measure.Caged', valueFormatter: function(data) {
+            return data.value.substring(5,7) + '/' + data.value.substring(8,10) + '/' + data.value.substring(0,4) }},
+          { headerName: 'Quantity', field: 'Measure.Quantity'},
+          { headerName: 'Donors', field: 'Measure.Donors'},
+          { headerName: 'NonDonors', field: 'Measure.NonDonors'},
+          { headerName: 'NewDonors', field: 'Measure.NewDonors'},
+          { headerName: 'RSP', field: 'Measure.RSP'},
+          { headerName: 'AVG', field: 'Measure.AVG'},
+          { headerName: 'Gross', field: 'Measure.Gross'},
+          { headerName: 'Cost', field: 'Measure.Cost'},
+          { headerName: 'Net', field: 'Measure.Net'},
+          { headerName: 'GPP', field: 'Measure.GPP'},
+          { headerName: 'CLM', field: 'Measure.CLM'},
+          { headerName: 'NLM', field: 'Measure.NLM'},
+          { headerName: 'IO', field: 'Measure.IO'}          
+        ],
+        enableSorting: true,   
+        masterDetail: true,     
+        groupDefaultExpanded: -1,           
+        detailCellRendererParams: this.PhaseRender
+      },    
+      getDetailRowData: function(params) {
+        params.successCallback(params.data.CampaignList);
+      }
+    };
+
+    this.MailTypeRender = {
+      detailGridOptions: {
+        columnDefs: [
+          { headerName: 'Mail Type', field: "MailType", cellRenderer: "agGroupCellRenderer" },
+          { headerName: 'Mailed', field: 'Measure.Mailed', valueFormatter: function(data) {
+            return data.value.substring(5,7) + '/' + data.value.substring(8,10) + '/' + data.value.substring(0,4) }},
+          { headerName: 'Caged', field: 'Measure.Caged', valueFormatter: function(data) {
+            return data.value.substring(5,7) + '/' + data.value.substring(8,10) + '/' + data.value.substring(0,4) }},
+          { headerName: 'Quantity', field: 'Measure.Quantity'},
+          { headerName: 'Donors', field: 'Measure.Donors'},
+          { headerName: 'NonDonors', field: 'Measure.NonDonors'},
+          { headerName: 'NewDonors', field: 'Measure.NewDonors'},
+          { headerName: 'RSP', field: 'Measure.RSP'},
+          { headerName: 'AVG', field: 'Measure.AVG'},
+          { headerName: 'Gross', field: 'Measure.Gross'},
+          { headerName: 'Cost', field: 'Measure.Cost'},
+          { headerName: 'Net', field: 'Measure.Net'},
+          { headerName: 'GPP', field: 'Measure.GPP'},
+          { headerName: 'CLM', field: 'Measure.CLM'},
+          { headerName: 'NLM', field: 'Measure.NLM'},
+          { headerName: 'IO', field: 'Measure.IO'}          
+        ],
+        enableSorting: true,   
+        masterDetail: true, 
+        groupDefaultExpanded: -1,     
+        detailCellRendererParams: this.CampaignRender
+      },    
+      getDetailRowData: function(params) {
+        params.successCallback(params.data.MailTypeList);
+      }
+    };
   }
 
-  // Capturing child components MailType, Campaign, Phase, Mailist
-
-  @ViewChildren(MaillistReturnsComponent, { read: ElementRef })
-  public maillistChildren: QueryList<ElementRef>;
-  public maillistArr: ChildElement[] = []; // title, className, innerHTML
-
-  @ViewChildren(PhaseReturnsComponent, { read: ElementRef })
-  public phaseChildren: QueryList<ElementRef>;
-  public phaseArr: ChildElement[] = [];
-
-  @ViewChildren(CampaignReturnsComponent, { read: ElementRef })
-  public campaignChildren: QueryList<ElementRef>;
-  public campaignArr: ChildElement[] = [];
-
-  @ViewChild(MailtypeReturnsComponent, { read: ElementRef })
-  public mailTypeChild: ElementRef;
-  public mailTypeArr: ChildElement[] = [];
-
-  public clientDataTable: any;
-  public mailTypeDataTable: any;
-  public campaignDataTable: any;
-  public phaseDataTable: any;
-  public selectedYear: string = "";
-  public dataAvailable: boolean = false;
-  public ErrorMsg: any;
-
-  public RootReturns: RootReturns;
-  public activeClient: string;
-
-
-  @ViewChild('widgetContent', { read: ElementRef })
-  public widgetsContent: ElementRef<any>;
-  public scrollRight(): void {
-    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft + 150), behavior: 'smooth' });
-  }
-  public scrollLeft(): void {
-    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft - 150), behavior: 'smooth' });
+  Alert(){
+    alert("test");
   }
 
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
 
+    this.rowData = this.service.getReturns('FDFL',new Date("01/01/2018"),new Date("12/31/2018"));
 
-  constructor(private _authService: AuthService, route: ActivatedRoute, private loaderService: LoaderService) {
-    route.params.subscribe( params => { 
-      this.activeClient = params["client"]; 
-      this.selectedYear = params["year"];
-    });
-    //loading panel
-    this.loaderService.display(true);
+    // setTimeout(function() {
+    //   params.api.forEachNode(function(node) {
+    //     node.setExpanded(true);
+    //     console.log(node);
+    //   });
+    // }, 100);
   }
-
-  // API Call
-
-  ngOnInit() {
-    $(".clientTable").toggle(false);
-    this._authService.getReturns(this.activeClient, new Date("01/01/" + this.selectedYear), new Date("12/31/" + this.selectedYear))
-      .subscribe(data => {
-        this.RootReturns = data;
-        $(".clientTable").toggle(true);
-        //loading panel
-        this.loaderService.display(false);
-      },
-      error => { 
-          this.ErrorMsg = error.statusText;
-          this.loaderService.display(false);
-          alert(this.ErrorMsg);
-      }
-    );
-    }
-
-  ngAfterViewInit() {
-    this.PrepArrays();
-    this.GeneratePage();
-  }
-
-  // Expand All, iterating through all tables
-
-  ExpandAll() {
-    this.clientDataTable.rows().every(function () {      // Default expand single client row and create child row
-      var tableHeader = $('.clientTableHeader');
-      var tr = $(this.node());
-      var row = this.row(tr);
-      row.child.show();
-      tableHeader.css("visibility", "hidden");
-      for (var j = 1; j < 25; j++) {
-        var nodes = this.column(j).nodes();
-        $(nodes[row.index()]).addClass('hideParentRow');
-      }
-      tr.addClass('shown');
-    });
-
-    for (var mailTypeIdx = 0; mailTypeIdx < $('table.mailTypeTable').length; mailTypeIdx++) { // multiple campaign tables
-      this.mailTypeDataTable.tables(mailTypeIdx).rows().every(function () {      // Default expand and create child rows
-        var tableHeader = $('.mailTypeTableHeader');
-        var tr = $(this.node());
-        var row = this.row(tr);
-        row.child.show();
-        tableHeader.css("visibility", "collapse");
-        for (var j = 1; j < 25; j++) {
-          var nodes = this.column(j).nodes();
-          $(nodes[row.index()]).addClass('hideParentRow');
-        }
-        tr.addClass('shown');
-      });
-    }
-
-    for (var campaignIdx = 0; campaignIdx < $('table.campaignTable').length; campaignIdx++) { // multiple campaign tables
-      this.campaignDataTable.tables(campaignIdx).rows().every(function () {      // Default expand and create child rows
-        var tableHeader = $('.campaignTableHeader');
-        var tr = $(this.node());
-        var row = this.row(tr);
-        row.child.show();
-        tableHeader.css("visibility", "collapse");
-        for (var j = 1; j < 25; j++) {
-          var nodes = this.column(j).nodes();
-          $(nodes[row.index()]).addClass('hideParentRow');
-        }
-        tr.addClass('shown');
-      });
-    }
-
-    for (var phaseIdx = 0; phaseIdx < $('table.phaseTable').length; phaseIdx++) { // multiple campaign tables
-      this.phaseDataTable.tables(phaseIdx).rows().every(function () {      // Default expand and create child rows
-        var tableHeader = $('.phaseTableHeader');
-        var tr = $(this.node());
-        var row = this.row(tr);
-        row.child.show();
-        tableHeader.css("visibility", "collapse");
-        for (var j = 1; j < 25; j++) {
-          var nodes = this.column(j).nodes();
-          $(nodes[row.index()]).addClass('hideParentRow');
-        }
-        tr.addClass('shown');
-        $('div.slider', row.child()).slideDown();
-      });
-    }
-  }
-
-  // Collapse all, iterating through all tables
-
-  CollapseAll() {
-
-    for (var phaseIdx = 0; phaseIdx < $('table.phaseTable').length; phaseIdx++) { // multiple campaign tables
-      this.phaseDataTable.tables(phaseIdx).rows().every(function () {      // Default expand and create child rows
-        var tableHeader = $('.phaseTableHeader');
-        var tr = $(this.node());
-        var row = this.row(tr);
-        row.child.hide();
-        tableHeader.css("visibility", "initial");
-        for (var j = 1; j < 25; j++) {
-          var nodes = this.column(j).nodes();
-          $(nodes[row.index()]).removeClass('hideParentRow');
-        }
-        tr.removeClass('shown');
-      });
-    }
-
-    for (var campaignIdx = 0; campaignIdx < $('table.campaignTable').length; campaignIdx++) { // multiple campaign tables
-      this.campaignDataTable.tables(campaignIdx).rows().every(function () {      // Default expand and create child rows
-        var tableHeader = $('.campaignTableHeader');
-        var tr = $(this.node());
-        var row = this.row(tr);
-        row.child.hide();
-        tableHeader.css("visibility", "initial");
-        for (var j = 1; j < 25; j++) {
-          var nodes = this.column(j).nodes();
-          $(nodes[row.index()]).removeClass('hideParentRow');
-        }
-        tr.removeClass('shown');
-      });
-    }
-
-    for (var mailTypeIdx = 0; mailTypeIdx < $('table.mailTypeTable').length; mailTypeIdx++) { // multiple campaign tables
-      this.mailTypeDataTable.tables(mailTypeIdx).rows().every(function () {      // Default expand and create child rows
-        var tableHeader = $('.mailTypeTableHeader');
-        var tr = $(this.node());
-        var row = this.row(tr);
-        row.child.hide();
-        tableHeader.css("visibility", "initial");
-        for (var j = 1; j < 25; j++) {
-          var nodes = this.column(j).nodes();
-          $(nodes[row.index()]).removeClass('hideParentRow');
-        }
-        tr.removeClass('shown');
-      });
-    }
-
-    this.clientDataTable.rows().every(function () {      // Default expand single client row and create child row
-      var tableHeader = $('.clientTableHeader');
-      var tr = $(this.node());
-      var row = this.row(tr);
-      row.child.hide();
-      tableHeader.css("visibility", "initial");
-      for (var j = 1; j < 25; j++) {
-        var nodes = this.column(j).nodes();
-        $(nodes[row.index()]).removeClass('hideParentRow');
-      }
-      tr.removeClass('shown');
-    });
-
-  }
-
-  // Storing all descendants (child components) in array
-
-  private PrepArrays(): void {
-    var MailTypeChild = this.mailTypeChild;
-    this.mailTypeArr.push({ 'title': MailTypeChild.nativeElement.title, 'innerHTML': MailTypeChild.nativeElement.getElementsByClassName('mailtypediv')[0].innerHTML });
-
-    var CampaignChildrenData = this.campaignChildren;
-    CampaignChildrenData.forEach(p => {
-      this.campaignArr.push({ 'title': p.nativeElement.title, 'innerHTML': p.nativeElement.getElementsByClassName('campaigndiv')[0].innerHTML });
-    });
-
-    var PhaseChildrenData = this.phaseChildren;
-    PhaseChildrenData.forEach(p => {
-      this.phaseArr.push({ 'title': p.nativeElement.title, 'innerHTML': p.nativeElement.getElementsByClassName('phasediv')[0].innerHTML });
-    });
-
-    var MailListChildrenData = this.maillistChildren;
-    MailListChildrenData.forEach(p => {
-      this.maillistArr.push({ 'title': p.nativeElement.title, 'innerHTML': p.nativeElement.getElementsByClassName('maillistdiv')[0].innerHTML });
-    });
-
-    var id = this.campaignArr.findIndex(p => p.title == "House");
-  }
-
-  // Main function to generate all page
-
-  private GeneratePage(): void {
-    let clientTable: any = $('table.clientTable');
-
-    this.clientDataTable = clientTable.DataTable({
-      "columnDefs": [
-        { targets: 0, className: "buttonColumn"},
-        { targets: 1, className: "clientColumn"},
-        { targets: 2, className: "descriptionColumn"},
-        {
-            targets: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], className: "tableSmallColumns"
-        },
-    ],
-      "select": true,
-      "autoWidth": false,
-      "paging": false,
-      "info": false,
-      "searching": false,
-      "ordering": true,
-      initComplete: function () {
-      }
-    });
-
-    $(".mailtypediv").remove();
-    $(".campaigndiv").remove();
-    $(".phasediv").remove();
-    $(".maillistdiv").remove();
-
-    var mailTypeArr = this.mailTypeArr;
-    this.clientDataTable.rows().every(function () {      // Default expand single client row and create child row
-      var tableHeader = $('.clientTableHeader');
-      var tr = $(this.node());
-      var row = this.row(tr);
-      var id = mailTypeArr.findIndex(p => p.title == row.data()[1]);
-      var childHTML = mailTypeArr[id].innerHTML;
-      row.child(childHTML).show();
-      tableHeader.css("visibility", "hidden");
-      for (var j = 1; j < 25; j++) {
-        var nodes = this.column(j).nodes();
-        $(nodes[row.index()]).addClass('hideParentRow');
-      }
-      tr.addClass('shown');
-    });
-
-    let mailTypeTable: any = $('table.mailTypeTable');
-
-    this.mailTypeDataTable = mailTypeTable.DataTable({
-      "columnDefs": [
-        { targets: 0, className: "buttonColumn"},
-        { targets: 1, className: "mailTypeColumn"},
-        { targets: 2, className: "descriptionColumn"},
-        {
-            targets: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], className: "tableSmallColumns"
-        },
-    ],
-      "select": true,
-      "autoWidth": false,
-      "paging": false,
-      "info": false,
-      "searching": false,
-      "ordering": true,
-      initComplete: function () {
-      }
-    });
-
-    var CampaignArr = this.campaignArr;
-
-    this.mailTypeDataTable.rows().every(function () {      // Default expand and create child rows
-      var tableHeader = $('.mailTypeTableHeader');
-      var tr = $(this.node());
-      var row = this.row(tr);
-      var id = CampaignArr.findIndex(p => p.title == row.data()[1]);
-      var childHTML = CampaignArr[id].innerHTML;
-      row.child(childHTML).show();
-      tableHeader.css("visibility", "collapse");
-      for (var j = 1; j < 25; j++) {
-        var nodes = this.column(j).nodes();
-        $(nodes[row.index()]).addClass('hideParentRow');
-      }
-      tr.addClass('shown');
-    });
-
-    let campaignTable: any = $('table.campaignTable');
-
-    this.campaignDataTable = campaignTable.DataTable({
-      "columnDefs": [
-        { targets: 0, className: "buttonColumn"},
-        { targets: 1, className: "campaignColumn"},
-        { targets: 2, className: "descriptionColumn"},
-        {
-            targets: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], className: "tableSmallColumns"
-        },
-    ],
-      "select": true,
-      "autoWidth": false,
-      "paging": false,
-      "info": false,
-      "searching": false,
-      "ordering": true,
-      initComplete: function () {
-      }
-    });
-
-    var PhaseArr = this.phaseArr;
-
-    for (var campaignIdx = 0; campaignIdx < $('table.campaignTable').length; campaignIdx++) { // multiple campaign tables
-      this.campaignDataTable.tables(campaignIdx).rows().every(function () {      // Default expand and create child rows
-        var tableHeader = $('.campaignTableHeader');
-        var tr = $(this.node());
-        var row = this.row(tr);
-        var id = PhaseArr.findIndex(p => p.title == row.data()[1]);
-        var childHTML = PhaseArr[id].innerHTML;
-        row.child(childHTML).show();
-        tableHeader.css("visibility", "collapse");
-        for (var j = 1; j < 25; j++) {
-          var nodes = this.column(j).nodes();
-          $(nodes[row.index()]).addClass('hideParentRow');
-        }
-        tr.addClass('shown');
-      });
-    }
-
-    let phaseTable: any = $('table.phaseTable');
-
-    this.phaseDataTable = phaseTable.DataTable({
-      "columnDefs": [
-        { targets: 0, className: "buttonColumn"},
-        { targets: 1, className: "phaseColumn"},
-        { targets: 2, className: "code-desc-buffer"},
-        { targets: 3, className: "descriptionColumn"},
-        
-        {
-            targets: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], className: "tableSmallColumns"
-        },
-    ],
-      "select": true,
-      "autoWidth": false,
-      "paging": false,
-      "info": false,
-      "searching": false,
-      "ordering": true,
-      initComplete: function () {
-      }
-    });
-
-    var maillistArr = this.maillistArr;
-
-    for (var phaseIdx = 0; phaseIdx < $('table.phaseTable').length; phaseIdx++) { // multiple campaign tables
-      this.phaseDataTable.tables(phaseIdx).rows().every(function () {      // Default expand and create child rows
-        var tableHeader = $('.phaseTableHeader');
-        var tr = $(this.node());
-        var row = this.row(tr);
-        var id = maillistArr.findIndex(p => p.title == row.data()[1]);
-        var childHTML = maillistArr[id].innerHTML;
-        row.child(childHTML).show();
-        tableHeader.css("visibility", "collapse");
-        for (var j = 1; j < 25; j++) {
-          var nodes = this.column(j).nodes();
-          $(nodes[row.index()]).addClass('hideParentRow');
-        }
-        tr.addClass('shown');
-      });
-    }
-
-    let maillistTable: any = $('table.maillistTable');
-
-    maillistTable.DataTable({
-        "columnDefs": [
-          { targets: 0, className: "buttonColumn"},
-          { targets: 1, className: "mailcodeColumn"},
-          { targets: 2, className: "code-desc-buffer"},
-          { targets: 3, className: "descriptionColumn"},
-          {
-              targets: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], className: "tableSmallColumns"
-          },
-      ],
-      "select": true,
-      "autoWidth": false,
-      "paging": false,
-      "info": false,
-      "searching": false,
-      "ordering": true,
-      initComplete: function () {
-      }
-    });
-
-    // Handle expand/collapse of Client
-    var clientDataTable = this.clientDataTable;
-    $('table.clientTable tbody').on('click', 'div.details-control', function () {
-      var tr = $(this).closest('tr');
-      var row = clientDataTable.row(tr);
-      var tableHeader = $('.clientTableHeader');
-      if (row.child.isShown()) {
-        row.child.hide();
-        tr.removeClass('shown');
-        if (row.index() == 0)
-          tableHeader.css("visibility", "initial");
-        for (var i = 1; i < 25; i++) {
-          var nodes = row.column(i).nodes();
-          $(nodes[row.index()]).removeClass('hideParentRow');
-        }
-      }
-      else {
-        row.child.show();
-        tr.addClass('shown');
-        tr.addClass('testGrey');
-        tableHeader.css("visibility", "hidden");
-        for (var i = 1; i < 25; i++) {
-          var nodes = row.column(i).nodes();
-          $(nodes[row.index()]).addClass('hideParentRow');
-        }
-      }
-    });
-
-     // Handle expand/collapse of Mail Type
-    var mailTypeDataTable = this.mailTypeDataTable;
-    $('table.mailTypeTable tbody').on('click', 'div.mdetails-control', function () {
-      var tr = $(this).closest('tr');
-      var row = mailTypeDataTable.row(tr);
-      var tableHeader = $('.mailTypeTableHeader');
-      var mailType = row.data()[1];
-      var index = 0;
-      for (var idx = 0; idx < row.column(i).nodes().length; idx++) {
-        if (row.column(1).nodes()[idx].innerHTML == mailType) {
-          index = idx;
-          break;
-        }
-      }
-
-      if (row.child.isShown()) {
-        row.child.hide();
-        tr.removeClass('shown');
-        if (row.index() == 0)
-          tableHeader.css("visibility", "initial");
-        for (var i = 1; i < 25; i++) {
-          var nodes = row.column(i).nodes();
-          $(nodes[index]).removeClass('hideParentRow');
-        }
-      }
-      else {
-        row.child.show();
-        tr.addClass('shown');
-        tableHeader.css("visibility", "collapse");
-        for (var i = 1; i < 25; i++) {
-          var nodes = row.column(i).nodes();
-          $(nodes[index]).addClass('hideParentRow');
-        }
-      }
-    });
-
-    // Handle expand/collapse of Campaign
-    var campaignDataTable = this.campaignDataTable;
-    $('table.campaignTable tbody').on('click', 'div.cdetails-control', function () { 
-      var tr = $(this).closest('tr');
-      var row = campaignDataTable.tables().row(tr);
-      var tableHeader = $('.campaignTableHeader');
-
-      var campaign = row.data()[1];
-      var index = 0;
-      for (var idx = 0; idx < row.column(i).nodes().length; idx++) {
-        if (row.column(1).nodes()[idx].innerHTML == campaign) {
-          index = idx;
-          break;
-        }
-      }
-
-      if (row.child.isShown()) {
-        row.child.hide();
-        tr.removeClass('shown');
-        if (row.index() == 0)
-          tableHeader.css("visibility", "initial");
-        for (var i = 1; i < 25; i++) {
-          var nodes = row.column(i).nodes();
-          $(nodes[index]).removeClass('hideParentRow');
-        }
-      }
-      else {
-        row.child.show();
-        tr.addClass('shown');
-        tableHeader.css("visibility", "collapse");
-        for (var i = 1; i < 25; i++) {
-          var nodes = row.column(i).nodes();
-          $(nodes[index]).addClass('hideParentRow');
-        }
-      }
-    });
-
-    // Handle expand/collapse of Phase
-    var phaseDataTable = this.phaseDataTable;
-    $('table.phaseTable tbody').on('click', 'div.pdetails-control', function () {
-      var tr = $(this).closest('tr');
-      var row = phaseDataTable.tables().row(tr);
-      var tableHeader = $('.phaseTableHeader');
-
-      var phase = row.data()[1];
-      var index = 0;
-      for (var idx = 0; idx < row.column(i).nodes().length; idx++) {
-        if (row.column(1).nodes()[idx].innerHTML == phase) {
-          index = idx;
-          break;
-        }
-      }
-
-      if (row.child.isShown()) {
-
-        $('div.slider', row.child()).slideUp(function () {
-          row.child.hide();
-          tr.removeClass('shown');
-          tableHeader.css("visibility", "initial");
-      });
-
-
-
-        // row.child.hide();
-        // tr.removeClass('shown');
-        // if (row.index() == 0)
-        //   tableHeader.css("visibility", "initial");
-        for (var i = 1; i < 25; i++) {
-          var nodes = row.column(i).nodes();
-          $(nodes[index]).removeClass('hideParentRow');
-        }
-      }
-      else {
-        // row.child.show();
-        
-
-        row.child.show();
-        tableHeader.css("visibility", "collapse");
-        for (var i = 1; i < 25; i++) {
-          var nodes = row.column(i).nodes();
-          $(nodes[index]).addClass('hideParentRow');
-        }
-        tr.addClass('shown');
-        $('div.slider', row.child()).slideDown();
-      }
-    });
-
-  }
-
 }

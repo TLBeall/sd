@@ -1,32 +1,31 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, platformBrowser } from '@angular/platform-browser';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { TokenParams} from './Models/TokenParams.model';
 import { AuthService } from './Services/auth.service';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
+// import {AppModuleNgFactory} from "../aot/app/app.module.ngfactory";
+
+import { AgGridModule } from 'ag-grid-angular';
 
 import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
-import { MailtypeReturnsComponent } from './Returns/mailtype-returns/mailtype-returns.component';
-import { CampaignReturnsComponent } from './Returns/campaign-returns/campaign-returns.component';
-import { PhaseReturnsComponent } from './Returns/phase-returns/phase-returns.component';
-import { MaillistReturnsComponent } from './Returns/maillist-returns/maillist-returns.component';
 import { LoaderService } from './Loader/loader.service';
 import { LoaderComponent } from './Loader/loader.component';
 import { ListPerformanceComponent } from './returns/Subviews/list-performance/list-performance.component';
 
 
+import {LicenseManager} from "ag-grid-enterprise";
+LicenseManager.setLicenseKey("Evaluation_License_Valid_Until__7_November_2018__MTU0MTU0ODgwMDAwMA==85765fef4e02a59e323b51600fb9fea3");
+
+// platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
+
 @NgModule({
   declarations: [
     AppComponent,
     NavigationBarComponent,
-    MailtypeReturnsComponent,
-    CampaignReturnsComponent,
-    PhaseReturnsComponent,
-    MaillistReturnsComponent,
     routingComponents,
     LoaderComponent,
     ListPerformanceComponent
@@ -37,7 +36,8 @@ import { ListPerformanceComponent } from './returns/Subviews/list-performance/li
     HttpClientModule,
     RouterModule,
     AppRoutingModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    AgGridModule.withComponents([])
   ],
   providers: [
     AuthService,

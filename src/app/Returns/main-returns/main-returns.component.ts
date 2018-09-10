@@ -1,7 +1,9 @@
 
 import { Component } from '@angular/core';
 import { enableProdMode } from '@angular/core';
+import { LoaderService } from '../../Loader/loader.service';
 import { AuthService } from '../../Services/auth.service';
+import {ActivatedRoute} from "@angular/router";
 
 import "ag-grid-enterprise";
 
@@ -22,6 +24,8 @@ export class ReturnsComponent  {
   private CampaignRender;
   private PhaseRender;
   private MailRender;
+  private activeClient;
+  private selectedYear;
 
   private columnDefs = [
     { headerName: 'Client', field: 'Client', cellRenderer: "agGroupCellRenderer"},
@@ -44,8 +48,12 @@ export class ReturnsComponent  {
     { headerName: 'IO', field: 'Measure.IO'}
   ];
 
-  constructor(service: AuthService) {
+  constructor(service: AuthService, route: ActivatedRoute, private loaderService: LoaderService) {
     this.service = service;
+    route.params.subscribe( params => { 
+      this.activeClient = params["client"]; 
+      this.selectedYear = params["year"];
+    });
 
     this.MailRender = {
       detailGridOptions: {
@@ -174,21 +182,9 @@ export class ReturnsComponent  {
     };
   }
 
-  Alert(){
-    alert("test");
-  }
-
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-
-    this.rowData = this.service.getReturns('FDFL',new Date("01/01/2018"),new Date("12/31/2018"));
-
-    // setTimeout(function() {
-    //   params.api.forEachNode(function(node) {
-    //     node.setExpanded(true);
-    //     console.log(node);
-    //   });
-    // }, 100);
+    this.rowData = this.service.getReturns(this.activeClient, new Date("01/01/" + this.selectedYear), new Date("12/31/" + this.selectedYear));
   }
 }

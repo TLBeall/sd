@@ -7,6 +7,7 @@ import { TokenParams } from '../Models/TokenParams.model';
 import { ClientList } from '../Models/ClientList.model';
 import { RootReturns } from '../Models/RootReturns.model';
 import { ListPerformance } from '../Models/ListPerformance.model';
+import { NewReturns } from '../Models/NewReturns.model';
 // import { LoaderService } from '../loader/loader.service';
 
 @Injectable()
@@ -39,6 +40,14 @@ export class AuthService {
   getReturns(client: string, startDate: Date, endDate: Date):Observable<RootReturns> {
     var Token = "";
     var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/MainReturns?ClientAcronym="+ client + "&startdate=" + startDate.toDateString() + "&enddate=" + endDate.toDateString();
+
+    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  }
+
+  getNewReturns(client: string, startDate: Date, endDate: Date):Observable<NewReturns[]> {
+    var Token = "";
+    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/PullReturns?ClientAcronym="+ client + "&startdate=" + startDate.toDateString() + "&enddate=" + endDate.toDateString();
 
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
     return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));

@@ -1,5 +1,5 @@
 <div style="margin-top: 100px"></div>
-<ag-grid-angular 
+<!-- <ag-grid-angular 
     style="width: 1500px; height: 800px;" 
     class="ag-theme-balham"
     [enableSorting]="true"
@@ -9,6 +9,16 @@
     [columnDefs]="columnDefs"  
     [detailCellRendererParams]="MailTypeRender"
     [groupDefaultExpanded] = "-1"   
+    (gridReady)="onGridReady($event)"  
+    >
+</ag-grid-angular> -->
+<ag-grid-angular 
+    style="width: 90%; height: 90%;" 
+    class="ag-theme-balham"
+    [enableSorting]="true"
+    [enableFilter]="true"
+    [rowData]="rowData" 
+    [columnDefs]="columnDefs"  
     (gridReady)="onGridReady($event)"  
     >
 </ag-grid-angular>

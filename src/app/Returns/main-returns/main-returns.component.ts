@@ -6,6 +6,7 @@ import { AuthService } from '../../Services/auth.service';
 import {ActivatedRoute} from "@angular/router";
 
 import "ag-grid-enterprise";
+import { NewReturns } from '../../Models/NewReturns.model';
 
 @Component({
   selector: 'app-main-returns',
@@ -18,7 +19,7 @@ export class ReturnsComponent  {
 
   private gridApi;
   private gridColumnApi;
-  private rowData: any[];
+  private rowData: NewReturns[];
   private service: AuthService;
   private activeClient;
   private selectedYear;
@@ -55,7 +56,7 @@ export class ReturnsComponent  {
     // { headerName: 'CLM', field: 'CLM'},
     // { headerName: 'NLM', field: 'NLM'},
     // { headerName: 'IO', field: 'IO'}
-  ];
+  ];  
 
   // private columnDefs = [
   //   { headerName: 'Client', field: 'Client', cellRenderer: "agGroupCellRenderer"},
@@ -84,7 +85,7 @@ export class ReturnsComponent  {
       this.activeClient = params["client"]; 
       this.selectedYear = params["year"];
     });
-      }
+  }
 
   //   this.MailRender = {
   //     detailGridOptions: {
@@ -216,6 +217,7 @@ export class ReturnsComponent  {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    this.rowData = this.service.getNewReturns(this.activeClient, new Date("01/01/" + this.selectedYear), new Date("12/31/" + this.selectedYear));
+    this.service.getNewReturns(this.activeClient, new Date("01/01/" + this.selectedYear), new Date("12/31/" + this.selectedYear)).subscribe( data =>
+    { this.rowData = data });
   }
 }

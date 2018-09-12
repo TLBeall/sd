@@ -18,6 +18,7 @@ import { ListPerformanceComponent } from './returns/Subviews/list-performance/li
 
 
 import {LicenseManager} from "ag-grid-enterprise";
+import { GroupRowInnerRenderer } from './group-row-inner-render/group-row-inner-render.component';
 LicenseManager.setLicenseKey("Evaluation_License_Valid_Until__7_November_2018__MTU0MTU0ODgwMDAwMA==85765fef4e02a59e323b51600fb9fea3");
 
 // platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
@@ -28,7 +29,8 @@ LicenseManager.setLicenseKey("Evaluation_License_Valid_Until__7_November_2018__M
     NavigationBarComponent,
     routingComponents,
     LoaderComponent,
-    ListPerformanceComponent
+    ListPerformanceComponent,
+    GroupRowInnerRenderer
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,7 @@ LicenseManager.setLicenseKey("Evaluation_License_Valid_Until__7_November_2018__M
     RouterModule,
     AppRoutingModule,
     AngularFontAwesomeModule,
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([GroupRowInnerRenderer])
   ],
   providers: [
     AuthService,

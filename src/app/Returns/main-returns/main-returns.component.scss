@@ -1,3 +1,6 @@
+.number-cell {
+    text-align: right;
+}
 .toolbar {
     width: 100%;
     background-color: 	white;
@@ -101,6 +104,7 @@ td, th{
 
 /*NOTE ON COLUMN WIDTHS*/
 /*For tables, min-width works, but use just width instead of max-width*/
+
 .buttonColumn{
     width:25px;
     min-width:25px;

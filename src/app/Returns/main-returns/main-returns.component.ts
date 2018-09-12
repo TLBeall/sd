@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 import { enableProdMode } from '@angular/core';
 import { LoaderService } from '../../Loader/loader.service';
 import { AuthService } from '../../Services/auth.service';
-import {ActivatedRoute} from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
+import { GroupRowInnerRenderer } from '../../group-row-inner-render/group-row-inner-render.component'
 
 import "ag-grid-enterprise";
 import { NewReturns } from '../../Models/NewReturns.model';
@@ -14,7 +15,7 @@ import { NewReturns } from '../../Models/NewReturns.model';
   styleUrls: ['./main-returns.component.scss']
 })
 
-export class ReturnsComponent  {
+export class ReturnsComponent {
   title = 'SD360-Reporting-Angular';
 
   private gridApi;
@@ -23,6 +24,10 @@ export class ReturnsComponent  {
   private service: AuthService;
   private activeClient;
   private selectedYear;
+  private columnDefs
+  private frameworkComponents;
+  private groupRowInnerRenderer;
+  private groupRowRendererParams;
 
   // private gridApi;
   // private gridColumnApi;
@@ -34,29 +39,6 @@ export class ReturnsComponent  {
   // private MailRender;
   // private activeClient;
   // private selectedYear;
-
-  private columnDefs = [
-    { headerName: 'Mail type', field: 'MailType', rowGroup: true },
-    { headerName: 'Campaign', field: 'CampaignName', rowGroup: true },
-    { headerName: 'Phase', field: 'PhaseName', rowGroup: true },
-    { headerName: 'Mail Code', field: 'MailCode' },
-    { headerName: 'Description', field: 'MailDescription' },
-    // { headerName: 'Mailed', field: 'Mailed'},
-    // { headerName: 'Caged', field: 'Caged'},
-    { headerName: 'Quantity', field: 'Quantity'}
-    // { headerName: 'Donors', field: 'Donors'},
-    // { headerName: 'NonDonors', field: 'NonDonors'},
-    // { headerName: 'NewDonors', field: 'NewDonors'},
-    // { headerName: 'RSP', field: 'RSP'},
-    // { headerName: 'AVG', field: 'AVG'},
-    // { headerName: 'Gross', field: 'Gross'},
-    // { headerName: 'Cost', field: 'Cost'},
-    // { headerName: 'Net', field: 'Net'},
-    // { headerName: 'GPP', field: 'GPP'},
-    // { headerName: 'CLM', field: 'CLM'},
-    // { headerName: 'NLM', field: 'NLM'},
-    // { headerName: 'IO', field: 'IO'}
-  ];  
 
   // private columnDefs = [
   //   { headerName: 'Client', field: 'Client', cellRenderer: "agGroupCellRenderer"},
@@ -81,10 +63,64 @@ export class ReturnsComponent  {
 
   constructor(service: AuthService, route: ActivatedRoute, private loaderService: LoaderService) {
     this.service = service;
-    route.params.subscribe( params => { 
-      this.activeClient = params["client"]; 
+    route.params.subscribe(params => {
+      this.activeClient = params["client"];
       this.selectedYear = params["year"];
     });
+    this.columnDefs    = [
+      { headerName: 'Type', field: 'MailType', width:80, hide: true, rowGroup: true },
+      { headerName: 'Campaign', field: 'CampaignName', width:80, hide: true, rowGroup: true },
+      { headerName: 'Phase', field: 'PhaseName', width:80, hide: true, rowGroup: true },
+      { headerName: 'Code', width:100, field: 'MailCode' },
+      { headerName: 'Description', width:220, field: 'MailDescription' },
+      { headerName: 'Mailed', field: 'Mailed',  width:80, valueFormatter: dateFormatter },
+      { headerName: 'Caged', field: 'Caged',  width:80, valueFormatter: dateFormatter },
+      { headerName: 'Qty', width:70, field: 'Quantity', aggFunc: "sum", valueFormatter: quantityFormatter, cellClass: "number-cell"},
+      { headerName: 'Don', width:70, field: 'Donors', aggFunc: "sum", valueFormatter: quantityFormatter, cellClass: "number-cell"},
+      { headerName: 'Non', width:70, field: 'NonDonors', aggFunc: "sum", valueFormatter: quantityFormatter, cellClass: "number-cell"},
+      { headerName: 'New', width:60, field: 'NewDonors', aggFunc: "sum", valueFormatter: quantityFormatter, cellClass: "number-cell"},
+      { headerName: 'RSP', width:70, field: 'RSP', valueFormatter: numberFormatter, cellClass: "number-cell"},
+      { headerName: 'AVG', width:70, valueFormatter: currencyFormatter, field: 'AVG', cellClass: "number-cell"},
+      { headerName: 'Gross', width:100, valueFormatter: currencyFormatter, field: 'Gross', aggFunc: "sum", cellClass: "number-cell"},
+      { headerName: 'Cost', width:100, valueFormatter: currencyFormatter, field: 'Cost', aggFunc: "sum", cellClass: "number-cell"},
+      { headerName: 'Net', width:100, valueFormatter: currencyFormatter, field: 'Net', aggFunc: "sum", cellClass: "number-cell"},
+      { headerName: 'GPP', width:60, valueFormatter: currencyFormatter, field: 'GPP', cellClass: "number-cell", 
+      valueGetter: function (params) {
+        if (params.data)
+        {
+        if (params.data.Quantity > 0)        
+        return params.data.Gross /  params.data.Quantity;
+        else
+        return 0;
+        }
+        else
+        return 0;
+      }
+    },
+      { headerName: 'CLM', width:60, valueFormatter: currencyFormatter, field: 'CLM', cellClass: "number-cell"},
+      { headerName: 'NLM', width:60, valueFormatter: currencyFormatter, field: 'NLM', cellClass: "number-cell"},
+      { headerName: 'IO', width:60, valueFormatter: numberFormatter , field: 'IO', cellClass: "number-cell"}
+    ];
+  
+    this.frameworkComponents = { groupRowInnerRenderer: GroupRowInnerRenderer };
+    this.groupRowInnerRenderer = "GroupRowInnerRenderer";
+    // this.groupRowRendererParams = {
+    //   flagCodes: {
+    //     Ireland: "ie",
+    //     "United States": "us",
+    //     Russia: "ru",
+    //     Australia: "au",
+    //     Canada: "ca",
+    //     Norway: "no",
+    //     China: "cn",
+    //     Zimbabwe: "zw",
+    //     Netherlands: "nl",
+    //     "South Korea": "kr",
+    //     Croatia: "hr",
+    //     France: "fr"
+    //   }
+    // };
+  
   }
 
   //   this.MailRender = {
@@ -217,7 +253,34 @@ export class ReturnsComponent  {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    this.service.getNewReturns(this.activeClient, new Date("01/01/" + this.selectedYear), new Date("12/31/" + this.selectedYear)).subscribe( data =>
-    { this.rowData = data });
+    params.api.sizeColumnsToFit();
+    this.service.getNewReturns(this.activeClient, new Date("01/01/" + this.selectedYear), new Date("12/31/" + this.selectedYear)).subscribe(data => { this.rowData = data });
   }
 }
+
+  function currencyFormatter(params) {
+    if(params.value)
+      return "$" + params.value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return "";
+  }
+  function numberFormatter(params) {
+    if(params.value)
+      return params.value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return "";
+  }
+  function quantityFormatter(params) {
+    if(params.value)
+      return params.value.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return "";
+  }
+
+  function dateFormatter (params) {
+    if (params.value)
+    return params.value.substring(5,7) + '/' + params.value.substring(8,10) + '/' + params.value.substring(2,4);
+    else
+    return "";
+  }
+  // function round(value, decimals) {
+  //   return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+  // }
+

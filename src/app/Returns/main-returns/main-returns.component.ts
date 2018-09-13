@@ -18,48 +18,17 @@ import { NewReturns } from '../../Models/NewReturns.model';
 export class ReturnsComponent {
   title = 'SD360-Reporting-Angular';
 
-  private gridApi;
-  private gridColumnApi;
-  private rowData: NewReturns[];
+  private rowData: any;
   private service: AuthService;
   private activeClient;
   private selectedYear;
-  private columnDefs
-  private frameworkComponents;
-  private groupRowInnerRenderer;
-  private groupRowRendererParams;
+  private expandedElement: any;
 
-  // private gridApi;
-  // private gridColumnApi;
-  // private rowData: any;
-  // private service: AuthService;
-  // private MailTypeRender;
-  // private CampaignRender;
-  // private PhaseRender;
-  // private MailRender;
-  // private activeClient;
-  // private selectedYear;
-
-  // private columnDefs = [
-  //   { headerName: 'Client', field: 'Client', cellRenderer: "agGroupCellRenderer"},
-  //   { headerName: 'Mailed', field: 'Measure.Mailed', valueFormatter: function(data) {
-  //     return data.value.substring(5,7) + '/' + data.value.substring(8,10) + '/' + data.value.substring(0,4) } },
-  //   { headerName: 'Caged', field: 'Measure.Caged', valueFormatter: function(data) {
-  //     return data.value.substring(5,7) + '/' + data.value.substring(8,10) + '/' + data.value.substring(0,4) }},
-  //   { headerName: 'Quantity', field: 'Measure.Quantity'},
-  //   { headerName: 'Donors', field: 'Measure.Donors'},
-  //   { headerName: 'NonDonors', field: 'Measure.NonDonors'},
-  //   { headerName: 'NewDonors', field: 'Measure.NewDonors'},
-  //   { headerName: 'RSP', field: 'Measure.RSP'},
-  //   { headerName: 'AVG', field: 'Measure.AVG'},
-  //   { headerName: 'Gross', field: 'Measure.Gross'},
-  //   { headerName: 'Cost', field: 'Measure.Cost'},
-  //   { headerName: 'Net', field: 'Measure.Net'},
-  //   { headerName: 'GPP', field: 'Measure.GPP'},
-  //   { headerName: 'CLM', field: 'Measure.CLM'},
-  //   { headerName: 'NLM', field: 'Measure.NLM'},
-  //   { headerName: 'IO', field: 'Measure.IO'}
-  // ];
+  clientDisplayedColumns: string[] = ['Client', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
+  mailTypeDisplayedColumns: string[] = ['MailType', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
+  campaignDisplayedColumns: string[] = ['CampaignName', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
+  phaseDisplayedColumns: string[] = ['PhaseName', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
+  mailListDisplayedColumns: string[] = ['MailCode', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
 
   constructor(service: AuthService, route: ActivatedRoute, private loaderService: LoaderService) {
     this.service = service;
@@ -273,12 +242,6 @@ export class ReturnsComponent {
       return params.value.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return "";
   }
-
-  function dateFormatter (params) {
-    if (params.value)
-    return params.value.substring(5,7) + '/' + params.value.substring(8,10) + '/' + params.value.substring(2,4);
-    else
-    return "";
   }
   // function round(value, decimals) {
   //   return Number(Math.round(value+'e'+decimals)+'e-'+decimals);

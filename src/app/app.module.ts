@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from './Services/auth.service';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // import {AppModuleNgFactory} from "../aot/app/app.module.ngfactory";
 
 import { AgGridModule } from 'ag-grid-angular';
@@ -19,6 +20,7 @@ import { ListPerformanceComponent } from './returns/Subviews/list-performance/li
 
 import {LicenseManager} from "ag-grid-enterprise";
 import { GroupRowInnerRenderer } from './group-row-inner-render/group-row-inner-render.component';
+import {MatTableModule} from '@angular/material/table';
 LicenseManager.setLicenseKey("Evaluation_License_Valid_Until__7_November_2018__MTU0MTU0ODgwMDAwMA==85765fef4e02a59e323b51600fb9fea3");
 
 // platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
@@ -37,8 +39,10 @@ LicenseManager.setLicenseKey("Evaluation_License_Valid_Until__7_November_2018__M
     HttpModule,
     HttpClientModule,
     RouterModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     AngularFontAwesomeModule,
+    MatTableModule,
     AgGridModule.withComponents([GroupRowInnerRenderer])
   ],
   providers: [

@@ -14,4 +14,5 @@ export class Returns {
     CLM: number;
     NLM: number;
     IO: number;
+    Expanded: boolean = true;
 }

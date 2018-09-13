@@ -1,33 +1,455 @@
 <div style="margin-top: 100px"></div>
-<!-- <ag-grid-angular 
-    style="width: 1500px; height: 800px;" 
-    class="ag-theme-balham"
-    [enableSorting]="true"
-    [enableFilter]="true"
-    [masterDetail]="true"
-    [rowData]="rowData | async" 
-    [columnDefs]="columnDefs"  
-    [detailCellRendererParams]="MailTypeRender"
-    [groupDefaultExpanded] = "-1"   
-    (gridReady)="onGridReady($event)"  
-    > 
-</ag-grid-angular> -->
-<ag-grid-angular
-    #agGrid
-    style="width: 1800px; height: 900px;"
-    id="myGrid"
-    [rowData]="rowData"
-    class="ag-theme-balham"
-    [columnDefs]="columnDefs"
-    [animateRows]="true"
-    [components]="components"
-    [enableRangeSelection]="true"
-    [enableSorting]="true"
-    [enableFilter]="true"
-    [enableColResize]="true"
-    [groupDefaultExpanded] = "-1"  
-    [groupIncludeFooter]="true"
-    [groupIncludeTotalFooter]="true"
-    [suppressAggFuncInHeader]="true"
-    (gridReady)="onGridReady($event)"
-    ></ag-grid-angular>
+
+<table mat-table [dataSource]="rowData" multiTemplateDataRows>
+    <ng-container matColumnDef="Client">
+        <th mat-header-cell *matHeaderCellDef> Client </th>
+        <td mat-cell *matCellDef="let element"> {{element.Client}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Mailed">
+        <th mat-header-cell *matHeaderCellDef> Mailed </th>
+        <td mat-cell *matCellDef="let element"> {{element.Measure.Mailed | date:'shortDate'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Caged">
+        <th mat-header-cell *matHeaderCellDef> Caged </th>
+        <td mat-cell *matCellDef="let element"> {{element.Measure.Caged | date:'shortDate'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Quantity">
+        <th mat-header-cell *matHeaderCellDef> Qty </th>
+        <td mat-cell *matCellDef="let element"> {{element.Measure.Quantity | number}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Donors">
+        <th mat-header-cell *matHeaderCellDef> Don </th>
+        <td mat-cell *matCellDef="let element"> {{element.Measure.Donors | number}} </td>
+    </ng-container>
+    <ng-container matColumnDef="NonDonors">
+        <th mat-header-cell *matHeaderCellDef> Non </th>
+        <td mat-cell *matCellDef="let element"> {{element.Measure.NonDonors | number}} </td>
+    </ng-container>
+    <ng-container matColumnDef="NewDonors">
+        <th mat-header-cell *matHeaderCellDef> New </th>
+        <td mat-cell *matCellDef="let element"> {{element.Measure.NewDonors | number}} </td>
+    </ng-container>
+    <ng-container matColumnDef="RSP">
+        <th mat-header-cell *matHeaderCellDef> RSP </th>
+        <td mat-cell *matCellDef="let element"> {{element.Measure.RSP | number}} </td>
+    </ng-container>
+    <ng-container matColumnDef="AVG">
+        <th mat-header-cell *matHeaderCellDef> AVG </th>
+        <td mat-cell *matCellDef="let element"> {{element.Measure.AVG | number}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Gross">
+        <th mat-header-cell *matHeaderCellDef> Gross </th>
+        <td mat-cell *matCellDef="let element"> {{element.Measure.Gross | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Cost">
+        <th mat-header-cell *matHeaderCellDef> Cost </th>
+        <td mat-cell *matCellDef="let element"> {{element.Measure.Cost | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Net">
+        <th mat-header-cell *matHeaderCellDef> Net </th>
+        <td mat-cell *matCellDef="let element"> {{element.Measure.Net | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="GPP">
+        <th mat-header-cell *matHeaderCellDef> GPP </th>
+        <td mat-cell *matCellDef="let element"> {{element.Measure.GPP | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="CLM">
+        <th mat-header-cell *matHeaderCellDef> CLM </th>
+        <td mat-cell *matCellDef="let element"> {{element.Measure.CLM | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="NLM">
+        <th mat-header-cell *matHeaderCellDef> NLM </th>
+        <td mat-cell *matCellDef="let element"> {{element.Measure.NLM | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="IO">
+        <th mat-header-cell *matHeaderCellDef> IO </th>
+        <td mat-cell *matCellDef="let element"> {{element.Measure.IO | number}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="clientDisplayedColumns.length">
+            <div [@detailExpand]="element.expanded ? 'expanded' : 'collapsed'">
+                <div style="width:100%">
+                    <table mat-table [dataSource]="element.MailTypeList" multiTemplateDataRows>
+                        <ng-container matColumnDef="MailType">
+                            <th mat-header-cell *matHeaderCellDef> Mail Type </th>
+                            <td mat-cell *matCellDef="let element"> {{element.MailType}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Mailed">
+                            <th mat-header-cell *matHeaderCellDef> Mailed </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Measure.Mailed | date:'shortDate'}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Caged">
+                            <th mat-header-cell *matHeaderCellDef> Caged </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Measure.Caged | date:'shortDate'}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Quantity">
+                            <th mat-header-cell *matHeaderCellDef> Qty </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Measure.Quantity | number}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Donors">
+                            <th mat-header-cell *matHeaderCellDef> Don </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Measure.Donors | number}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="NonDonors">
+                            <th mat-header-cell *matHeaderCellDef> Non </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Measure.NonDonors | number}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="NewDonors">
+                            <th mat-header-cell *matHeaderCellDef> New </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Measure.NewDonors | number}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="RSP">
+                            <th mat-header-cell *matHeaderCellDef> RSP </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Measure.RSP | number}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="AVG">
+                            <th mat-header-cell *matHeaderCellDef> AVG </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Measure.AVG | number}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Gross">
+                            <th mat-header-cell *matHeaderCellDef> Gross </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Measure.Gross | currency}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Cost">
+                            <th mat-header-cell *matHeaderCellDef> Cost </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Measure.Cost | currency}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Net">
+                            <th mat-header-cell *matHeaderCellDef> Net </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Measure.Net | currency}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="GPP">
+                            <th mat-header-cell *matHeaderCellDef> GPP </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Measure.GPP | currency}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="CLM">
+                            <th mat-header-cell *matHeaderCellDef> CLM </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Measure.CLM | currency}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="NLM">
+                            <th mat-header-cell *matHeaderCellDef> NLM </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Measure.NLM | currency}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="IO">
+                            <th mat-header-cell *matHeaderCellDef> IO </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Measure.IO | number}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="expandedDetail">
+                            <td mat-cell *matCellDef="let element" [attr.colspan]="mailTypeDisplayedColumns.length">
+                                <div class="example-element-detail" [@detailExpand]="element.expanded ? 'expanded' : 'collapsed'">
+                                    <div style="width:100%">
+                                        <table mat-table [dataSource]="element.CampaignList" multiTemplateDataRows>
+                                            <ng-container matColumnDef="CampaignName">
+                                                <th mat-header-cell *matHeaderCellDef> Campaign </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.CampaignName}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="Mailed">
+                                                <th mat-header-cell *matHeaderCellDef> Mailed </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.Measure.Mailed | date:'shortDate'}}
+                                                    </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="Caged">
+                                                <th mat-header-cell *matHeaderCellDef> Caged </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.Measure.Caged | date:'shortDate'}}
+                                                    </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="Quantity">
+                                                <th mat-header-cell *matHeaderCellDef> Qty </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.Measure.Quantity | number}}
+                                                    </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="Donors">
+                                                <th mat-header-cell *matHeaderCellDef> Don </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.Measure.Donors | number}}
+                                                    </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="NonDonors">
+                                                <th mat-header-cell *matHeaderCellDef> Non </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.Measure.NonDonors | number}}
+                                                    </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="NewDonors">
+                                                <th mat-header-cell *matHeaderCellDef> New </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.Measure.NewDonors | number}}
+                                                    </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="RSP">
+                                                <th mat-header-cell *matHeaderCellDef> RSP </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.Measure.RSP | number}}
+                                                    </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="AVG">
+                                                <th mat-header-cell *matHeaderCellDef> AVG </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.Measure.AVG | number}}
+                                                    </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="Gross">
+                                                <th mat-header-cell *matHeaderCellDef> Gross </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.Measure.Gross | currency}}
+                                                    </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="Cost">
+                                                <th mat-header-cell *matHeaderCellDef> Cost </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.Measure.Cost | currency}}
+                                                    </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="Net">
+                                                <th mat-header-cell *matHeaderCellDef> Net </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.Measure.Net | currency}}
+                                                    </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="GPP">
+                                                <th mat-header-cell *matHeaderCellDef> GPP </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.Measure.GPP | currency}}
+                                                    </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="CLM">
+                                                <th mat-header-cell *matHeaderCellDef> CLM </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.Measure.CLM | currency}}
+                                                    </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="NLM">
+                                                <th mat-header-cell *matHeaderCellDef> NLM </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.Measure.NLM | currency}}
+                                                    </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="IO">
+                                                <th mat-header-cell *matHeaderCellDef> IO </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.Measure.IO | number}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="expandedDetail">
+                                                <td mat-cell *matCellDef="let element" [attr.colspan]="campaignDisplayedColumns.length">
+                                                    <div class="example-element-detail" [@detailExpand]="element.expanded ? 'expanded' : 'collapsed'">
+                                                        <div style="width:100%">
+                                                            <table mat-table [dataSource]="element.PhaseList" multiTemplateDataRows>
+                                                                <ng-container matColumnDef="PhaseName">
+                                                                    <th mat-header-cell *matHeaderCellDef> Phase </th>
+                                                                    <td mat-cell *matCellDef="let element"> {{element.PhaseName}}
+                                                                        </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="Mailed">
+                                                                    <th mat-header-cell *matHeaderCellDef> Mailed </th>
+                                                                    <td mat-cell *matCellDef="let element"> {{element.Measure.Mailed
+                                                                        | date:'shortDate'}} </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="Caged">
+                                                                    <th mat-header-cell *matHeaderCellDef> Caged </th>
+                                                                    <td mat-cell *matCellDef="let element"> {{element.Measure.Caged
+                                                                        | date:'shortDate'}} </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="Quantity">
+                                                                    <th mat-header-cell *matHeaderCellDef> Qty </th>
+                                                                    <td mat-cell *matCellDef="let element"> {{element.Measure.Quantity
+                                                                        | number}} </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="Donors">
+                                                                    <th mat-header-cell *matHeaderCellDef> Don </th>
+                                                                    <td mat-cell *matCellDef="let element"> {{element.Measure.Donors
+                                                                        | number}} </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="NonDonors">
+                                                                    <th mat-header-cell *matHeaderCellDef> Non </th>
+                                                                    <td mat-cell *matCellDef="let element"> {{element.Measure.NonDonors
+                                                                        | number}} </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="NewDonors">
+                                                                    <th mat-header-cell *matHeaderCellDef> New </th>
+                                                                    <td mat-cell *matCellDef="let element"> {{element.Measure.NewDonors
+                                                                        | number}} </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="RSP">
+                                                                    <th mat-header-cell *matHeaderCellDef> RSP </th>
+                                                                    <td mat-cell *matCellDef="let element"> {{element.Measure.RSP
+                                                                        | number}} </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="AVG">
+                                                                    <th mat-header-cell *matHeaderCellDef> AVG </th>
+                                                                    <td mat-cell *matCellDef="let element"> {{element.Measure.AVG
+                                                                        | number}} </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="Gross">
+                                                                    <th mat-header-cell *matHeaderCellDef> Gross </th>
+                                                                    <td mat-cell *matCellDef="let element"> {{element.Measure.Gross
+                                                                        | currency}} </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="Cost">
+                                                                    <th mat-header-cell *matHeaderCellDef> Cost </th>
+                                                                    <td mat-cell *matCellDef="let element"> {{element.Measure.Cost
+                                                                        | currency}} </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="Net">
+                                                                    <th mat-header-cell *matHeaderCellDef> Net </th>
+                                                                    <td mat-cell *matCellDef="let element"> {{element.Measure.Net
+                                                                        | currency}} </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="GPP">
+                                                                    <th mat-header-cell *matHeaderCellDef> GPP </th>
+                                                                    <td mat-cell *matCellDef="let element"> {{element.Measure.GPP
+                                                                        | currency}} </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="CLM">
+                                                                    <th mat-header-cell *matHeaderCellDef> CLM </th>
+                                                                    <td mat-cell *matCellDef="let element"> {{element.Measure.CLM
+                                                                        | currency}} </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="NLM">
+                                                                    <th mat-header-cell *matHeaderCellDef> NLM </th>
+                                                                    <td mat-cell *matCellDef="let element"> {{element.Measure.NLM
+                                                                        | currency}} </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="IO">
+                                                                    <th mat-header-cell *matHeaderCellDef> IO </th>
+                                                                    <td mat-cell *matCellDef="let element"> {{element.Measure.IO
+                                                                        | number}} </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="expandedDetail">
+                                                                    <td mat-cell *matCellDef="let element" [attr.colspan]="phaseDisplayedColumns.length">
+                                                                        <div class="example-element-detail" [@detailExpand]="element.expanded ? 'expanded' : 'collapsed'">
+                                                                            <div style="width:100%">
+                                                                                <table mat-table [dataSource]="element.MailList" multiTemplateDataRows>
+                                                                                    <ng-container matColumnDef="MailCode">
+                                                                                        <th mat-header-cell *matHeaderCellDef> Mail
+                                                                                            Code </th>
+                                                                                        <td mat-cell *matCellDef="let element"> {{element.MailCode}}
+                                                                                            : {{element.MailDescription}}
+                                                                                            </td>
+                                                                                    </ng-container>
+                                                                                    <ng-container matColumnDef="Mailed">
+                                                                                        <th mat-header-cell *matHeaderCellDef> Mailed
+                                                                                            </th>
+                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.Mailed
+                                                                                            | date:'shortDate'}} </td>
+                                                                                    </ng-container>
+                                                                                    <ng-container matColumnDef="Caged">
+                                                                                        <th mat-header-cell *matHeaderCellDef> Caged
+                                                                                            </th>
+                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.Caged
+                                                                                            | date:'shortDate'}} </td>
+                                                                                    </ng-container>
+                                                                                    <ng-container matColumnDef="Quantity">
+                                                                                        <th mat-header-cell *matHeaderCellDef> Qty
+                                                                                            </th>
+                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.Quantity
+                                                                                            | number}} </td>
+                                                                                    </ng-container>
+                                                                                    <ng-container matColumnDef="Donors">
+                                                                                        <th mat-header-cell *matHeaderCellDef> Don
+                                                                                            </th>
+                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.Donors
+                                                                                            | number}} </td>
+                                                                                    </ng-container>
+                                                                                    <ng-container matColumnDef="NonDonors">
+                                                                                        <th mat-header-cell *matHeaderCellDef> Non
+                                                                                            </th>
+                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.NonDonors
+                                                                                            | number}} </td>
+                                                                                    </ng-container>
+                                                                                    <ng-container matColumnDef="NewDonors">
+                                                                                        <th mat-header-cell *matHeaderCellDef> New
+                                                                                            </th>
+                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.NewDonors
+                                                                                            | number}} </td>
+                                                                                    </ng-container>
+                                                                                    <ng-container matColumnDef="RSP">
+                                                                                        <th mat-header-cell *matHeaderCellDef> RSP
+                                                                                            </th>
+                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.RSP
+                                                                                            | number}} </td>
+                                                                                    </ng-container>
+                                                                                    <ng-container matColumnDef="AVG">
+                                                                                        <th mat-header-cell *matHeaderCellDef> AVG
+                                                                                            </th>
+                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.AVG
+                                                                                            | number}} </td>
+                                                                                    </ng-container>
+                                                                                    <ng-container matColumnDef="Gross">
+                                                                                        <th mat-header-cell *matHeaderCellDef> Gross
+                                                                                            </th>
+                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.Gross
+                                                                                            | currency}} </td>
+                                                                                    </ng-container>
+                                                                                    <ng-container matColumnDef="Cost">
+                                                                                        <th mat-header-cell *matHeaderCellDef> Cost
+                                                                                            </th>
+                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.Cost
+                                                                                            | currency}} </td>
+                                                                                    </ng-container>
+                                                                                    <ng-container matColumnDef="Net">
+                                                                                        <th mat-header-cell *matHeaderCellDef> Net
+                                                                                            </th>
+                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.Net
+                                                                                            | currency}} </td>
+                                                                                    </ng-container>
+                                                                                    <ng-container matColumnDef="GPP">
+                                                                                        <th mat-header-cell *matHeaderCellDef> GPP
+                                                                                            </th>
+                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.GPP
+                                                                                            | currency}} </td>
+                                                                                    </ng-container>
+                                                                                    <ng-container matColumnDef="CLM">
+                                                                                        <th mat-header-cell *matHeaderCellDef> CLM
+                                                                                            </th>
+                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.CLM
+                                                                                            | currency}} </td>
+                                                                                    </ng-container>
+                                                                                    <ng-container matColumnDef="NLM">
+                                                                                        <th mat-header-cell *matHeaderCellDef> NLM
+                                                                                            </th>
+                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.NLM
+                                                                                            | currency}} </td>
+                                                                                    </ng-container>
+                                                                                    <ng-container matColumnDef="IO">
+                                                                                        <th mat-header-cell *matHeaderCellDef> IO
+                                                                                            </th>
+                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.IO
+                                                                                            | number}} </td>
+                                                                                    </ng-container>
+
+                                                                                    <tr mat-header-row *matHeaderRowDef="mailListDisplayedColumns"></tr>
+                                                                                    <tr mat-row *matRowDef="let element; columns: mailListDisplayedColumns;" class="example-element-row">
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </ng-container>
+                                                                <tr mat-header-row *matHeaderRowDef="phaseDisplayedColumns"></tr>
+                                                                <tr mat-row *matRowDef="let element; columns: phaseDisplayedColumns;" class="example-element-row" [class.example-expanded-row]="expandedElement === element"
+                                                                    (dblclick)="element.expanded = ! element.expanded">
+                                                                </tr>
+                                                                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="campaignDisplayedColumns"></tr>
+                                            <tr mat-row *matRowDef="let element; columns: campaignDisplayedColumns;" class="example-element-row" [class.example-expanded-row]="expandedElement === element"
+                                                (dblclick)="element.expanded = ! element.expanded">
+                                            </tr>
+                                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="mailTypeDisplayedColumns"></tr>
+                        <tr mat-row *matRowDef="let element; columns: mailTypeDisplayedColumns;" class="example-element-row" [class.example-expanded-row]="expandedElement === element"
+                            (dblclick)="element.expanded = ! element.expanded">
+                        </tr>
+                        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="clientDisplayedColumns"></tr>
+    <tr mat-row *matRowDef="let element; columns: clientDisplayedColumns;" class="example-element-row" [class.example-expanded-row]="element.expanded"
+        (dblclick)="element.expanded = ! element.expanded">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table>

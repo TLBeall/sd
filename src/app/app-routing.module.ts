@@ -7,11 +7,12 @@ import { InternalHomeDashboardComponent } from './internal-home-dashboard/intern
 import { ReturnsComponent } from './Returns/main-returns/main-returns.component';
 import { ListPerformanceComponent } from './returns/Subviews/list-performance/list-performance.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { ResolveReturnsComponent } from './Services/resolve-returns/resolve-returns.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/homepage', pathMatch: 'full'},  // this is how to set up the default page
   {path: 'homepage', component: InternalHomeDashboardComponent},
-  {path: 'returns/:client/:year', component: ReturnsComponent },
+  {path: 'returns/:client/:year', component: ReturnsComponent, resolve: {rowData: ResolveReturnsComponent} },
   {path: 'listperformance/:listowner/:listmanager/:recency', component: ListPerformanceComponent },
   {path: 'listperformance/:listowner/:listmanager', component: ListPerformanceComponent },
   {path: 'listperformance/:listowner', component: ListPerformanceComponent },

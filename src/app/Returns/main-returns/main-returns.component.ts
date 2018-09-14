@@ -6,6 +6,7 @@ import { ActivatedRoute } from "@angular/router";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 import "ag-grid-enterprise";
+import { RootReturns } from '../../Models/RootReturns.model';
 
 @Component({
   selector: 'app-main-returns',
@@ -23,11 +24,11 @@ import "ag-grid-enterprise";
 export class ReturnsComponent {
   title = 'SD360-Reporting-Angular';
 
-  private rowData: any;
+  private rowData: RootReturns;
   private service: AuthService;
   private activeClient;
   private selectedYear;
-  private expandedElement: any;
+  private route: any;
 
   clientDisplayedColumns: string[] = ['Client', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   mailTypeDisplayedColumns: string[] = ['MailType', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
@@ -36,13 +37,18 @@ export class ReturnsComponent {
   mailListDisplayedColumns: string[] = ['MailCode', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
 
   constructor(service: AuthService, route: ActivatedRoute, private loaderService: LoaderService) {
-    this.service = service;
-    route.params.subscribe(params => {
-      this.activeClient = params["client"];
-      this.selectedYear = params["year"];
-    }); 
-    this.service.getReturns(this.activeClient, new Date("01/01/" + this.selectedYear), new Date("12/31/" + this.selectedYear)).subscribe(
-      data => this.rowData = data
-    );
+    this.route = route;
+    // this.service = service;
+    // route.params.subscribe(params => {
+    //   this.activeClient = params["client"];
+    //   this.selectedYear = params["year"];
+    // }); 
+    // this.service.getReturns(this.activeClient, new Date("01/01/" + this.selectedYear), new Date("12/31/" + this.selectedYear)).subscribe(data => {
+    //   this.rowData = data;
+    // })
+  }   
+
+  ngOnInit() {
+    this.rowData = this.route.snapshot.data['rowData'];
   }
 }

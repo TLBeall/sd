@@ -5,7 +5,6 @@ import { AuthService } from '../../Services/auth.service';
 import { ActivatedRoute } from "@angular/router";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
-import "ag-grid-enterprise";
 import { RootReturns } from '../../Models/RootReturns.model';
 
 @Component({

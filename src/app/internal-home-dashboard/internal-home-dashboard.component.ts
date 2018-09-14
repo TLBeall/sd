@@ -24,18 +24,10 @@ export class InternalHomeDashboardComponent implements OnInit {
         this._authService.getClientList((new Date()).getFullYear().toString())
             .subscribe(data => {
                 this.ClientArr = data;
+                this.selectedYear = new Date().getFullYear().toString();
             });
     }
 
-<<<<<<< HEAD
-    public ClientArr : ClientList[];
-    public tokenParam : TokenParams;
-  
-    public triggers; 
-    public filters; 
-    public selectedYear: string = (new Date()).getFullYear().toString();
-      selectedItem = 1;
-=======
     GetArchived(tab): void {
         console.log(tab);
         this.tempYearVal = tab.index;
@@ -53,7 +45,6 @@ export class InternalHomeDashboardComponent implements OnInit {
                 });
         } else this.ClientArr = null;
     }
->>>>>>> 79755303ffa6d4afd21c979ac11387b9f00abf06
 
     GetArchivedYear(val) {
         this.pYear = (val.target.innerText);
@@ -72,67 +63,4 @@ export class InternalHomeDashboardComponent implements OnInit {
         $('ul.alphabet > li > a').removeClass('active');
         $('#showAllClientsLi > a').addClass('active');
     }
-<<<<<<< HEAD
-
-  constructor(private _authService: AuthService) { }
-
-  
-
-  ngOnInit() {
-
-    this._authService.getClientList((new Date()).getFullYear().toString())
-    .subscribe(data => {
-      this.ClientArr = data;
-      });
-      
-      $('#showAllClientsLi').click(function () {
-        var filters =  $('ul.dictionary li a');  
-        filters.parent().fadeIn(222); 
-        $('#alphabetResult').html('');
-    });
-
-    
-    this.triggers =  $('ul.alphabet li a');
-
-    this.triggers.click(function () {
-        var takeLetter = $(this).text();
-        var result = 0;
-        this.filters =  $('ul.dictionary li a');  
-        this.filters.parent().hide();  
-        this.filters.each(function () {
-            if (takeLetter != "#") {
-                if (RegExp('^' + takeLetter).test($(this).text())) {
-                    result += 1;
-                    $(this).parent().fadeIn(222);
-                }
-            }
-            else {
-                if (RegExp('^' + '[0-9]').test($(this).text())) {
-                    result += 1;
-                    $(this).parent().fadeIn(222);
-                }
-            }
-        });
-        // $('#alphabetResult').html('<b>' + (result < 1 ? 'No results found' : result + ' result(s) found') + '</b>');
-    });    
-  }
-
-
-  GetArchived(pYear: string): void {
-    this.selectedYear = pYear;
-    this._authService.getClientList(pYear)
-    .subscribe(data => {
-      this.ClientArr = data;
-      $('#alphabetResult').trigger( "click" );
-      });   
-  }
-
-  GetArchivedAndReset(pYear: string): void {
-      this.GetArchived(pYear);
-      $("#ByYearId").html("By Year");
-      this.selectedYear = (new Date()).getFullYear().toString();
-    }
-
-=======
->>>>>>> 79755303ffa6d4afd21c979ac11387b9f00abf06
 }

@@ -7,17 +7,10 @@ import { AuthService } from './Services/auth.service';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-<<<<<<< HEAD
-
-import { AppComponent } from './app.component';
-import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
-=======
 import {MatTreeModule, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
-import { InternalHomeDashboardComponent } from './internal-home-dashboard/internal-home-dashboard.component';
->>>>>>> 79755303ffa6d4afd21c979ac11387b9f00abf06
 import { LoaderService } from './Loader/loader.service';
 import { LoaderComponent } from './Loader/loader.component';
 import { ListPerformanceComponent } from './returns/Subviews/list-performance/list-performance.component';
@@ -38,7 +31,7 @@ import { InternalHomeDashboardComponent } from './internal-home-dashboard/intern
     routingComponents,
     LoaderComponent,
     ListPerformanceComponent,
-    ResolveReturnsComponent
+    ResolveReturnsComponent,
     InternalHomeDashboardComponent,
     routingComponents,
     LoaderComponent,
@@ -57,9 +50,7 @@ import { InternalHomeDashboardComponent } from './internal-home-dashboard/intern
     BrowserAnimationsModule,
     AppRoutingModule,
     AngularFontAwesomeModule,
-<<<<<<< HEAD
-    MatTableModule
-=======
+    MatTableModule,
     BrowserAnimationsModule,
     MatTreeModule,
     MatButtonModule,
@@ -68,7 +59,6 @@ import { InternalHomeDashboardComponent } from './internal-home-dashboard/intern
     MatTabsModule,
     MatMenuModule,
     MatToolbarModule
->>>>>>> 79755303ffa6d4afd21c979ac11387b9f00abf06
   ],
   providers: [
     AuthService,

@@ -1,23 +1,11 @@
-<<<<<<< HEAD
 
 import { Component } from '@angular/core';
 import { LoaderService } from '../../Loader/loader.service';
-=======
-import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ContentChildren } from '@angular/core';
->>>>>>> 79755303ffa6d4afd21c979ac11387b9f00abf06
 import { AuthService } from '../../Services/auth.service';
 import { ActivatedRoute } from "@angular/router";
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 import { RootReturns } from '../../Models/RootReturns.model';
-<<<<<<< HEAD
-=======
-import 'datatables.net';
-import * as $ from 'jquery';
-import { ChildElement } from '../../Models/childElement.model';
-import { ActivatedRoute } from "@angular/router";
-import { LoaderService } from '../../Loader/loader.service';
->>>>>>> 79755303ffa6d4afd21c979ac11387b9f00abf06
 
 
 @Component({
@@ -33,7 +21,6 @@ import { LoaderService } from '../../Loader/loader.service';
   ]
 })
 
-<<<<<<< HEAD
 export class ReturnsComponent {
   title = 'SD360-Reporting-Angular';
 
@@ -46,25 +33,12 @@ export class ReturnsComponent {
   campaignDisplayedColumns: string[] = ['CampaignName', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   phaseDisplayedColumns: string[] = ['PhaseName', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   mailListDisplayedColumns: string[] = ['MailCode', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
-=======
-export class ReturnsComponent implements OnInit {
-
-  public RootReturns: RootReturns;
-  public activeClient: string;
-
-  constructor(private _authService: AuthService, route: ActivatedRoute, private loaderService: LoaderService) {
-    route.params.subscribe(params => this.activeClient = params["id"]);
-    //loading panel
-    this.loaderService.display(true);
-  }
->>>>>>> 79755303ffa6d4afd21c979ac11387b9f00abf06
 
   constructor(route: ActivatedRoute) {
     this.route = route;
   }   
 
   ngOnInit() {
-<<<<<<< HEAD
     this.rowData = this.route.snapshot.data['rowData'];
   }
 
@@ -75,19 +49,3 @@ export class ReturnsComponent implements OnInit {
     return 'collapse';
   }
 }
-=======
-    $(".clientTable").toggle(false);
-    this._authService.getReturns(this.activeClient, new Date("01/01/2018"), new Date("12/31/2018"))
-      .subscribe(data => {
-        this.RootReturns = data;
-        $(".clientTable").toggle(true);
-        //loading panel
-        this.loaderService.display(false);
-      });
-  }
-
-  ngAfterViewInit() {
-  }
-}
-
->>>>>>> 79755303ffa6d4afd21c979ac11387b9f00abf06

@@ -1,0 +1,62 @@
+$itemHeight: 42px;
+  
+  
+.widgetContainer {
+  float: left;
+  margin-top:6px;
+  width:calc(100vw - 75px - ((33.25px)*3)); //75px being the "back" button and 33.25 being the left and right arrows
+  overflow: hidden; //hides the scrollbar that would otherwise appear in IE and Firefox
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+}
+
+.widgetContainer {
+    button{
+      margin-right:8px;
+      margin-bottom:8px;
+      border:none;
+      cursor: pointer;
+      color: #1279C0;
+      background-color:#fff;
+      font-size:0.86rem;
+      font-weight:bold;
+      padding:4px 8px;
+    }
+    button:hover{
+      border-radius:5px;
+      background-color: #F5F5F5;
+      box-shadow: 1px 1px 2px 0px #686868;
+    }
+}
+
+#LwidgetScrollBtn{
+    float:left;
+    height:$itemHeight;
+    background-color:#fff;
+    border-right:1px #DCDCDC solid;
+    color: #808080;
+    font-size:16pt;
+    margin-right:8px;
+}
+
+#RwidgetScrollBtn{
+  float:right;
+  height:$itemHeight;
+  background-color:#fff;
+  border-left:1px #DCDCDC solid;
+  color: #808080;
+  font-size:16pt;
+  margin-left:8px;
+}
+
+#toolbarBackBtn{
+    height:$itemHeight;
+    background-color:#fff;
+    float:left;
+}
+
+#toolbarBackBtn::after{
+  content: "";
+  clear: both;
+  display: table;
+}

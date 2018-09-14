@@ -1,0 +1,38 @@
+#alphabetToolbar {
+    text-align: center;
+    top:6px;
+}
+
+.alphabet{
+    display: inline-table;
+    margin-bottom:0px;
+    list-style: none;
+    li{
+        font-size: 11pt;
+        float: left;
+        margin:0px;
+        a{
+            padding: 4px 8px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #1279C0;
+        }
+        a:hover{
+            background-color: #F5F5F5;
+            box-shadow: 1px 1px 2px 0px #686868;
+            cursor: pointer;
+        }
+        a.active.show{
+            color:white !important;
+        }
+        a.active{
+            color:white !important;
+        }
+        a.active.show:hover{
+            color:#1279C0 !important;
+        }
+    }
+    li#showAllClientsLi{
+        margin-right: 20px;
+    }
+}

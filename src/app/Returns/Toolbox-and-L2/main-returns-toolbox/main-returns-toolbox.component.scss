@@ -1,0 +1,161 @@
+$shiftWidth: 300px;
+$shiftSpeed: 0.4s;
+$shiftStyle: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+
+/*<><><><><><><><>*/
+/*Button Settings Start*/
+#toolboxBtn{
+  position:fixed;
+  font-size:14pt;
+  height:30px;
+  width:40px;
+  top: 92px;
+  right:0px;
+  z-index:110;
+  border-radius:0 0 0 0.25rem !important;
+  transition: $shiftSpeed;
+  transition-timing-function: $shiftStyle;
+}
+#toolboxBtn.btnShifted{
+  display:block;
+  right: $shiftWidth;
+  transition: $shiftSpeed;
+  transition-timing-function: $shiftStyle;
+}
+#demoToolboxBtn{
+  position:fixed;
+  font-size:12pt;
+  height:30px;
+  width:40px;
+  top: 124px;
+  right:0px;
+  z-index:110;
+  border-radius:0.25rem 0 0 0.25rem !important;
+  transition: $shiftSpeed;
+  transition-timing-function: $shiftStyle;
+}
+#demoToolboxBtn.btnShifted{
+  display:block;
+  right: $shiftWidth;
+  transition: $shiftSpeed;
+  transition-timing-function: $shiftStyle;
+}
+/*Button Settings End*/
+/*<><><><><><><><>*/
+
+
+.toolbox{
+  border-top: 1px #f0f0f0 solid;
+  background-color:#fff;
+  position:fixed;
+  top:92px;
+  z-index:100;
+  width:0;
+  right:0px;
+  height:100vh;
+  overflow:hidden;
+  transition: $shiftSpeed;
+  transition-timing-function: $shiftStyle;
+}
+/*In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll*/
+.toolboxScrollContainer{
+  height:100%;
+  margin-right: -50px; /* maximum width of scrollbar */
+  padding-right: 50px; /* maximum width of scrollbar */
+  padding-top:10px;
+  padding-left:10px;
+  overflow-y: scroll;
+}
+.psuedoClearfix {
+  content: "";
+  clear: both;
+  display: table;
+  height:100px;
+  width:100%;
+}
+
+.toolbox.shifted{
+  display: block;
+  width: $shiftWidth;
+  transition: $shiftSpeed;
+  transition-timing-function: $shiftStyle;
+  box-shadow: -8px 0px 8px -8px #686868;
+}
+
+.hidden{
+  display: none;
+}
+
+
+
+
+//Settings for L2 toolbox
+section{
+  & > p{
+    margin: 0 0 20px;
+    line-height: 1.5;
+  }
+
+  &#content1, &#content2{
+    display: none;
+    padding: 20px 0 0;
+  }
+}
+
+input#tab1, input#tab2 {
+  display: none;
+}
+
+label {
+  display: inline-block;
+  padding: 3px 6px;
+  text-align: center;
+  color: #bbb;
+  // font-weight: bold;
+  width:50%;
+  background-color:#eee;
+  &#label1{
+    border-radius: 25px 0px 0px 25px;
+  }
+  &#label2{
+    border-radius: 0px 25px 25px 0px;
+  }
+  &:before {
+    font-family: fontawesome;
+    font-weight: normal;
+    margin-right: 10px;
+  }
+  &:hover {
+    color: #888;
+    cursor: pointer;
+  }
+}
+
+// label[for*='1']:before { content: '\f1cb'; }
+// label[for*='2']:before { content: '\f17d'; }
+
+input:checked + label {
+  color: #555;
+  background-color: #1279C0;
+  color:#fff;
+}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2 {
+  display: block;
+}
+
+
+
+
+
+ //Removes pagination (prev/next) on the mat tab 
+ ::ng-deep .mat-tab-header-pagination {
+  display: none !important;
+}
+//Makes the tab header width roughly 50% of the toolbox (% doesnt work)
+::ng-deep #mainReturnsL2box .mat-tab-label{
+  padding: 0 !important;
+  width:136px;
+  min-width: 0px !important;
+}

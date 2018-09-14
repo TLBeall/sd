@@ -1,115 +1,69 @@
-<div class="toolbar">
-  <div id="alphabetToolbar" class="col-md-12">
-    <ul class="alphabet nav nav-pills">
-      <li class="nav-item" id="showAllClientsLi">
-        <a class="nav-link active" data-toggle="pill">All</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">#</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">A</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">B</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">C</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">D</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">E</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">F</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">G</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">H</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">I</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">J</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">K</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">L</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">M</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">N</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">O</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">P</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">Q</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">R</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">S</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">T</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">U</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">V</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">W</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">X</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">Y</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">Z</a>
-      </li>
-      <!-- <li id="alphabetResult"></li> -->
-    </ul>
-  </div>
-</div>
+<app-toolbar></app-toolbar>
+<mat-card id="internalHomeMC">
+    <mat-tab-group (selectedTabChange)="GetArchived($event)" color="accent">
+        <mat-tab label="Active">
+            <div class='dictionaryContent'>
+                <ul class='dictionary'>
+                    <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}'>{{
+                            client?.gClientName }}</a></li>
+                </ul>
+            </div>
+        </mat-tab>
+        <mat-tab label="Archived">
+            <div class='dictionaryContent'>
+                <ul class='dictionary'>
+                    <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}'>{{
+                            client?.gClientName }}</a></li>
+                </ul>
+            </div>
+        </mat-tab>
+        <mat-tab label="By Year">
+            <ng-template mat-tab-label>
+                <button mat-button [matMenuTriggerFor]="menu">By Year {{selectedYear }}
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="GetArchivedYear($event); setYear($event)">2016</button>
+                    <button mat-menu-item (click)="GetArchivedYear($event); setYear($event)">2017</button>
+                    <button mat-menu-item (click)="GetArchivedYear($event); setYear($event)">2018</button>
+                </mat-menu>
+            </ng-template>
+            <div class='dictionaryContent'>
+                <ul class='dictionary'>
+                    <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}'>{{
+                            client?.gClientName }}</a></li>
+                </ul>
+            </div>
+        </mat-tab>
+        <mat-tab label="By Year"></mat-tab>
+    <mat-tab label="By Year"></mat-tab>
+    <mat-tab label="By Year"></mat-tab>
+    </mat-tab-group>
+    
+</mat-card>
 
-  <div class="mainContent">
-    <div id="dictionaryHeader">
+
+
+
+<!-- <div id="dictionaryHeader">
 
         <div class="btn-group">
             <button type="button" name="options" class="btn btn-primary" [ngClass]="{'active': selectedItem === 1}" (click)="GetArchived('2018'); setSelectedItem(1)">Live</button>
             <button type="button" name="options" class="btn btn-primary" [ngClass]="{'active': selectedItem === 2}" (click)="GetArchived('ALL'); setSelectedItem(2)">Archived</button>
-            <button type="button dropdown" name="options" id="ByYearId" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [ngClass]="{'active': selectedItem === 3}" (click)="setSelectedItem(3)">
+            <button type="button dropdown" name="options" id="ByYearId" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" [ngClass]="{'active': selectedItem === 3}" (click)="setSelectedItem(3)">
                 By Year {{ selectedYear }}
                 <i class="fas fa-caret-down"></i>
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" (click)="GetArchived(2016); setYear($event)">2016</a></li>
-              <li><a class="dropdown-item" (click)="GetArchived(2017); setYear($event)">2017</a></li>
-              <li><a class="dropdown-item" (click)="GetArchived(2018); setYear($event)">2018</a></li>
+                <li><a class="dropdown-item" (click)="GetArchived(2016); setYear($event)">2016</a></li>
+                <li><a class="dropdown-item" (click)="GetArchived(2017); setYear($event)">2017</a></li>
+                <li><a class="dropdown-item" (click)="GetArchived(2018); setYear($event)">2018</a></li>
             </ul>
-          </div>
+        </div>
     </div>
-
-<div class='dictionaryContent'>
-<ul class='dictionary'>
-    <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}'>{{ client?.gClientName }}</a></li>
-</ul>
-</div>
+    <div class='dictionaryContent'>
+        <ul class='dictionary'>
+            <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}'>{{
+                    client?.gClientName }}</a></li>
+        </ul>
+    </div> -->

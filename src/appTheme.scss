@@ -1,0 +1,80 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+
+$my-custom-primary-palette: (
+    50 : #e7e7e7,
+    100 : #c2c2c2,
+    200 : #999999,
+    300 : #707070,
+    400 : #525252,
+    500 : #333333,
+    600 : #2e2e2e,
+    700 : #272727,
+    800 : #202020,
+    900 : #141414,
+    A100 : #ef6e6e,
+    A200 : #ea4040,
+    A400 : #f60000,
+    A700 : #dd0000,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+
+
+  $my-custom-accent-palette: (
+    50 : #e3eff7,
+    100 : #b8d7ec,
+    200 : #89bce0,
+    300 : #59a1d3,
+    400 : #368dc9,
+    500 : #1279c0,
+    600 : #1071ba,
+    700 : #0d66b2,
+    800 : #0a5caa,
+    900 : #05499c,
+    A100 : #c8ddff,
+    A200 : #95beff,
+    A400 : #629fff,
+    A700 : #4890ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+$my-theme-primary: mat-palette($my-custom-primary-palette);
+$my-theme-accent: mat-palette($my-custom-accent-palette);
+// $my-app-warn: mat-palette($mat-red);
+
+$my-theme: mat-light-theme($my-theme-primary, $my-theme-accent);
+
+@include angular-material-theme($my-theme);

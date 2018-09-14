@@ -1,2 +1,13 @@
 @import "~bootstrap/dist/css/bootstrap.css";
+// @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 /* You can add global styles to this file, and also import other style files */
+
+// Removes the weird circle given from the browser on objects on click
+:focus{
+    outline: none !important;
+}
+.btn:focus,.btn:active:focus,.btn.active:focus,
+.btn.focus,.btn:active.focus,.btn.active.focus {
+    outline: none;
+    box-shadow:none;
+}

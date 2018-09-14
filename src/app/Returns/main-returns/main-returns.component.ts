@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ContentChildren, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ContentChildren } from '@angular/core';
 import { AuthService } from '../../Services/auth.service';
 import { delay, share } from 'rxjs/operators';
 import { RootReturns } from '../../Models/RootReturns.model';
@@ -12,6 +12,7 @@ import { ChildElement } from '../../Models/childElement.model';
 import {ActivatedRoute} from "@angular/router";
 import { LoaderService } from '../../Loader/loader.service';
 
+
 @Component({
   selector: 'app-main-returns',
   templateUrl: './main-returns.component.html',
@@ -19,18 +20,6 @@ import { LoaderService } from '../../Loader/loader.service';
 })
 
 export class ReturnsComponent implements OnInit {
-
-  public innerWidth: any;
-  public mobileStatus:boolean;
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.innerWidth = window.innerWidth;
-    if (this.innerWidth >= 1050){
-      this.mobileStatus = false;
-    } else {
-      this.mobileStatus = true;
-    }
-  }
 
   // Capturing child components MailType, Campaign, Phase, Mailist
 
@@ -59,18 +48,6 @@ export class ReturnsComponent implements OnInit {
   public RootReturns: RootReturns;
   public activeClient: string;
 
-
-  @ViewChild('widgetContent', { read: ElementRef })
-  public widgetsContent: ElementRef<any>;
-  public scrollRight(): void {
-    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft + 150), behavior: 'smooth' });
-  }
-  public scrollLeft(): void {
-    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft - 150), behavior: 'smooth' });
-  }
-
-
-
   constructor(private _authService: AuthService, route: ActivatedRoute, private loaderService: LoaderService) {
     route.params.subscribe( params => this.activeClient = params["id"] );
     //loading panel
@@ -91,8 +68,8 @@ export class ReturnsComponent implements OnInit {
     }
 
   ngAfterViewInit() {
-    this.PrepArrays();
-    this.GeneratePage();
+    // this.PrepArrays();
+    // this.GeneratePage();
   }
 
   // Expand All, iterating through all tables

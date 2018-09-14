@@ -36,6 +36,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   exports: [RouterModule],
+  providers: [ResolveReturnsComponent],
   declarations: []
 })
 export class AppRoutingModule { }

@@ -25,10 +25,8 @@ export class ReturnsComponent {
   title = 'SD360-Reporting-Angular';
 
   private rowData: RootReturns;
-  private service: AuthService;
-  private activeClient;
-  private selectedYear;
   private route: any;
+  private valueToReturn: boolean = false;
 
   clientDisplayedColumns: string[] = ['Client', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   mailTypeDisplayedColumns: string[] = ['MailType', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
@@ -36,19 +34,18 @@ export class ReturnsComponent {
   phaseDisplayedColumns: string[] = ['PhaseName', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   mailListDisplayedColumns: string[] = ['MailCode', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
 
-  constructor(service: AuthService, route: ActivatedRoute, private loaderService: LoaderService) {
+  constructor(route: ActivatedRoute) {
     this.route = route;
-    // this.service = service;
-    // route.params.subscribe(params => {
-    //   this.activeClient = params["client"];
-    //   this.selectedYear = params["year"];
-    // }); 
-    // this.service.getReturns(this.activeClient, new Date("01/01/" + this.selectedYear), new Date("12/31/" + this.selectedYear)).subscribe(data => {
-    //   this.rowData = data;
-    // })
   }   
 
   ngOnInit() {
     this.rowData = this.route.snapshot.data['rowData'];
+  }
+
+  GetVisibilityStyle(state: boolean): string
+  {
+    if (state)
+      return 'visible';
+    return 'collapse';
   }
 }

@@ -2,5 +2,6 @@
     <app-main-returns-toolbar *ngIf="location.includes('/returns')"></app-main-returns-toolbar>
     <app-home-page-internal-toolbar *ngIf="location.includes('/homepage')"></app-home-page-internal-toolbar>
     </div>
-    <!--Below is a psuedo clearfix to load all content below the toolbar-->
+    
+    <!--Below is a psuedo clearfix to load all content across all pages below the toolbar-->
     <div id="psuedoClearFix" [style.margin-top.px]= "clearFixHeight"></div>

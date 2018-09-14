@@ -13,10 +13,6 @@ import {MatTreeModule, MatButtonModule, MatIconModule, MatCardModule, MatTabsMod
 import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { InternalHomeDashboardComponent } from './internal-home-dashboard/internal-home-dashboard.component';
-import { MailtypeReturnsComponent } from './Returns/mailtype-returns/mailtype-returns.component';
-import { CampaignReturnsComponent } from './Returns/campaign-returns/campaign-returns.component';
-import { PhaseReturnsComponent } from './Returns/phase-returns/phase-returns.component';
-import { MaillistReturnsComponent } from './Returns/maillist-returns/maillist-returns.component';
 import { LoaderService } from './Loader/loader.service';
 import { LoaderComponent } from './Loader/loader.component';
 import { ListPerformanceComponent } from './returns/Subviews/list-performance/list-performance.component';
@@ -31,10 +27,6 @@ import { HomePageInternalToolbarComponent } from './toolbar/home-page-internal-t
     AppComponent,
     NavigationBarComponent,
     InternalHomeDashboardComponent,
-    MailtypeReturnsComponent,
-    CampaignReturnsComponent,
-    PhaseReturnsComponent,
-    MaillistReturnsComponent,
     routingComponents,
     LoaderComponent,
     ListPerformanceComponent,

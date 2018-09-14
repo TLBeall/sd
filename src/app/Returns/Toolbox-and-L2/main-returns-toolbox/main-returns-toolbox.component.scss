@@ -88,67 +88,6 @@ $shiftStyle: cubic-bezier(0.175, 0.885, 0.32, 1.1);
 
 
 
-
-//Settings for L2 toolbox
-section{
-  & > p{
-    margin: 0 0 20px;
-    line-height: 1.5;
-  }
-
-  &#content1, &#content2{
-    display: none;
-    padding: 20px 0 0;
-  }
-}
-
-input#tab1, input#tab2 {
-  display: none;
-}
-
-label {
-  display: inline-block;
-  padding: 3px 6px;
-  text-align: center;
-  color: #bbb;
-  // font-weight: bold;
-  width:50%;
-  background-color:#eee;
-  &#label1{
-    border-radius: 25px 0px 0px 25px;
-  }
-  &#label2{
-    border-radius: 0px 25px 25px 0px;
-  }
-  &:before {
-    font-family: fontawesome;
-    font-weight: normal;
-    margin-right: 10px;
-  }
-  &:hover {
-    color: #888;
-    cursor: pointer;
-  }
-}
-
-// label[for*='1']:before { content: '\f1cb'; }
-// label[for*='2']:before { content: '\f17d'; }
-
-input:checked + label {
-  color: #555;
-  background-color: #1279C0;
-  color:#fff;
-}
-
-#tab1:checked ~ #content1,
-#tab2:checked ~ #content2 {
-  display: block;
-}
-
-
-
-
-
  //Removes pagination (prev/next) on the mat tab 
  ::ng-deep .mat-tab-header-pagination {
   display: none !important;

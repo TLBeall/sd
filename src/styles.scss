@@ -1,9 +1,21 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 /* You can add global styles to this file, and also import other style files */
 
+<<<<<<< HEAD
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 
 .number-cell {
     text-align: right;
 }
+=======
+// Removes the weird circle given from the browser on objects on click
+:focus{
+    outline: none !important;
+}
+.btn:focus,.btn:active:focus,.btn.active:focus,
+.btn.focus,.btn:active.focus,.btn.active.focus {
+    outline: none;
+    box-shadow:none;
+}
+>>>>>>> 79755303ffa6d4afd21c979ac11387b9f00abf06

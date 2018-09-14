@@ -1,0 +1,19 @@
+  <!-- <div class="col-md-2"> -->
+    <!-- <span style="margin:5px" id='expandAllLists' class='btn btn-sm btn-outline-danger' (click)="ExpandAll()">Expand All</span>
+    <span style="margin:5px" id='collapseAllLists' class='btn btn-sm btn-outline-success' (click)="CollapseAll()">Collapse
+      All</span> -->
+      <button id="toolbarBackBtn" style="width:75px;" class="btn btn-sm" [disabled]="true"><i class="fas fa-chevron-left"></i>Back</button>
+      <div>
+        <button *ngIf="mobileStatus" id="LwidgetScrollBtn" class="btn btn-sm fa fa-chevron-left" (click)="scrollLeft()"></button>
+      <div #widgetContent class="widgetContainer">
+        <button >Donor Lookup</button>
+        <!-- <button >Doubling Days</button> -->
+        <button >Format</button>
+        <button >Inception Year</button>
+        <button >List Conversion</button>
+        <button >List Performance</button>
+        <button >New Donor</button>
+        <button >Recency</button>
+      </div>
+        <button *ngIf="mobileStatus" id="RwidgetScrollBtn" class="btn btn-sm fa fa-chevron-right" (click)="scrollRight()"></button>
+    </div>

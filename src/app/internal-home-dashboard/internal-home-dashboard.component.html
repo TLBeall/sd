@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="toolbar">
   <div id="alphabetToolbar" class="col-md-12">
     <ul class="alphabet nav nav-pills">
@@ -113,3 +114,47 @@
     <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/{{ selectedYear }}'>{{ client?.gClientName }}</a></li>
 </ul>
 </div>
+=======
+<app-toolbar></app-toolbar>
+<mat-card id="internalHomeMC">
+    <mat-tab-group (selectedTabChange)="GetArchived($event)" color="accent">
+        <mat-tab label="Active">
+            <div class='dictionaryContent'>
+                <ul class='dictionary'>
+                    <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}'>{{
+                            client?.gClientName }}</a></li>
+                </ul>
+            </div>
+        </mat-tab>
+        <mat-tab label="Archived">
+            <div class='dictionaryContent'>
+                <ul class='dictionary'>
+                    <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}'>{{
+                            client?.gClientName }}</a></li>
+                </ul>
+            </div>
+        </mat-tab>
+        <mat-tab label="By Year">
+            <ng-template mat-tab-label>
+                <button mat-button [matMenuTriggerFor]="menu">By Year {{selectedYear }}
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="GetArchivedYear($event); setYear($event)">2016</button>
+                    <button mat-menu-item (click)="GetArchivedYear($event); setYear($event)">2017</button>
+                    <button mat-menu-item (click)="GetArchivedYear($event); setYear($event)">2018</button>
+                </mat-menu>
+            </ng-template>
+            <div class='dictionaryContent'>
+                <ul class='dictionary'>
+                    <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}'>{{
+                            client?.gClientName }}</a></li>
+                </ul>
+            </div>
+        </mat-tab>
+        <mat-tab label="By Year"></mat-tab>
+    <mat-tab label="By Year"></mat-tab>
+    <mat-tab label="By Year"></mat-tab>
+    </mat-tab-group>
+    
+</mat-card>
+>>>>>>> 79755303ffa6d4afd21c979ac11387b9f00abf06

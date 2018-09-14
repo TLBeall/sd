@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div style="margin-top: 100px"></div>
 <table mat-table [dataSource]="rowData" multiTemplateDataRows>
     <ng-container matColumnDef="Client">
@@ -624,3 +625,96 @@
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     <!-- <tr mat-footer-row [style.visibility]="GetVisibilityStyle(rowData[0].Measure.Expanded)" *matFooterRowDef="clientDisplayedColumns"></tr> -->
 </table>
+=======
+<!-- <div class="toolbar"> -->
+  <!-- <div class="col-md-2"> -->
+    <!-- <span style="margin:5px" id='expandAllLists' class='btn btn-sm btn-outline-danger' (click)="ExpandAll()">Expand All</span>
+    <span style="margin:5px" id='collapseAllLists' class='btn btn-sm btn-outline-success' (click)="CollapseAll()">Collapse
+      All</span> -->
+      <!-- <button id="toolbarBackBtn" style="width:75px;" class="btn btn-sm" [disabled]="true"><i class="fas fa-chevron-left"></i>Back</button>
+      <div>
+        <button *ngIf="mobileStatus" id="LwidgetScrollBtn" class="btn btn-sm fa fa-chevron-left" (click)="scrollLeft()"></button>
+      <div #widgetContent class="widgetContainer">
+        <button >List Performance</button>
+        <button >Format</button>
+        <button >New Donor</button>
+        <button >List Conversion</button>
+        <button >Doubling Days</button>
+        <button >Donor Lookup</button>
+        <button >Inception Year</button>
+        <button >Recency</button>
+      </div>
+        <button *ngIf="mobileStatus" id="RwidgetScrollBtn" class="btn btn-sm fa fa-chevron-right" (click)="scrollRight()"></button>
+    </div>
+</div> -->
+<!-- <h1 style="margin-top:100px;">{{ RootReturns?.Client | uppercase }}</h1> -->
+<!-- <app-toolbar></app-toolbar> -->
+<!-- <table style="margin-top:100px;" class="clientTable" cellspacing="0" cellpadding="0">
+  <thead class='clientTableHeader' style='text-decoration: underline;'>
+    <tr>
+      <th></th>
+      <th> Client </th>
+      <th></th>
+      <th>Mailed</th>
+      <th>Caged</th>
+      <th>Quantity</th>
+      <th>Donors</th>
+      <th>Non</th>
+      <th>New</th>
+      <th>RSP</th>
+      <th>AVG</th>
+      <th>Gross</th>
+      <th>Cost</th>
+      <th>Net</th>
+      <th>GPP</th>
+      <th>CLM</th>
+      <th>NLM</th>
+      <th>IO</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="btnCol">
+        <div class="details-control"></div>
+      </td>
+      <td>{{ RootReturns?.Client | uppercase }}</td>
+      <td></td>
+      <td>{{ RootReturns?.Measure.Mailed | date: 'MM/dd/yy'}}</td>
+      <td>{{ RootReturns?.Measure.Caged | date: 'MM/dd/yy' }}</td>
+      <td>{{ RootReturns?.Measure.Quantity | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.Donors | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.NonDonors | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.NewDonors | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.RSP | percent:'1.2-2'}}</td>
+      <td>{{ RootReturns?.Measure.AVG | number : '1.0-2' }}</td>
+      <td>{{ RootReturns?.Measure.Gross | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.Cost | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.Net | number : '1.0-0' }}</td>
+      <td>{{ RootReturns?.Measure.GPP | number : '1.0-2' }}</td>
+      <td>{{ RootReturns?.Measure.CLM | number : '1.0-2' }}</td>
+      <td>{{ RootReturns?.Measure.NLM | number : '1.0-2' }}</td>
+      <td>{{ RootReturns?.Measure.IO | number : '1.0-2' }}</td>
+    </tr>
+  </tbody>
+</table> -->
+<!-- <div style="visibility: collapse"> -->
+  <!-- <div>
+    <app-mailtype-returns [RootReturns]="RootReturns" [MailTypeList]="RootReturns?.MailTypeList" title="{{ RootReturns?.Client }}"></app-mailtype-returns>
+    <div *ngFor="let mailType of RootReturns.MailTypeList">
+      <app-campaign-returns [MailType]="mailType" [CampaignList]="mailType?.CampaignList" title="{{ mailType.MailType }}"></app-campaign-returns>
+      <ng-container *ngFor="let campaign of mailType.CampaignList">
+        <app-phase-returns [Campaign]="campaign" [PhaseList]="campaign?.PhaseList" title="{{ campaign.CampaignName }}"></app-phase-returns>
+        <div *ngFor="let phase of campaign?.PhaseList">
+          <app-maillist-returns [MailType]="mailType.MailType" [Phase]="phase" [MailList]="phase?.MailList" title="{{ phase.PhaseName }}"></app-maillist-returns>
+        </div>
+      </ng-container>
+    </div>
+  </div> -->
+<!-- </div> -->
+<app-toolbar></app-toolbar>
+
+<!-- <div style="margin-top:200px;"> test</div> -->
+<app-main-returns-toolbox></app-main-returns-toolbox>
+
+
+>>>>>>> 79755303ffa6d4afd21c979ac11387b9f00abf06

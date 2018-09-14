@@ -11,7 +11,12 @@ import { ResolveReturnsComponent } from './Services/resolve-returns/resolve-retu
 const routes: Routes = [
   {path: '', redirectTo: '/homepage', pathMatch: 'full'},  // this is how to set up the default page
   {path: 'homepage', component: InternalHomeDashboardComponent},
+<<<<<<< HEAD
   {path: 'returns/:client/:year', component: ReturnsComponent, resolve: {rowData: ResolveReturnsComponent} },
+=======
+  {path: 'returns', component: ReturnsComponent},
+  {path: 'returns/:id', component: ReturnsComponent },
+>>>>>>> 79755303ffa6d4afd21c979ac11387b9f00abf06
   {path: 'listperformance/:listowner/:listmanager/:recency', component: ListPerformanceComponent },
   {path: 'listperformance/:listowner/:listmanager', component: ListPerformanceComponent },
   {path: 'listperformance/:listowner', component: ListPerformanceComponent },

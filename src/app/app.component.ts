@@ -8,6 +8,7 @@ import { enableProdMode } from '@angular/core';
 })
 export class AppComponent {
   title = 'SD360-Reporting-Angular';
+  
 
   constructor() {
   }

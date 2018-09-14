@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output } from '@angular/core';
 import { AuthService } from '../Services/auth.service'
 import { TokenParams } from '../Models/TokenParams.model';
 import { ClientList } from '../Models/ClientList.model';
@@ -6,12 +6,28 @@ import * as $ from 'jquery';
 
 
 @Component({
-  selector: 'app-internal-home-dashboard',
-  templateUrl: './internal-home-dashboard.component.html',
-  styleUrls: ['./internal-home-dashboard.component.scss']
+    selector: 'app-internal-home-dashboard',
+    templateUrl: './internal-home-dashboard.component.html',
+    styleUrls: ['./internal-home-dashboard.component.scss']
 })
 export class InternalHomeDashboardComponent implements OnInit {
+    public ClientArr: ClientList[];
+    public tokenParam: TokenParams;
+    public pYear: string;
+    public tempYearVal: number;
+    public selectedYear: string = "";
+    public selectedItem: number = 1;
 
+    constructor(private _authService: AuthService) { }
+
+    ngOnInit() {
+        this._authService.getClientList((new Date()).getFullYear().toString())
+            .subscribe(data => {
+                this.ClientArr = data;
+            });
+    }
+
+<<<<<<< HEAD
     public ClientArr : ClientList[];
     public tokenParam : TokenParams;
   
@@ -19,27 +35,44 @@ export class InternalHomeDashboardComponent implements OnInit {
     public filters; 
     public selectedYear: string = (new Date()).getFullYear().toString();
       selectedItem = 1;
+=======
+    GetArchived(tab): void {
+        console.log(tab);
+        this.tempYearVal = tab.index;
+        if (tab.tab.textLabel != "By Year") {
+            if (this.tempYearVal == 0) {
+                this.pYear = "2018";
+            } else if (this.tempYearVal == 1) {
+                this.pYear = "All";
+            }
+            this._authService.getClientList(this.pYear)
+                .subscribe(data => {
+                    this.ClientArr = data;
+                    this.resetAlphabet()
+                    this.selectedYear = "";
+                });
+        } else this.ClientArr = null;
+    }
+>>>>>>> 79755303ffa6d4afd21c979ac11387b9f00abf06
 
-    setSelectedItem(id: number){
-        this.selectedItem = id;
-        if (id === 1 || id === 2){
-        this.selectedYear = "";
-        this.resetAlphabet();
-        }
-        if (id === 3 && this.selectedYear != ""){
-            this.resetAlphabet()
-        }
+    GetArchivedYear(val) {
+        this.pYear = (val.target.innerText);
+        this._authService.getClientList(this.pYear)
+            .subscribe(data => {
+                this.ClientArr = data;
+            });
     }
 
-    setYear(event: any){
-        this.selectedYear = event.target.text;
+    setYear(val) {
+        this.selectedYear = val.target.textContent;
         this.resetAlphabet();
     }
 
-    resetAlphabet(){
+    resetAlphabet() {
         $('ul.alphabet > li > a').removeClass('active');
         $('#showAllClientsLi > a').addClass('active');
     }
+<<<<<<< HEAD
 
   constructor(private _authService: AuthService) { }
 
@@ -100,4 +133,6 @@ export class InternalHomeDashboardComponent implements OnInit {
       this.selectedYear = (new Date()).getFullYear().toString();
     }
 
+=======
+>>>>>>> 79755303ffa6d4afd21c979ac11387b9f00abf06
 }

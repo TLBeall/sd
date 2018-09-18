@@ -7,7 +7,7 @@ import { AuthService } from './Services/auth.service';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatTreeModule, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule} from '@angular/material';
+import {MatTreeModule, MatSort, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule, MatSortModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
@@ -51,6 +51,7 @@ import { InternalHomeDashboardComponent } from './internal-home-dashboard/intern
     AppRoutingModule,
     AngularFontAwesomeModule,
     MatTableModule,
+    MatSortModule,
     BrowserAnimationsModule,
     MatTreeModule,
     MatButtonModule,

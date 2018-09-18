@@ -5,4 +5,5 @@ export class CampaignReturns {
     CampaignName: string;
     Measure:Returns;
     PhaseList: PhaseReturns[];
+    PhaseDataSource: any[];
 }

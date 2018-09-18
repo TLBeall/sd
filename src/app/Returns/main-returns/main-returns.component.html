@@ -1,5 +1,10 @@
 <div style="margin-top: 100px"></div>
 <table mat-table [dataSource]="rowData" multiTemplateDataRows>
+    <ng-container matColumnDef="Expand">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element"> <button (click)="ToggleExpansion(element)"> [] </button> </td>
+        <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
     <ng-container matColumnDef="Client">
         <th mat-header-cell *matHeaderCellDef> Client </th>
         <td mat-cell *matCellDef="let element"> {{element.Client}} </td>
@@ -44,32 +49,33 @@
     <ng-container matColumnDef="RSP">
         <th mat-header-cell *matHeaderCellDef> RSP </th>
         <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! rowData[0].Measure.Expanded)"> {{element.Measure.RSP
-            | number}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.RSP | number}} </td>
+            | percent:'1.0-2'}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.RSP | percent:'1.0-2'}} </td>
     </ng-container>
     <ng-container matColumnDef="AVG">
         <th mat-header-cell *matHeaderCellDef> AVG </th>
         <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! rowData[0].Measure.Expanded)"> {{element.Measure.AVG
-            | number}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.AVG | number}} </td>
+            | number:'1.2-2'}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.AVG | number:'1.2-2'}} </td>
     </ng-container>
     <ng-container matColumnDef="Gross">
         <th mat-header-cell *matHeaderCellDef> Gross </th>
         <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! rowData[0].Measure.Expanded)"> {{element.Measure.Gross
-            | currency}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.Gross | currency}} </td>
+            | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.Gross | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
     </ng-container>
     <ng-container matColumnDef="Cost">
         <th mat-header-cell *matHeaderCellDef> Cost </th>
         <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! rowData[0].Measure.Expanded)"> {{element.Measure.Cost
-            | currency}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.Cost | currency}} </td>
+            | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.Cost | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
     </ng-container>
     <ng-container matColumnDef="Net">
         <th mat-header-cell *matHeaderCellDef> Net </th>
-        <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! rowData[0].Measure.Expanded)"> {{element.Measure.Net
-            | currency}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.Net | currency}} </td>
+        <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.Net < 0" [style.visibility]="GetVisibilityStyle(! rowData[0].Measure.Expanded)">
+            {{element.Measure.Net | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+        <td mat-footer-cell *matFooterCellDef [class.negative]="rowData[0].Measure.Net < 0"> {{rowData[0].Measure.Net | currency
+            : 'USD' : 'symbol' : '1.0-0'}} </td>
     </ng-container>
     <ng-container matColumnDef="GPP">
         <th mat-header-cell *matHeaderCellDef> GPP </th>
@@ -85,122 +91,139 @@
     </ng-container>
     <ng-container matColumnDef="NLM">
         <th mat-header-cell *matHeaderCellDef> NLM </th>
-        <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! rowData[0].Measure.Expanded)"> {{element.Measure.NLM
-            | currency}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.NLM | currency}} </td>
+        <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.NLM < 0" [style.visibility]="GetVisibilityStyle(! rowData[0].Measure.Expanded)">
+            {{element.Measure.NLM | currency}} </td>
+        <td mat-footer-cell *matFooterCellDef [class.negative]="rowData[0].Measure.NLM < 0"> {{rowData[0].Measure.NLM | currency}}
+        </td>
     </ng-container>
     <ng-container matColumnDef="IO">
         <th mat-header-cell *matHeaderCellDef> IO </th>
         <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! rowData[0].Measure.Expanded)"> {{element.Measure.IO
-            | number}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.IO | number}} </td>
+            | number : '1.2-2'}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.IO | number : '1.2-2'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let element" [attr.colspan]="clientDisplayedColumns.length">
             <div [@detailExpand]="element.Measure.Expanded ? 'expanded' : 'collapsed'">
                 <div style="width:100%">
-                    <table mat-table [dataSource]="element.MailTypeList" multiTemplateDataRows>
+                    <table mat-table [dataSource]="element.MailTypeList" matSort (matSortChange)="MailTypeSort($event, element.MailTypeList)" multiTemplateDataRows>
+                        <ng-container matColumnDef="Expand">
+                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                            <td mat-cell *matCellDef="let element"> <button (click)="ToggleExpansion(element)"> [] </button>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
                         <ng-container matColumnDef="MailType">
-                            <th mat-header-cell *matHeaderCellDef> Mail Type </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Mail Type </th>
                             <td mat-cell *matCellDef="let element"> {{element.MailType}} </td>
-                            <td mat-footer-cell *matFooterCellDef> Total {{rowData[0].Client}}</td>
+                            <td mat-footer-cell *matFooterCellDef> Total {{element.Client}}</td>
                         </ng-container>
                         <ng-container matColumnDef="Mailed">
-                            <th mat-header-cell *matHeaderCellDef> Mailed </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Mailed </th>
                             <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Mailed
                                 | date:'shortDate'}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.Mailed | date:'shortDate'}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{element.Measure.Mailed | date:'shortDate'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="Caged">
-                            <th mat-header-cell *matHeaderCellDef> Caged </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Caged </th>
                             <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Caged
                                 | date:'shortDate'}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.Caged | date:'shortDate'}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{element.Measure.Caged | date:'shortDate'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="Quantity">
-                            <th mat-header-cell *matHeaderCellDef> Qty </th>
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> Qty </th>
                             <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Quantity
                                 | number}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.Quantity | number}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{element.Measure.Quantity | number}} </td>
                         </ng-container>
                         <ng-container matColumnDef="Donors">
-                            <th mat-header-cell *matHeaderCellDef> Don </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Don </th>
                             <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Donors
                                 | number}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.Donors | number}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{element.Measure.Donors | number}} </td>
                         </ng-container>
                         <ng-container matColumnDef="NonDonors">
-                            <th mat-header-cell *matHeaderCellDef> Non </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Non </th>
                             <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.NonDonors
                                 | number}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.NonDonors | number}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{element.Measure.NonDonors | number}} </td>
                         </ng-container>
                         <ng-container matColumnDef="NewDonors">
-                            <th mat-header-cell *matHeaderCellDef> New </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> New </th>
                             <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.NewDonors
                                 | number}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.NewDonors | number}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{element.Measure.NewDonors | number}} </td>
                         </ng-container>
                         <ng-container matColumnDef="RSP">
-                            <th mat-header-cell *matHeaderCellDef> RSP </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> RSP </th>
                             <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.RSP
-                                | number}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.RSP | number}} </td>
+                                | percent:'1.0-2'}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{element.Measure.RSP | percent:'1.0-2'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="AVG">
-                            <th mat-header-cell *matHeaderCellDef> AVG </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> AVG </th>
                             <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.AVG
-                                | number}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.AVG | number}} </td>
+                                | number:'1.2-2'}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{element.Measure.AVG | number:'1.2-2'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="Gross">
-                            <th mat-header-cell *matHeaderCellDef> Gross </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Gross </th>
                             <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Gross
-                                | currency}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.Gross | currency}} </td>
+                                | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{element.Measure.Gross | currency : 'USD' : 'symbol'
+                                : '1.0-0'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="Cost">
-                            <th mat-header-cell *matHeaderCellDef> Cost </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Cost </th>
                             <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Cost
-                                | currency}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.Cost | currency}} </td>
+                                | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{element.Measure.Cost | currency : 'USD' : 'symbol' :
+                                '1.0-0'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="Net">
-                            <th mat-header-cell *matHeaderCellDef> Net </th>
-                            <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Net
-                                | currency}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.Net | currency}} </td>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Net </th>
+                            <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.Net < 0" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)">
+                                {{element.Measure.Net | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+                            <td mat-footer-cell [class.negative]="element.Measure.Net < 0" *matFooterCellDef> {{element.Measure.Net
+                                | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="GPP">
-                            <th mat-header-cell *matHeaderCellDef> GPP </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> GPP </th>
                             <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.GPP
                                 | currency}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.GPP | currency}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{element.Measure.GPP | currency}} </td>
                         </ng-container>
                         <ng-container matColumnDef="CLM">
-                            <th mat-header-cell *matHeaderCellDef> CLM </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> CLM </th>
                             <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.CLM
                                 | currency}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.CLM | currency}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{element.Measure.CLM | currency}} </td>
                         </ng-container>
                         <ng-container matColumnDef="NLM">
-                            <th mat-header-cell *matHeaderCellDef> NLM </th>
-                            <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.NLM
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> NLM </th>
+                            <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.NLM < 0" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)">
+                                {{element.Measure.NLM | currency}} </td>
+                            <td mat-footer-cell *matFooterCellDef [class.negative]="element.Measure.NLM < 0"> {{element.Measure.NLM
                                 | currency}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.NLM | currency}} </td>
                         </ng-container>
                         <ng-container matColumnDef="IO">
-                            <th mat-header-cell *matHeaderCellDef> IO </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> IO </th>
                             <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.IO
-                                | number}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{rowData[0].Measure.IO | number}} </td>
+                                | number : '1.2-2'}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{element.Measure.IO | number : '1.2-2'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="expandedDetail">
                             <td mat-cell *matCellDef="let element" [attr.colspan]="mailTypeDisplayedColumns.length">
                                 <div class="example-element-detail" [@detailExpand]="element.Measure.Expanded ? 'expanded' : 'collapsed'">
                                     <div style="width:100%">
                                         <table mat-table [dataSource]="element.CampaignList" multiTemplateDataRows>
+                                            <ng-container matColumnDef="Expand">
+                                                <th mat-header-cell *matHeaderCellDef> Action </th>
+                                                <td mat-cell *matCellDef="let element"> <button (click)="ToggleExpansion(element)">
+                                                        [] </button> </td>
+                                                <td mat-footer-cell *matFooterCellDef> </td>
+                                            </ng-container>
                                             <ng-container matColumnDef="CampaignName">
                                                 <th mat-header-cell *matHeaderCellDef> Campaign </th>
                                                 <td mat-cell *matCellDef="let element"> {{element.CampaignName}} </td>
@@ -209,110 +232,120 @@
                                             <ng-container matColumnDef="Mailed">
                                                 <th mat-header-cell *matHeaderCellDef> Mailed </th>
                                                 <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Mailed
-                                                    | date:'shortDate'}}</td>
+                                                    | date:'shortDate'}} </td>
                                                 <td mat-footer-cell *matFooterCellDef> {{element.Measure.Mailed | date:'shortDate'}}
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="Caged">
                                                 <th mat-header-cell *matHeaderCellDef> Caged </th>
                                                 <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Caged
-                                                    | date:'shortDate'}}</td>
+                                                    | date:'shortDate'}} </td>
                                                 <td mat-footer-cell *matFooterCellDef> {{element.Measure.Caged | date:'shortDate'}}
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="Quantity">
                                                 <th mat-header-cell *matHeaderCellDef> Qty </th>
                                                 <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Quantity
-                                                    | number}}</td>
+                                                    | number}} </td>
                                                 <td mat-footer-cell *matFooterCellDef> {{element.Measure.Quantity | number}}
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="Donors">
                                                 <th mat-header-cell *matHeaderCellDef> Don </th>
                                                 <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Donors
-                                                    | number}}
-                                                </td>
+                                                    | number}} </td>
                                                 <td mat-footer-cell *matFooterCellDef> {{element.Measure.Donors | number}}
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="NonDonors">
                                                 <th mat-header-cell *matHeaderCellDef> Non </th>
                                                 <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.NonDonors
-                                                    | number}}</td>
+                                                    | number}} </td>
                                                 <td mat-footer-cell *matFooterCellDef> {{element.Measure.NonDonors | number}}
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="NewDonors">
                                                 <th mat-header-cell *matHeaderCellDef> New </th>
                                                 <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.NewDonors
-                                                    | number}}</td>
-                                                <td mat-footer-cell *matFooterCellDef> {{element.Measure.NewDonors | number}}</td>
+                                                    | number}} </td>
+                                                <td mat-footer-cell *matFooterCellDef> {{element.Measure.NewDonors | number}}
+                                                </td>
                                             </ng-container>
                                             <ng-container matColumnDef="RSP">
                                                 <th mat-header-cell *matHeaderCellDef> RSP </th>
                                                 <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.RSP
-                                                    | number}}</td>
-                                                <td mat-footer-cell *matFooterCellDef> {{element.Measure.RSP | number}} </td>
+                                                    | percent:'1.0-2'}} </td>
+                                                <td mat-footer-cell *matFooterCellDef> {{element.Measure.RSP | percent:'1.0-2'}}
+                                                </td>
                                             </ng-container>
                                             <ng-container matColumnDef="AVG">
                                                 <th mat-header-cell *matHeaderCellDef> AVG </th>
                                                 <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.AVG
-                                                    | number}}</td>
-                                                <td mat-footer-cell *matFooterCellDef> {{element.Measure.AVG | number}} </td>
+                                                    | number:'1.2-2'}} </td>
+                                                <td mat-footer-cell *matFooterCellDef> {{element.Measure.AVG | number:'1.2-2'}}
+                                                </td>
                                             </ng-container>
                                             <ng-container matColumnDef="Gross">
                                                 <th mat-header-cell *matHeaderCellDef> Gross </th>
                                                 <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Gross
-                                                    | currency}}
-                                                    <td mat-footer-cell *matFooterCellDef> {{element.Measure.Gross | currency}}
-                                                    </td>
+                                                    | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+                                                <td mat-footer-cell *matFooterCellDef> {{element.Measure.Gross | currency
+                                                    : 'USD' : 'symbol' : '1.0-0'}} </td>
                                             </ng-container>
                                             <ng-container matColumnDef="Cost">
                                                 <th mat-header-cell *matHeaderCellDef> Cost </th>
                                                 <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Cost
-                                                    | currency}}</td>
-                                                <td mat-footer-cell *matFooterCellDef> {{element.Measure.Cost | currency}}
-                                                </td>
+                                                    | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+                                                <td mat-footer-cell *matFooterCellDef> {{element.Measure.Cost | currency
+                                                    : 'USD' : 'symbol' : '1.0-0'}} </td>
                                             </ng-container>
                                             <ng-container matColumnDef="Net">
                                                 <th mat-header-cell *matHeaderCellDef> Net </th>
-                                                <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Net
-                                                    | currency}}</td>
-                                                <td mat-footer-cell *matFooterCellDef> {{element.Measure.Net | currency}}
-                                                </td>
+                                                <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.Net < 0" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)">
+                                                    {{element.Measure.Net | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+                                                <td mat-footer-cell [class.negative]="element.Measure.Net < 0" *matFooterCellDef> {{element.Measure.Net
+                                                    | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
                                             </ng-container>
                                             <ng-container matColumnDef="GPP">
                                                 <th mat-header-cell *matHeaderCellDef> GPP </th>
                                                 <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.GPP
-                                                    | currency}}</td>
+                                                    | currency}} </td>
                                                 <td mat-footer-cell *matFooterCellDef> {{element.Measure.GPP | currency}}
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="CLM">
                                                 <th mat-header-cell *matHeaderCellDef> CLM </th>
                                                 <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.CLM
-                                                    | currency}}</td>
+                                                    | currency}} </td>
                                                 <td mat-footer-cell *matFooterCellDef> {{element.Measure.CLM | currency}}
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="NLM">
                                                 <th mat-header-cell *matHeaderCellDef> NLM </th>
-                                                <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.NLM
-                                                    | currency}}</td>
-                                                <td mat-footer-cell *matFooterCellDef> {{element.Measure.NLM | currency}}
+                                                <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.NLM < 0" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)">
+                                                    {{element.Measure.NLM | currency}}
                                                 </td>
+                                                <td mat-footer-cell *matFooterCellDef [class.negative]="element.Measure.NLM < 0"> {{element.Measure.NLM
+                                                    | currency}} </td>
                                             </ng-container>
                                             <ng-container matColumnDef="IO">
                                                 <th mat-header-cell *matHeaderCellDef> IO </th>
                                                 <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.IO
-                                                    | number}} </td>
-                                                <td mat-footer-cell *matFooterCellDef> {{element.Measure.IO | number}} </td>
+                                                    | number : '1.2-2'}} </td>
+                                                <td mat-footer-cell *matFooterCellDef> {{element.Measure.IO | number : '1.2-2'}}
+                                                </td>
                                             </ng-container>
                                             <ng-container matColumnDef="expandedDetail">
                                                 <td mat-cell *matCellDef="let element" [attr.colspan]="campaignDisplayedColumns.length">
                                                     <div class="example-element-detail" [@detailExpand]="element.Measure.Expanded ? 'expanded' : 'collapsed'">
                                                         <div style="width:100%">
                                                             <table mat-table [dataSource]="element.PhaseList" multiTemplateDataRows>
+                                                                <ng-container matColumnDef="Expand">
+                                                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                                                    <td mat-cell *matCellDef="let element"> <button (click)="ToggleExpansion(element)">
+                                                                            [] </button> </td>
+                                                                    <td mat-footer-cell *matFooterCellDef> </td>
+                                                                </ng-container>
                                                                 <ng-container matColumnDef="PhaseName">
                                                                     <th mat-header-cell *matHeaderCellDef> Phase </th>
                                                                     <td mat-cell *matCellDef="let element"> {{element.PhaseName}}
@@ -323,123 +356,115 @@
                                                                 <ng-container matColumnDef="Mailed">
                                                                     <th mat-header-cell *matHeaderCellDef> Mailed </th>
                                                                     <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Mailed
-                                                                        | date:'shortDate'}}</td>
+                                                                        | date:'shortDate'}} </td>
                                                                     <td mat-footer-cell *matFooterCellDef> {{element.Measure.Mailed
-                                                                        | date:'shortDate'}}
-                                                                    </td>
+                                                                        | date:'shortDate'}} </td>
                                                                 </ng-container>
                                                                 <ng-container matColumnDef="Caged">
                                                                     <th mat-header-cell *matHeaderCellDef> Caged </th>
                                                                     <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Caged
-                                                                        | date:'shortDate'}}</td>
+                                                                        | date:'shortDate'}} </td>
                                                                     <td mat-footer-cell *matFooterCellDef> {{element.Measure.Caged
-                                                                        | date:'shortDate'}}
-                                                                    </td>
+                                                                        | date:'shortDate'}} </td>
                                                                 </ng-container>
                                                                 <ng-container matColumnDef="Quantity">
                                                                     <th mat-header-cell *matHeaderCellDef> Qty </th>
                                                                     <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Quantity
-                                                                        | number}}</td>
+                                                                        | number}} </td>
                                                                     <td mat-footer-cell *matFooterCellDef> {{element.Measure.Quantity
-                                                                        | number}}
-                                                                    </td>
+                                                                        | number}} </td>
                                                                 </ng-container>
                                                                 <ng-container matColumnDef="Donors">
                                                                     <th mat-header-cell *matHeaderCellDef> Don </th>
                                                                     <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Donors
-                                                                        | number}}
-                                                                    </td>
+                                                                        | number}} </td>
                                                                     <td mat-footer-cell *matFooterCellDef> {{element.Measure.Donors
-                                                                        | number}}
-                                                                    </td>
+                                                                        | number}} </td>
                                                                 </ng-container>
                                                                 <ng-container matColumnDef="NonDonors">
                                                                     <th mat-header-cell *matHeaderCellDef> Non </th>
                                                                     <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.NonDonors
-                                                                        | number}}</td>
+                                                                        | number}} </td>
                                                                     <td mat-footer-cell *matFooterCellDef> {{element.Measure.NonDonors
-                                                                        | number}}
-                                                                    </td>
+                                                                        | number}} </td>
                                                                 </ng-container>
                                                                 <ng-container matColumnDef="NewDonors">
                                                                     <th mat-header-cell *matHeaderCellDef> New </th>
                                                                     <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.NewDonors
-                                                                        | number}}</td>
+                                                                        | number}} </td>
                                                                     <td mat-footer-cell *matFooterCellDef> {{element.Measure.NewDonors
-                                                                        | number}}</td>
+                                                                        | number}} </td>
                                                                 </ng-container>
                                                                 <ng-container matColumnDef="RSP">
                                                                     <th mat-header-cell *matHeaderCellDef> RSP </th>
                                                                     <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.RSP
-                                                                        | number}}</td>
+                                                                        | percent:'1.0-2'}} </td>
                                                                     <td mat-footer-cell *matFooterCellDef> {{element.Measure.RSP
-                                                                        | number}} </td>
+                                                                        | percent:'1.0-2'}} </td>
                                                                 </ng-container>
                                                                 <ng-container matColumnDef="AVG">
                                                                     <th mat-header-cell *matHeaderCellDef> AVG </th>
                                                                     <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.AVG
-                                                                        | number}}</td>
+                                                                        | number:'1.2-2'}} </td>
                                                                     <td mat-footer-cell *matFooterCellDef> {{element.Measure.AVG
-                                                                        | number}} </td>
+                                                                        | number:'1.2-2'}} </td>
                                                                 </ng-container>
                                                                 <ng-container matColumnDef="Gross">
                                                                     <th mat-header-cell *matHeaderCellDef> Gross </th>
                                                                     <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Gross
-                                                                        | currency}}
-                                                                        <td mat-footer-cell *matFooterCellDef> {{element.Measure.Gross
-                                                                            | currency}} </td>
+                                                                        | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+                                                                    <td mat-footer-cell *matFooterCellDef> {{element.Measure.Gross
+                                                                        | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
                                                                 </ng-container>
                                                                 <ng-container matColumnDef="Cost">
                                                                     <th mat-header-cell *matHeaderCellDef> Cost </th>
                                                                     <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Cost
-                                                                        | currency}}</td>
+                                                                        | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
                                                                     <td mat-footer-cell *matFooterCellDef> {{element.Measure.Cost
-                                                                        | currency}}
-                                                                    </td>
+                                                                        | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
                                                                 </ng-container>
                                                                 <ng-container matColumnDef="Net">
                                                                     <th mat-header-cell *matHeaderCellDef> Net </th>
-                                                                    <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.Net
-                                                                        | currency}}</td>
-                                                                    <td mat-footer-cell *matFooterCellDef> {{element.Measure.Net
-                                                                        | currency}}
-                                                                    </td>
+                                                                    <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.Net < 0" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)">
+                                                                        {{element.Measure.Net | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+                                                                    <td mat-footer-cell [class.negative]="element.Measure.Net < 0" *matFooterCellDef> {{element.Measure.Net
+                                                                        | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
                                                                 </ng-container>
                                                                 <ng-container matColumnDef="GPP">
                                                                     <th mat-header-cell *matHeaderCellDef> GPP </th>
                                                                     <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.GPP
-                                                                        | currency}}</td>
+                                                                        | currency}} </td>
                                                                     <td mat-footer-cell *matFooterCellDef> {{element.Measure.GPP
-                                                                        | currency}}
-                                                                    </td>
+                                                                        | currency}} </td>
                                                                 </ng-container>
                                                                 <ng-container matColumnDef="CLM">
                                                                     <th mat-header-cell *matHeaderCellDef> CLM </th>
                                                                     <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.CLM
-                                                                        | currency}}</td>
+                                                                        | currency}} </td>
                                                                     <td mat-footer-cell *matFooterCellDef> {{element.Measure.CLM
-                                                                        | currency}}
-                                                                    </td>
+                                                                        | currency}} </td>
                                                                 </ng-container>
                                                                 <ng-container matColumnDef="NLM">
                                                                     <th mat-header-cell *matHeaderCellDef> NLM </th>
-                                                                    <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.NLM
-                                                                        | currency}}</td>
-                                                                    <td mat-footer-cell *matFooterCellDef> {{element.Measure.NLM
-                                                                        | currency}}
-                                                                    </td>
+                                                                    <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.NLM < 0" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)">
+                                                                        {{element.Measure.NLM | currency}} </td>
+                                                                    <td mat-footer-cell *matFooterCellDef [class.negative]="element.Measure.NLM < 0"> {{element.Measure.NLM
+                                                                        | currency}} </td>
                                                                 </ng-container>
                                                                 <ng-container matColumnDef="IO">
                                                                     <th mat-header-cell *matHeaderCellDef> IO </th>
                                                                     <td mat-cell *matCellDef="let element" [style.visibility]="GetVisibilityStyle(! element.Measure.Expanded)"> {{element.Measure.IO
-                                                                        | number}} </td>
+                                                                        | number : '1.2-2'}} </td>
                                                                     <td mat-footer-cell *matFooterCellDef> {{element.Measure.IO
-                                                                        | number}} </td>
+                                                                        | number : '1.2-2'}} </td>
                                                                 </ng-container>
                                                                 <ng-container matColumnDef="expandedDetail">
                                                                     <td mat-cell *matCellDef="let element" [attr.colspan]="phaseDisplayedColumns.length">
                                                                         <div class="example-element-detail" [@detailExpand]="element.Measure.Expanded ? 'expanded' : 'collapsed'">
                                                                             <div style="width:100%">
+                                                                                <h3> {{element.Title}}</h3>
+                                                                                <p> {{element.Format}} - Doubling Days ({{element.DoublingDays}})
+                                                                                </p>
                                                                                 <table mat-table [dataSource]="element.MailList" multiTemplateDataRows>
                                                                                     <ng-container matColumnDef="MailCode">
                                                                                         <th mat-header-cell *matHeaderCellDef> Mail
@@ -503,41 +528,47 @@
                                                                                         <th mat-header-cell *matHeaderCellDef> RSP
                                                                                         </th>
                                                                                         <td mat-cell *matCellDef="let element"> {{element.Measure.RSP
-                                                                                            | number}} </td>
+                                                                                            | percent:'1.0-2'}} </td>
                                                                                         <td mat-footer-cell *matFooterCellDef> {{element.Measure.RSP
-                                                                                            | number}} </td>
+                                                                                            | percent:'1.0-2'}} </td>
                                                                                     </ng-container>
                                                                                     <ng-container matColumnDef="AVG">
                                                                                         <th mat-header-cell *matHeaderCellDef> AVG
                                                                                         </th>
                                                                                         <td mat-cell *matCellDef="let element"> {{element.Measure.AVG
-                                                                                            | number}} </td>
+                                                                                            | number:'1.2-2'}} </td>
                                                                                         <td mat-footer-cell *matFooterCellDef> {{element.Measure.AVG
-                                                                                            | number}} </td>
+                                                                                            | number:'1.2-2'}} </td>
                                                                                     </ng-container>
                                                                                     <ng-container matColumnDef="Gross">
                                                                                         <th mat-header-cell *matHeaderCellDef> Gross
                                                                                         </th>
                                                                                         <td mat-cell *matCellDef="let element"> {{element.Measure.Gross
-                                                                                            | currency}} </td>
+                                                                                            | currency : 'USD' : 'symbol'
+                                                                                            : '1.0-0'}} </td>
                                                                                         <td mat-footer-cell *matFooterCellDef> {{element.Measure.Gross
-                                                                                            | currency}} </td>
+                                                                                            | currency : 'USD' : 'symbol'
+                                                                                            : '1.0-0'}} </td>
                                                                                     </ng-container>
                                                                                     <ng-container matColumnDef="Cost">
                                                                                         <th mat-header-cell *matHeaderCellDef> Cost
                                                                                         </th>
                                                                                         <td mat-cell *matCellDef="let element"> {{element.Measure.Cost
-                                                                                            | currency}} </td>
+                                                                                            | currency : 'USD' : 'symbol'
+                                                                                            : '1.0-0'}} </td>
                                                                                         <td mat-footer-cell *matFooterCellDef> {{element.Measure.Cost
-                                                                                            | currency}} </td>
+                                                                                            | currency : 'USD' : 'symbol'
+                                                                                            : '1.0-0'}} </td>
                                                                                     </ng-container>
                                                                                     <ng-container matColumnDef="Net">
                                                                                         <th mat-header-cell *matHeaderCellDef> Net
                                                                                         </th>
-                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.Net
-                                                                                            | currency}} </td>
-                                                                                        <td mat-footer-cell *matFooterCellDef> {{element.Measure.Net
-                                                                                            | currency}} </td>
+                                                                                        <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.Net < 0"> {{element.Measure.Net
+                                                                                            | currency : 'USD' : 'symbol'
+                                                                                            : '1.0-0'}} </td>
+                                                                                        <td mat-footer-cell [class.negative]="element.Measure.Net < 0" *matFooterCellDef> {{element.Measure.Net
+                                                                                            | currency : 'USD' : 'symbol'
+                                                                                            : '1.0-0'}} </td>
                                                                                     </ng-container>
                                                                                     <ng-container matColumnDef="GPP">
                                                                                         <th mat-header-cell *matHeaderCellDef> GPP
@@ -558,18 +589,18 @@
                                                                                     <ng-container matColumnDef="NLM">
                                                                                         <th mat-header-cell *matHeaderCellDef> NLM
                                                                                         </th>
-                                                                                        <td mat-cell *matCellDef="let element"> {{element.Measure.NLM
+                                                                                        <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.NLM < 0"> {{element.Measure.NLM
                                                                                             | currency}} </td>
-                                                                                        <td mat-footer-cell *matFooterCellDef> {{element.Measure.NLM
+                                                                                        <td mat-footer-cell *matFooterCellDef [class.negative]="element.Measure.NLM < 0"> {{element.Measure.NLM
                                                                                             | currency}} </td>
                                                                                     </ng-container>
                                                                                     <ng-container matColumnDef="IO">
                                                                                         <th mat-header-cell *matHeaderCellDef> IO
                                                                                         </th>
                                                                                         <td mat-cell *matCellDef="let element"> {{element.Measure.IO
-                                                                                            | number}} </td>
+                                                                                            | number : '1.2-2'}} </td>
                                                                                         <td mat-footer-cell *matFooterCellDef> {{element.Measure.IO
-                                                                                            | number}} </td>
+                                                                                            | number : '1.2-2'}} </td>
                                                                                     </ng-container>
 
                                                                                     <tr mat-header-row *matHeaderRowDef="mailListDisplayedColumns"></tr>
@@ -581,21 +612,20 @@
                                                                         </div>
                                                                     </td>
                                                                 </ng-container>
-                                                                <tr mat-header-row *matHeaderRowDef="phaseDisplayedColumns"></tr>
-                                                                <tr mat-row *matRowDef="let element; columns: phaseDisplayedColumns;" class="example-element-row" [class.example-expanded-row]="element.Measure.Expanded"
-                                                                    (dblclick)="element.Measure.Expanded = ! element.Measure.Expanded">
+                                                                <tr mat-header-row [style.visibility]="GetVisibilityStyle(! element.PhaseList[0].Measure.Expanded)" *matHeaderRowDef="phaseDisplayedColumns"></tr>
+                                                                <tr mat-row *matRowDef="let element; columns: phaseDisplayedColumns;" class="example-element-row" [class.example-expanded-row]="element.Measure.Expanded">
                                                                 </tr>
                                                                 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
                                                                 <tr mat-footer-row [style.visibility]="GetVisibilityStyle(element.Measure.Expanded)" *matFooterRowDef="phaseDisplayedColumns"></tr>
                                                             </table>
                                                         </div>
                                                     </div>
-                                                    </td>
+                                                </td>
                                             </ng-container>
 
-                                            <tr mat-header-row *matHeaderRowDef="campaignDisplayedColumns"></tr>
+                                            <tr mat-header-row [style.visibility]="GetVisibilityStyle(! element.CampaignList[0].Measure.Expanded)" *matHeaderRowDef="campaignDisplayedColumns"></tr>
                                             <tr mat-row *matRowDef="let element; columns: campaignDisplayedColumns;" class="example-element-row" [class.example-expanded-row]="element.Measure.Expanded"
-                                                (dblclick)="element.Measure.Expanded = ! element.Measure.Expanded">
+                                                (dblclick)="CollapseNextLevel(element, element.PhaseList)">
                                             </tr>
                                             <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
                                             <tr mat-footer-row [style.visibility]="GetVisibilityStyle(element.Measure.Expanded)" *matFooterRowDef="campaignDisplayedColumns"></tr>
@@ -603,30 +633,25 @@
                                     </div>
 
                                 </div>
-                                </td>
+                            </td>
                         </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="mailTypeDisplayedColumns"></tr>
+                        <tr mat-header-row [style.visibility]="GetVisibilityStyle(! element.MailTypeList[0].Measure.Expanded)" *matHeaderRowDef="mailTypeDisplayedColumns"></tr>
                         <tr mat-row *matRowDef="let element; columns: mailTypeDisplayedColumns;" class="example-element-row" [class.example-expanded-row]="element.Measure.Expanded"
-                            (dblclick)="element.Measure.Expanded = ! element.Measure.Expanded">
+                            (dblclick)="CollapseNextLevel(element, element.CampaignList)">
                         </tr>
                         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
                         <tr mat-footer-row [style.visibility]="GetVisibilityStyle(element.Measure.Expanded)" *matFooterRowDef="mailTypeDisplayedColumns"></tr>
                     </table>
                 </div>
             </div>
-            </td>
+        </td>
     </ng-container>
-    <tr mat-header-row *matHeaderRowDef="clientDisplayedColumns"></tr>
     <tr mat-row *matRowDef="let element; columns: clientDisplayedColumns;" class="example-element-row" [class.example-expanded-row]="element.Measure.Expanded"
-        (dblclick)="element.Measure.Expanded = ! element.Measure.Expanded">
+        (dblclick)="CollapseNextLevel(element, element.MailTypeList)">
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-    <!-- <tr mat-footer-row [style.visibility]="GetVisibilityStyle(rowData[0].Measure.Expanded)" *matFooterRowDef="clientDisplayedColumns"></tr> -->
 </table>
 
 <app-toolbar></app-toolbar>
 
 <app-main-returns-toolbox></app-main-returns-toolbox>
-
-

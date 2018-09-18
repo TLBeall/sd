@@ -18,6 +18,7 @@ export class PhaseReturns {
     PostageOutType:string;
     PostageInType:string;
     MailList:MailReturns[];
+    MailDataSource: any[];
     DoublingDays: number;
     ListOwnerName: string;
     ListManagerName: string;

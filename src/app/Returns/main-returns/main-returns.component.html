@@ -107,7 +107,8 @@
         <td mat-cell *matCellDef="let element" [attr.colspan]="clientDisplayedColumns.length">
             <div [@detailExpand]="element.Measure.Expanded ? 'expanded' : 'collapsed'">
                 <div style="width:100%">
-                    <table mat-table [dataSource]="element.MailTypeList" matSort (matSortChange)="MailTypeSort($event, element.MailTypeList)" multiTemplateDataRows>
+                    <table mat-table [dataSource]="element.MailTypeList" matSort (matSortChange)="MailTypeSort($event, element.MailTypeList)"
+                        multiTemplateDataRows>
                         <ng-container matColumnDef="Expand">
                             <th mat-header-cell *matHeaderCellDef> Action </th>
                             <td mat-cell *matCellDef="let element"> <button (click)="ToggleExpansion(element)"> [] </button>

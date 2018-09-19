@@ -6,9 +6,8 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from './Services/auth.service';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatTreeModule, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule} from '@angular/material';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTreeModule, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule } from '@angular/material';
 import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { LoaderService } from './Loader/loader.service';
@@ -19,10 +18,11 @@ import { ClickOutsideDirective } from './click-outside.directive';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { MainReturnsToolbarComponent } from './toolbar/main-returns-toolbar/main-returns-toolbar.component';
 import { HomePageInternalToolbarComponent } from './toolbar/home-page-internal-toolbar/home-page-internal-toolbar.component';
-
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { ResolveReturnsComponent } from './Services/resolve-returns/resolve-returns.component';
-import { InternalHomeDashboardComponent } from './internal-home-dashboard/internal-home-dashboard.component';
+import { InternalHomePageComponent } from './internal-home-page/internal-home-page.component';
+import { InternalHomeDashboardComponent } from './internal-home-page/internal-home-dashboard/internal-home-dashboard.component';
+import { InternalHomeToolboxComponent } from './internal-home-page/internal-home-toolbox/internal-home-toolbox.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,7 @@ import { InternalHomeDashboardComponent } from './internal-home-dashboard/intern
     LoaderComponent,
     ListPerformanceComponent,
     ResolveReturnsComponent,
-    InternalHomeDashboardComponent,
+    InternalHomePageComponent,
     routingComponents,
     LoaderComponent,
     ListPerformanceComponent,
@@ -41,6 +41,8 @@ import { InternalHomeDashboardComponent } from './internal-home-dashboard/intern
     ToolbarComponent,
     MainReturnsToolbarComponent,
     HomePageInternalToolbarComponent,
+    InternalHomeDashboardComponent,
+    InternalHomeToolboxComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,4 +69,4 @@ import { InternalHomeDashboardComponent } from './internal-home-dashboard/intern
   bootstrap: [AppComponent]
 })
 export class AppModule {
- }
+}

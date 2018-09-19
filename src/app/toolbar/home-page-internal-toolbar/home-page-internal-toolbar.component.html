@@ -1,4 +1,5 @@
-<div id="alphabetToolbar" class="col-md-12">
+<!-- <><> DESKTOP... See below for Tablet/phone <><>-->
+<div id="alphabetToolbar" *ngIf="currentWindowWidth >= 900" class="col-md-12">
   <ul class="alphabet nav nav-pills">
     <li class="nav-item" id="showAllClientsLi">
       <a class="nav-link active" data-toggle="pill">All</a>
@@ -84,6 +85,45 @@
     <li class="nav-item">
       <a class="nav-link" data-toggle="pill">Z</a>
     </li>
-    <!-- <li id="alphabetResult"></li> -->
   </ul>
 </div>
+
+
+<!-- <><> Tablet/Phone Alphabet Settings <><>-->
+<ng-container *ngIf="currentWindowWidth < 900">
+<button mat-flat-button color="accent" [matMenuTriggerFor]="menu" id="alphabetSearchBtn">{{ alphabetSelection }}</button>
+<mat-menu #menu="matMenu">
+  <div id="phoneAlphabet" mat-menu-item>
+    <ul>
+      <li (click)="findAll($event)">All</li>
+      <li (click)="findLetter($event)">#</li>
+      <li (click)="findLetter($event)">A</li>
+      <li (click)="findLetter($event)">B</li>
+      <li (click)="findLetter($event)">C</li>
+      <li (click)="findLetter($event)">D</li>
+      <li (click)="findLetter($event)">E</li>
+      <li (click)="findLetter($event)">F</li>
+      <li (click)="findLetter($event)">G</li>
+      <li (click)="findLetter($event)">H</li>
+      <li (click)="findLetter($event)">I</li>
+      <li (click)="findLetter($event)">J</li>
+      <li (click)="findLetter($event)">K</li>
+      <li (click)="findLetter($event)">L</li>
+      <li (click)="findLetter($event)">M</li>
+      <li (click)="findLetter($event)">N</li>
+      <li (click)="findLetter($event)">O</li>
+      <li (click)="findLetter($event)">P</li>
+      <li (click)="findLetter($event)">Q</li>
+      <li (click)="findLetter($event)">R</li>
+      <li (click)="findLetter($event)">S</li>
+      <li (click)="findLetter($event)">T</li>
+      <li (click)="findLetter($event)">U</li>
+      <li (click)="findLetter($event)">V</li>
+      <li (click)="findLetter($event)">W</li>
+      <li (click)="findLetter($event)">X</li>
+      <li (click)="findLetter($event)">Y</li>
+      <li (click)="findLetter($event)">Z</li>
+    </ul>
+  </div>
+</mat-menu>
+</ng-container>

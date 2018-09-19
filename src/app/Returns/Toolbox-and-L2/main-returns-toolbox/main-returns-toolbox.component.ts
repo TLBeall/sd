@@ -7,21 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainReturnsToolboxComponent implements OnInit {
 
-  opened: Boolean;
+  toolsOpened: Boolean;
   demoOpened: Boolean;
   hide: Boolean = false;
   visibility: string = "hidden";
-
+  toolsIcon: string = "settings";
+  l2Icon: string = "group";
 
   toggle(tag: number) {
     if (tag === 1) {
-      this.opened = !this.opened;
+      this.toolsOpened = !this.toolsOpened;
       this.hide = !this.hide;
+      this.toolsIcon = this.toolsOpened?  "arrow_forward_ios": "settings";
       this.visibleFunction();
-      
     } else if (tag === 2) {
       this.demoOpened = !this.demoOpened;
       this.hide = !this.hide;
+      this.l2Icon = this.demoOpened? "arrow_forward_ios": "group";
       this.visibleFunction();
     }
   }

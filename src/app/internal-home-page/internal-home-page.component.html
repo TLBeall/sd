@@ -1,0 +1,91 @@
+<app-toolbar></app-toolbar>
+<!-- <div class="container"> -->
+<div class="row" [ngClass]="{
+    'fullPage': currentWindowWidth >= 900
+}">
+    <div [ngClass]="{
+        'col-8': currentWindowWidth >= 900,
+        'col-12': currentWindowWidth < 900
+    }">
+        <mat-card>
+            <mat-tab-group (selectedTabChange)="GetArchived($event)" color="accent">
+                <mat-tab label="Active">
+                    <div class='dictionaryContent'>
+                        <ul class='dictionary'>
+                            <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/{{ selectedYear }}'>{{
+                                    client?.gClientName }}</a></li>
+                        </ul>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Archived">
+                    <div class='dictionaryContent'>
+                        <ul class='dictionary'>
+                            <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/{{ selectedYear }}'>{{
+                                    client?.gClientName }}</a></li>
+                        </ul>
+                    </div>
+                </mat-tab>
+                <mat-tab label="By Year">
+                    <ng-template mat-tab-label>
+                        <button mat-button [matMenuTriggerFor]="menu">By Year {{selectedYear }}
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="GetArchivedYear($event); setYear($event)">2016</button>
+                            <button mat-menu-item (click)="GetArchivedYear($event); setYear($event)">2017</button>
+                            <button mat-menu-item (click)="GetArchivedYear($event); setYear($event)">2018</button>
+                        </mat-menu>
+                    </ng-template>
+                    <div class='dictionaryContent'>
+                        <ul class='dictionary'>
+                            <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/{{ selectedYear }}'>{{
+                                    client?.gClientName }}</a></li>
+                        </ul>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card>
+    </div>
+
+
+
+    <div *ngIf="currentWindowWidth >= 900" [ngClass]="{
+'col-4': currentWindowWidth >= 900    
+}">
+        <mat-card>
+            <figure style="width: 100%;">
+                <img src="http://www.batikcompusoft.com/img/underconstruction.gif" width="100%">
+                <figcaption style="text-align: center;">Under Construction</figcaption>
+            </figure>
+            <img src="https://image.freepik.com/free-icon/graph_318-10306.jpg" width="100%">
+        </mat-card>
+    </div>
+
+
+
+    <!--<><><> Main Toolbox <><><>-->
+    <ng-container *ngIf="currentWindowWidth < 900">
+        <button title="Tools" (click)="toggle(1)" id="toolboxBtn" class="btn toolboxButtonCollection" [ngClass]="{
+    'btnShifted': toolsOpened,
+    'hidden': hide
+  }">
+            <i class="material-icons">{{toolsIcon}}</i>
+        </button>
+        <div class="toolbox" [ngClass]="{
+    'shifted': toolsOpened
+  }">
+            <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
+            <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
+                <figure style="width: 100%;">
+                    <img src="http://www.batikcompusoft.com/img/underconstruction.gif" width="100%">
+                    <figcaption style="text-align: center;">Under Construction</figcaption>
+                </figure>
+            </div>
+        </div>
+    </ng-container>
+
+
+
+</div>
+<!-- </div> -->
+
+<div id="testBox"></div>

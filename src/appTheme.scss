@@ -1,7 +1,28 @@
 @import '~@angular/material/theming';
 @include mat-core();
 
+$primary-white: #FFF;
+$gray-1: #F8F8F8; //body background
+$gray-2: #F5F5F5; //button hover background
+$gray-3: #F0F0F0; //some button native background
+$gray-4: #D3D3D3; //introduced as the gray color for material element text
+$gray-5: #686868; //box shadows
 
+$primary-black: #333;
+$primary-blue-default: #1279C0;
+$primary-blue-light: #59a1d3;
+$primary-blue-dark: #0a5caa;
+
+
+
+$primary-text: #212529; //boostrap/native black text
+
+
+$material-box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+
+
+// <><> Material Theme Start <><>
+// <><><><><><><><><><><><><><><>
 $my-custom-primary-palette: (
     50 : #e7e7e7,
     100 : #c2c2c2,
@@ -35,8 +56,6 @@ $my-custom-primary-palette: (
     )
 );
 
-
-
   $my-custom-accent-palette: (
     50 : #e3eff7,
     100 : #b8d7ec,
@@ -69,12 +88,11 @@ $my-custom-primary-palette: (
         A700 : #000000,
     )
 );
-
-
 $my-theme-primary: mat-palette($my-custom-primary-palette);
 $my-theme-accent: mat-palette($my-custom-accent-palette);
 // $my-app-warn: mat-palette($mat-red);
-
 $my-theme: mat-light-theme($my-theme-primary, $my-theme-accent);
-
 @include angular-material-theme($my-theme);
+// <><><><><><><><><><><><><><><>
+// <><> Material Theme END <><>
+

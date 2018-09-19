@@ -12,7 +12,7 @@ export class MainReturnsToolbarComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    if (this.innerWidth >= 1050){
+    if (this.innerWidth >= 900){
       this.mobileStatus = false;
     } else {
       this.mobileStatus = true;

@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import {Routes, RouterModule} from '@angular/router';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { InternalHomeDashboardComponent } from './internal-home-dashboard/internal-home-dashboard.component';
+import { InternalHomePageComponent } from './internal-home-page/internal-home-page.component';
 import { ReturnsComponent } from './Returns/main-returns/main-returns.component';
 import { ListPerformanceComponent } from './returns/Subviews/list-performance/list-performance.component';
 import { ResolveReturnsComponent } from './Services/resolve-returns/resolve-returns.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/homepage', pathMatch: 'full'},  // this is how to set up the default page
-  {path: 'homepage', component: InternalHomeDashboardComponent},
+  {path: 'homepage', component: InternalHomePageComponent},
   {path: 'returns/:client/:year', component: ReturnsComponent, resolve: {rowData: ResolveReturnsComponent} },
   {path: 'returns', component: ReturnsComponent},
   {path: 'listperformance/:listowner/:listmanager/:recency', component: ListPerformanceComponent },
@@ -29,4 +29,4 @@ const routes: Routes = [
   declarations: []
 })
 export class AppRoutingModule { }
-export const routingComponents = [InternalHomeDashboardComponent, ReturnsComponent, PageNotFoundComponent];
+export const routingComponents = [InternalHomePageComponent, ReturnsComponent, PageNotFoundComponent];

@@ -1,4 +1,6 @@
 @import "~bootstrap/dist/css/bootstrap.css";
+@import "./appTheme.scss";
+
 /* You can add global styles to this file, and also import other style files */
 
 // Removes the weird circle given from the browser on objects on click
@@ -9,4 +11,9 @@
 .btn.focus,.btn:active.focus,.btn.active.focus {
     outline: none;
     box-shadow:none;
+}
+
+//Creates the light grey background-color --- ALSO need to change in the toolbar.component.scss file (clearfix)
+body{
+    background-color:#F8F8F8;
 }

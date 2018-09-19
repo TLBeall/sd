@@ -5,40 +5,34 @@ $shiftStyle: cubic-bezier(0.175, 0.885, 0.32, 1.1);
 /*<><><><><><><><>*/
 /*Button Settings Start*/
 #toolboxBtn{
-  position:fixed;
-  font-size:14pt;
-  height:30px;
-  width:40px;
   top: 92px;
-  right:0px;
-  z-index:110;
   border-radius:0 0 0 0.25rem !important;
-  transition: $shiftSpeed;
-  transition-timing-function: $shiftStyle;
 }
-#toolboxBtn.btnShifted{
-  display:block;
-  right: $shiftWidth;
-  transition: $shiftSpeed;
-  transition-timing-function: $shiftStyle;
-}
+
 #demoToolboxBtn{
+  top: 124px;
+  border-radius:0.25rem 0 0 0.25rem !important;
+}
+
+.toolboxButtonCollection{
   position:fixed;
-  font-size:12pt;
   height:30px;
   width:40px;
-  top: 124px;
   right:0px;
   z-index:110;
-  border-radius:0.25rem 0 0 0.25rem !important;
+  // padding:5px 0px 4px 0px;
   transition: $shiftSpeed;
   transition-timing-function: $shiftStyle;
-}
-#demoToolboxBtn.btnShifted{
-  display:block;
-  right: $shiftWidth;
-  transition: $shiftSpeed;
-  transition-timing-function: $shiftStyle;
+  &.btnShifted{
+    display:flex;
+    right: $shiftWidth;
+    transition: $shiftSpeed;
+    transition-timing-function: $shiftStyle;
+  }
+  i{
+    font-size:20px;
+    margin:auto;
+  }
 }
 /*Button Settings End*/
 /*<><><><><><><><>*/

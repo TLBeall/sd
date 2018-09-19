@@ -36,3 +36,36 @@
         margin-right: 20px;
     }
 }
+
+
+#alphabetSearchBtn{
+    // margin-top:3px;
+    margin:0 auto;
+    margin-top:3px;
+    margin-left:10px;
+    }
+
+#phoneAlphabet{
+    width:280px;
+    height:220px;
+    padding: 4px 8px;
+    ul{
+    margin: 0 auto;
+    padding: 0;
+    background-color:#F8F8F8;
+         li{
+             height: 36px;
+             width:36px;
+             list-style: none;
+        float:left;
+        background-color:#1279C0;
+        color: #fff;
+        margin:4px;
+        font-weight:bold;
+        text-align: center;
+        cursor: pointer;
+        line-height: 40px;
+    }
+}
+    
+}

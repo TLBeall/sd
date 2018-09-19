@@ -7,13 +7,14 @@
 <div (clickOutside)="closeToolbox()">
 
   <!--<><><> Main Toolbox <><><>-->
-  <button title="Tools" (click)="toggle(1)" id="toolboxBtn" class="btn fa" [ngClass]="{
-        'btnShifted fa-chevron-right': opened,
-        'fa-cog': !opened,
+  <button title="Tools" (click)="toggle(1)" id="toolboxBtn" class="btn toolboxButtonCollection" [ngClass]="{
+        'btnShifted': toolsOpened,
         'hidden': hide
-      }"></button>
+      }">
+      <i class="material-icons">{{toolsIcon}}</i>
+    </button>
   <div class="toolbox" [ngClass]="{
-        'shifted': opened
+        'shifted': toolsOpened
       }">
     <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
     <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
@@ -26,11 +27,12 @@
   </div>
 
   <!--<><><> L2 Toolbox <><><>-->
-  <button title="Donor Demographics" (click)="toggle(2)" id="demoToolboxBtn" class="btn fa" [ngClass]="{
-    'btnShifted fa-chevron-right': demoOpened,
-    'fa-users': !demoOpened,
+  <button title="Donor Demographics" (click)="toggle(2)" id="demoToolboxBtn" class="btn toolboxButtonCollection" [ngClass]="{
+    'btnShifted': demoOpened,
     'hidden': hide
-  }"></button>
+  }">
+  <i class="material-icons">{{l2Icon}}</i>
+</button>
   <div class="toolbox" [ngClass]="{
     'shifted': demoOpened
   }">

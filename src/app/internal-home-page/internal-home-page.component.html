@@ -1,11 +1,10 @@
 <app-toolbar></app-toolbar>
-<!-- <div class="container"> -->
 <div class="row" [ngClass]="{
-    'fullPage': currentWindowWidth >= 900
+    'fullPage': currentWindowWidth >= 992
 }">
     <div [ngClass]="{
-        'col-8': currentWindowWidth >= 900,
-        'col-12': currentWindowWidth < 900
+        'col-8': currentWindowWidth >= 992,
+        'col-12': currentWindowWidth < 992
     }">
         <mat-card>
             <mat-tab-group (selectedTabChange)="GetArchived($event)" color="accent">
@@ -47,45 +46,43 @@
     </div>
 
 
-
-    <div *ngIf="currentWindowWidth >= 900" [ngClass]="{
-'col-4': currentWindowWidth >= 900    
-}">
-        <mat-card>
-            <figure style="width: 100%;">
-                <img src="http://www.batikcompusoft.com/img/underconstruction.gif" width="100%">
-                <figcaption style="text-align: center;">Under Construction</figcaption>
-            </figure>
-            <img src="https://image.freepik.com/free-icon/graph_318-10306.jpg" width="100%">
-        </mat-card>
+    <!-- Dashboard in page form-->
+    <div *ngIf="currentWindowWidth >=992" [ngClass]="{
+    'col-4': currentWindowWidth >= 992    
+    }">
+        <app-internal-home-dashboard></app-internal-home-dashboard>
     </div>
 
 
 
-    <!--<><><> Main Toolbox <><><>-->
-    <ng-container *ngIf="currentWindowWidth < 900">
+    <!-- Dashboard in toolbox form-->
+    <ng-container *ngIf="currentWindowWidth < 992">
         <button title="Tools" (click)="toggle(1)" id="toolboxBtn" class="btn toolboxButtonCollection" [ngClass]="{
-    'btnShifted': toolsOpened,
-    'hidden': hide
-  }">
-            <i class="material-icons">{{toolsIcon}}</i>
-        </button>
-        <div class="toolbox" [ngClass]="{
-    'shifted': toolsOpened
-  }">
-            <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
-            <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
-                <figure style="width: 100%;">
-                    <img src="http://www.batikcompusoft.com/img/underconstruction.gif" width="100%">
-                    <figcaption style="text-align: center;">Under Construction</figcaption>
-                </figure>
-            </div>
-        </div>
+            'btnShifted': toolsOpened,
+            'hidden': hide
+          }">
+                    <i class="material-icons">{{toolsIcon}}</i>
+                </button>
+                <div class="toolbox" [ngClass]="{
+            'shifted': toolsOpened
+          }">
+                    <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
+                    <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
+                        <figure style="width: 100%;">
+                            <img src="http://www.batikcompusoft.com/img/underconstruction.gif" width="100%">
+                            <figcaption style="text-align: center;">Under Construction</figcaption>
+                        </figure>
+                    </div>
+                </div>
     </ng-container>
 
+<<<<<<< HEAD
 
 
 </div>
 <!-- </div> -->
 
 <div id="testBox"></div>
+=======
+</div>
+>>>>>>> cdbfc5a7801ca4415c4e220618e010e2e526b610

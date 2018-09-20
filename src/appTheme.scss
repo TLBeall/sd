@@ -1,24 +1,100 @@
 @import '~@angular/material/theming';
 @include mat-core();
 
-$primary-white: #FFF;
-$gray-1: #F8F8F8; //body background
-$gray-2: #F5F5F5; //button hover background
-$gray-3: #F0F0F0; //some button native background
-$gray-4: #D3D3D3; //introduced as the gray color for material element text
-$gray-5: #686868; //box shadows
+// <><><><><><><><><><><><><><><><><><><><><>
+// <><><> Variables across website start <><><>
+// ***To implement, add to the top of CSS files: @import '~src/appTheme.scss';
+// <><><><><><><><><><><><><><><><><><><><><>
+$color-white: #FFF;
+$color-whitesmoke: #F8F8F8; //body background
+$color-gallery: #F0F0F0; //some buttons native background
+$color-gainsboro: #D3D3D3; //introduced as the gray color for material element text
+$color-gray: #808080; //used on scroll buttons of toolbar
+$color-dovegray: #686868; //box shadows
 
-$primary-black: #333;
-$primary-blue-default: #1279C0;
-$primary-blue-light: #59a1d3;
-$primary-blue-dark: #0a5caa;
-
-
-
-$primary-text: #212529; //boostrap/native black text
+$color-shark: #212529; //boostrap/native black for text
+$color-mineshaft: #333; //navigation bar
+$color-blue-default: #1279C0;
+$color-blue-light: #59a1d3;
+$color-blue-dark: #0a5caa;
 
 
 $material-box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+
+$size-lg: 1200px;
+$size-md: 992px;
+$size-sm: 768px;
+$size-xs: 576px;
+
+$shiftWidth:300px;
+$shiftSpeed: 0.4s;
+$shiftStyle: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+
+@mixin toolboxBase{
+    border-top: 1px $color-gallery solid;
+    background-color:$color-white;
+    position:fixed;
+    top:92px;
+    z-index:100;
+    width:0;
+    right:0px;
+    height:100vh;
+    overflow:hidden;
+    transition: $shiftSpeed;
+    transition-timing-function: $shiftStyle;
+}
+/*In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll*/
+@mixin toolboxScrolling{
+    height:100%;
+    margin-right: -50px; /* maximum width of scrollbar */
+    padding-right: 50px; /* maximum width of scrollbar */
+    padding-top:10px;
+    padding-left:10px;
+    overflow-y: scroll;
+}
+@mixin toolboxClearfix{
+    content: "";
+    clear: both;
+    display: table;
+    height:100px;
+    width:100%;
+}
+@mixin toolboxShifted{
+    display: block;
+    width: $shiftWidth;
+    transition: $shiftSpeed;
+    transition-timing-function: $shiftStyle;
+    box-shadow: -8px 0px 8px -8px $color-dovegray;
+}
+@mixin toolboxBtnCollMain{
+    position:fixed;
+    background-color:$color-blue-default;
+    color: $color-white;
+    height:30px;
+    width:40px;
+    right:0px;
+    z-index:110;
+    transition: $shiftSpeed;
+    transition-timing-function: $shiftStyle;
+}
+ @mixin toolboxBtnCollShifted{
+      display:flex;
+      right: $shiftWidth;
+      transition: $shiftSpeed;
+      transition-timing-function: $shiftStyle;
+}
+@mixin clearfix{
+    content: "";
+    clear: both;
+    display: table;
+}
+
+
+// <><><><><><><><><><><><><><><><><><><><><>
+// <><><> Variables across website End <><><>
+// <><><><><><><><><><><><><><><><><><><><><>
+
+
 
 
 // <><> Material Theme Start <><>

@@ -1,6 +1,5 @@
-$shiftWidth: 300px;
-$shiftSpeed: 0.4s;
-$shiftStyle: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+@import '~src/appTheme.scss';
+
 
 /*<><><><><><><><>*/
 /*Button Settings Start*/
@@ -15,19 +14,9 @@ $shiftStyle: cubic-bezier(0.175, 0.885, 0.32, 1.1);
 }
 
 .toolboxButtonCollection{
-  position:fixed;
-  height:30px;
-  width:40px;
-  right:0px;
-  z-index:110;
-  // padding:5px 0px 4px 0px;
-  transition: $shiftSpeed;
-  transition-timing-function: $shiftStyle;
+  @include toolboxBtnCollMain;
   &.btnShifted{
-    display:flex;
-    right: $shiftWidth;
-    transition: $shiftSpeed;
-    transition-timing-function: $shiftStyle;
+    @include toolboxBtnCollShifted;
   }
   i{
     font-size:20px;
@@ -39,47 +28,23 @@ $shiftStyle: cubic-bezier(0.175, 0.885, 0.32, 1.1);
 
 
 .toolbox{
-  border-top: 1px #f0f0f0 solid;
-  background-color:#fff;
-  position:fixed;
-  top:92px;
-  z-index:100;
-  width:0;
-  right:0px;
-  height:100vh;
-  overflow:hidden;
-  transition: $shiftSpeed;
-  transition-timing-function: $shiftStyle;
+  @include toolboxBase;
 }
 /*In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll*/
 .toolboxScrollContainer{
-  height:100%;
-  margin-right: -50px; /* maximum width of scrollbar */
-  padding-right: 50px; /* maximum width of scrollbar */
-  padding-top:10px;
-  padding-left:10px;
-  overflow-y: scroll;
+  @include toolboxScrolling;
 }
 .psuedoClearfix {
-  content: "";
-  clear: both;
-  display: table;
-  height:100px;
-  width:100%;
+  @include toolboxClearfix;
 }
 
 .toolbox.shifted{
-  display: block;
-  width: $shiftWidth;
-  transition: $shiftSpeed;
-  transition-timing-function: $shiftStyle;
-  box-shadow: -8px 0px 8px -8px #686868;
+  @include toolboxShifted;
 }
 
 .hidden{
   display: none;
 }
-
 
 
  //Removes pagination (prev/next) on the mat tab 

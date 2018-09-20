@@ -1,6 +1,9 @@
+@import '~src/appTheme.scss';
+
+
 #alphabetToolbar {
     text-align: center;
-    top:6px;
+    margin-top:6px;
 }
 
 .alphabet{
@@ -15,11 +18,11 @@
             padding: 4px 8px;
             font-weight: bold;
             cursor: pointer;
-            color: #1279C0;
+            color: $color-blue-default;
         }
         a:hover{
-            background-color: #F5F5F5;
-            box-shadow: 1px 1px 2px 0px #686868;
+            background-color: $color-whitesmoke;
+            box-shadow: 1px 1px 2px 0px $color-dovegray;
             cursor: pointer;
         }
         a.active.show{
@@ -29,7 +32,7 @@
             color:white !important;
         }
         a.active.show:hover{
-            color:#1279C0 !important;
+            color:$color-blue-default !important;
         }
     }
     li#showAllClientsLi{
@@ -39,7 +42,6 @@
 
 
 #alphabetSearchBtn{
-    // margin-top:3px;
     margin:0 auto;
     margin-top:3px;
     margin-left:10px;
@@ -52,19 +54,19 @@
     ul{
     margin: 0 auto;
     padding: 0;
-    background-color:#F8F8F8;
+    background-color:$color-whitesmoke;
          li{
-             height: 36px;
-             width:36px;
-             list-style: none;
-        float:left;
-        background-color:#1279C0;
-        color: #fff;
-        margin:4px;
-        font-weight:bold;
-        text-align: center;
-        cursor: pointer;
-        line-height: 40px;
+            height: 36px;
+            width:36px;
+            list-style: none;
+            float:left;
+            background-color:$color-blue-default;
+            color: #fff;
+            margin:4px;
+            font-weight:bold;
+            text-align: center;
+            cursor: pointer;
+            line-height: 40px; //affects where the letters are inside of the li vertically
     }
 }
     

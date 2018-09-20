@@ -23,7 +23,7 @@ import { MatProgressSpinnerModule,   MatSelectModule, MatDatepickerModule, MatNa
 import { ResolveReturnsComponent } from './Services/resolve-returns/resolve-returns.component';
 import { InternalHomePageComponent } from './internal-home-page/internal-home-page.component';
 import { InternalHomeDashboardComponent } from './internal-home-page/internal-home-dashboard/internal-home-dashboard.component';
-import { ScreenDataService } from './Services/screen-data.service';
+import { GlobalService } from './Services/global.service';
 
 
 @NgModule({
@@ -71,7 +71,7 @@ import { ScreenDataService } from './Services/screen-data.service';
   providers: [
     AuthService,
     LoaderService,
-    ScreenDataService
+    GlobalService
   ],
   bootstrap: [AppComponent]
 })

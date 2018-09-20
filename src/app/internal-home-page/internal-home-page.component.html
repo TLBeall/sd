@@ -12,7 +12,7 @@
                 <mat-tab label="Active">
                     <div class='dictionaryContent'>
                         <ul class='dictionary'>
-                            <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/{{ selectedYear }}'>{{
+                            <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/0101{{ currentYear }}/1231{{ currentYear }}'>{{
                                     client?.gClientName }}</a></li>
                         </ul>
                     </div>
@@ -20,7 +20,7 @@
                 <mat-tab label="Archived">
                     <div class='dictionaryContent'>
                         <ul class='dictionary'>
-                            <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/{{ selectedYear }}'>{{
+                            <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/01012000/1231{{ currentYear }}'>{{
                                     client?.gClientName }}</a></li>
                         </ul>
                     </div>
@@ -37,7 +37,7 @@
                     </ng-template>
                     <div class='dictionaryContent'>
                         <ul class='dictionary'>
-                            <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/{{ selectedYear }}'>{{
+                            <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/0101{{ selectedYear }}/1231{{ selectedYear }}'>{{
                                     client?.gClientName }}</a></li>
                         </ul>
                     </div>

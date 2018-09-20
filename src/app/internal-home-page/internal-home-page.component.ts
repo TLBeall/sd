@@ -17,8 +17,11 @@ export class InternalHomePageComponent implements OnInit {
     public tempYearVal: number;
     public selectedYear: string;
     public currentWindowWidth: number;
+    public currentYear: number;
 
-    constructor(private _authService: AuthService) { }
+    constructor(private _authService: AuthService) { 
+        this.currentYear = (new Date()).getFullYear();
+    }
 
     ngOnInit() {
         this.currentWindowWidth = window.innerWidth;

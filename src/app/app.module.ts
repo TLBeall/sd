@@ -20,7 +20,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { MainReturnsToolbarComponent } from './toolbar/main-returns-toolbar/main-returns-toolbar.component';
 import { HomePageInternalToolbarComponent } from './toolbar/home-page-internal-toolbar/home-page-internal-toolbar.component';
 import { MatTableModule } from '@angular/material/table';
-import { MatProgressSpinnerModule } from '@angular/material';
+import { MatProgressSpinnerModule,   MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatInputModule } from '@angular/material';
 import { ResolveReturnsComponent } from './Services/resolve-returns/resolve-returns.component';
 import { InternalHomePageComponent } from './internal-home-page/internal-home-page.component';
 import { InternalHomeDashboardComponent } from './internal-home-page/internal-home-dashboard/internal-home-dashboard.component';
@@ -63,7 +63,11 @@ import { InternalHomeToolboxComponent } from './internal-home-page/internal-home
     MatCardModule,
     MatTabsModule,
     MatMenuModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule
   ],
   providers: [
     AuthService,

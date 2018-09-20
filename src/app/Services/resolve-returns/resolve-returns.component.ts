@@ -18,7 +18,9 @@ export class ResolveReturnsComponent implements OnInit {
   resolve(route:ActivatedRouteSnapshot, 
     state:RouterStateSnapshot,
    ): Observable<any> {
-    return this.AuthService.getReturns(route.params['client'],new Date("01/01/" + route.params['year'].toString()),new Date("12/31/" + route.params['year'].toString()));  
+    return this.AuthService.getReturns(route.params['client'],
+    new Date(route.params['from'].substring(0,2) + "/" + route.params['from'].substring(2,4) + "/" + route.params['from'].substring(4,8)),
+    new Date(route.params['to'].substring(0,2) + "/" + route.params['to'].substring(2,4) + "/" + route.params['to'].substring(4,8)));  
 }
   ngOnInit() {
   }

@@ -9,15 +9,7 @@ export class MainReturnsToolbarComponent implements OnInit {
 
   public innerWidth: any;
   public mobileStatus:boolean;
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.innerWidth = window.innerWidth;
-    if (this.innerWidth >= 900){
-      this.mobileStatus = false;
-    } else {
-      this.mobileStatus = true;
-    }
-  }
+  
 
   @ViewChild('widgetContent', { read: ElementRef })
   public widgetsContent: ElementRef<any>;
@@ -33,6 +25,16 @@ export class MainReturnsToolbarComponent implements OnInit {
    }
 
   ngOnInit() {
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+    if (this.innerWidth >= 992){
+      this.mobileStatus = false;
+    } else {
+      this.mobileStatus = true;
+    }
   }
 
 }

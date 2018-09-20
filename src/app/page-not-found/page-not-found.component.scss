@@ -1,9 +1,1 @@
-.toolbar {
-    width: 100%;
-    background-color: 	#DCDCDC;
-    position:fixed;
-    top:46px !important;
-    z-index: 90;
-    min-height:46px;
-    box-shadow: 0px 0px 16px 0px #686868;
-}
+@import '~src/appTheme.scss';

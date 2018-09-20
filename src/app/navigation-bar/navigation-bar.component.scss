@@ -1,3 +1,6 @@
+@import '~src/appTheme.scss';
+
+
 #logoNavAnchor{
     margin-left:10px;
     text-decoration:none;
@@ -5,27 +8,27 @@
     border-radius:5px;
     font-size:1.2rem;
     #spanSD{
-        color: #1279C0;  
+        color: $color-blue-default;  
     }
     #span360{
-        color: white;
+        color: $color-white;
     }
 }
 #logoNavAnchor:hover{
-    background-color: white;
+    background-color: $color-white;
     transform: scale(1.0);
     transition: all 500ms;
     #span360{
-        color:#1279C0;
+        color:$color-blue-default;
     }
     #spanSD{
-        color:#333;
+        color:$color-mineshaft;
     }
 }
 
 
 .topnav {
-    background-color: #333;
+    background-color: $color-mineshaft;
     padding:0;
     min-height: 50px !important;
     div{
@@ -34,8 +37,8 @@
             li.mainNavItem{
                 margin-left:10px;
                 button{
-                    background-color:#333;
-                    color:white;
+                    background-color:$color-mineshaft;
+                    color:$color-white;
                     font-size:0.9rem;
                 }
             }
@@ -46,7 +49,7 @@
                 //     margin-top:0px;
                 // }
                 button{
-                    background:#1279C0; 
+                    background:$color-blue-default; 
                     transition: all 500ms;
                     transform: scale(1.1);
                 }
@@ -54,7 +57,7 @@
         }
     }
     #navBarToggleBtn{
-        color:white;
+        color:$color-white;
     }
 }
 
@@ -70,7 +73,7 @@
 
 
 /*<><><><><> TABLET AND PHONE START <><><><><>*/
-@media screen and (max-width: 992px) {
+@media screen and (max-width: $size-md) {
 
     .mainNavItem{
         margin: 2px auto !important;

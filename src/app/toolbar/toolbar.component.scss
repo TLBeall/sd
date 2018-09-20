@@ -1,16 +1,18 @@
+@import '~src/appTheme.scss';
+
+
 .toolbar {
     width: 100%;
-    background-color: 	white;
+    background-color: 	$color-white;
     position:fixed;
     top:50px !important;
     z-index: 90;
     min-height:42px;
     // max-height:42px;
-    box-shadow: 0px 0px 8px 0px #686868;
+    box-shadow: 0px 0px 8px 0px $color-dovegray;
 }
 
 #psuedoClearFix{
-    // height:1px; 
     width:100%;
-    background-color:#F8F8F8;
+    background-color: $color-whitesmoke;
 }

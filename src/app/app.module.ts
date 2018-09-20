@@ -6,9 +6,8 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from './Services/auth.service';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatTreeModule, MatSort, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule, MatSortModule} from '@angular/material';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTreeModule, MatSort, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule, MatSortModule} from '@angular/material';
 import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { LoaderService } from './Loader/loader.service';
@@ -23,7 +22,8 @@ import { MatTableModule } from '@angular/material/table';
 import { ResolveReturnsComponent } from './Services/resolve-returns/resolve-returns.component';
 import { InternalHomePageComponent } from './internal-home-page/internal-home-page.component';
 import { InternalHomeDashboardComponent } from './internal-home-page/internal-home-dashboard/internal-home-dashboard.component';
-import { InternalHomeToolboxComponent } from './internal-home-page/internal-home-toolbox/internal-home-toolbox.component';
+import { ScreenDataService } from './Services/screen-data.service';
+
 
 @NgModule({
   declarations: [
@@ -43,7 +43,6 @@ import { InternalHomeToolboxComponent } from './internal-home-page/internal-home
     MainReturnsToolbarComponent,
     HomePageInternalToolbarComponent,
     InternalHomeDashboardComponent,
-    InternalHomeToolboxComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +65,8 @@ import { InternalHomeToolboxComponent } from './internal-home-page/internal-home
   ],
   providers: [
     AuthService,
-    LoaderService
+    LoaderService,
+    ScreenDataService
   ],
   bootstrap: [AppComponent]
 })

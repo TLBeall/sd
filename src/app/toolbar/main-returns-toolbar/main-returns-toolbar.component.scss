@@ -1,3 +1,4 @@
+@import '~src/appTheme.scss';
 $itemHeight: 42px;
   
 
@@ -12,15 +13,15 @@ $itemHeight: 42px;
       margin: 0px 2px 8px 2px;
       border:none;
       cursor: pointer;
-      color: #1279C0;
-      background-color:#fff;
+      color: $color-blue-default;
+      background-color:$color-white;
       font-size:0.86rem;
       font-weight:bold;
       padding:4px 8px;
       &:hover{
         border-radius:5px;
-        background-color: #F5F5F5;
-        box-shadow: 1px 1px 2px 0px #686868;
+        background-color: $color-whitesmoke;
+        box-shadow: 1px 1px 2px 0px $color-dovegray;
       }
  
     }
@@ -28,27 +29,27 @@ $itemHeight: 42px;
 
 .returnsToolbarScrollBtn{
   height:$itemHeight;
-  background-color:#fff;
-  color: #808080;
+  background-color:$color-white;
+  color: $color-gray;
   font-size:18pt;
   padding: 4px 0px;
 }
 
 #LwidgetScrollBtn{
     float:left;
-    border-right:1px #DCDCDC solid;
+    border-right:1px $color-gainsboro solid;
 
 }
 
 #RwidgetScrollBtn{
   float:right;
-  border-left:1px #DCDCDC solid;
+  border-left:1px $color-gainsboro solid;
 
 }
 
 #toolbarBackBtn{
     height:$itemHeight;
-    background-color:#fff;
+    background-color:$color-white;
     float:left;
     width:75px;
     i{
@@ -61,7 +62,5 @@ $itemHeight: 42px;
 }
 
 #toolbarBackBtn::after{
-  content: "";
-  clear: both;
-  display: table;
+  @include clearfix;
 }

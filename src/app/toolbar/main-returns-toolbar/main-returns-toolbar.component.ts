@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { GlobalService } from '../../Services/global.service';
 
 @Component({
   selector: 'app-main-returns-toolbar',
@@ -7,8 +8,10 @@ import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular
 })
 export class MainReturnsToolbarComponent implements OnInit {
 
-  public innerWidth: any;
-  public mobileStatus:boolean;
+  public size_lg = this._g.size_lg;
+  public size_md = this._g.size_md;
+  public size_sm = this._g.size_sm;
+  public size_xs = this._g.size_xs;
   
 
   @ViewChild('widgetContent', { read: ElementRef })
@@ -20,21 +23,11 @@ export class MainReturnsToolbarComponent implements OnInit {
     this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft - 150), behavior: 'smooth' });
   }
 
-  constructor() {
-    this.onResize(event); //required to work on mobile (since resize doesnt happen)
+  constructor(private _g: GlobalService) {
    }
 
   ngOnInit() {
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.innerWidth = window.innerWidth;
-    if (this.innerWidth >= 992){
-      this.mobileStatus = false;
-    } else {
-      this.mobileStatus = true;
-    }
-  }
 
 }

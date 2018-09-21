@@ -1,8 +1,15 @@
-<div style="margin-top: 100px"></div>
+<app-toolbar></app-toolbar>
 <table mat-table [dataSource]="rowData" multiTemplateDataRows>
     <ng-container matColumnDef="Expand">
         <th mat-header-cell *matHeaderCellDef> Action </th>
-        <td mat-cell *matCellDef="let element"> <button [ngStyle]="{'background-color':ReadyToCollapseAll(rowData[0].MailTypeList) ? 'red' : 'white' }" (click)="NextLevel(rowData[0], rowData[0].MailTypeList)">X</button><button (click)="ToggleExpansion(element)">Y</button> </td>
+        <td mat-cell *matCellDef="let element"> 
+            <button mat-icon-button  (click)="NextLevel(rowData[0], rowData[0].MailTypeList)">
+                    <!-- [ngStyle]="{'background-color':ReadyToCollapseAll(rowData[0].MailTypeList) ? 'red' : 'white' }" -->
+                <i class="material-icons">{{ CollapseAllBtn(rowData[0].MailTypeList) }}</i></button>
+            <button mat-icon-button (click)="ToggleExpansion(element)">
+                <i class="material-icons">{{ CollapseListBtn(element) }}</i>
+            </button> 
+        </td>
         <td mat-footer-cell *matFooterCellDef> </td>
     </ng-container>
     <ng-container matColumnDef="Client">
@@ -111,7 +118,12 @@
                         multiTemplateDataRows>
                         <ng-container matColumnDef="Expand">
                             <th mat-header-cell *matHeaderCellDef> Action </th>
-                            <td mat-cell *matCellDef="let element"><button [ngStyle]="{'background-color':ReadyToCollapseAll(element.CampaignList) ? 'red' : 'white' }" (click)="NextLevel(element, element.CampaignList)">X</button> <button (click)="ToggleExpansion(element)"> [] </button>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-icon-button (click)="NextLevel(element, element.CampaignList)">
+                                    <i class="material-icons"> {{ CollapseAllBtn(element.CampaignList) }}</i></button> 
+                                <!-- [ngStyle]="{'background-color':ReadyToCollapseAll(element.CampaignList) ? 'red' : 'white' }" -->
+                                <button mat-icon-button (click)="ToggleExpansion(element)">
+                                    <i class="material-icons">{{ CollapseListBtn(element) }}</i></button>
                             </td>
                             <td mat-footer-cell *matFooterCellDef> </td>
                         </ng-container>
@@ -221,8 +233,15 @@
                                         <table mat-table [dataSource]="element.CampaignList" multiTemplateDataRows matSort (matSortChange)="SortFunction($event, element)">
                                             <ng-container matColumnDef="Expand">
                                                 <th mat-header-cell *matHeaderCellDef> Action </th>
-                                                <td mat-cell *matCellDef="let element"> <button [ngStyle]="{'background-color':ReadyToCollapseAll(element.PhaseList) ? 'red' : 'white' }" (click)="NextLevel(element, element.PhaseList)">X</button> <button (click)="ToggleExpansion(element)">
-                                                        [] </button> </td>
+                                                <td mat-cell *matCellDef="let element"> 
+                                                    <button mat-icon-button  (click)="NextLevel(element, element.PhaseList)">
+                                                        <i class="material-icons">{{ CollapseAllBtn(element.PhaseList) }}</i>
+                                                    </button>
+                                                    <!-- [ngStyle]="{'background-color':ReadyToCollapseAll(element.PhaseList) ? 'red' : 'white' }" -->
+                                                     <button mat-icon-button (click)="ToggleExpansion(element)">
+                                                         <i class="material-icons">{{ CollapseListBtn(element) }}</i>
+                                                        </button> 
+                                                    </td>
                                                 <td mat-footer-cell *matFooterCellDef> </td>
                                             </ng-container>
                                             <ng-container matColumnDef="CampaignName">
@@ -343,8 +362,16 @@
                                                             <table mat-table [dataSource]="element.PhaseList" multiTemplateDataRows matSort (matSortChange)="SortFunction($event, element)">
                                                                 <ng-container matColumnDef="Expand">
                                                                     <th mat-header-cell *matHeaderCellDef> Action </th>
-                                                                    <td mat-cell *matCellDef="let element"> <button (click)="ToggleExpansion(element)">
-                                                                            [] </button> </td>
+                                                                    <td mat-cell *matCellDef="let element"> 
+                                                                        <button mat-icon-button (click)="ToggleExpansion(element)">
+                                                                            <i class="material-icons">{{ CollapseListBtn(element) }}</i>
+                                                                            </button> </td>
+                                                                            <!-- <button mat-icon-button  (click)="NextLevel(element, element.PhaseList)">
+                                                                                    <i class="material-icons">{{ CollapseAllBtn(element.PhaseList) }}</i>
+                                                                                </button>
+                                                                                 <button mat-icon-button (click)="ToggleExpansion(element)">
+                                                                                     <i class="material-icons">{{ CollapseListBtn(element) }}</i>
+                                                                                    </button>  -->
                                                                     <td mat-footer-cell *matFooterCellDef> </td>
                                                                 </ng-container>
                                                                 <ng-container matColumnDef="PhaseName">
@@ -650,7 +677,7 @@
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 </table>
 
-<app-toolbar></app-toolbar>
+
 
 <app-main-returns-toolbox [client]="rowData[0].Client" ></app-main-returns-toolbox> 
 

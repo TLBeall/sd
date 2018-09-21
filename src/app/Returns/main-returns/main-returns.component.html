@@ -649,9 +649,7 @@
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 </table>
-
 <app-toolbar></app-toolbar>
-
-<app-main-returns-toolbox [client]="rowData[0].Client" ></app-main-returns-toolbox> 
+<app-main-returns-toolbox [client]="rowData[0].Client" [fromDate]='startDate' [toDate]="endDate" ></app-main-returns-toolbox> 
 
 <!-- [startDate]="" [endDate]="" -->

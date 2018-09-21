@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Sort } from '@angular/material';
 import { LoaderService } from '../../Loader/loader.service';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Params } from "@angular/router";
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { RootReturns } from '../../Models/RootReturns.model';
 
@@ -23,12 +23,8 @@ export class ReturnsComponent {
 
   private rowData: RootReturns;
   private route: any;
-  private valueToReturn: boolean = false;
-  private TempList: any;
-  private RootDataSource: any;
-  private ChangeDetector: any;
-  private start: any;
-  private end:any;
+  private startDate: any;
+  private endDate:any;
 
   clientDisplayedColumns: string[] = ['Expand', 'Client', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   mailTypeDisplayedColumns: string[] = ['Expand', 'MailType', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
@@ -38,13 +34,14 @@ export class ReturnsComponent {
 
   constructor(route: ActivatedRoute, private changeDetectorRefs: ChangeDetectorRef) {
     this.route = route;
-    this.ChangeDetector = changeDetectorRefs;
-    route.params.subscribe(p => { this.start = p._value.from.subString(0,2) + "" + p._value.from.subString(2,4) + p._value.from.subString(4,8)});
-    route.params.subscribe(p => { this.end = p._value.to});
   }
 
   ngOnInit() {
     this.rowData = this.route.snapshot.data['rowData'];
+    this.route.params.subscribe((params: Params) => {
+      this.startDate = new Date(params['from'].substring(0,2) + "/" + params['from'].substring(2,4) + "/" + params['from'].substring(4,8));
+      this.endDate = new Date(params['to'].substring(0,2) + "/" + params['to'].substring(2,4) + "/" + params['to'].substring(4,8));
+    });
   }
 
   GetVisibilityStyle(state: boolean): string {
@@ -103,6 +100,7 @@ export class ReturnsComponent {
   ToggleExpansion(Element: any) {
     Element.Measure.Expanded = !Element.Measure.Expanded;
   }
+
 
   SortFunction(sort: Sort, Element: any) {
 

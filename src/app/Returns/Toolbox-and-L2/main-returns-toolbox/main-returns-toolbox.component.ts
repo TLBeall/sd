@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ClientList } from '../../../Models/ClientList.model';
 import { AuthService } from '../../../Services/auth.service';
+import { resolve } from 'url';
 
 @Component({
   selector: 'app-main-returns-toolbox',
@@ -10,14 +12,14 @@ import { AuthService } from '../../../Services/auth.service';
 export class MainReturnsToolboxComponent implements OnInit {
 
   @Input() client:string;
+  @Input() fromDate:Date;
+  @Input() toDate:Date;
   toolsOpened: Boolean;
   demoOpened: Boolean;
   hide: Boolean = false;
   visibility: string = "hidden";
   toolsIcon: string = "settings";
   l2Icon: string = "group";
-  startDate: any;
-  endDate: any;
   public ClientArr: ClientList[];
 
 
@@ -51,7 +53,7 @@ export class MainReturnsToolboxComponent implements OnInit {
     //not sure if these should close on click outside?
   }
 
-  constructor(private _authService: AuthService) {
+  constructor(private _authService: AuthService, private router: Router) {
     this._authService.getClientList("All")
             .subscribe(data => {
                 this.ClientArr = data;
@@ -59,8 +61,6 @@ export class MainReturnsToolboxComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.startDate = new Date();
-    this.endDate = new Date();
   }
 
 }

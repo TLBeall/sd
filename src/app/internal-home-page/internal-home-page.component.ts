@@ -108,7 +108,7 @@ import { AuthService } from '../Services/auth.service'
 import { TokenParams } from '../Models/TokenParams.model';
 import { ClientList } from '../Models/ClientList.model';
 import * as $ from 'jquery';
-import { ScreenDataService } from '../Services/screen-data.service';
+import { GlobalService } from '../Services/global.service';
 import { Subscription } from 'rxjs';
 
 
@@ -129,12 +129,14 @@ export class InternalHomePageComponent implements OnInit {
     toolsIcon: string = "assessment";
     subscription: Subscription;
     public currentWindowWidth: number;
+    public currentYear: number;
 
-    constructor(private _authService: AuthService, private _testWidth: ScreenDataService) {
-        this.subscription = _testWidth.currentWindowWidth.subscribe(
-            data => {
-                this.currentWindowWidth = data;
-            });
+    constructor(private _authService: AuthService, private _g: GlobalService) {
+        this.currentYear = (new Date()).getFullYear();
+        // this.subscription = _testWidth.currentWindowWidth.subscribe(
+        //     data => {
+        //         this.currentWindowWidth = data;
+        //     });
     }
 
     ngOnInit() {
@@ -143,7 +145,7 @@ export class InternalHomePageComponent implements OnInit {
                 this.ClientArr = data;
                 this.selectedYear = new Date().getFullYear().toString();
             });
-    }
+        }
 
     GetArchived(tab): void {
         this.tempYearVal = tab.index;

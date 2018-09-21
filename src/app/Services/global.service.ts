@@ -14,26 +14,18 @@
 //     this.currentWindowWidth = data;
 //   }
 
-//   constructor() { }
-// }
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Subject }    from 'rxjs';
+import { Subject, Observable }    from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ScreenDataService {
+export class GlobalService {
     
-  
-private windowSource = new Subject<number>();
-currentWindowWidth = this.windowSource.asObservable();
+public cwWidth: number;
 
-setWidth(data: number){
-  this.windowSource.next(data);
-}
-
-  constructor() { 
+constructor() { 
   }
+
 }

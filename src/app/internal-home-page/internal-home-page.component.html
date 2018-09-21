@@ -1,17 +1,17 @@
 <app-toolbar></app-toolbar>
 <div class="row" [ngClass]="{
-    'fullPage': currentWindowWidth >= 992
+    'fullPage': this._g.cwWidth >= 992
 }">
     <div [ngClass]="{
-        'col-8': currentWindowWidth >= 992,
-        'col-12': currentWindowWidth < 992
+        'col-8': this._g.cwWidth >= 992,
+        'col-12': this._g.cwWidth < 992
     }">
         <mat-card>
             <mat-tab-group (selectedTabChange)="GetArchived($event)" color="accent">
                 <mat-tab label="Active">
                     <div class='dictionaryContent'>
                         <ul class='dictionary'>
-                            <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/{{ selectedYear }}'>{{
+                            <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/0101{{ currentYear }}/1231{{ currentYear }}'>{{
                                     client?.gClientName }}</a></li>
                         </ul>
                     </div>
@@ -19,7 +19,7 @@
                 <mat-tab label="Archived">
                     <div class='dictionaryContent'>
                         <ul class='dictionary'>
-                            <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/{{ selectedYear }}'>{{
+                            <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/01012000/1231{{ currentYear }}'>{{
                                     client?.gClientName }}</a></li>
                         </ul>
                     </div>
@@ -36,7 +36,7 @@
                     </ng-template>
                     <div class='dictionaryContent'>
                         <ul class='dictionary'>
-                            <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/{{ selectedYear }}'>{{
+                            <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/0101{{ selectedYear }}/1231{{ selectedYear }}'>{{
                                     client?.gClientName }}</a></li>
                         </ul>
                     </div>
@@ -47,8 +47,8 @@
 
 
     <!-- Dashboard in page form-->
-    <div *ngIf="currentWindowWidth >=992" [ngClass]="{
-    'col-4': currentWindowWidth >= 992    
+    <div *ngIf="this._g.cwWidth >=992" [ngClass]="{
+    'col-4': this._g.cwWidth >= 992    
     }">
         <app-internal-home-dashboard></app-internal-home-dashboard>
     </div>
@@ -56,7 +56,7 @@
 
 
     <!-- Dashboard in toolbox form-->
-    <ng-container *ngIf="currentWindowWidth < 992">
+    <ng-container *ngIf="this._g.cwWidth < 992">
         <button title="Tools" (click)="toggle(1)" id="toolboxBtn" class="btn toolboxButtonCollection" [ngClass]="{
             'btnShifted': toolsOpened,
             'hidden': hide

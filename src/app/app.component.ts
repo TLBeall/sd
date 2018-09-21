@@ -34,7 +34,7 @@
 
 import { Component, HostListener, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { enableProdMode } from '@angular/core';
-import { ScreenDataService } from './Services/screen-data.service';
+import { GlobalService } from './Services/global.service';
 
 @Component({
   selector: 'app-root',
@@ -43,37 +43,25 @@ import { ScreenDataService } from './Services/screen-data.service';
 })
 export class AppComponent implements OnInit {
   title = 'SD360-Reporting-Angular';
-  // public currentWindowWidth: number;
   public currentWindowWidth: number;
+  public WidthService: any;
 
   ngOnInit() {
-    // this.currentWindowWidth = window.innerWidth;
-    // this._testWidth.setWidth(this.currentWindowWidth);
   }
 
-  constructor(private _testWidth: ScreenDataService) {
-    // this.currentWindowWidth = window.innerWidth;
-    // this._testWidth.setWidth(this.currentWindowWidth);
+  constructor(private _g: GlobalService) {
   }
 
 
   @HostListener('window:load')
   onload() {
-    this.currentWindowWidth = window.innerWidth;
-    this._testWidth.setWidth(this.currentWindowWidth);
+    this._g.cwWidth = window.innerWidth;
   }
 
   @HostListener('window:resize')
   onResize() {
-    this.currentWindowWidth = window.innerWidth;
-    this._testWidth.setWidth(this.currentWindowWidth);
+    this._g.cwWidth = window.innerWidth;
   }
-
-
-  //   ngOnChanges(changes: SimpleChanges): void{
-  //     this.currentWindowWidth = window.innerWidth;
-  //   this._testWidth.setWidth(this.currentWindowWidth);
-  // }
 }
 
 

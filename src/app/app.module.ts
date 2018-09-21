@@ -19,10 +19,11 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { MainReturnsToolbarComponent } from './toolbar/main-returns-toolbar/main-returns-toolbar.component';
 import { HomePageInternalToolbarComponent } from './toolbar/home-page-internal-toolbar/home-page-internal-toolbar.component';
 import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule,   MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatInputModule } from '@angular/material';
 import { ResolveReturnsComponent } from './Services/resolve-returns/resolve-returns.component';
 import { InternalHomePageComponent } from './internal-home-page/internal-home-page.component';
 import { InternalHomeDashboardComponent } from './internal-home-page/internal-home-dashboard/internal-home-dashboard.component';
-import { ScreenDataService } from './Services/screen-data.service';
+import { GlobalService } from './Services/global.service';
 
 
 @NgModule({
@@ -42,7 +43,7 @@ import { ScreenDataService } from './Services/screen-data.service';
     ToolbarComponent,
     MainReturnsToolbarComponent,
     HomePageInternalToolbarComponent,
-    InternalHomeDashboardComponent,
+    InternalHomeDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -61,12 +62,16 @@ import { ScreenDataService } from './Services/screen-data.service';
     MatCardModule,
     MatTabsModule,
     MatMenuModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule
   ],
   providers: [
     AuthService,
     LoaderService,
-    ScreenDataService
+    GlobalService
   ],
   bootstrap: [AppComponent]
 })

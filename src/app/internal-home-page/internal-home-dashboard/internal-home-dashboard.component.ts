@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-internal-home-dashboard',
@@ -7,19 +7,11 @@ import { Component, OnInit, HostListener } from '@angular/core';
 })
 export class InternalHomeDashboardComponent implements OnInit {
 
-  public currentWindowWidth: number;
-
 
   constructor() { }
 
   ngOnInit() {
-    this.currentWindowWidth = window.innerWidth;
 
-  }
-
-  @HostListener('window:resize')
-  onResize() {
-    this.currentWindowWidth = window.innerWidth
   }
   
 }

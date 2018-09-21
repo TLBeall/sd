@@ -1,5 +1,5 @@
 <!-- <><> DESKTOP... See below for Tablet/phone <><>-->
-<div id="alphabetToolbar" *ngIf="currentWindowWidth >= 992">
+<div id="alphabetToolbar" *ngIf="this._g.cwWidth >= size_md">
   <ul class="alphabet nav nav-pills">
     <li class="nav-item" id="showAllClientsLi">
       <a class="nav-link active" data-toggle="pill">All</a>
@@ -92,7 +92,7 @@
 <!-- The toolbar settings for tablet/phone are found in the internal home dashboard - toolbox component-->
 
 <!-- <><> Tablet/Phone Alphabet Settings <><>-->
-<ng-container *ngIf="currentWindowWidth < 992">
+<ng-container *ngIf="this._g.cwWidth < size_md">
 <button mat-flat-button color="accent" [matMenuTriggerFor]="menu" id="alphabetSearchBtn">{{ alphabetSelection }}</button>
 <mat-menu #menu="matMenu">
   <div id="phoneAlphabet" mat-menu-item>

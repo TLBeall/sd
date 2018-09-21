@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener, Input } from '@angular/core';
 import * as $ from 'jquery';
 import { getLocaleDateTimeFormat } from '@angular/common';
+import { GlobalService } from '../../Services/global.service';
 
 @Component({
     selector: 'app-home-page-internal-toolbar',
@@ -12,12 +13,15 @@ export class HomePageInternalToolbarComponent implements OnInit {
     public filters;
     public currentWindowWidth: number;
     public alphabetSelection: string;
+    public size_lg = this._g.size_lg;
+    public size_md = this._g.size_md;
+    public size_sm = this._g.size_sm;
+    public size_xs = this._g.size_xs;
 
-    constructor(){
+    constructor(private _g: GlobalService){
     }
 
     ngOnInit() {
-        this.currentWindowWidth = window.innerWidth;
         this.alphabetSelection = "Search by Letter";
 
         $('#showAllClientsLi').click(function () {
@@ -77,11 +81,6 @@ export class HomePageInternalToolbarComponent implements OnInit {
         var filters = $('ul.dictionary li a');
         filters.parent().fadeIn(222);
         this.alphabetSelection = "Search by Letter";
-    }
-
-    @HostListener('window:resize')
-    onResize() {
-        this.currentWindowWidth = window.innerWidth
     }
 
 }

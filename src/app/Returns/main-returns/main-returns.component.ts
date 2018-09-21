@@ -19,12 +19,23 @@ import { RootReturns } from '../../Models/RootReturns.model';
 })
 
 export class ReturnsComponent {
+
+
   title = 'SD360-Reporting-Angular';
 
   private rowData: RootReturns;
   private route: any;
+<<<<<<< HEAD
   private startDate: any;
   private endDate:any;
+=======
+  private valueToReturn: boolean = false;
+  private TempList: any;
+  private RootDataSource: any;
+  private ChangeDetector: any;
+  private start: any;
+  private end: any;
+>>>>>>> 7602538523e68add1c66b7648e72d72c9ada8b4e
 
   clientDisplayedColumns: string[] = ['Expand', 'Client', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   mailTypeDisplayedColumns: string[] = ['Expand', 'MailType', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
@@ -34,6 +45,12 @@ export class ReturnsComponent {
 
   constructor(route: ActivatedRoute, private changeDetectorRefs: ChangeDetectorRef) {
     this.route = route;
+<<<<<<< HEAD
+=======
+    this.ChangeDetector = changeDetectorRefs;
+    route.params.subscribe(p => { this.start = p._value.from.subString(0, 2) + "" + p._value.from.subString(2, 4) + p._value.from.subString(4, 8) });
+    route.params.subscribe(p => { this.end = p._value.to });
+>>>>>>> 7602538523e68add1c66b7648e72d72c9ada8b4e
   }
 
   ngOnInit() {
@@ -50,17 +67,31 @@ export class ReturnsComponent {
     return 'collapse';
   }
 
+  CollapseAllBtn(list: any[]): string {
+    if (this.ReadyToCollapseAll(list) == true)
+      return "unfold_less";
+    return "unfold_more";
+  }
+
+  CollapseListBtn(Element): string {
+    if (Element.Measure.Expanded == true)
+      return "expand_less";
+    return "chevron_right";
+  }
+
+
   ReadyToCollapseAll(list: any[]): boolean {
     var RetValue: boolean = false;
     list.forEach(b => {
-      if (b.Measure.Expanded == true)
-      {
+      if (b.Measure.Expanded == true) {
         RetValue = true;
         return RetValue;
       }
     })
     return RetValue;
   }
+
+  public SetToExpand: boolean;
 
   NextLevel(Parent: any, ChildList: any[]) {
     var SetToExpand = true;

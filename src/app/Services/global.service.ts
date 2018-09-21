@@ -12,10 +12,10 @@ public size_lg:number = 1200;
 public size_md:number = 992;
 public size_sm:number = 768;
 public size_xs:number = 576;
-public client: string;
-public startDate: Date;
-public endDate: Date; 
-public rootReturns: RootReturns;
+public client: string = "FDFL";
+public startDate:Date = new Date("01/01/" + new Date().getFullYear());
+public endDate:Date = new Date("12/31/" + new Date().getFullYear());
+public rootReturns: any;
 
 
 constructor() { 

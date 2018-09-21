@@ -22,7 +22,7 @@ export class ResolveReturnsComponent implements OnInit {
   resolve(route:ActivatedRouteSnapshot, 
     state:RouterStateSnapshot,
    ): Observable<any> {
-   return this.AuthService.getReturns(this._g.client,this._g.startDate,this._g.endDate);
+   return this.AuthService.getReturns(this._g.client,this._g.startDate,this._g.endDate)
   };  
 
    ngOnInit() {

@@ -4,6 +4,7 @@ import { LoaderService } from '../../Loader/loader.service';
 import { ActivatedRoute, Params } from "@angular/router";
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { RootReturns } from '../../Models/RootReturns.model';
+import { GlobalService } from '../../Services/global.service';
 
 @Component({
   selector: 'app-main-returns',
@@ -23,7 +24,6 @@ export class ReturnsComponent {
 
   title = 'SD360-Reporting-Angular';
 
-  private rowData: RootReturns;
   private route: any;
   private startDate: any;
   private endDate:any;
@@ -34,12 +34,13 @@ export class ReturnsComponent {
   phaseDisplayedColumns: string[] = ['Expand', 'PhaseName', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   mailListDisplayedColumns: string[] = ['MailCode', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
 
-  constructor(route: ActivatedRoute, private changeDetectorRefs: ChangeDetectorRef) {
+  constructor(route: ActivatedRoute, private changeDetectorRefs: ChangeDetectorRef, private _g: GlobalService) {
     this.route = route;
   }
 
   ngOnInit() {
-    this.rowData = this.route.snapshot.data['rowData'];
+    // this.rowData = this.route.snapshot.data['rowData'];
+    this._g.rootReturns = this.route.snapshot.data['rowData'];
     // this.route.params.subscribe((params: Params) => {
     //   this.startDate = new Date(params['from'].substring(0,2) + "/" + params['from'].substring(2,4) + "/" + params['from'].substring(4,8));
     //   this.endDate = new Date(params['to'].substring(0,2) + "/" + params['to'].substring(2,4) + "/" + params['to'].substring(4,8));
@@ -130,9 +131,9 @@ export class ReturnsComponent {
 
     switch (myType) {
       case "MailTypeList": {
-        if (this.ReadyToCollapseAll(this.rowData[0].MailTypeList))
-          this.NextLevel(this.rowData[0], this.rowData[0].MailTypeList);
-        data = this.rowData[0].MailTypeList.slice();
+        if (this.ReadyToCollapseAll(this._g.rootReturns[0].MailTypeList))
+          this.NextLevel(this._g.rootReturns[0], this._g.rootReturns[0].MailTypeList);
+        data = this._g.rootReturns[0].MailTypeList.slice();
         break;
       }
       case "MailType": {
@@ -211,7 +212,7 @@ export class ReturnsComponent {
     switch (myType) {
       case "MailTypeList": {
         sort.active = "MailType";
-        this.rowData[0].MailTypeList = sortedData;
+        this._g.rootReturns[0].MailTypeList = sortedData;
         break;
       }
       case "MailType": {

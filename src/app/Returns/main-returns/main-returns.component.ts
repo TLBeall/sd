@@ -40,10 +40,10 @@ export class ReturnsComponent {
 
   ngOnInit() {
     this.rowData = this.route.snapshot.data['rowData'];
-    this.route.params.subscribe((params: Params) => {
-      this.startDate = new Date(params['from'].substring(0,2) + "/" + params['from'].substring(2,4) + "/" + params['from'].substring(4,8));
-      this.endDate = new Date(params['to'].substring(0,2) + "/" + params['to'].substring(2,4) + "/" + params['to'].substring(4,8));
-    });
+    // this.route.params.subscribe((params: Params) => {
+    //   this.startDate = new Date(params['from'].substring(0,2) + "/" + params['from'].substring(2,4) + "/" + params['from'].substring(4,8));
+    //   this.endDate = new Date(params['to'].substring(0,2) + "/" + params['to'].substring(2,4) + "/" + params['to'].substring(4,8));
+    // });
   }
 
   GetVisibilityStyle(state: boolean): string {

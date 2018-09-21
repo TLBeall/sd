@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClientList } from '../../../Models/ClientList.model';
 import { AuthService } from '../../../Services/auth.service';
+import { GlobalService } from '../../../Services/global.service'
 import { resolve } from 'url';
 
 @Component({
@@ -53,15 +54,27 @@ export class MainReturnsToolboxComponent implements OnInit {
     //not sure if these should close on click outside?
   }
 
-  constructor(private _authService: AuthService, private router: Router) {
+  constructor(private _authService: AuthService, private router: Router, private _g: GlobalService) {
     this._authService.getClientList("All")
             .subscribe(data => {
                 this.ClientArr = data;
             });
   }
 
+  ApplyChanges()
+  {
+    alert('hello');
+  }
+
   ngOnInit() {
   }
+
+  // this._g.startDate = new Date('01/01/'+ this.fromDate.toString());
+  // this._g.endDate = new Date('12/31/'+ this.toDate.toString());
+  // this._g.client = this.client;
+  // this._authService.getReturns(this._g.client,this._g.startDate,this._g.endDate).subscribe( data => {
+  //   this._g.rootReturns = data;
+  // });
 
 }
 

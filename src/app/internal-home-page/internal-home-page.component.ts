@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, Input, Output, HostListener } from '@angular/core';
+import { Router } from '@angular/router'
 import { AuthService } from '../Services/auth.service'
 import { TokenParams } from '../Models/TokenParams.model';
 import { ClientList } from '../Models/ClientList.model';
@@ -32,7 +33,7 @@ export class InternalHomePageComponent implements OnInit {
 
 
 
-    constructor(private _authService: AuthService, private _g: GlobalService) {
+    constructor(private _authService: AuthService, private _g: GlobalService, private router:Router) {
         this.currentYear = (new Date()).getFullYear();
     }
 
@@ -98,6 +99,12 @@ export class InternalHomePageComponent implements OnInit {
         }
     }
 
+    NavigateToReturns(client:string, startYear:number, endYear:number) {
+        this._g.startDate = new Date('01/01/'+ startYear.toString());
+        this._g.endDate = new Date('12/31/'+ endYear.toString());
+        this._g.client = client;
+        this.router.navigateByUrl('returns');
+    }
     // @HostListener('window:resize')
     // onResize() {
     //     this.currentWindowWidth = window.innerWidth

@@ -15,8 +15,10 @@ public size_xs:number = 576;
 public client: string = "FDFL";
 public startDate:Date = new Date("01/01/" + new Date().getFullYear());
 public endDate:Date = new Date("12/31/" + new Date().getFullYear());
+public listowner: number;
+public listmanager: number;
+public recency: number;
 public rootReturns: any;
-
 
 constructor() { 
   }

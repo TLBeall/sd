@@ -5,13 +5,11 @@ import { AuthService } from '../auth.service';
 import { GlobalService } from '../global.service';
 
 @Component({
-  selector: 'app-resolve-returns',
-  templateUrl: './resolve-returns.component.html',
-  styleUrls: ['./resolve-returns.component.css']
+  selector: 'app-resolve-listperformance',
+  templateUrl: './resolvelistperformance.component.html',
+  styleUrls: ['./resolvelistperformance.component.css']
 })
-
-@Injectable()
-export class ResolveReturnsComponent implements OnInit {
+export class ResolvelistperformanceComponent implements OnInit {
 
   constructor(private  AuthService: AuthService, private _g: GlobalService) 
   {
@@ -21,7 +19,7 @@ export class ResolveReturnsComponent implements OnInit {
   resolve(route:ActivatedRouteSnapshot, 
     state:RouterStateSnapshot,
    ): Observable<any> {
-   return this.AuthService.getReturns(this._g.client,this._g.startDate,this._g.endDate)
+   return this.AuthService.getListPerformance(this._g.listowner, this._g.listmanager, this._g.recency, this._g.startDate,this._g.endDate)  
   };  
 
    ngOnInit() {

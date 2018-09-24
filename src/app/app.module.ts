@@ -25,6 +25,7 @@ import { InternalHomePageComponent } from './internal-home-page/internal-home-pa
 import { InternalHomeDashboardComponent } from './internal-home-page/internal-home-dashboard/internal-home-dashboard.component';
 import { GlobalService } from './Services/global.service';
 import {FormsModule} from '@angular/forms';
+import { ResolvelistperformanceComponent } from './services/resolvelistperformance/resolvelistperformance.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import {FormsModule} from '@angular/forms';
     ToolbarComponent,
     MainReturnsToolbarComponent,
     HomePageInternalToolbarComponent,
-    InternalHomeDashboardComponent
+    InternalHomeDashboardComponent,
+    ResolvelistperformanceComponent
   ],
   imports: [
     BrowserModule,

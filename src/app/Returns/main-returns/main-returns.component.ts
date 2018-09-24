@@ -5,6 +5,7 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { RootReturns } from '../../Models/RootReturns.model';
 import { GlobalService } from '../../Services/global.service';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-main-returns',
@@ -34,18 +35,24 @@ export class ReturnsComponent {
   phaseDisplayedColumns: string[] = ['Expand', 'PhaseName', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   mailListDisplayedColumns: string[] = ['MailCode', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
 
-  constructor(route: ActivatedRoute, private changeDetectorRefs: ChangeDetectorRef, private _g: GlobalService) {
+  constructor(route: ActivatedRoute, private _g: GlobalService, private router:Router) {
     this.route = route;
   }
 
   ngOnInit() {
-    // this.rowData = this.route.snapshot.data['rowData'];
     this._g.rootReturns = this.route.snapshot.data['rowData'];
-    // this.route.params.subscribe((params: Params) => {
-    //   this.startDate = new Date(params['from'].substring(0,2) + "/" + params['from'].substring(2,4) + "/" + params['from'].substring(4,8));
-    //   this.endDate = new Date(params['to'].substring(0,2) + "/" + params['to'].substring(2,4) + "/" + params['to'].substring(4,8));
-    // });
   }
+
+  // NavigateToListPerformance(element.ListOwner, element.ListManager, element.Recency, '01/01/2018', '12/31/2018')
+
+  NavigateToListPerformance(ListOwner:number, ListManager:number, Recency:number, startDate:Date, endDate:Date) {
+    this._g.startDate = startDate;
+    this._g.endDate = endDate;
+    this._g.listowner = ListOwner;
+    this._g.listmanager = ListManager;
+    this._g.recency = Recency;
+    this.router.navigateByUrl('listperformance');
+}
 
   GetVisibilityStyle(state: boolean): string {
     if (state)

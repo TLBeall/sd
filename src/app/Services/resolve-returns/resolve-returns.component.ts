@@ -3,6 +3,7 @@ import { Resolve, ActivatedRouteSnapshot,RouterStateSnapshot } from '@angular/ro
 import { Observable } from 'rxjs/Rx';
 import { AuthService } from '../auth.service';
 import { Subscription } from 'rxjs/Subscription';
+import { GlobalService } from '../global.service';
 
 @Component({
   selector: 'app-resolve-returns',
@@ -13,16 +14,18 @@ import { Subscription } from 'rxjs/Subscription';
 @Injectable()
 export class ResolveReturnsComponent implements OnInit {
 
-  constructor(private  AuthService: AuthService) { }
+  constructor(private  AuthService: AuthService, private _g: GlobalService) 
+  {
+
+  }
 
   resolve(route:ActivatedRouteSnapshot, 
     state:RouterStateSnapshot,
    ): Observable<any> {
-    return this.AuthService.getReturns(route.params['client'],
-    new Date(route.params['from'].substring(0,2) + "/" + route.params['from'].substring(2,4) + "/" + route.params['from'].substring(4,8)),
-    new Date(route.params['to'].substring(0,2) + "/" + route.params['to'].substring(2,4) + "/" + route.params['to'].substring(4,8)));  
-}
-  ngOnInit() {
+   return this.AuthService.getReturns(this._g.client,this._g.startDate,this._g.endDate)
+  };  
+
+   ngOnInit() {
   }
 
 }

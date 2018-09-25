@@ -21,19 +21,19 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-            <input matInput [matDatepicker]="startDatePicker" [value]="startDate" placeholder="start date">
-            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #startDatePicker></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field>
-              <input matInput [matDatepicker]="endDatePicker" [value]="endDate" placeholder="end date">
-              <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #endDatePicker></mat-datepicker>
-            </mat-form-field>
-        </p>
+          <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="fromDate" placeholder="start date">
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [matDatepicker]="endDatePicker" [(ngModel)]="toDate" placeholder="end date">
+          <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker></mat-datepicker>
+        </mat-form-field>
+      </p>
       <p>Insert expand/collapse all buttons here?</p>
       <p>Insert temproary exclude toggle button here</p>
-      <p>Page reset</p>
+      <button mat-raised-button color="accent" (click)="applyChanges()"> OK </button>
     </div>
   </div>
 

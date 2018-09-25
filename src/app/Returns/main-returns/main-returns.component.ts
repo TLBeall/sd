@@ -1,9 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { Sort, MatTableModule, MatTable } from '@angular/material';
 import { LoaderService } from '../../Loader/loader.service';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Params } from "@angular/router";
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { RootReturns } from '../../Models/RootReturns.model';
+import { GlobalService } from '../../Services/global.service';
 
 @Component({
   selector: 'app-main-returns',
@@ -23,14 +24,9 @@ export class ReturnsComponent {
 
   title = 'SD360-Reporting-Angular';
 
-  private rowData: RootReturns;
   private route: any;
-  private valueToReturn: boolean = false;
-  private TempList: any;
-  private RootDataSource: any;
-  private ChangeDetector: any;
-  private start: any;
-  private end: any;
+  private startDate: any;
+  private endDate:any;
 
 
   // @ViewChild('PseudoDescription', { read: ElementRef })
@@ -41,16 +37,22 @@ export class ReturnsComponent {
   phaseDisplayedColumns: string[] = ['Expand', 'PhaseName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   mailListDisplayedColumns: string[] = ['PseudoExpand', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
 
-  constructor(route: ActivatedRoute, private changeDetectorRefs: ChangeDetectorRef) {
+  constructor(route: ActivatedRoute, private changeDetectorRefs: ChangeDetectorRef, private _g: GlobalService) {
     this.route = route;
-    this.ChangeDetector = changeDetectorRefs;
-    route.params.subscribe(p => { this.start = p._value.from.subString(0, 2) + "" + p._value.from.subString(2, 4) + p._value.from.subString(4, 8) });
-    route.params.subscribe(p => { this.end = p._value.to });
   }
 
   ngOnInit() {
+<<<<<<< HEAD
     this.rowData = this.route.snapshot.data['rowData'];
     // console.log(this.pseudoDescription.nativeElement);
+=======
+    // this.rowData = this.route.snapshot.data['rowData'];
+    this._g.rootReturns = this.route.snapshot.data['rowData'];
+    // this.route.params.subscribe((params: Params) => {
+    //   this.startDate = new Date(params['from'].substring(0,2) + "/" + params['from'].substring(2,4) + "/" + params['from'].substring(4,8));
+    //   this.endDate = new Date(params['to'].substring(0,2) + "/" + params['to'].substring(2,4) + "/" + params['to'].substring(4,8));
+    // });
+>>>>>>> 864ec3044d4f1e23aafb9b115c3ab54fefd6f3df
   }
 
   GetVisibilityStyle(state: boolean): string {
@@ -120,6 +122,7 @@ export class ReturnsComponent {
     Element.Measure.Expanded = !Element.Measure.Expanded;
   }
 
+
   SortFunction(sort: Sort, Element: any) {
 
     var data: any;
@@ -132,9 +135,9 @@ export class ReturnsComponent {
 
     switch (myType) {
       case "MailTypeList": {
-        if (this.ReadyToCollapseAll(this.rowData[0].MailTypeList))
-          this.NextLevel(this.rowData[0], this.rowData[0].MailTypeList);
-        data = this.rowData[0].MailTypeList.slice();
+        if (this.ReadyToCollapseAll(this._g.rootReturns[0].MailTypeList))
+          this.NextLevel(this._g.rootReturns[0], this._g.rootReturns[0].MailTypeList);
+        data = this._g.rootReturns[0].MailTypeList.slice();
         break;
       }
       case "MailType": {
@@ -213,7 +216,7 @@ export class ReturnsComponent {
     switch (myType) {
       case "MailTypeList": {
         sort.active = "MailType";
-        this.rowData[0].MailTypeList = sortedData;
+        this._g.rootReturns[0].MailTypeList = sortedData;
         break;
       }
       case "MailType": {

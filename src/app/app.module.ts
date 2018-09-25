@@ -24,6 +24,7 @@ import { ResolveReturnsComponent } from './Services/resolve-returns/resolve-retu
 import { InternalHomePageComponent } from './internal-home-page/internal-home-page.component';
 import { InternalHomeDashboardComponent } from './internal-home-page/internal-home-dashboard/internal-home-dashboard.component';
 import { GlobalService } from './Services/global.service';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { GlobalService } from './Services/global.service';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatInputModule
+    MatInputModule,
+    FormsModule
   ],
   providers: [
     AuthService,

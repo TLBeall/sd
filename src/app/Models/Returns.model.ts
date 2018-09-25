@@ -15,4 +15,5 @@ export class Returns {
     NLM: number;
     IO: number;
     Expanded: boolean = true;
+    IsLast:boolean = false;
 }

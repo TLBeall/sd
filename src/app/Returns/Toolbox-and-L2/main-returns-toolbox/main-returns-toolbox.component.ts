@@ -69,6 +69,7 @@ export class MainReturnsToolboxComponent implements OnInit {
     this._g.endDate = this.toDate;
     this._g.client = this.client;
     this._authService.getReturns(this._g.client, this._g.startDate, this._g.endDate).subscribe(data => {
+      if (data)
       this._g.rootReturns = data;
     });
   }

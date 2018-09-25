@@ -28,6 +28,7 @@ export class ReturnsComponent {
   private route: any;
   private startDate: any;
   private endDate:any;
+  private showlistperformance:boolean = false;
 
   clientDisplayedColumns: string[] = ['Expand', 'Client', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   mailTypeDisplayedColumns: string[] = ['Expand', 'MailType', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
@@ -37,10 +38,13 @@ export class ReturnsComponent {
 
   constructor(route: ActivatedRoute, private _g: GlobalService, private router:Router) {
     this.route = route;
+    _g.showlistperformance = false;
   }
 
   ngOnInit() {
+    this._g.rootReturns = new RootReturns();
     this._g.rootReturns = this.route.snapshot.data['rowData'];
+    this.SetLastElements();
   }
 
   // NavigateToListPerformance(element.ListOwner, element.ListManager, element.Recency, '01/01/2018', '12/31/2018')
@@ -51,7 +55,8 @@ export class ReturnsComponent {
     this._g.listowner = ListOwner;
     this._g.listmanager = ListManager;
     this._g.recency = Recency;
-    this.router.navigateByUrl('listperformance');
+    this.router.navigate(['listperformance/'+ ListOwner.toString() + '/' + ListManager.toString() + '/' + Recency.toString()], {relativeTo: this.route});
+    this._g.showlistperformance = true;
 }
 
   GetVisibilityStyle(state: boolean): string {
@@ -76,6 +81,7 @@ export class ReturnsComponent {
   ReadyToCollapseAll(list: any[]): boolean {
     var RetValue: boolean = false;
     list.forEach(b => {
+      if (b.Measure)
       if (b.Measure.Expanded == true) {
         RetValue = true;
         return RetValue;
@@ -122,9 +128,25 @@ export class ReturnsComponent {
   }
 
   ToggleExpansion(Element: any) {
-    Element.Measure.Expanded = !Element.Measure.Expanded;
+    if (Element.Measure)
+      Element.Measure.Expanded = !Element.Measure.Expanded;
   }
 
+  SetLastElements()
+  {
+    this._g.rootReturns[0].MailTypeList.forEach(element => {
+      element.Measure.IsLast = false;
+      element.CampaignList.forEach(element => {
+        element.Measure.IsLast = false;
+        element.PhaseList.forEach(element => {
+          element.Measure.IsLast = false;
+        });
+        element.PhaseList[element.PhaseList.length-1].Measure.IsLast = true;  
+      });
+      element.CampaignList[element.CampaignList.length-1].Measure.IsLast = true;
+    });
+    this._g.rootReturns[0].MailTypeList[this._g.rootReturns[0].MailTypeList.length-1].Measure.IsLast = true;
+  }
 
   SortFunction(sort: Sort, Element: any) {
 
@@ -215,6 +237,8 @@ export class ReturnsComponent {
         default: return 0;
       }
     });
+
+    this.SetLastElements();
 
     switch (myType) {
       case "MailTypeList": {

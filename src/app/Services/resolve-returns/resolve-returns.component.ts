@@ -3,6 +3,7 @@ import { Resolve, ActivatedRouteSnapshot,RouterStateSnapshot } from '@angular/ro
 import { Observable } from 'rxjs/Rx';
 import { AuthService } from '../auth.service';
 import { GlobalService } from '../global.service';
+import { RootReturns } from '../../Models/RootReturns.model';
 
 @Component({
   selector: 'app-resolve-returns',
@@ -20,8 +21,8 @@ export class ResolveReturnsComponent implements OnInit {
 
   resolve(route:ActivatedRouteSnapshot, 
     state:RouterStateSnapshot,
-   ): Observable<any> {
-   return this.AuthService.getReturns(this._g.client,this._g.startDate,this._g.endDate)
+   ): Observable<RootReturns> {
+   return  this.AuthService.getReturns(this._g.client,this._g.startDate,this._g.endDate)
   };  
 
    ngOnInit() {

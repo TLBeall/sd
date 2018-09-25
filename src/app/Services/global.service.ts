@@ -18,7 +18,8 @@ public endDate:Date = new Date("12/31/" + new Date().getFullYear());
 public listowner: number;
 public listmanager: number;
 public recency: number;
-public rootReturns: any;
+public rootReturns: RootReturns;
+public showlistperformance: boolean;
 
 constructor() { 
   }

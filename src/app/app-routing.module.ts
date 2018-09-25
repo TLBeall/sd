@@ -13,7 +13,11 @@ const routes: Routes = [
   {path: '', redirectTo: '/homepage', pathMatch: 'full'},  // this is how to set up the default page
   {path: 'homepage', component: InternalHomePageComponent },
   // {path: 'returns/:client/:from/:to', component: ReturnsComponent, resolve: {rowData: ResolveReturnsComponent} },
-  {path: 'returns', component: ReturnsComponent, resolve: {rowData: ResolveReturnsComponent} },
+  {path: 'returns', component: ReturnsComponent,   children: [
+    {path: 'listperformance/:listowner/:listmanager/:recency', component: ListPerformanceComponent }
+  ],
+resolve: {rowData: ResolveReturnsComponent} 
+},
   // {path: 'listperformance', component: ListPerformanceComponent, resolve: {rowData: ResolvelistperformanceComponent} },
   {path: '**', component: PageNotFoundComponent} //Setup for if URL does not match
 ];

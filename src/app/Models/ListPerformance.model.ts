@@ -9,6 +9,5 @@ export class ListPerformance {
     ListOwnerName: string;
     ListManagerName: string;
     Recency: string;
-    AvgPackageIO: number;
     Measure: Returns;
 }

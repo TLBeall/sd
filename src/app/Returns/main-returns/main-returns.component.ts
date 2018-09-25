@@ -42,17 +42,12 @@ export class ReturnsComponent {
   }
 
   ngOnInit() {
-<<<<<<< HEAD
-    this.rowData = this.route.snapshot.data['rowData'];
-    // console.log(this.pseudoDescription.nativeElement);
-=======
     // this.rowData = this.route.snapshot.data['rowData'];
     this._g.rootReturns = this.route.snapshot.data['rowData'];
     // this.route.params.subscribe((params: Params) => {
     //   this.startDate = new Date(params['from'].substring(0,2) + "/" + params['from'].substring(2,4) + "/" + params['from'].substring(4,8));
     //   this.endDate = new Date(params['to'].substring(0,2) + "/" + params['to'].substring(2,4) + "/" + params['to'].substring(4,8));
     // });
->>>>>>> 864ec3044d4f1e23aafb9b115c3ab54fefd6f3df
   }
 
   GetVisibilityStyle(state: boolean): string {

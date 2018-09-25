@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Sort } from '@angular/material';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Sort, MatTableModule, MatTable } from '@angular/material';
 import { LoaderService } from '../../Loader/loader.service';
 import { ActivatedRoute, Params } from "@angular/router";
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -30,11 +30,14 @@ export class ReturnsComponent {
   private endDate:any;
   private showlistperformance:boolean = false;
 
-  clientDisplayedColumns: string[] = ['Expand', 'Client', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
-  mailTypeDisplayedColumns: string[] = ['Expand', 'MailType', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
-  campaignDisplayedColumns: string[] = ['Expand', 'CampaignName', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
-  phaseDisplayedColumns: string[] = ['Expand', 'PhaseName', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
-  mailListDisplayedColumns: string[] = ['MailCode', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
+
+  // @ViewChild('PseudoDescription', { read: ElementRef })
+  // public pseudoDescription: ElementRef;
+  clientDisplayedColumns: string[] = ['Expand', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
+  mailTypeDisplayedColumns: string[] = ['Expand', 'MailType', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
+  campaignDisplayedColumns: string[] = ['Expand', 'CampaignName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
+  phaseDisplayedColumns: string[] = ['Expand', 'PhaseName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
+  mailListDisplayedColumns: string[] = ['PseudoExpand', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
 
   constructor(route: ActivatedRoute, private _g: GlobalService, private router:Router) {
     this.route = route;
@@ -65,16 +68,13 @@ export class ReturnsComponent {
     return 'collapse';
   }
 
-  CollapseAllBtn(list: any[]): string {
-    if (this.ReadyToCollapseAll(list) == true)
-      return "unfold_less";
-    return "unfold_more";
-  }
 
-  CollapseListBtn(Element): string {
-    if (Element.Measure.Expanded == true)
-      return "expand_less";
-    return "chevron_right";
+  CollapseListBtn(Element): boolean {
+    if (Element.Measure.Expanded == true) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 
@@ -85,12 +85,11 @@ export class ReturnsComponent {
       if (b.Measure.Expanded == true) {
         RetValue = true;
         return RetValue;
+      } else {
       }
     })
     return RetValue;
   }
-
-  public SetToExpand: boolean;
 
   NextLevel(Parent: any, ChildList: any[]) {
     var SetToExpand = true;
@@ -126,7 +125,7 @@ export class ReturnsComponent {
     if (Parent.Measure.Expanded == false)
       Parent.Measure.Expanded = true;
   }
-
+  toggleState: boolean;
   ToggleExpansion(Element: any) {
     if (Element.Measure)
       Element.Measure.Expanded = !Element.Measure.Expanded;

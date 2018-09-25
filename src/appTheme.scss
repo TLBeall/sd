@@ -9,6 +9,7 @@ $color-white: #FFF;
 $color-whitesmoke: #F8F8F8; //body background
 $color-gallery: #F0F0F0; //some buttons native background
 $color-gainsboro: #D3D3D3; //introduced as the gray color for material element text
+$color-silver: 	#C0C0C0;
 $color-gray: #808080; //used on scroll buttons of toolbar
 $color-dovegray: #686868; //box shadows
 
@@ -86,6 +87,37 @@ $shiftStyle: cubic-bezier(0.175, 0.885, 0.32, 1.1);
     clear: both;
     display: table;
 }
+
+//<><><> Material Icon's (mi) Converted to Classes <><><>
+  .mi_expand_less::after{
+    content: "expand_less";
+  }
+
+  .mi_expand_more::after{
+    content: "expand_more";
+  }
+
+  .mi_unfold_less::after{
+    content: "unfold_less";
+  }
+
+  .mi_unfold_more::after{
+    content: "unfold_more";
+  }
+
+  .mi_chevron_right::after{
+      content: "chevron_right";
+  }
+
+  .mi_chevron_left::after{
+      content: "chevron_left";
+  }
+
+  .mi_menu::after{
+    content: "menu";
+  }
+
+
 
 
 // <><><><><><><><><><><><><><><><><><><><><>

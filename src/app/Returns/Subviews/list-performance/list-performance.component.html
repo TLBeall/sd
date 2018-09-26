@@ -1,17 +1,17 @@
 <button (click)='HideList()'> Back </button>
-<table mat-table [dataSource]="ListPerformanceArr" multiTemplateDataRows>
+<table mat-table [dataSource]="ListPerformanceArr" matSort (matSortChange)="SortFunction($event, ListPerformanceArr)" multiTemplateDataRows>
   <ng-container matColumnDef="Client">
-    <th mat-header-cell *matHeaderCellDef> Client </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Client </th>
     <td mat-cell *matCellDef="let element"> {{element.Client}} </td>
     <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
   </ng-container>
   <ng-container matColumnDef="Phase">
-    <th mat-header-cell *matHeaderCellDef> Phase </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Phase </th>
     <td mat-cell *matCellDef="let element"> {{element.Phase}} </td>
     <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
   </ng-container>
   <ng-container matColumnDef="MailCode">
-    <th mat-header-cell *matHeaderCellDef> MailCode </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> MailCode </th>
     <td mat-cell *matCellDef="let element"> {{element.MailCode}} </td>
     <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
   </ng-container>
@@ -30,65 +30,65 @@
     <td mat-cell *matCellDef="let element"> {{element.ExchangeFlag}} </td>
     <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
   </ng-container>  <ng-container matColumnDef="Mailed">
-    <th mat-header-cell *matHeaderCellDef> Mailed </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Mailed </th>
     <td mat-cell *matCellDef="let element"> {{element.Measure.Mailed | date:'shortDate'}} </td>
   </ng-container>
   <ng-container matColumnDef="Caged">
-    <th mat-header-cell *matHeaderCellDef> Caged </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Caged </th>
     <td mat-cell *matCellDef="let element"> {{element.Measure.Caged | date:'shortDate'}} </td>
   </ng-container>
   <ng-container matColumnDef="Quantity">
-    <th mat-header-cell *matHeaderCellDef> Qty </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Qty </th>
     <td mat-cell *matCellDef="let element"> {{element.Measure.Quantity | number}} </td>
   </ng-container>
   <ng-container matColumnDef="Donors">
-    <th mat-header-cell *matHeaderCellDef> Don </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Don </th>
     <td mat-cell *matCellDef="let element"> {{element.Measure.Donors | number}} </td>
   </ng-container>
   <ng-container matColumnDef="NonDonors">
-    <th mat-header-cell *matHeaderCellDef> Non </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Non </th>
     <td mat-cell *matCellDef="let element"> {{element.Measure.NonDonors | number}} </td>
   </ng-container>
   <ng-container matColumnDef="NewDonors">
-    <th mat-header-cell *matHeaderCellDef> New </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> New </th>
     <td mat-cell *matCellDef="let element"> {{element.Measure.NewDonors | number}} </td>
   </ng-container>
   <ng-container matColumnDef="RSP">
-    <th mat-header-cell *matHeaderCellDef> RSP </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> RSP </th>
     <td mat-cell *matCellDef="let element"> {{element.Measure.RSP | percent:'1.0-2'}} </td>
   </ng-container>
   <ng-container matColumnDef="AVG">
-    <th mat-header-cell *matHeaderCellDef> AVG </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> AVG </th>
     <td mat-cell *matCellDef="let element"> {{element.Measure.AVG | number:'1.2-2'}} </td>
   </ng-container>
   <ng-container matColumnDef="Gross">
-    <th mat-header-cell *matHeaderCellDef> Gross </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Gross </th>
     <td mat-cell *matCellDef="let element"> {{element.Measure.Gross | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
   </ng-container>
   <ng-container matColumnDef="Cost">
-    <th mat-header-cell *matHeaderCellDef> Cost </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Cost </th>
     <td mat-cell *matCellDef="let element"> {{element.Measure.Cost | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
   </ng-container>
   <ng-container matColumnDef="Net">
-    <th mat-header-cell *matHeaderCellDef> Net </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Net </th>
     <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.Net < 0">
       {{element.Measure.Net | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
   </ng-container>
   <ng-container matColumnDef="GPP">
-    <th mat-header-cell *matHeaderCellDef> GPP </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> GPP </th>
     <td mat-cell *matCellDef="let element"> {{element.Measure.GPP | currency}} </td>
   </ng-container>
   <ng-container matColumnDef="CLM">
-    <th mat-header-cell *matHeaderCellDef> CLM </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> CLM </th>
     <td mat-cell *matCellDef="let element"> {{element.Measure.CLM | currency}} </td>
   </ng-container>
   <ng-container matColumnDef="NLM">
-    <th mat-header-cell *matHeaderCellDef> NLM </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> NLM </th>
     <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.NLM < 0">
       {{element.Measure.NLM | currency}} </td>
   </ng-container>
   <ng-container matColumnDef="IO">
-    <th mat-header-cell *matHeaderCellDef> IO </th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> IO </th>
     <td mat-cell *matCellDef="let element"> {{element.Measure.IO | number : '1.2-2'}} </td>
   </ng-container>
   <!-- <ng-container matColumnDef="AvgPackageIO">

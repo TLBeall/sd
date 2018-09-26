@@ -777,7 +777,7 @@
                                                                                     <tr mat-header-row *matHeaderRowDef="mailListDisplayedColumns"></tr>
                                                                                     <tr mat-row *matRowDef="let element; columns: mailListDisplayedColumns;" class="example-element-row">
                                                                                     </tr>
-                                                                                    <tr mat-footer-row [ngStyle]="{'visibility':element.Measure.Expanded ? 'collapse' : 'visible' }" *matFooterRowDef="mailListDisplayedColumns"></tr>
+                                                                                    <tr mat-footer-row [ngStyle]="{'visibility':element.Measure.Expanded ? 'visible' : 'collapse' }" *matFooterRowDef="mailListDisplayedColumns"></tr>
                                                                                 </table>
                                                                             </div>
                                                                         </div>
@@ -787,7 +787,7 @@
                                                                 <tr mat-row *matRowDef="let element; columns: phaseDisplayedColumns;" class="example-element-row" [class.example-expanded-row]="element.Measure.Expanded">
                                                                 </tr>
                                                                 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-                                                                <tr mat-footer-row [ngStyle]="{'visibility':element.Measure.Expanded ? 'collapse' : 'visible' }" *matFooterRowDef="phaseDisplayedColumns"></tr>
+                                                                <tr mat-footer-row [ngStyle]="{'visibility':element.Measure.Expanded ? 'visible' : 'collapse' }" *matFooterRowDef="phaseDisplayedColumns"></tr>
                                                             </table>
                                                         </div>
                                                     </div>
@@ -798,7 +798,7 @@
                                             <tr mat-row *matRowDef="let element; columns: campaignDisplayedColumns;" class="example-element-row" [class.example-expanded-row]="element.Measure.Expanded">
                                             </tr>
                                             <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-                                            <tr mat-footer-row [ngStyle]="{'visibility':element.Measure.Expanded ? 'collapse' : 'visible' }" *matFooterRowDef="campaignDisplayedColumns"></tr>
+                                            <tr mat-footer-row [ngStyle]="{'visibility':element.Measure.Expanded ? 'visible' : 'collapse' }" *matFooterRowDef="campaignDisplayedColumns"></tr>
                                         </table>
                                     </div>
 
@@ -809,7 +809,7 @@
                         <tr mat-row *matRowDef="let element; columns: mailTypeDisplayedColumns;" class="example-element-row" [class.example-expanded-row]="element.Measure.Expanded">
                         </tr>
                         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-                        <tr mat-footer-row [ngStyle]="{'visibility':element.Measure.Expanded ? 'collapse' : 'visible' }" *matFooterRowDef="mailTypeDisplayedColumns"></tr>
+                        <tr mat-footer-row [ngStyle]="{'visibility':element.Measure.Expanded ? 'visible' : 'collapse' }" *matFooterRowDef="mailTypeDisplayedColumns"></tr>
                     </table>
                 </div>
             </div>

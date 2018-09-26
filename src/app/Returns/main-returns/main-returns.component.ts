@@ -58,7 +58,7 @@ export class ReturnsComponent {
     this._g.listowner = ListOwner;
     this._g.listmanager = ListManager;
     this._g.recency = Recency;
-    this.router.navigate(['listperformance/'+ ListOwner.toString() + '/' + ListManager.toString() + '/' + Recency.toString()], {relativeTo: this.route});
+    this.router.navigate(['listperformance'], {relativeTo: this.route});
     this._g.showlistperformance = true;
 }
 

@@ -173,8 +173,8 @@
 
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
   <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" [ngStyle]="{'background-color':element.Measure.Expanded ? '#e6e6e6' : 'white' }"> </tr>
-  <tr mat-row *matRowDef="let child1; columns: packageColumns;" [ngStyle]="{'visibility':child1.Measure.Expanded ? 'visible' : 'collapse' }" style="background-color:#F8F8F8"></tr>
-  <tr mat-row *matRowDef="let child2; columns: package2Columns;" [ngStyle]="{'visibility':child2.Measure.Expanded ? 'visible' : 'collapse' }"  style="background-color:#F8F8F8"></tr>
+  <tr mat-row *matRowDef="let element; columns: packageColumns;" [ngStyle]="{'visibility':element.Measure.Expanded ? 'visible' : 'collapse' }" style="background-color:#F8F8F8"></tr>
+  <tr mat-row *matRowDef="let element; columns: package2Columns;" [ngStyle]="{'visibility':element.Measure.Expanded ? 'visible' : 'collapse' }"  style="background-color:#F8F8F8"></tr>
   
 
 </table>

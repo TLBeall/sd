@@ -14,7 +14,7 @@ const routes: Routes = [
   {path: 'homepage', component: InternalHomePageComponent },
   // {path: 'returns/:client/:from/:to', component: ReturnsComponent, resolve: {rowData: ResolveReturnsComponent} },
   {path: 'returns', component: ReturnsComponent,   children: [
-    {path: 'listperformance/:listowner/:listmanager/:recency', component: ListPerformanceComponent }
+    {path: 'listperformance', component: ListPerformanceComponent }
   ],
 resolve: {rowData: ResolveReturnsComponent} 
 },

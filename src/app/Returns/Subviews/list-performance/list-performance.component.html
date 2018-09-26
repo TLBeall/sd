@@ -1,5 +1,14 @@
 <button (click)='HideList()'> Back </button>
 <table mat-table [dataSource]="ListPerformanceArr" matSort (matSortChange)="SortFunction($event, ListPerformanceArr)" multiTemplateDataRows>
+  <ng-container matColumnDef="Expand">
+    <th mat-header-cell *matHeaderCellDef class="expandBtnColumn"></th>
+    <td mat-cell *matCellDef="let element" class="expandBtnColumn">
+      <button mat-icon-button (click)="ToggleExpansion(element)" class="returnsExpCollBtn">
+        <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_expand_more' : 'mi_chevron_right'"></i>
+      </button>
+    </td>
+    <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"> </td>
+  </ng-container>
   <ng-container matColumnDef="Client">
     <th mat-header-cell mat-sort-header *matHeaderCellDef> Client </th>
     <td mat-cell *matCellDef="let element"> {{element.Client}} </td>
@@ -20,16 +29,12 @@
     <td mat-cell *matCellDef="let element"> {{element.Description}} </td>
     <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
   </ng-container>
-  <ng-container matColumnDef="Recency">
-    <th mat-header-cell *matHeaderCellDef> Recency </th>
-    <td mat-cell *matCellDef="let element"> {{element.Recency}} </td>
-    <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
-  </ng-container>
   <ng-container matColumnDef="ExchangeFlag">
     <th mat-header-cell *matHeaderCellDef> FF </th>
     <td mat-cell *matCellDef="let element"> {{element.ExchangeFlag}} </td>
     <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
-  </ng-container>  <ng-container matColumnDef="Mailed">
+  </ng-container>
+  <ng-container matColumnDef="Mailed">
     <th mat-header-cell mat-sort-header *matHeaderCellDef> Mailed </th>
     <td mat-cell *matCellDef="let element"> {{element.Measure.Mailed | date:'shortDate'}} </td>
   </ng-container>
@@ -96,7 +101,17 @@
     <td mat-cell *matCellDef="let element"> {{element.AvgPackageIO | number : '1.2-2'}} </td>
   </ng-container> -->
 
+  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+      <div class="example-element-detail" [@detailExpand]="element.Measure.Expanded ? 'expanded' : 'collapsed'" [style.height]="element.Measure.Expanded ? 'unset' : '0 !important'">
+          <span class="example-element-description-attribution"> {{ element.PackageTitle }} </span>
+      </div>
+    </td>
+  </ng-container>
+
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;">
-  </tr>
+  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"> </tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+
 </table>

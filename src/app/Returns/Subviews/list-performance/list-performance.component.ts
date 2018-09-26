@@ -5,11 +5,19 @@ import { LoaderService } from '../../../Loader/loader.service';
 import { ListPerformance } from '../../../Models/ListPerformance.model';
 import { GlobalService } from '../../../Services/global.service';
 import { Sort } from '@angular/material';
+import { trigger, state, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-list-performance',
   templateUrl: './list-performance.component.html',
-  styleUrls: ['./list-performance.component.scss']
+  styleUrls: ['./list-performance.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed, void', style({ height: '0px', minHeight: '0', display: 'none' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+    ]),
+  ],
 })
 export class ListPerformanceComponent implements OnInit {
 
@@ -17,25 +25,34 @@ export class ListPerformanceComponent implements OnInit {
   public ListManager: number = 0;
   public Recency: number = 0;
   public ListPerformanceArr: ListPerformance[];
-  columnsToDisplay: string[] = ['Client', 'Phase', 'MailCode', 'Description', 'ExchangeFlag', 'Recency', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
+  columnsToDisplay: string[] = ['Expand','Client', 'Phase', 'MailCode', 'Description', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private _g: GlobalService) {
-    var endDate = new Date(); // default to last 2 years
+    var endDate = new Date(); 
     var startDate = new Date();
     var year = endDate.getFullYear() - 2;
     startDate.setFullYear(year);
-    // route.params.subscribe(params => {
-    //   this.ListOwner = +params["listowner"];
-    //   if (params["listmanager"]) {
-    //     this.ListManager = +params["listmanager"];
-    //     if (params["recency"])
-    //       this.Recency = +params["recency"];
-    //   }
-    // });
     this._authService.getListPerformance(this._g.listowner, this._g.listmanager, this._g.recency, startDate, endDate)
       .subscribe(data => {
         this.ListPerformanceArr = data;
+        this.ListPerformanceArr.forEach(p => { p.Measure.Expanded = false; })
       });
+  }
+
+  CollapseListBtn(Element): boolean {
+    if (Element.Measure.Expanded == true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  ToggleExpansion(Element: any) {
+    if (Element.Measure)
+      Element.Measure.Expanded = !Element.Measure.Expanded;
+    if (Element.Measure.Expanded == true)
+      if (! Element['PackageTitle'])
+        Element['PackageTitle'] = "TEST";
   }
 
   ngOnInit() {
@@ -81,6 +98,7 @@ export class ListPerformanceComponent implements OnInit {
         default: return 0;
       }
     });
+    sortedData.forEach(p => { p.Measure.Expanded = false; })
     this.ListPerformanceArr = sortedData;
   }
 }

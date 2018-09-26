@@ -1,6 +1,10 @@
 <app-toolbar></app-toolbar>
 <app-main-returns-toolbox></app-main-returns-toolbox> 
+<<<<<<< HEAD
 <div *ngIf='!_g.showlistperformance'>
+=======
+
+>>>>>>> 40d560b58211ef4aa6066454a4550e99b9263acd
 
 <table id="table1" mat-table [dataSource]="_g.rootReturns" multiTemplateDataRows #PseudoDescription>
     <ng-container matColumnDef="Expand">
@@ -9,10 +13,10 @@
             <button mat-icon-button (click)="ToggleExpansion(element)" class="returnsExpCollBtn">
                 <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_expand_more' : 'mi_chevron_right'"  ></i>
                 <!-- [ngStyle]="{'visibility':CollapseListBtn(element) ? 'expand' : 'collapse'}" -->
-            </button> 
+                </button>
                 <button mat-icon-button  (click)="NextLevel(_g.rootReturns[0], _g.rootReturns[0].MailTypeList)" class="returnsExpCollBtn">
                     <i class="material-icons" [ngClass]="ReadyToCollapseAll(_g.rootReturns[0].MailTypeList) ? 'mi_unfold_more' : 'mi_unfold_less'"></i>
-            </button>
+                </button>
 
         </td>
         <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"> </td>
@@ -22,8 +26,13 @@
         <td mat-cell *matCellDef="let element" class="mailLevelColumn" [ngClass]="{
             'font-client-lg': GetVisibilityStyle(! _g.rootReturns[0].Measure.Expanded) == 'collapse',
             'font-sm': GetVisibilityStyle(! _g.rootReturns[0].Measure.Expanded) == 'expand'
+<<<<<<< HEAD
         }"> {{ _g.clientName }} </td>
         <td mat-footer-cell *matFooterCellDef class="mailLevelColumn"> Total {{ _g.clientName }} </td>
+=======
+        }"> {{element.Client}} </td>
+        <td mat-footer-cell *matFooterCellDef class="mailLevelColumn"> Total {{_g.rootReturns[0].Client}} </td>
+>>>>>>> 40d560b58211ef4aa6066454a4550e99b9263acd
         
 <!--         
         <th mat-header-cell *matHeaderCellDef> Client </th>

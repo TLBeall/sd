@@ -103,6 +103,7 @@ export class InternalHomePageComponent implements OnInit {
         this._g.startDate = new Date('01/01/'+ startYear.toString());
         this._g.endDate = new Date('12/31/'+ endYear.toString());
         this._g.client = client;
+        this._g.clientName = this.ClientArr.find(p => p.gClientAcronym == client).gClientName;
         this.router.navigateByUrl('returns');
     }
     // @HostListener('window:resize')

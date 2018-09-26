@@ -23,15 +23,15 @@ export class ListPerformanceComponent implements OnInit {
     var startDate = new Date();
     var year = endDate.getFullYear() - 2;
     startDate.setFullYear(year);
-    route.params.subscribe(params => {
-      this.ListOwner = +params["listowner"];
-      if (params["listmanager"]) {
-        this.ListManager = +params["listmanager"];
-        if (params["recency"])
-          this.Recency = +params["recency"];
-      }
-    });
-    this._authService.getListPerformance(this.ListOwner, this.ListManager, this.Recency, startDate, endDate)
+    // route.params.subscribe(params => {
+    //   this.ListOwner = +params["listowner"];
+    //   if (params["listmanager"]) {
+    //     this.ListManager = +params["listmanager"];
+    //     if (params["recency"])
+    //       this.Recency = +params["recency"];
+    //   }
+    // });
+    this._authService.getListPerformance(this._g.listowner, this._g.listmanager, this._g.recency, startDate, endDate)
       .subscribe(data => {
         this.ListPerformanceArr = data;
       });

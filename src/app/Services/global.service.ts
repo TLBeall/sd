@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable }    from 'rxjs';
 import { RootReturns } from '../Models/RootReturns.model';
+import { ClientList } from '../Models/ClientList.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ public listmanager: number;
 public recency: number;
 public rootReturns: RootReturns;
 public showlistperformance: boolean;
+public clientName: string = "40 Days for Life";
 
 constructor() { 
   }

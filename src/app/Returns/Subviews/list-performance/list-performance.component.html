@@ -1,3 +1,4 @@
+<div *ngIf="ListPerformanceArr">
 <button (click)='HideList()'> Back </button>
 <table mat-table [dataSource]="ListPerformanceArr" matSort (matSortChange)="SortFunction($event, ListPerformanceArr)" multiTemplateDataRows>
   <ng-container matColumnDef="Expand">
@@ -105,7 +106,30 @@
   <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
       <div class="example-element-detail" [@detailExpand]="element.Measure.Expanded ? 'expanded' : 'collapsed'" [style.height]="element.Measure.Expanded ? 'unset' : '0 !important'">
-          <span class="example-element-description-attribution"> {{ element.PackageTitle }} </span>
+        <div *ngIf="element.PackageName">
+          <table style="width:100%">
+            <tr>
+              <td>{{ element.PackageName }}</td>
+              <td>{{ element.PackageTitle }}</td>
+              <td>{{ element.PackageFormat }}</td>
+              <td>{{ element.PackageMailed | date:'shortDate'}}</td>
+              <td>{{ element.PackageCaged | date:'shortDate'}}</td>
+              <td>{{ element.PackageQuantiy | number}}</td>
+              <td>{{ element.PackageDonors | number}}</td>
+              <td>{{ element.PackageNonDonors | number}}</td>
+              <td>{{ element.PackageNewDonors | number}}</td>
+              <td>{{ element.PackageRSP | percent:'1.0-2'}}</td>
+              <td>{{ element.PackageAVG | number:'1.2-2'}}</td>
+              <td>{{ element.PackageGross | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+              <td>{{ element.PackageNet | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+              <td>{{ element.PackageCost | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+              <td>{{ element.PackageGPP | currency}}</td>
+              <td>{{ element.PackageCLM | currency}}</td>
+              <td>{{ element.PackageNLM | currency}}</td>
+              <td>{{ element.PackageIO  | number : '1.2-2'}}</td>
+            </tr>
+          </table>
+        </div>
       </div>
     </td>
   </ng-container>
@@ -115,3 +139,4 @@
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 
 </table>
+</div>

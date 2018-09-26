@@ -38,7 +38,7 @@ export class AuthService {
     return this.http.get(GetListAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 
-  getPackageReturns(packagePhase: string):Observable<Returns> {
+  getPackageReturns(packagePhase: string):Observable<any> {
     var Token = "";
     var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/PackageReturns?PackagePhase="+ packagePhase;
 

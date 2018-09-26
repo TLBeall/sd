@@ -48,11 +48,32 @@ export class ListPerformanceComponent implements OnInit {
   }
 
   ToggleExpansion(Element: any) {
-    if (Element.Measure)
-      Element.Measure.Expanded = !Element.Measure.Expanded;
-    if (Element.Measure.Expanded == true)
+    if (Element.Measure.Expanded == false)
       if (! Element['PackageTitle'])
-        Element['PackageTitle'] = "TEST";
+      {
+        this._authService.getPackageReturns(Element.Phase).subscribe(p=> {
+          Element['PackageName'] = p.Name;
+          Element['PackageTitle'] = p.Title;
+          Element['PackageFormat'] = p.Format;
+          Element['PackageAVG'] = p.Measure.AVG;
+          Element['PackageCaged'] = p.Measure.Caged;
+          Element['PackageMailed'] = p.Measure.Mailed;
+          Element['PackageIO'] = p.Measure.IO;
+          Element['PackageRSP'] = p.Measure.RSP;
+          Element['PackageGross'] = p.Measure.Gross;
+          Element['PackageCost'] = p.Measure.Cost;
+          Element['PackageNet'] = p.Measure.Net;
+          Element['PackageDonors'] = p.Measure.Donors;
+          Element['PackageNonDonors'] = p.Measure.NonDonors;
+          Element['PackageNewDonors'] = p.Measure.NewDonors;
+          Element['PackageQuantity'] = p.Measure.Quantity;
+          Element['PackageCLM'] = p.Measure.CLM;
+          Element['PackageNLM'] = p.Measure.NLM;
+          Element['PackageGPP'] = p.Measure.GPP;
+        });
+      }
+      if (Element.Measure)
+      Element.Measure.Expanded = !Element.Measure.Expanded;
   }
 
   ngOnInit() {

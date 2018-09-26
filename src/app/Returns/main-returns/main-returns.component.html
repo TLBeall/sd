@@ -1,17 +1,16 @@
 <app-toolbar></app-toolbar>
 <app-main-returns-toolbox></app-main-returns-toolbox> 
 
-
 <table id="table1" mat-table [dataSource]="_g.rootReturns" multiTemplateDataRows #PseudoDescription>
     <ng-container matColumnDef="Expand">
         <th mat-header-cell *matHeaderCellDef class="expandBtnColumn"></th>
         <td mat-cell *matCellDef="let element" class="expandBtnColumn" > 
             <button mat-icon-button (click)="ToggleExpansion(element)" class="returnsExpCollBtn">
-                <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_expand_more' : 'mi_chevron_right'"  ></i>
+                <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_arrow_drop_down' : 'mi_arrow_right'"  ></i>
                 <!-- [ngStyle]="{'visibility':CollapseListBtn(element) ? 'expand' : 'collapse'}" -->
                 </button>
                 <button mat-icon-button  (click)="NextLevel(_g.rootReturns[0], _g.rootReturns[0].MailTypeList)" class="returnsExpCollBtn">
-                    <i class="material-icons" [ngClass]="ReadyToCollapseAll(_g.rootReturns[0].MailTypeList) ? 'mi_unfold_more' : 'mi_unfold_less'"></i>
+                    <i class="material-icons" [ngClass]="ReadyToCollapseAll(_g.rootReturns[0].MailTypeList) ? 'custom_line_weight' : 'mi_drag_handle'"></i>
                 </button>
 
         </td>
@@ -148,10 +147,10 @@
                             <th mat-header-cell *matHeaderCellDef class="expandBtnColumn" ></th>
                             <td mat-cell *matCellDef="let element" class="expandBtnColumn" >
                                 <button mat-icon-button (click)="ToggleExpansion(element)" class="returnsExpCollBtn">
-                                    <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_expand_more' : 'mi_chevron_right'"></i>
+                                    <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_arrow_drop_down' : 'mi_arrow_right'"></i>
                                 </button>
                                 <button mat-icon-button (click)="NextLevel(element, element.CampaignList)" class="returnsExpCollBtn">
-                                    <i class="material-icons" [ngClass]="ReadyToCollapseAll(element.CampaignList) ? 'mi_unfold_more' : 'mi_unfold_less'"></i>
+                                    <i class="material-icons" [ngClass]="ReadyToCollapseAll(element.CampaignList) ? 'custom_line_weight' : 'mi_drag_handle'"></i>
                                 </button> 
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"> </td>
@@ -283,10 +282,10 @@
                                                 <th mat-header-cell *matHeaderCellDef class="expandBtnColumn"></th>
                                                 <td mat-cell *matCellDef="let element" class="expandBtnColumn"> 
                                                     <button mat-icon-button (click)="ToggleExpansion(element)" class="returnsExpCollBtn">
-                                                        <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_expand_more' : 'mi_chevron_right'"></i>
+                                                        <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_arrow_drop_down' : 'mi_arrow_right'"></i>
                                                     </button> 
                                                     <button mat-icon-button  (click)="NextLevel(element, element.PhaseList)" class="returnsExpCollBtn">
-                                                        <i class="material-icons" [ngClass]="ReadyToCollapseAll(element.PhaseList) ? 'mi_unfold_more' : 'mi_unfold_less'"></i>
+                                                        <i class="material-icons" [ngClass]="ReadyToCollapseAll(element.PhaseList) ? 'custom_line_weight' : 'mi_drag_handle'"></i>
                                                     </button>
                                                      
                                                     </td>
@@ -433,7 +432,7 @@
                                                                     <th mat-header-cell *matHeaderCellDef class="expandBtnColumn"></th>
                                                                     <td mat-cell *matCellDef="let element" class="expandBtnColumn"> 
                                                                         <button class="phaseToggleButton returnsExpCollBtn" mat-icon-button (click)="ToggleExpansion(element)">
-                                                                                <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_expand_more' : 'mi_chevron_right'"></i>
+                                                                                <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_arrow_drop_down' : 'mi_arrow_right'"></i>
                                                                             </button> </td>
                                                                     <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"> </td>
                                                                 </ng-container>

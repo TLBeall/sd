@@ -26,6 +26,8 @@ export class ListPerformanceComponent implements OnInit {
   public Recency: number = 0;
   public ListPerformanceArr: ListPerformance[];
   columnsToDisplay: string[] = ['Expand','Client', 'Phase', 'MailCode', 'Description', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
+  packageColumns: string[] = ['None','None', 'PackageTitle', 'None','None','None','PackageMailed', 'PackageCaged', 'PackageQuantity', 'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 'PackageGross', 'PackageCost', 'PackageNet', 'PackageGPP', 'PackageCLM', 'PackageNLM', 'PackageIO'];
+  package2Columns: string[] = ['None','None', 'PackageFormat', 'None','None','None','None', 'None', 'None', 'None', 'None', 'None', 'RSPPerformance', 'AVGPerformance', 'None', 'None', 'None', 'None', 'None', 'None', 'IOPerformance'];
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private _g: GlobalService) {
     var endDate = new Date(); 

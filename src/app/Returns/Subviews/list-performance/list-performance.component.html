@@ -97,46 +97,85 @@
     <th mat-header-cell mat-sort-header *matHeaderCellDef> IO </th>
     <td mat-cell *matCellDef="let element"> {{element.Measure.IO | number : '1.2-2'}} </td>
   </ng-container>
-  <!-- <ng-container matColumnDef="AvgPackageIO">
-    <th mat-header-cell *matHeaderCellDef> Package I/O </th>
-    <td mat-cell *matCellDef="let element"> {{element.AvgPackageIO | number : '1.2-2'}} </td>
-  </ng-container> -->
 
-  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-  <ng-container matColumnDef="expandedDetail">
-    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-      <div class="example-element-detail" [@detailExpand]="element.Measure.Expanded ? 'expanded' : 'collapsed'" [style.height]="element.Measure.Expanded ? 'unset' : '0 !important'">
-        <div *ngIf="element.PackageName">
-          <table style="width:100%">
-            <tr>
-              <td>{{ element.PackageName }}</td>
-              <td>{{ element.PackageTitle }}</td>
-              <td>{{ element.PackageFormat }}</td>
-              <td>{{ element.PackageMailed | date:'shortDate'}}</td>
-              <td>{{ element.PackageCaged | date:'shortDate'}}</td>
-              <td>{{ element.PackageQuantiy | number}}</td>
-              <td>{{ element.PackageDonors | number}}</td>
-              <td>{{ element.PackageNonDonors | number}}</td>
-              <td>{{ element.PackageNewDonors | number}}</td>
-              <td>{{ element.PackageRSP | percent:'1.0-2'}}</td>
-              <td>{{ element.PackageAVG | number:'1.2-2'}}</td>
-              <td>{{ element.PackageGross | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
-              <td>{{ element.PackageNet | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
-              <td>{{ element.PackageCost | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
-              <td>{{ element.PackageGPP | currency}}</td>
-              <td>{{ element.PackageCLM | currency}}</td>
-              <td>{{ element.PackageNLM | currency}}</td>
-              <td>{{ element.PackageIO  | number : '1.2-2'}}</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </td>
-  </ng-container>
+  <!-- ['Expand','PackageTitle', 'PackageFormat', 'None','None','PackageMailed', 'PackageCaged', 'PackageQuantity', 
+  'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 
+  'PackageGross', 'PackageCost', 'PackageNet', 'PackageGPP', 'PackageCLM', 'PackageNLM', 'PackageIO']; -->
+
+    <ng-container matColumnDef="PackageTitle">
+      <td mat-cell *matCellDef="let element"> {{element.PackageTitle}} </td>
+    </ng-container>
+    <ng-container matColumnDef="PackageFormat">
+      <td mat-cell *matCellDef="let element"> {{element.PackageFormat}} </td>
+      <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
+    </ng-container>
+    <ng-container matColumnDef="None">
+      <td mat-cell *matCellDef="let element">  </td>
+    </ng-container>
+    <ng-container matColumnDef="PackageMailed">
+      <td mat-cell *matCellDef="let element"> {{element.PackageMailed | date:'shortDate'}} </td>
+      <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
+    </ng-container>
+    <ng-container matColumnDef="PackageCaged">
+      <td mat-cell *matCellDef="let element"> {{element.PackageCaged | date:'shortDate'}} </td>
+      <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
+    </ng-container>
+    <ng-container matColumnDef="PackageQuantity">
+      <td mat-cell *matCellDef="let element"> {{element.PackageQuantity | number}} </td>
+    </ng-container>
+    <ng-container matColumnDef="PackageDonors">
+      <td mat-cell *matCellDef="let element"> {{elementPackageDonors | number}} </td>
+    </ng-container>
+    <ng-container matColumnDef="PackageNonDonors">
+      <td mat-cell *matCellDef="let element"> {{element.PackageNonDonors | number}} </td>
+    </ng-container>
+    <ng-container matColumnDef="PackageNewDonors">
+      <td mat-cell *matCellDef="let element"> {{element.PackageNewDonors | number}} </td>
+    </ng-container>
+    <ng-container matColumnDef="PackageRSP">
+      <td mat-cell *matCellDef="let element"> {{element.PackageRSP | percent:'1.0-2'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="PackageAVG">
+      <td mat-cell *matCellDef="let element"> {{element.PackageAVG | number:'1.2-2'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="PackageGross">
+      <td mat-cell *matCellDef="let element"> {{element.PackageGross | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="PackageCost">
+      <td mat-cell *matCellDef="let element"> {{element.PackageCost | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="PackageNet">
+      <td mat-cell *matCellDef="let element" [class.negative]="element.PackageNet < 0">
+        {{element.PackageNet | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="PackageGPP">
+      <td mat-cell *matCellDef="let element"> {{element.PackageGPP | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="PackageCLM">
+      <td mat-cell *matCellDef="let element"> {{element.PackageCLM | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="PackageNLM">
+      <td mat-cell *matCellDef="let element" [class.negative]="element.PackageNLM < 0">
+        {{element.PackageNLM | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="PackageIO">
+      <td mat-cell *matCellDef="let element"> {{element.PackageIO | number : '1.2-2'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="RSPPerformance">
+        <td mat-cell *matCellDef="let element"> <i class="material-icons" [ngStyle]="{'color':element.PackageRSP > element.Measure.RSP ? 'red' : 'green' }" [ngClass]="element.PackageRSP > element.Measure.RSP ? 'mi_expand_more' : 'mi_expand_less'"></i></td>
+    </ng-container>    
+    <ng-container matColumnDef="AVGPerformance">
+        <td mat-cell *matCellDef="let element"> <i class="material-icons" [ngStyle]="{'color':element.PackageAVG > element.Measure.AVG ? 'red' : 'green' }" [ngClass]="element.PackageAVG > element.Measure.AVG ? 'mi_expand_more' : 'mi_expand_less'"></i></td>
+    </ng-container>    
+    <ng-container matColumnDef="IOPerformance">
+        <td mat-cell *matCellDef="let element"> <i class="material-icons" [ngStyle]="{'color':element.PackageIO > element.Measure.IO ? 'red' : 'green' }" [ngClass]="element.PackageIO > element.Measure.IO ? 'mi_expand_more' : 'mi_expand_less'"></i></td>
+    </ng-container>    
 
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"> </tr>
-  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" [ngStyle]="{'background-color':element.Measure.Expanded ? '#e6e6e6' : 'white' }"> </tr>
+  <tr mat-row *matRowDef="let child1; columns: packageColumns;" [ngStyle]="{'visibility':child1.Measure.Expanded ? 'visible' : 'collapse' }" style="background-color:#F8F8F8"></tr>
+  <tr mat-row *matRowDef="let child2; columns: package2Columns;" [ngStyle]="{'visibility':child2.Measure.Expanded ? 'visible' : 'collapse' }"  style="background-color:#F8F8F8"></tr>
+  
 
 </table>
 </div>

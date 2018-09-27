@@ -47,7 +47,7 @@ export class ReturnsComponent {
   ngOnInit() {
     this._g.rootReturns = new RootReturns();
     this._g.rootReturns = this.route.snapshot.data['rowData'];
-    this.SetLastElements();
+    this._g.SetLastElements();
   }
 
   // NavigateToListPerformance(element.ListOwner, element.ListManager, element.Recency, '01/01/2018', '12/31/2018')
@@ -129,22 +129,6 @@ export class ReturnsComponent {
   ToggleExpansion(Element: any) {
     if (Element.Measure)
       Element.Measure.Expanded = !Element.Measure.Expanded;
-  }
-
-  SetLastElements()
-  {
-    this._g.rootReturns[0].MailTypeList.forEach(element => {
-      element.Measure.IsLast = false;
-      element.CampaignList.forEach(element => {
-        element.Measure.IsLast = false;
-        element.PhaseList.forEach(element => {
-          element.Measure.IsLast = false;
-        });
-        element.PhaseList[element.PhaseList.length-1].Measure.IsLast = true;  
-      });
-      element.CampaignList[element.CampaignList.length-1].Measure.IsLast = true;
-    });
-    this._g.rootReturns[0].MailTypeList[this._g.rootReturns[0].MailTypeList.length-1].Measure.IsLast = true;
   }
 
   SortFunction(sort: Sort, Element: any) {
@@ -262,7 +246,7 @@ export class ReturnsComponent {
         break;
       }
     }
-    this.SetLastElements();
+    this._g.SetLastElements();
   }
 
 }

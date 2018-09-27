@@ -117,6 +117,82 @@ $shiftStyle: cubic-bezier(0.175, 0.885, 0.32, 1.1);
     content: "menu";
   }
 
+  .mi_calendar_view_day::after{
+      content: "calendar_view_day";
+  }
+
+  .mi_horizontal_split::after{
+      content: "horizontal_split";
+  }
+
+  .mi_line_weight::after{
+      content: "line_weight";
+  }
+
+  .mi_reorder::after{
+      content: "reorder";
+  }
+
+  .mi_sort::after{
+      content: "sort";
+  }
+
+  .mi_drag_handle::after{
+      content: "drag_handle";
+  }
+
+  .mi_filter_list::after{
+      content: "filter_list";
+  }
+
+  .mi_arrow_drop_up::after{
+      content: "arrow_drop_up";
+  }
+
+  .mi_arrow_drop_down::after{
+      content: "arrow_drop_down";
+  }
+
+  .mi_arrow_left::after{
+      content: "arrow_left";
+  }
+
+  .mi_arrow_right::after{
+      content: "arrow_right";
+  }
+
+  .mi_clear_all::after{
+      content: "clear_all";
+  }
+
+  .mi_list::after{
+      content: "list";
+  }
+
+  .mi_format_line_spacing::after{
+      content: "format_line_spacing";
+  }
+
+  .mi_more_vertical::after{
+      content: "more_vertical";
+  }
+
+  //Creating custom class image
+  .custom_line_weight{
+    display: inline-block;
+    // position: absolute;
+    // float:left;
+    // top: 0;
+    // right: 0;
+    // left: 0;
+    // bottom: 0;
+    background: url(/assets/Editing-Line-Width-icon.png) center center no-repeat;
+    background-size: contain;
+    width: 90%;
+    height: 70%;
+    margin-bottom: 7px !important;
+    opacity: 0.9;
+}
 
 
 

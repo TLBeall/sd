@@ -7,9 +7,15 @@ export class ListPerformance {
     MailCode: string;
     Description: string;
     ExchangeFlag: string;
+    ListOwner:number;
+    ListOwnerAbbrev:string;
     ListOwnerName: string;
+    ListManager: number;
     ListManagerName: string;
-    Recency: string;
+    ListManagerAbbrev:string;
+    Recency: number;
+    RecencyString: string;
+    RecencySort: number;
     Measure: Returns;
     Package: PackageDetails;
 }

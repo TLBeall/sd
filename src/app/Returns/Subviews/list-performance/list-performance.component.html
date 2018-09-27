@@ -25,11 +25,21 @@
     <td mat-cell *matCellDef="let element"> {{element.MailCode}} </td>
     <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
   </ng-container>
-  <ng-container matColumnDef="Description">
-    <th mat-header-cell *matHeaderCellDef> Description </th>
-    <td mat-cell *matCellDef="let element"> {{element.Description}} </td>
+  <ng-container matColumnDef="ListOwner">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> List </th>
+    <td mat-cell *matCellDef="let element" title="{{ element.ListOwnerName }}"> {{element.ListOwnerAbr}} </td>
     <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
   </ng-container>
+  <ng-container matColumnDef="ListManager">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> Manager </th>
+      <td mat-cell *matCellDef="let element" title="{{ element.ListManagerName }}"> {{element.ListManagerAbr}} </td>
+      <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
+    </ng-container>
+    <ng-container matColumnDef="RecencyString">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> Recency </th>
+        <td mat-cell *matCellDef="let element" title="{{ element.Description }}"> {{element.RecencyString}} </td>
+        <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
+      </ng-container>
   <ng-container matColumnDef="ExchangeFlag">
     <th mat-header-cell *matHeaderCellDef> FF </th>
     <td mat-cell *matCellDef="let element"> {{element.ExchangeFlag}} </td>
@@ -124,7 +134,7 @@
       <td mat-cell *matCellDef="let element"> {{element.PackageQuantity | number}} </td>
     </ng-container>
     <ng-container matColumnDef="PackageDonors">
-      <td mat-cell *matCellDef="let element"> {{elementPackageDonors | number}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.PackageDonors | number}} </td>
     </ng-container>
     <ng-container matColumnDef="PackageNonDonors">
       <td mat-cell *matCellDef="let element"> {{element.PackageNonDonors | number}} </td>

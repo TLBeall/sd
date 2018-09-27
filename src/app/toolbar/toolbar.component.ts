@@ -13,7 +13,7 @@ export class ToolbarComponent implements OnInit {
   public toolbarHeight: any;
   public clearFixHeight: any = 115;
 
-  constructor(private _router: Router, ) {
+  constructor(private _router: Router) {
     this.location = _router.url;
   }
 

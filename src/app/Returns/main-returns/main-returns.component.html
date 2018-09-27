@@ -898,12 +898,14 @@
                                                                                                 <ng-container *ngIf="element.ListOwner == 0; then house; else prospect">
                                                                                                 </ng-container>
                                                                                                 <ng-template #prospect>
+                                                                                                    <span class="prospectListDescription">
                                                                                                      <a title="{{ element.ListOwnerName }}"
-                                                                                                    (click)="NavigateToListPerformance(element.ListOwner, 0, 0, startDate, endDate)">
-                                                                                                    {{element.ListOwnerAbr}} / </a>
-                                                                                                <a title="{{ element.ListManagerName }}" (click)="NavigateToListPerformance(element.ListOwner, element.ListManager, 0, startDate, endDate)">{{element.ListManagerAbr}} / </a> <a (click)="NavigateToListPerformance(element.ListOwner, element.ListManager, element.Recency, startDate, endDate)">
-                                                                                                        {{element.RecencyString}}
-                                                                                                    </a>
+                                                                                                    (click)="NavigateToListPerformance(element.ListOwner, 0, 0, startDate, endDate)">{{element.ListOwnerAbr}}</a>
+                                                                                                    <span>/ </span>
+                                                                                                <a title="{{ element.ListManagerName }}" (click)="NavigateToListPerformance(element.ListOwner, element.ListManager, 0, startDate, endDate)"> {{element.ListManagerAbr}}</a>
+                                                                                                <span>/ </span> 
+                                                                                                <a (click)="NavigateToListPerformance(element.ListOwner, element.ListManager, element.Recency, startDate, endDate)"> {{element.RecencyString}}</a>
+                                                                                                </span>
                                                                                                 </ng-template>
                                                                                                 <ng-template #house>
                                                                                                     {{ element.MailDescription }}

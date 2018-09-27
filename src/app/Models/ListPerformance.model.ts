@@ -1,4 +1,5 @@
 import { Returns } from "./Returns.model";
+import { PackageDetails } from "./PackageDetails.model";
 
 export class ListPerformance {
     Client: string;
@@ -9,6 +10,6 @@ export class ListPerformance {
     ListOwnerName: string;
     ListManagerName: string;
     Recency: string;
-    AvgPackageIO: number;
     Measure: Returns;
+    Package: PackageDetails;
 }

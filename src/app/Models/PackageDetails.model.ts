@@ -1,5 +1,7 @@
-export class Returns {
-    Mailed: Date;
+export class PackageDetails {
+    Name: string;
+    Title: string;
+    Format: string;
     Caged: Date;
     Quantity: number;
     Donors: number;
@@ -14,6 +16,4 @@ export class Returns {
     CLM: number;
     NLM: number;
     IO: number;
-    Expanded: boolean = true;
-    IsLast:boolean = false;
 }

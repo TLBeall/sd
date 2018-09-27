@@ -8,6 +8,7 @@ import { ClientList } from '../Models/ClientList.model';
 import { RootReturns } from '../Models/RootReturns.model';
 import { ListPerformance } from '../Models/ListPerformance.model';
 import { NewReturns } from '../Models/NewReturns.model';
+import { Returns } from '../Models/Returns.model';
 // import { LoaderService } from '../loader/loader.service';
 
 @Injectable()
@@ -37,6 +38,14 @@ export class AuthService {
     return this.http.get(GetListAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 
+  getPackageReturns(packagePhase: string):Observable<Returns> {
+    var Token = "";
+    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/PackageReturns?PackagePhase="+ packagePhase;
+
+    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  }
+
   getReturns(client: string, startDate: Date, endDate: Date):Observable<RootReturns> {
     var Token = "";
     var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/MainReturns?ClientAcronym="+ client + "&startdate=" + startDate.toDateString() + "&enddate=" + endDate.toDateString();
@@ -55,7 +64,7 @@ export class AuthService {
 
   getListPerformance(ListOwner: number, ListManager: number, Recency: number, startDate: Date, endDate: Date):Observable<ListPerformance[]> {
     var Token = "";
-    var ListPerformanceAPI = "https://sd360.sunrisedataservices.com/api/ListPerformance?ListOwner=" + ListOwner.toString() + "&ListManager=" + ListManager.toString() + "&Recency=" + Recency.toString() + "&startdate=" + startDate.toDateString() + "&enddate=" + endDate.toDateString();
+    var ListPerformanceAPI = "https://sd360.sunrisedataservices.com/api/ListPerformance?ListOwner=" + ListOwner.toString() + "&ListManager=" + ListManager.toString() + "&Recency=" + Recency.toString() + "&startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString();
 
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
     return this.http.get(ListPerformanceAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));

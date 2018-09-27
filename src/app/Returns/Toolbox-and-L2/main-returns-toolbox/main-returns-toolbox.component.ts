@@ -12,6 +12,7 @@ import { resolve } from 'url';
 })
 export class MainReturnsToolboxComponent implements OnInit {
   client: string;
+  clientName: string;
   fromDate: Date;
   toDate: Date;
   toolsOpened: Boolean;
@@ -61,14 +62,16 @@ export class MainReturnsToolboxComponent implements OnInit {
     this._authService.getClientList("All")
     .subscribe(data => {
         this.ClientArr = data;
-    });
+      });
   }
 
   applyChanges() {
     this._g.startDate = this.fromDate;
     this._g.endDate = this.toDate;
     this._g.client = this.client;
+    this._g.clientName = this.ClientArr.find(p => p.gClientAcronym == this.client).gClientName;
     this._authService.getReturns(this._g.client, this._g.startDate, this._g.endDate).subscribe(data => {
+      if (data)
       this._g.rootReturns = data;
     });
   }

@@ -38,7 +38,6 @@ import {FormsModule} from '@angular/forms';
     InternalHomePageComponent,
     routingComponents,
     LoaderComponent,
-    ListPerformanceComponent,
     MainReturnsToolboxComponent,
     ClickOutsideDirective,
     ToolbarComponent,

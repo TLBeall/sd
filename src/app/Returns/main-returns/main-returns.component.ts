@@ -5,6 +5,7 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { RootReturns } from '../../Models/RootReturns.model';
 import { GlobalService } from '../../Services/global.service';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-main-returns',
@@ -14,7 +15,7 @@ import { GlobalService } from '../../Services/global.service';
     trigger('detailExpand', [
       state('collapsed, void', style({ height: '0px', minHeight: '0', display: 'none' })),
       state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
     ]),
   ]
 })
@@ -27,6 +28,7 @@ export class ReturnsComponent {
   private route: any;
   private startDate: any;
   private endDate:any;
+  private showlistperformance:boolean = false;
 
 
   // @ViewChild('PseudoDescription', { read: ElementRef })
@@ -37,18 +39,28 @@ export class ReturnsComponent {
   phaseDisplayedColumns: string[] = ['Expand', 'PhaseName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   mailListDisplayedColumns: string[] = ['PseudoExpand', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
 
-  constructor(route: ActivatedRoute, private changeDetectorRefs: ChangeDetectorRef, private _g: GlobalService) {
+  constructor(route: ActivatedRoute, private _g: GlobalService, private router:Router) {
     this.route = route;
+    _g.showlistperformance = false;
   }
 
   ngOnInit() {
-    // this.rowData = this.route.snapshot.data['rowData'];
+    this._g.rootReturns = new RootReturns();
     this._g.rootReturns = this.route.snapshot.data['rowData'];
-    // this.route.params.subscribe((params: Params) => {
-    //   this.startDate = new Date(params['from'].substring(0,2) + "/" + params['from'].substring(2,4) + "/" + params['from'].substring(4,8));
-    //   this.endDate = new Date(params['to'].substring(0,2) + "/" + params['to'].substring(2,4) + "/" + params['to'].substring(4,8));
-    // });
+    this.SetLastElements();
   }
+
+  // NavigateToListPerformance(element.ListOwner, element.ListManager, element.Recency, '01/01/2018', '12/31/2018')
+
+  NavigateToListPerformance(ListOwner:number, ListManager:number, Recency:number, startDate:Date, endDate:Date) {
+    this._g.startDate = startDate;
+    this._g.endDate = endDate;
+    this._g.listowner = ListOwner;
+    this._g.listmanager = ListManager;
+    this._g.recency = Recency;
+    this.router.navigate(['listperformance/'+ ListOwner.toString() + '/' + ListManager.toString() + '/' + Recency.toString()], {relativeTo: this.route});
+    this._g.showlistperformance = true;
+}
 
   GetVisibilityStyle(state: boolean): string {
     if (state)
@@ -69,6 +81,7 @@ export class ReturnsComponent {
   ReadyToCollapseAll(list: any[]): boolean {
     var RetValue: boolean = false;
     list.forEach(b => {
+      if (b.Measure)
       if (b.Measure.Expanded == true) {
         RetValue = true;
         return RetValue;
@@ -114,9 +127,25 @@ export class ReturnsComponent {
   }
   toggleState: boolean;
   ToggleExpansion(Element: any) {
-    Element.Measure.Expanded = !Element.Measure.Expanded;
+    if (Element.Measure)
+      Element.Measure.Expanded = !Element.Measure.Expanded;
   }
 
+  SetLastElements()
+  {
+    this._g.rootReturns[0].MailTypeList.forEach(element => {
+      element.Measure.IsLast = false;
+      element.CampaignList.forEach(element => {
+        element.Measure.IsLast = false;
+        element.PhaseList.forEach(element => {
+          element.Measure.IsLast = false;
+        });
+        element.PhaseList[element.PhaseList.length-1].Measure.IsLast = true;  
+      });
+      element.CampaignList[element.CampaignList.length-1].Measure.IsLast = true;
+    });
+    this._g.rootReturns[0].MailTypeList[this._g.rootReturns[0].MailTypeList.length-1].Measure.IsLast = true;
+  }
 
   SortFunction(sort: Sort, Element: any) {
 
@@ -207,6 +236,8 @@ export class ReturnsComponent {
         default: return 0;
       }
     });
+
+    this.SetLastElements();
 
     switch (myType) {
       case "MailTypeList": {

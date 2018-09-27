@@ -1,10 +1,11 @@
 @import '~src/appTheme.scss';  
-$btnColumnShift: 62px;
+$btnColumnShift: 72px;
 
 //Controls material expand/collapse buttons at all levels
 .returnsExpCollBtn{
   width:30px;
   height:30px;
+  opacity: 0.4;
   i{
     padding: 0px 0px 10px 0px;
   }
@@ -99,23 +100,21 @@ $btnColumnShift: 62px;
   }
 }
 
-.campaignFooterCell{
-  border-top:none !important;
-}
 
 //Controls the location of the phase button within the left-most column
 .phaseToggleButton{
   float:right;
-  margin-right:2px;
+  margin-right:12px;
 }
 
 //Collectively control the row settings and cell settings (set the row height of all the tables)
+//As well as controlling the footer underlines for all expanded/collapsed states
 .mat-row {
   height: auto;
 }
 .mat-cell {
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   border-bottom:none;
 }
 tr.mat-header-row{
@@ -125,13 +124,42 @@ th.mat-header-cell{
   padding:0;
 }
 tr.mat-footer-row{
-  height:auto;
-}
-td.mat-footer-cell{
-  padding-top:6px;
-  padding-bottom:30px;
+  height:auto; //row height required to be manually controlled by each cell
 }
 
+.elementCollapsed{
+  border-top: 1px solid $color-gainsboro !important;
+}
+.elementExpanded{ //need to control when it is not expanded, otherwise it defaults to having a top-border
+  border-top: none !important;
+}
+.elementLast{
+  padding-top:6px;
+}
+.listElementDefault{
+  padding-top: 6px;
+  padding-bottom: 15px;
+}
+.phaseElementDefault{
+  padding-top: 6px;
+  padding-bottom: 35px;
+}
+.campaignElementDefault{
+  padding-top: 6px;
+  padding-bottom: 80px;
+}
+// Cell setting end
+
+
+
+
+
+
+
+
+
+
+      
 
 .phaseInfoBuffer{
   width:($btnColumnShift - 15);
@@ -194,30 +222,39 @@ font-weight: bold;
 
 
 
+
+
 //Controls font size for headers of tables depending on expanded/collapsed state
 $font-leader:20px;
 .font-client-lg{
-// font-size:($font-leader*1.2) !important;
-// font-weight: bolder;
-// color: $color-blue-default;
+font-size:($font-leader*1.2) !important;
+font-weight: bolder;
 // padding-left:30px;
+width:100% !important;
+  min-width: 100%; //FF and IE
 }
 .font-mailType-lg{
-  // font-size:($font-leader*1.1) !important;
-  // font-weight:bold;
+  font-size:($font-leader*1.1) !important;
+  font-weight:bold;
   // padding-left:20px;
+  // width:100% !important;
+  // min-width: 100%; //FF and IE
 }
 .font-campaignName-lg{
-  // font-size:($font-leader*1.0) !important;
-  // font-weight:bold;
+  font-size:($font-leader*1.0) !important;
+  font-weight:bold;
   // padding-left:10px;
+  // width:100% !important;
+  // min-width: 100%; //FF and IE
 }
 .font-phase-lg{
-  // font-size:($font-leader*0.8) !important;
-  // font-weight:bold;
+  font-size:($font-leader*0.7) !important;
+  font-weight:bold;
+  // width:100% !important;
+  // min-width: 100%; //FF and IE
 }
 .font-sm{
-// font-size:inherit;
+font-size:inherit;
 }
 
 

@@ -30,6 +30,7 @@ export class ReturnsComponent {
   private startDate: any;
   private endDate:any;
   private pageReady:boolean=false;
+  private scrollStoreProvider:any;
 
 
   // @ViewChild('PseudoDescription', { read: ElementRef })

@@ -20,11 +20,10 @@ import { MainReturnsToolbarComponent } from './toolbar/main-returns-toolbar/main
 import { HomePageInternalToolbarComponent } from './toolbar/home-page-internal-toolbar/home-page-internal-toolbar.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule,   MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatInputModule } from '@angular/material';
-import { ResolveReturnsComponent } from './Services/resolve-returns/resolve-returns.component';
 import { InternalHomePageComponent } from './internal-home-page/internal-home-page.component';
 import { InternalHomeDashboardComponent } from './internal-home-page/internal-home-dashboard/internal-home-dashboard.component';
 import { GlobalService } from './Services/global.service';
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -34,7 +33,6 @@ import {FormsModule} from '@angular/forms';
     routingComponents,
     LoaderComponent,
     ListPerformanceComponent,
-    ResolveReturnsComponent,
     InternalHomePageComponent,
     routingComponents,
     LoaderComponent,

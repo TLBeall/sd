@@ -104,11 +104,6 @@ export class InternalHomePageComponent implements OnInit {
         this._g.endDate = new Date('12/31/'+ endYear.toString());
         this._g.client = client;
         this._g.clientName = this.ClientArr.find(p => p.gClientAcronym == client).gClientName;
-        this.router.navigateByUrl('returns');
+        this.router.navigate(['returns/' + this._g.client + '/' + this._g.startDate.toLocaleDateString().split('/').join('_') + '/' + this._g.endDate.toLocaleDateString().split('/').join('_')]);
     }
-    // @HostListener('window:resize')
-    // onResize() {
-    //     this.currentWindowWidth = window.innerWidth
-    // }
-
 }

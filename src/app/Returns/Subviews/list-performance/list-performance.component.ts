@@ -30,8 +30,8 @@ export class ListPerformanceComponent implements OnInit {
   package2Columns: string[] = ['None','None', 'PackageFormat', 'None','None','None','None','None','None', 'None', 'None', 'None', 'None', 'None', 'RSPPerformance', 'AVGPerformance', 'None', 'None', 'None', 'None', 'None', 'None', 'IOPerformance'];
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private _g: GlobalService) {
-    var endDate = new Date(); 
-    var startDate = new Date();
+    var endDate = this._g.endDate; 
+    var startDate = this._g.startDate;
     var year = endDate.getFullYear() - 2;
     startDate.setFullYear(year);
     this._authService.getListPerformance(this._g.listowner, this._g.listmanager, this._g.recency, startDate, endDate)
@@ -79,11 +79,6 @@ export class ListPerformanceComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  HideList()
-  {
-    this._g.showlistperformance = false;
   }
 
   SortFunction(sort: Sort, data: any) {

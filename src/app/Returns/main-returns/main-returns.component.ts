@@ -6,6 +6,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { RootReturns } from '../../Models/RootReturns.model';
 import { GlobalService } from '../../Services/global.service';
 import { Router } from '@angular/router'
+import { AuthService } from '../../Services/auth.service'
 
 @Component({
   selector: 'app-main-returns',
@@ -28,7 +29,7 @@ export class ReturnsComponent {
   private route: any;
   private startDate: any;
   private endDate:any;
-  private showlistperformance:boolean = false;
+  private pageReady:boolean=false;
 
 
   // @ViewChild('PseudoDescription', { read: ElementRef })
@@ -39,27 +40,40 @@ export class ReturnsComponent {
   phaseDisplayedColumns: string[] = ['Expand', 'PhaseName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   mailListDisplayedColumns: string[] = ['PseudoExpand', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
 
-  constructor(route: ActivatedRoute, private _g: GlobalService, private router:Router) {
+  constructor(route: ActivatedRoute, private _authService:AuthService, private _g: GlobalService, private router:Router) {
     this.route = route;
-    _g.showlistperformance = false;
   }
 
   ngOnInit() {
-    this._g.rootReturns = new RootReturns();
-    this._g.rootReturns = this.route.snapshot.data['rowData'];
+    if (! this._g.client)
+    this.route.params.subscribe(params => {
+      this.LoadValues(params['client'], params['from'], params['to']); 
+      // In a real app: dispatch action to load the details here.
+   });
+
+    this._authService.getReturns(this._g.client, this._g.startDate, this._g.endDate).subscribe(data => {
+      if (data)
+      this._g.rootReturns = data;
+      this._g.SetLastElements();
+      this.pageReady = true;
+    });
     this._g.SetLastElements();
+  }
+
+  LoadValues(client:any, startDate:any, endDate:any)
+  {
+    this._g.client = client;
+    this._g.startDate = startDate;
+    this._g.endDate = endDate;
   }
 
   // NavigateToListPerformance(element.ListOwner, element.ListManager, element.Recency, '01/01/2018', '12/31/2018')
 
   NavigateToListPerformance(ListOwner:number, ListManager:number, Recency:number, startDate:Date, endDate:Date) {
-    this._g.startDate = startDate;
-    this._g.endDate = endDate;
     this._g.listowner = ListOwner;
     this._g.listmanager = ListManager;
     this._g.recency = Recency;
-    this.router.navigate(['listperformance'], {relativeTo: this.route});
-    this._g.showlistperformance = true;
+    this.router.navigate(['listperformance' + '/' + ListOwner + '/' + ListManager + '/' + Recency + '/' + this._g.startDate.toLocaleDateString().split('/').join('_') + '/' + this._g.endDate.toLocaleDateString().split('/').join('_')]);
 }
 
   GetVisibilityStyle(state: boolean): string {

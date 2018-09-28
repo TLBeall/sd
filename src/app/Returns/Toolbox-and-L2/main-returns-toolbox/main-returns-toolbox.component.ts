@@ -74,7 +74,6 @@ export class MainReturnsToolboxComponent implements OnInit {
       if (data)
       this._g.rootReturns = data;
       this._g.SetLastElements();
-      this._g.showlistperformance = false;
     });
   }
 

@@ -63,8 +63,8 @@ export class ReturnsComponent {
   LoadValues(client:any, startDate:any, endDate:any)
   {
     this._g.client = client;
-    this._g.startDate = startDate;
-    this._g.endDate = endDate;
+    this._g.startDate = new Date(Date.parse(startDate.split('_')[0].toString() + '/' + startDate.split('_')[1].toString() + '/' + startDate.split('_')[2].toString())) ;
+    this._g.endDate = new Date(Date.parse(endDate.split('_')[0].toString() + '/' + endDate.split('_')[1].toString() + '/' + endDate.split('_')[2].toString())) ;
   }
 
   // NavigateToListPerformance(element.ListOwner, element.ListManager, element.Recency, '01/01/2018', '12/31/2018')
@@ -73,6 +73,7 @@ export class ReturnsComponent {
     this._g.listowner = ListOwner;
     this._g.listmanager = ListManager;
     this._g.recency = Recency;
+    this._g.clearCache = true;
     this.router.navigate(['listperformance' + '/' + ListOwner + '/' + ListManager + '/' + Recency + '/' + this._g.startDate.toLocaleDateString().split('/').join('_') + '/' + this._g.endDate.toLocaleDateString().split('/').join('_')]);
 }
 

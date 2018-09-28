@@ -24,6 +24,7 @@ import { InternalHomePageComponent } from './internal-home-page/internal-home-pa
 import { InternalHomeDashboardComponent } from './internal-home-page/internal-home-dashboard/internal-home-dashboard.component';
 import { GlobalService } from './Services/global.service';
 import { FormsModule } from '@angular/forms';
+import { CustomReuseStrategy } from './Services/CustomReuseStrategy.service';
 
 
 @NgModule({
@@ -70,7 +71,9 @@ import { FormsModule } from '@angular/forms';
   providers: [
     AuthService,
     LoaderService,
-    GlobalService
+    GlobalService,
+    CustomReuseStrategy
+
   ],
   bootstrap: [AppComponent]
 })

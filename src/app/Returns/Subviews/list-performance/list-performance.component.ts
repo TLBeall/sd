@@ -21,6 +21,7 @@ import { trigger, state, transition, style, animate } from '@angular/animations'
 })
 export class ListPerformanceComponent implements OnInit {
 
+  private route: any;
   public ListOwner: number = 0;
   public ListManager: number = 0;
   public Recency: number = 0;
@@ -30,15 +31,7 @@ export class ListPerformanceComponent implements OnInit {
   package2Columns: string[] = ['None','None', 'PackageFormat', 'None','None','None','None','None','None', 'None', 'None', 'None', 'None', 'None', 'RSPPerformance', 'AVGPerformance', 'None', 'None', 'None', 'None', 'None', 'None', 'IOPerformance'];
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private _g: GlobalService) {
-    var endDate = this._g.endDate; 
-    var startDate = this._g.startDate;
-    var year = endDate.getFullYear() - 2;
-    startDate.setFullYear(year);
-    this._authService.getListPerformance(this._g.listowner, this._g.listmanager, this._g.recency, startDate, endDate)
-      .subscribe(data => {
-        this.ListPerformanceArr = data;
-        this.ListPerformanceArr.forEach(p => { p.Measure.Expanded = false; })
-      });
+    this.route = route;
   }
 
   CollapseListBtn(Element): boolean {
@@ -79,6 +72,27 @@ export class ListPerformanceComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (! this._g.listowner)
+    this.route.params.subscribe(params => {
+      this.LoadValues(params['listowner'], params['listmanager'], params['recency'], params['startdate'], params['enddate']); 
+      // In a real app: dispatch action to load the details here.
+   });
+   var startDate = this._g.startDate;
+   var endDate = this._g.endDate; 
+   this._authService.getListPerformance(this._g.listowner, this._g.listmanager, this._g.recency, startDate, endDate)
+      .subscribe(data => {
+        this.ListPerformanceArr = data;
+        this.ListPerformanceArr.forEach(p => { p.Measure.Expanded = false; })
+      });    
+  }
+
+  LoadValues(listowner:any, listmanager:any, recency:any, startdate:any, enddate: any)
+  {
+    this._g.listowner = listowner;
+    this._g.listmanager = listmanager;
+    this._g.recency = recency;
+    this._g.startDate = new Date(Date.parse(startdate.split('_')[0].toString() + '/' + startdate.split('_')[1].toString() + '/' + startdate.split('_')[2].toString())) ;
+    this._g.endDate = new Date(Date.parse(enddate.split('_')[0].toString() + '/' + enddate.split('_')[1].toString() + '/' + enddate.split('_')[2].toString())) ;
   }
 
   SortFunction(sort: Sort, data: any) {

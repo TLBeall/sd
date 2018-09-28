@@ -1,15 +1,17 @@
 import { RouteReuseStrategy, DetachedRouteHandle, ActivatedRouteSnapshot } from "@angular/router";
 import { InternalHomePageComponent } from "../internal-home-page/internal-home-page.component";
+import { Injectable } from "@angular/core";
+import { GlobalService } from '../Services/global.service'
 
+@Injectable({
+  providedIn: 'root'
+})
 export class CustomReuseStrategy implements RouteReuseStrategy { 
 
-  private handlers: {[key: string]: DetachedRouteHandle} = {};
+  public handlers: {[key: string]: DetachedRouteHandle} = {};
   
-
-  constructor() {
-    
+  constructor(private c:GlobalService) {
   }
-
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
     return true;
@@ -20,14 +22,15 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   }
 
   shouldAttach(route: ActivatedRouteSnapshot): boolean {
-    // if (route.component == InternalHomePageComponent) {
-    //     this.handlers = {};
-    //     return false;
-    //   }
     return !!this.handlers[route.url.join("/")];    
   }
 
   retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle {
+    if (this.c.clearCache)
+    {
+      delete this.handlers[route.url.join("/") || route.parent.url.join("/")];    
+      this.c.clearCache = false;
+    }
     return this.handlers[route.url.join("/") || route.parent.url.join("/")];    
   }
 

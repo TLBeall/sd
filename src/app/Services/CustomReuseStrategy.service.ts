@@ -7,11 +7,11 @@ import { InternalHomeDashboardComponent } from "../internal-home-page/internal-h
 @Injectable({
   providedIn: 'root'
 })
-export class CustomReuseStrategy implements RouteReuseStrategy { 
+export class CustomReuseStrategy implements RouteReuseStrategy {
 
-  public handlers: {[key: string]: DetachedRouteHandle} = {};
-  
-  constructor(private c:GlobalService) {
+  public handlers: { [key: string]: DetachedRouteHandle } = {};
+
+  constructor(private c: GlobalService) {
   }
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
@@ -19,20 +19,24 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   }
 
   store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
-    this.handlers[route.url.join("/") || route.parent.url.join("/")] = handle;    
+    if (handle != null)
+      this.handlers[route.url.join("/") || route.parent.url.join("/")] = handle;
   }
 
   shouldAttach(route: ActivatedRouteSnapshot): boolean {
-    return !!this.handlers[route.url.join("/")];    
+    return !!this.handlers[route.url.join("/")];
   }
 
   retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle {
-    if (this.c.clearCache)
-    {
-      delete this.handlers[route.url.join("/") || route.parent.url.join("/")];    
-      this.c.clearCache = false;
+    if (this.c.clearCurCache) {
+      delete this.handlers[route.url.join("/") || route.parent.url.join("/")];
+      this.c.clearCurCache = false;
     }
-    return this.handlers[route.url.join("/") || route.parent.url.join("/")];    
+    if (this.c.clearAllCache) {
+      this.handlers = {};
+      this.c.clearAllCache = false;
+    }
+    return this.handlers[route.url.join("/") || route.parent.url.join("/")];
   }
 
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {

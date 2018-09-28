@@ -74,7 +74,7 @@ export class ReturnsComponent {
     this._g.listowner = ListOwner;
     this._g.listmanager = ListManager;
     this._g.recency = Recency;
-    this._g.clearCache = true;
+    this._g.clearCurCache = true;
     this.router.navigate(['listperformance' + '/' + ListOwner + '/' + ListManager + '/' + Recency + '/' + this._g.startDate.toLocaleDateString().split('/').join('_') + '/' + this._g.endDate.toLocaleDateString().split('/').join('_')]);
 }
 

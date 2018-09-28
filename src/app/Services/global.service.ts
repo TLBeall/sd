@@ -21,7 +21,8 @@ export class GlobalService {
   public recency: number;
   public rootReturns: RootReturns;
   public clientName: string;
-  public clearCache: boolean = false;
+  public clearAllCache: boolean = false;
+  public clearCurCache: boolean = false;
 
   constructor() {
   }

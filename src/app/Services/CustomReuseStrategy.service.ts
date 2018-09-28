@@ -2,6 +2,7 @@ import { RouteReuseStrategy, DetachedRouteHandle, ActivatedRouteSnapshot } from 
 import { InternalHomePageComponent } from "../internal-home-page/internal-home-page.component";
 import { Injectable } from "@angular/core";
 import { GlobalService } from '../Services/global.service'
+import { InternalHomeDashboardComponent } from "../internal-home-page/internal-home-dashboard/internal-home-dashboard.component";
 
 @Injectable({
   providedIn: 'root'

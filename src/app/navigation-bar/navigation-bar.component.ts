@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -8,9 +9,18 @@ import { Component } from '@angular/core';
 })
 export class NavigationBarComponent {
   navbarOpen = false;
+  route:any;
+  constructor(route: ActivatedRoute) {
+    this.route = route;
+  }
 
   toggleNavbar() {
     this.navbarOpen = !this.navbarOpen;
+  }
+
+  NavigateToHome()
+  {
+    this.route.navigateUrl('/homepage');
   }
 
 }

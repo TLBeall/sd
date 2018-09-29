@@ -21,26 +21,10 @@ export class GlobalService {
   public recency: number;
   public rootReturns: RootReturns;
   public clientName: string;
-  public clearAllCache: boolean = false;
+  public clientArr:ClientList[];
   public clearCurCache: boolean = false;
 
   constructor() {
-  }
-
-  SetLastElements() {
-    if (this.rootReturns)
-      this.rootReturns[0].MailTypeList.forEach(element => {
-        element.Measure.IsLast = false;
-        element.CampaignList.forEach(element => {
-          element.Measure.IsLast = false;
-          element.PhaseList.forEach(element => {
-            element.Measure.IsLast = false;
-          });
-          element.PhaseList[element.PhaseList.length - 1].Measure.IsLast = true;
-        });
-        element.CampaignList[element.CampaignList.length - 1].Measure.IsLast = true;
-      });
-    this.rootReturns[0].MailTypeList[this.rootReturns[0].MailTypeList.length - 1].Measure.IsLast = true;
   }
 
 }

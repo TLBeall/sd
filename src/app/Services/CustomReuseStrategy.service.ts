@@ -19,7 +19,6 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   }
 
   store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
-    if (handle != null)
       this.handlers[route.url.join("/") || route.parent.url.join("/")] = handle;
   }
 
@@ -31,10 +30,6 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     if (this.c.clearCurCache) {
       delete this.handlers[route.url.join("/") || route.parent.url.join("/")];
       this.c.clearCurCache = false;
-    }
-    if (this.c.clearAllCache) {
-      this.handlers = {};
-      this.c.clearAllCache = false;
     }
     return this.handlers[route.url.join("/") || route.parent.url.join("/")];
   }

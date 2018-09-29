@@ -41,6 +41,7 @@ export class InternalHomePageComponent implements OnInit {
         this._authService.getClientList((new Date()).getFullYear().toString())
             .subscribe(data => {
                 this.ClientArr = data;
+                this._g.clientArr = data;
                 this.selectedYear = new Date().getFullYear().toString();
             });
         }
@@ -100,11 +101,10 @@ export class InternalHomePageComponent implements OnInit {
     }
 
     NavigateToReturns(client:string, startYear:number, endYear:number) {
-        this._g.startDate = new Date('01/01/'+ startYear.toString());
-        this._g.endDate = new Date('12/31/'+ endYear.toString());
-        this._g.client = client;
-        this._g.clientName = this.ClientArr.find(p => p.gClientAcronym == client).gClientName;
-        this._g.clearAllCache = true;
-        this.router.navigate(['returns/' + this._g.client + '/' + this._g.startDate.toLocaleDateString().split('/').join('_') + '/' + this._g.endDate.toLocaleDateString().split('/').join('_')]);
+        var startDate = new Date('01/01/'+ startYear.toString());
+        var endDate = new Date('12/31/'+ endYear.toString());
+        var client = client;
+        this._g.clearCurCache = true;
+        this.router.navigate(['returns/' + client + '/' + startDate.toLocaleDateString().split('/').join('_') + '/' + endDate.toLocaleDateString().split('/').join('_')]);
     }
 }

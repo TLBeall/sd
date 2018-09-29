@@ -1,7 +1,7 @@
-<div *ngIf="pageReady">
+<div *ngIf="this.pageReady == true">
 <app-toolbar></app-toolbar>
 <app-main-returns-toolbox></app-main-returns-toolbox>
-<table id="table1" mat-table [dataSource]="_g.rootReturns" multiTemplateDataRows #PseudoDescription>
+<table id="table1" mat-table [dataSource]="this.rootReturns" multiTemplateDataRows #PseudoDescription>
     <ng-container matColumnDef="Expand">
         <th mat-header-cell *matHeaderCellDef class="expandBtnColumn"></th>
         <td mat-cell *matCellDef="let element" class="expandBtnColumn">
@@ -9,8 +9,8 @@
                 <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_arrow_drop_down' : 'mi_arrow_right'"></i>
                 <!-- [ngStyle]="{'visibility':CollapseListBtn(element) ? 'expand' : 'collapse'}" -->
             </button>
-            <button mat-icon-button (click)="NextLevel(_g.rootReturns[0], _g.rootReturns[0].MailTypeList)" class="returnsExpCollBtn">
-                <i class="material-icons" [ngClass]="ReadyToCollapseAll(_g.rootReturns[0].MailTypeList) ? 'custom_line_weight' : 'mi_drag_handle'"></i>
+            <button mat-icon-button (click)="NextLevel(this.rootReturns[0], this.rootReturns[0].MailTypeList)" class="returnsExpCollBtn">
+                <i class="material-icons" [ngClass]="ReadyToCollapseAll(this.rootReturns[0].MailTypeList) ? 'custom_line_weight' : 'mi_drag_handle'"></i>
             </button>
 
         </td>
@@ -19,10 +19,10 @@
     <ng-container matColumnDef="Client">
         <th mat-header-cell *matHeaderCellDef class="mailLevelColumn"> Client </th>
         <td mat-cell *matCellDef="let element" class="mailLevelColumn" [ngClass]="{
-            'font-client-lg': GetVisibilityStyle(! _g.rootReturns[0].Measure.Expanded) == 'collapse',
-            'font-sm': GetVisibilityStyle(! _g.rootReturns[0].Measure.Expanded) == 'expand'
-        }"> {{ _g.clientName }} </td>
-        <td mat-footer-cell *matFooterCellDef class="mailLevelColumn"> Total {{ _g.clientName }} </td>
+            'font-client-lg': GetVisibilityStyle(! this.rootReturns[0].Measure.Expanded) == 'collapse',
+            'font-sm': GetVisibilityStyle(! this.rootReturns[0].Measure.Expanded) == 'expand'
+        }"> {{ this.clientName }} </td>
+        <td mat-footer-cell *matFooterCellDef class="mailLevelColumn"> Total {{ this.clientName }} </td>
     </ng-container>
 
 
@@ -41,98 +41,98 @@
     </ng-container>
     <ng-container matColumnDef="Mailed">
         <th mat-header-cell *matHeaderCellDef> Mailed </th>
-        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':_g.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
+        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
             {{element.Measure.Mailed | date:'shortDate'}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{_g.rootReturns[0].Measure.Mailed | date:'shortDate'}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{this.rootReturns[0].Measure.Mailed | date:'shortDate'}} </td>
     </ng-container>
     <ng-container matColumnDef="Caged">
         <th mat-header-cell *matHeaderCellDef> Caged </th>
-        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':_g.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
+        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
             {{element.Measure.Caged | date:'shortDate'}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{_g.rootReturns[0].Measure.Caged | date:'shortDate'}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{this.rootReturns[0].Measure.Caged | date:'shortDate'}} </td>
     </ng-container>
     <ng-container matColumnDef="Quantity">
         <th mat-header-cell *matHeaderCellDef> Qty </th>
-        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':_g.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
+        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
             {{element.Measure.Quantity | number}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{_g.rootReturns[0].Measure.Quantity | number}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{this.rootReturns[0].Measure.Quantity | number}} </td>
     </ng-container>
     <ng-container matColumnDef="Donors">
         <th mat-header-cell *matHeaderCellDef> Don </th>
-        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':_g.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
+        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
             {{element.Measure.Donors | number}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{_g.rootReturns[0].Measure.Donors | number}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{this.rootReturns[0].Measure.Donors | number}} </td>
     </ng-container>
     <ng-container matColumnDef="NonDonors">
         <th mat-header-cell *matHeaderCellDef> Non </th>
-        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':_g.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
+        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
             {{element.Measure.NonDonors | number}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{_g.rootReturns[0].Measure.NonDonors | number}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{this.rootReturns[0].Measure.NonDonors | number}} </td>
     </ng-container>
     <ng-container matColumnDef="NewDonors">
         <th mat-header-cell *matHeaderCellDef> New </th>
-        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':_g.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
+        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
             {{element.Measure.NewDonors | number}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{_g.rootReturns[0].Measure.NewDonors | number}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{this.rootReturns[0].Measure.NewDonors | number}} </td>
     </ng-container>
     <ng-container matColumnDef="RSP">
         <th mat-header-cell *matHeaderCellDef> RSP </th>
-        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':_g.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
+        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
             {{element.Measure.RSP | percent:'1.0-2'}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{_g.rootReturns[0].Measure.RSP | percent:'1.0-2'}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{this.rootReturns[0].Measure.RSP | percent:'1.0-2'}} </td>
     </ng-container>
     <ng-container matColumnDef="AVG">
         <th mat-header-cell *matHeaderCellDef> AVG </th>
-        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':_g.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
+        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
             {{element.Measure.AVG | number:'1.2-2'}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{_g.rootReturns[0].Measure.AVG | number:'1.2-2'}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{this.rootReturns[0].Measure.AVG | number:'1.2-2'}} </td>
     </ng-container>
     <ng-container matColumnDef="Gross">
         <th mat-header-cell *matHeaderCellDef> Gross </th>
-        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':_g.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
+        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
             {{element.Measure.Gross | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{_g.rootReturns[0].Measure.Gross | currency : 'USD' : 'symbol' : '1.0-0'}}
+        <td mat-footer-cell *matFooterCellDef> {{this.rootReturns[0].Measure.Gross | currency : 'USD' : 'symbol' : '1.0-0'}}
         </td>
     </ng-container>
     <ng-container matColumnDef="Cost">
         <th mat-header-cell *matHeaderCellDef> Cost </th>
-        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':_g.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
+        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
             {{element.Measure.Cost | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{_g.rootReturns[0].Measure.Cost | currency : 'USD' : 'symbol' : '1.0-0'}}
+        <td mat-footer-cell *matFooterCellDef> {{this.rootReturns[0].Measure.Cost | currency : 'USD' : 'symbol' : '1.0-0'}}
         </td>
     </ng-container>
     <ng-container matColumnDef="Net">
         <th mat-header-cell *matHeaderCellDef> Net </th>
-        <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.Net < 0" [ngStyle]="{'visibility':_g.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
+        <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.Net < 0" [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
             {{element.Measure.Net | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
-        <td mat-footer-cell *matFooterCellDef [class.negative]="_g.rootReturns[0].Measure.Net < 0"> {{_g.rootReturns[0].Measure.Net
+        <td mat-footer-cell *matFooterCellDef [class.negative]="this.rootReturns[0].Measure.Net < 0"> {{this.rootReturns[0].Measure.Net
             | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
     </ng-container>
     <ng-container matColumnDef="GPP">
         <th mat-header-cell *matHeaderCellDef> GPP </th>
-        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':_g.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
+        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
             {{element.Measure.GPP | currency}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{_g.rootReturns[0].Measure.GPP | currency}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{this.rootReturns[0].Measure.GPP | currency}} </td>
     </ng-container>
     <ng-container matColumnDef="CLM">
         <th mat-header-cell *matHeaderCellDef> CLM </th>
-        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':_g.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
+        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
             {{element.Measure.CLM | currency}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{_g.rootReturns[0].Measure.CLM | currency}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{this.rootReturns[0].Measure.CLM | currency}} </td>
     </ng-container>
     <ng-container matColumnDef="NLM">
         <th mat-header-cell *matHeaderCellDef> NLM </th>
-        <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.NLM < 0" [ngStyle]="{'visibility':_g.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
+        <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.NLM < 0" [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
             {{element.Measure.NLM | currency}} </td>
-        <td mat-footer-cell *matFooterCellDef [class.negative]="_g.rootReturns[0].Measure.NLM < 0"> {{_g.rootReturns[0].Measure.NLM
+        <td mat-footer-cell *matFooterCellDef [class.negative]="this.rootReturns[0].Measure.NLM < 0"> {{this.rootReturns[0].Measure.NLM
             | currency}}
         </td>
     </ng-container>
     <ng-container matColumnDef="IO">
         <th mat-header-cell *matHeaderCellDef> IO </th>
-        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':_g.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
+        <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }">
             {{element.Measure.IO | number : '1.2-2'}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{_g.rootReturns[0].Measure.IO | number : '1.2-2'}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{this.rootReturns[0].Measure.IO | number : '1.2-2'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="expandedDetail">
@@ -895,10 +895,10 @@
                                                                                             <ng-container *ngIf="element.ListOwner == 0; then house; else prospect">
                                                                                             </ng-container>
                                                                                             <ng-template #prospect>
-                                                                                                <a title="{{ element.ListOwnerName }}" (click)="NavigateToListPerformance(element.ListOwner, 0, 0)">
+                                                                                                <a title="{{ element.ListOwnerName }}" (click)="NavigateToListPerformance(element.ListOwner, 0, 0, startDate, endDate)">
                                                                                                     {{element.ListOwnerAbr}} / </a>
-                                                                                                <a title="{{ element.ListManagerName }}" (click)="NavigateToListPerformance(element.ListOwner, element.ListManager, 0)">{{element.ListManagerAbr}}
-                                                                                                    / </a> <a (click)="NavigateToListPerformance(element.ListOwner, element.ListManager, element.Recency)">
+                                                                                                <a title="{{ element.ListManagerName }}" (click)="NavigateToListPerformance(element.ListOwner, element.ListManager, 0, startDate, endDate)">{{element.ListManagerAbr}}
+                                                                                                    / </a> <a (click)="NavigateToListPerformance(element.ListOwner, element.ListManager, element.Recency, startDate, endDate)">
                                                                                                     {{element.RecencyString}}
                                                                                                 </a>
                                                                                             </ng-template>
@@ -1138,7 +1138,7 @@
             </div>
         </td>
     </ng-container>
-    <tr mat-header-row [ngStyle]="{'visibility':_g.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }" *matHeaderRowDef="clientDisplayedColumns"></tr>
+    <tr mat-header-row [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded ? 'collapse' : 'visible' }" *matHeaderRowDef="clientDisplayedColumns"></tr>
     <tr mat-row *matRowDef="let element; columns: clientDisplayedColumns;" class="example-element-row" [class.example-expanded-row]="element.Measure.Expanded">
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>

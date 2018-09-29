@@ -66,15 +66,15 @@ export class MainReturnsToolboxComponent implements OnInit {
   }
 
   applyChanges() {
-    this._g.startDate = this.fromDate;
-    this._g.endDate = this.toDate;
-    this._g.client = this.client;
-    this._g.clientName = this.ClientArr.find(p => p.gClientAcronym == this.client).gClientName;
-    this._authService.getReturns(this._g.client, this._g.startDate, this._g.endDate).subscribe(data => {
-      if (data)
-      this._g.rootReturns = data;
-      this._g.SetLastElements();
-    });
+    // this._g.startDate = this.fromDate;
+    // this._g.endDate = this.toDate;
+    // this._g.client = this.client;
+    // this._g.clientName = this.ClientArr.find(p => p.gClientAcronym == this.client).gClientName;
+    // this._authService.getReturns(this._g.client, this._g.startDate, this._g.endDate).subscribe(data => {
+    //   if (data)
+    //   this._g.rootReturns = data;
+    //   this._g.SetLastElements();
+    // });
   }
 
   ngOnInit() {

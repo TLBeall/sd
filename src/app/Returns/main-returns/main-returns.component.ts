@@ -30,7 +30,9 @@ export class ReturnsComponent {
   private startDate: any;
   private endDate:any;
   private pageReady:boolean=false;
-  private scrollStoreProvider:any;
+  private client:string;
+  private clientName: string;
+  private rootReturns: RootReturns;
 
 
   // @ViewChild('PseudoDescription', { read: ElementRef })
@@ -46,36 +48,31 @@ export class ReturnsComponent {
   }
 
   ngOnInit() {
-    if (! this._g.client)
     this.route.params.subscribe(params => {
       this.LoadValues(params['client'], params['from'], params['to']); 
-      // In a real app: dispatch action to load the details here.
+      this._authService.getReturns(this.client, this.startDate, this.endDate).subscribe(data => {
+        this.rootReturns = data;
+        this.pageReady = true;
+        this.SetLastElements();
+      });
+      this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.client).gClientName;
+        // In a real app: dispatch action to load the details here.
    });
 
-    this._authService.getReturns(this._g.client, this._g.startDate, this._g.endDate).subscribe(data => {
-      if (data)
-      this._g.rootReturns = data;
-      this._g.SetLastElements();
-      this.pageReady = true;
-    });
-    this._g.SetLastElements();
   }
 
   LoadValues(client:any, startDate:any, endDate:any)
   {
-    this._g.client = client;
-    this._g.startDate = new Date(Date.parse(startDate.split('_')[0].toString() + '/' + startDate.split('_')[1].toString() + '/' + startDate.split('_')[2].toString())) ;
-    this._g.endDate = new Date(Date.parse(endDate.split('_')[0].toString() + '/' + endDate.split('_')[1].toString() + '/' + endDate.split('_')[2].toString())) ;
+    this.client = client;
+    this.startDate = new Date(Date.parse(startDate.split('_')[0].toString() + '/' + startDate.split('_')[1].toString() + '/' + startDate.split('_')[2].toString())) ;
+    this.endDate = new Date(Date.parse(endDate.split('_')[0].toString() + '/' + endDate.split('_')[1].toString() + '/' + endDate.split('_')[2].toString())) ;
   }
 
   // NavigateToListPerformance(element.ListOwner, element.ListManager, element.Recency, '01/01/2018', '12/31/2018')
 
   NavigateToListPerformance(ListOwner:number, ListManager:number, Recency:number, startDate:Date, endDate:Date) {
-    this._g.listowner = ListOwner;
-    this._g.listmanager = ListManager;
-    this._g.recency = Recency;
     this._g.clearCurCache = true;
-    this.router.navigate(['listperformance' + '/' + ListOwner + '/' + ListManager + '/' + Recency + '/' + this._g.startDate.toLocaleDateString().split('/').join('_') + '/' + this._g.endDate.toLocaleDateString().split('/').join('_')]);
+    this.router.navigate(['listperformance' + '/' + ListOwner + '/' + ListManager + '/' + Recency + '/' + startDate.toLocaleDateString().split('/').join('_') + '/' + endDate.toLocaleDateString().split('/').join('_')]);
 }
 
   GetVisibilityStyle(state: boolean): string {
@@ -159,9 +156,9 @@ export class ReturnsComponent {
 
     switch (myType) {
       case "MailTypeList": {
-        if (this.ReadyToCollapseAll(this._g.rootReturns[0].MailTypeList))
-          this.NextLevel(this._g.rootReturns[0], this._g.rootReturns[0].MailTypeList);
-        data = this._g.rootReturns[0].MailTypeList.slice();
+        if (this.ReadyToCollapseAll(this.rootReturns[0].MailTypeList))
+          this.NextLevel(this.rootReturns[0], this.rootReturns[0].MailTypeList);
+        data = this.rootReturns[0].MailTypeList.slice();
         break;
       }
       case "MailType": {
@@ -242,7 +239,7 @@ export class ReturnsComponent {
     switch (myType) {
       case "MailTypeList": {
         sort.active = "MailType";
-        this._g.rootReturns[0].MailTypeList = sortedData;
+        this.rootReturns[0].MailTypeList = sortedData;
         break;
       }
       case "MailType": {
@@ -262,10 +259,27 @@ export class ReturnsComponent {
         break;
       }
     }
-    this._g.SetLastElements();
+    this.SetLastElements();
   }
 
+  SetLastElements() {
+    if (this.rootReturns)
+      this.rootReturns[0].MailTypeList.forEach(element => {
+        element.Measure.IsLast = false;
+        element.CampaignList.forEach(element => {
+          element.Measure.IsLast = false;
+          element.PhaseList.forEach(element => {
+            element.Measure.IsLast = false;
+          });
+          element.PhaseList[element.PhaseList.length - 1].Measure.IsLast = true;
+        });
+        element.CampaignList[element.CampaignList.length - 1].Measure.IsLast = true;
+      });
+    this.rootReturns[0].MailTypeList[this.rootReturns[0].MailTypeList.length - 1].Measure.IsLast = true;
+  }
 }
+
+
 
 
 function compare(a: string, b: string, isAsc) {

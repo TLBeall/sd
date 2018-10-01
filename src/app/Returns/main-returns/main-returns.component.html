@@ -1004,7 +1004,7 @@
                 <ng-template #prospect>
                     <a title="{{ element.ListOwnerName }}" (click)="NavigateToListPerformance(element.ListOwner, 0, 0, startDate, endDate)">
                         {{element.ListOwnerAbr}} / </a>
-                    <a title="{{ element.ListManagerName }}" (click)="NavigateToListPerformance(element.ListOwner, element.ListManager, 0, startDate, endDate)">{{element.ListManagerAbr}}
+                    <a title="{{ element.ListManagerName }}" (click)="NavigateToListPerformance(0, element.ListManager, 0, startDate, endDate)">{{element.ListManagerAbr}}
                         / </a> <a (click)="NavigateToListPerformance(element.ListOwner, element.ListManager, element.Recency, startDate, endDate)">
                         {{element.RecencyString}}
                     </a>

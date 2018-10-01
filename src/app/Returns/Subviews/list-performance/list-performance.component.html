@@ -1,4 +1,7 @@
-<div *ngIf="ListPerformanceArr" style="margin-top:100px">
+<div *ngIf="this.pageReady == false" class="loading-indicator">
+  <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+</div>
+<div *ngIf="this.pageReady == true" style="margin-top:100px">
 <table mat-table [dataSource]="ListPerformanceArr" matSort (matSortChange)="SortFunction($event, ListPerformanceArr)" multiTemplateDataRows>
   <ng-container matColumnDef="Expand">
     <th mat-header-cell *matHeaderCellDef class="expandBtnColumn"></th>

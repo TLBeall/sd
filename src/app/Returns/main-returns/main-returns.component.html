@@ -1,3 +1,6 @@
+<div *ngIf="this.pageReady == false" class="loading-indicator">
+    <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+  </div>
 <div *ngIf="this.pageReady == true">
     <app-main-returns-toolbox (results)='onResults($event)'></app-main-returns-toolbox>
     <app-toolbar></app-toolbar>

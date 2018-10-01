@@ -66,7 +66,8 @@ import { CustomReuseStrategy } from './Services/CustomReuseStrategy.service';
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     AuthService,

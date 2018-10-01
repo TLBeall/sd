@@ -52,8 +52,8 @@ export class ReturnsComponent {
       this.LoadValues(params['client'], params['from'], params['to']); 
       this._authService.getReturns(this.client, this.startDate, this.endDate).subscribe(data => {
         this.rootReturns = data;
+        this.rootReturns = this._g.SetLastElements(this.rootReturns)
         this.pageReady = true;
-        this.SetLastElements();
       });
       this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.client).gClientName;
         // In a real app: dispatch action to load the details here.
@@ -64,15 +64,15 @@ export class ReturnsComponent {
   LoadValues(client:any, startDate:any, endDate:any)
   {
     this.client = client;
-    this.startDate = new Date(Date.parse(startDate.split('_')[0].toString() + '/' + startDate.split('_')[1].toString() + '/' + startDate.split('_')[2].toString())) ;
-    this.endDate = new Date(Date.parse(endDate.split('_')[0].toString() + '/' + endDate.split('_')[1].toString() + '/' + endDate.split('_')[2].toString())) ;
+    this.startDate = new Date(Date.parse(startDate.split('.')[0].toString() + '/' + startDate.split('.')[1].toString() + '/' + startDate.split('.')[2].toString())) ;
+    this.endDate = new Date(Date.parse(endDate.split('.')[0].toString() + '/' + endDate.split('.')[1].toString() + '/' + endDate.split('.')[2].toString())) ;
   }
 
   // NavigateToListPerformance(element.ListOwner, element.ListManager, element.Recency, '01/01/2018', '12/31/2018')
 
   NavigateToListPerformance(ListOwner:number, ListManager:number, Recency:number, startDate:Date, endDate:Date) {
     this._g.clearCurCache = true;
-    this.router.navigate(['listperformance' + '/' + ListOwner + '/' + ListManager + '/' + Recency + '/' + startDate.toLocaleDateString().split('/').join('_') + '/' + endDate.toLocaleDateString().split('/').join('_')]);
+    this.router.navigate(['listperformance' + '/' + ListOwner + '/' + ListManager + '/' + Recency + '/' + startDate.toLocaleDateString().split('/').join('.') + '/' + endDate.toLocaleDateString().split('/').join('.')]);
 }
 
   GetVisibilityStyle(state: boolean): string {
@@ -142,6 +142,12 @@ export class ReturnsComponent {
   ToggleExpansion(Element: any) {
     if (Element.Measure)
       Element.Measure.Expanded = !Element.Measure.Expanded;
+  }
+
+  onResults(ReturnedResults:any):any
+  {
+    this.clientName = this._g.clientArr.find(p => p.gClientAcronym == ReturnedResults[0].Client).gClientName;
+    this.rootReturns = ReturnedResults;
   }
 
   SortFunction(sort: Sort, Element: any) {
@@ -259,28 +265,9 @@ export class ReturnsComponent {
         break;
       }
     }
-    this.SetLastElements();
-  }
-
-  SetLastElements() {
-    if (this.rootReturns)
-      this.rootReturns[0].MailTypeList.forEach(element => {
-        element.Measure.IsLast = false;
-        element.CampaignList.forEach(element => {
-          element.Measure.IsLast = false;
-          element.PhaseList.forEach(element => {
-            element.Measure.IsLast = false;
-          });
-          element.PhaseList[element.PhaseList.length - 1].Measure.IsLast = true;
-        });
-        element.CampaignList[element.CampaignList.length - 1].Measure.IsLast = true;
-      });
-    this.rootReturns[0].MailTypeList[this.rootReturns[0].MailTypeList.length - 1].Measure.IsLast = true;
+    this._g.SetLastElements(this.rootReturns[0]);
   }
 }
-
-
-
 
 function compare(a: string, b: string, isAsc) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);

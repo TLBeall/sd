@@ -105,6 +105,6 @@ export class InternalHomePageComponent implements OnInit {
         var endDate = new Date('12/31/'+ endYear.toString());
         var client = client;
         this._g.clearCurCache = true;
-        this.router.navigate(['returns/' + client + '/' + startDate.toLocaleDateString().split('/').join('_') + '/' + endDate.toLocaleDateString().split('/').join('_')]);
+        this.router.navigate(['returns/' + client + '/' + startDate.toLocaleDateString().split('/').join('.') + '/' + endDate.toLocaleDateString().split('/').join('.')]);
     }
 }

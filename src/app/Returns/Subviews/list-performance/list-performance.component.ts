@@ -90,8 +90,8 @@ export class ListPerformanceComponent implements OnInit {
     this.ListOwner = listowner;
     this.ListManager = listmanager;
     this.Recency = recency;
-    this.startDate = new Date(Date.parse(startdate.split('_')[0].toString() + '/' + startdate.split('_')[1].toString() + '/' + startdate.split('_')[2].toString())) ;
-    this.endDate = new Date(Date.parse(enddate.split('_')[0].toString() + '/' + enddate.split('_')[1].toString() + '/' + enddate.split('_')[2].toString())) ;
+    this.startDate = new Date(Date.parse(startdate.split('.')[0].toString() + '/' + startdate.split('.')[1].toString() + '/' + startdate.split('.')[2].toString())) ;
+    this.endDate = new Date(Date.parse(enddate.split('.')[0].toString() + '/' + enddate.split('.')[1].toString() + '/' + enddate.split('.')[2].toString())) ;
   }
 
   SortFunction(sort: Sort, data: any) {

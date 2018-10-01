@@ -1,5 +1,55 @@
-@import '~src/appTheme.scss';  
-$btnColumnShift: 72px;
+@import '~src/appTheme.scss'; 
+
+
+$btnColumnShift: 72px; //used to control the left column for both parent and child tables
+
+
+
+table {
+  width: 100%;
+  //Controls the font sizing in all of the tables
+  th{
+    font-size:12px !important;
+  }
+  //controls the list table font
+  td{
+    font-size:11px;
+    &.mat-footer-cell{
+      font-weight: bold;
+      border-bottom:none;
+      border-top: 1px solid $color-gainsboro;
+      
+    }
+    &.cdk-column-expandedDetail{
+      font-size: inherit !important;
+    }
+  }
+}
+
+//Controls hover and selected for the rows
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: #e3eff7;
+}
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #e3eff7;
+}
+
+//Controls child view initial settings
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+//Controls color of negative values on table
+.negative {
+  color: red;
+}
+
+//Removes padding from all nested tables
+::ng-deep table > tbody > tr > td.cdk-column-expandedDetail.mat-column-expandedDetail{
+  padding: 0 !important;
+}
+
 
 //Controls material expand/collapse buttons at all levels
 .returnsExpCollBtn{
@@ -11,39 +61,14 @@ $btnColumnShift: 72px;
   }
 }
   
-#table1{
-  // width: 98%;
-  // margin: 0 auto;
-  // background-color:$color-gainsboro;
-}
-#table2{
-// background-color:$color-gallery;
-}
-#table3{
-// background-color:$color-whitesmoke;
-}
-#table4{
-// background-color:$color-white;
-}
-
-//Removes padding from all nested tables
-::ng-deep table > tbody > tr > td.cdk-column-expandedDetail.mat-column-expandedDetail{
-  padding: 0 !important;
-}
-
-//controls the most left column of all parent tables, which houses the expand/collapse buttons
-::ng-deep table > tbody > tr > td.mat-cell.cdk-column-Expand.mat-column-Expand{
-  padding: 0;
-  width:$btnColumnShift;
-  min-width:$btnColumnShift; //FF and IE
-  // background-color:aqua;
-}
-
+//Controls left-most column of all parent tables (containing buttons)
 .expandBtnColumn{
+  padding: 0 !important;
   border-bottom:none !important;
   border-top:none !important;
+  width:$btnColumnShift;
+  min-width:$btnColumnShift; //FF and IE
 }
-
 
 //controls the most left column of the list table - created to make a buffer equal to the button width columns in parent tables
 .pseudoExpand{
@@ -58,14 +83,12 @@ $btnColumnShift: 72px;
 .mailLevelColumn{
   width:110px !important;
   min-width: 110px; //FF and IE
-  // background-color: purple;
 }
 
-//controls the psuedo desciprtion column found in parent tables
+//controls the psuedo description column found in parent tables (to help alignment with child table)
 .descriptionColumn{
   width: 20vw;
   min-width: 20vw; //FF and IE
-  // background-color: blue;
   padding-right:6px;
 }
 @media screen and (max-width:$size-xs){
@@ -74,41 +97,20 @@ $btnColumnShift: 72px;
     min-width: 30vw;
   }
 }
+
+//Controls the exchange flag column across all tables
 .exchangeFlagColumn{
   width: 22px;
   min-width:22px; //FF and IE
 }
 
-  table {
-    width: 100%;
-    //Controls the font sizing in all of the tables
-    th{
-      font-size:12px !important;
-    }
-    //controls the list table
-    td{
-      font-size:11px;
-      &.mat-footer-cell{
-        font-weight: bold;
-        border-bottom:none;
-        border-top: 1px solid $color-gainsboro;
-        
-      }
-      &.cdk-column-expandedDetail{
-        font-size: inherit !important;
-      }
-  }
-}
-
-
-//Controls the location of the phase button within the left-most column
+//Controls the location of the expand/collapse button within the left-most column of the phase table
 .phaseToggleButton{
   float:right;
   margin-right:12px;
 }
 
 //Collectively control the row settings and cell settings (set the row height of all the tables)
-//As well as controlling the footer underlines for all expanded/collapsed states
 .mat-row {
   height: auto;
 }
@@ -124,9 +126,9 @@ th.mat-header-cell{
   padding:0;
 }
 tr.mat-footer-row{
-  height:auto; //row height required to be manually controlled by each cell
+  height:auto; //row height in mat tables is required to be manually controlled by each cell
 }
-
+//Controls the footer underlines for all expanded/collapsed states
 .elementCollapsed{
   border-top: 1px solid $color-gainsboro !important;
 }
@@ -150,17 +152,7 @@ tr.mat-footer-row{
 }
 // Cell setting end
 
-
-
-
-
-
-
-
-
-
-      
-
+//Controls the settings for the header information above each list table
 .phaseInfoBuffer{
   width:($btnColumnShift - 15);
   height:1px;
@@ -170,12 +162,10 @@ tr.mat-footer-row{
 font-size: 14px;
 font-weight:bold;
 }
-
 .pPackageFormat{
 font-size: 13px;
 font-weight: bold;
 }
-
 .aPackagePDF{
   font-size: 12px;
   float:left;
@@ -183,11 +173,9 @@ font-weight: bold;
     text-decoration: underline;
   }
 }
-
 .pPackageDoubling{
   font-size:13px;
 }
-
 .formatDiv{
   text-align: right;
 }
@@ -197,32 +185,13 @@ font-weight: bold;
   }
 }
 
-
-  //Controls hover and selected for the row?
-  tr.example-element-row:not(.example-expanded-row):hover {
-    background: #e3eff7;
+//Controls the settings for the links to the list performance page from the list tables (prospect)
+.prospectListDescription{
+  a{
+    cursor: pointer;
+    text-decoration: underline;
   }
-  tr.example-element-row:not(.example-expanded-row):active {
-    background: #e3eff7;
-  }
-  
-
-
-//Controls child view initial settings
-  .example-element-detail {
-    overflow: hidden;
-    display: flex;
-  }
-
-
-//Controls color of negative values on table
-.negative {
-  color: red;
 }
-
-
-
-
 
 //Controls font size for headers of tables depending on expanded/collapsed state
 $font-leader:20px;
@@ -257,10 +226,5 @@ width:100% !important;
 font-size:inherit;
 }
 
-.prospectListDescription{
-  a{
-    cursor: pointer;
-    text-decoration: underline;
-  }
-}
+
 

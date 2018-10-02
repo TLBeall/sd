@@ -21,24 +21,19 @@ import { trigger, state, transition, style, animate } from '@angular/animations'
 })
 export class ListPerformanceComponent implements OnInit {
 
+  private route: any;
   public ListOwner: number = 0;
   public ListManager: number = 0;
   public Recency: number = 0;
+  public startDate: any;
+  public endDate: any;
   public ListPerformanceArr: ListPerformance[];
   columnsToDisplay: string[] = ['Expand','Client', 'Phase', 'MailCode', 'ListOwner', 'ListManager', 'RecencyString', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   packageColumns: string[] = ['None','None', 'PackageTitle', 'None','None','None','None','None','PackageMailed', 'PackageCaged', 'PackageQuantity', 'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 'PackageGross', 'PackageCost', 'PackageNet', 'PackageGPP', 'PackageCLM', 'PackageNLM', 'PackageIO'];
   package2Columns: string[] = ['None','None', 'PackageFormat', 'None','None','None','None','None','None', 'None', 'None', 'None', 'None', 'None', 'RSPPerformance', 'AVGPerformance', 'None', 'None', 'None', 'None', 'None', 'None', 'IOPerformance'];
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private _g: GlobalService) {
-    var endDate = new Date(); 
-    var startDate = new Date();
-    var year = endDate.getFullYear() - 2;
-    startDate.setFullYear(year);
-    this._authService.getListPerformance(this._g.listowner, this._g.listmanager, this._g.recency, startDate, endDate)
-      .subscribe(data => {
-        this.ListPerformanceArr = data;
-        this.ListPerformanceArr.forEach(p => { p.Measure.Expanded = false; })
-      });
+    this.route = route;
   }
 
   CollapseListBtn(Element): boolean {
@@ -79,11 +74,24 @@ export class ListPerformanceComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.route.params.subscribe(params => {
+      this.LoadValues(params['listowner'], params['listmanager'], params['recency'], params['startdate'], params['enddate']); 
+      this._authService.getListPerformance(this.ListOwner, this.ListManager, this.Recency, this.startDate, this.endDate)
+      .subscribe(data => {
+        this.ListPerformanceArr = data;
+        this.ListPerformanceArr.forEach(p => { p.Measure.Expanded = false; })
+      });    
+   });
   }
 
-  HideList()
+  LoadValues(listowner:any, listmanager:any, recency:any, startdate:any, enddate: any)
   {
-    this._g.showlistperformance = false;
+    this.ListOwner = listowner;
+    this.ListManager = listmanager;
+    this.Recency = recency;
+    this.startDate = new Date(Date.parse(startdate.split('.')[0].toString() + '/' + startdate.split('.')[1].toString() + '/' + startdate.split('.')[2].toString())) ;
+    this.endDate = new Date(Date.parse(enddate.split('.')[0].toString() + '/' + enddate.split('.')[1].toString() + '/' + enddate.split('.')[2].toString())) ;
   }
 
   SortFunction(sort: Sort, data: any) {

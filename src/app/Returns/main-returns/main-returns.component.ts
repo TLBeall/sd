@@ -6,6 +6,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { RootReturns } from '../../Models/RootReturns.model';
 import { GlobalService } from '../../Services/global.service';
 import { Router } from '@angular/router'
+import { AuthService } from '../../Services/auth.service'
 
 @Component({
   selector: 'app-main-returns',
@@ -26,6 +27,12 @@ export class ReturnsComponent {
   title = 'SD360-Reporting-Angular';
 
   private route: any;
+  private startDate: any;
+  private endDate:any;
+  private pageReady:boolean=false;
+  private client:string;
+  private clientName: string;
+  private rootReturns: RootReturns;
 
   clientDisplayedColumns: string[] = ['Expand', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   mailTypeDisplayedColumns: string[] = ['Expand', 'MailType', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
@@ -33,28 +40,36 @@ export class ReturnsComponent {
   phaseDisplayedColumns: string[] = ['Expand', 'PhaseName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   mailListDisplayedColumns: string[] = ['PseudoExpand', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
 
-  constructor(route: ActivatedRoute, private _g: GlobalService, private router:Router) {
+  constructor(route: ActivatedRoute, private _authService:AuthService, private _g: GlobalService, private router:Router) {
     this.route = route;
-    _g.showlistperformance = false;
   }
 
   ngOnInit() {
-    this._g.rootReturns = new RootReturns();
-    this._g.rootReturns = this.route.snapshot.data['rowData'];
-    this._g.SetLastElements();
+    this.route.params.subscribe(params => {
+      this.LoadValues(params['client'], params['from'], params['to']); 
+      this._authService.getReturns(this.client, this.startDate, this.endDate).subscribe(data => {
+        this.rootReturns = data;
+        this.rootReturns = this._g.SetLastElements(this.rootReturns)
+        this.pageReady = true;
+      });
+      this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.client).gClientName;
+        // In a real app: dispatch action to load the details here.
+   });
+
+  }
+
+  LoadValues(client:any, startDate:any, endDate:any)
+  {
+    this.client = client;
+    this.startDate = new Date(Date.parse(startDate.split('.')[0].toString() + '/' + startDate.split('.')[1].toString() + '/' + startDate.split('.')[2].toString())) ;
+    this.endDate = new Date(Date.parse(endDate.split('.')[0].toString() + '/' + endDate.split('.')[1].toString() + '/' + endDate.split('.')[2].toString())) ;
   }
 
 
   NavigateToListPerformance(ListOwner:number, ListManager:number, Recency:number, startDate:Date, endDate:Date) {
-    this._g.startDate = startDate;
-    this._g.endDate = endDate;
-    this._g.listowner = ListOwner;
-    this._g.listmanager = ListManager;
-    this._g.recency = Recency;
-    this.router.navigate(['listperformance'], {relativeTo: this.route});
-    this._g.showlistperformance = true;
-  }
-
+    this._g.clearCurCache = true;
+    this.router.navigate(['listperformance' + '/' + ListOwner + '/' + ListManager + '/' + Recency + '/' + startDate.toLocaleDateString().split('/').join('.') + '/' + endDate.toLocaleDateString().split('/').join('.')]);
+}
 
   GetVisibilityStyle(state: boolean): string {
     if (state)
@@ -127,6 +142,12 @@ export class ReturnsComponent {
       Element.Measure.Expanded = !Element.Measure.Expanded;
   }
 
+  onResults(ReturnedResults:any):any
+  {
+    this.clientName = this._g.clientArr.find(p => p.gClientAcronym == ReturnedResults[0].Client).gClientName;
+    this.rootReturns = ReturnedResults;
+  }
+
   SortFunction(sort: Sort, Element: any) {
     var data: any;
     var myType: string = "";
@@ -138,9 +159,9 @@ export class ReturnsComponent {
 
     switch (myType) {
       case "MailTypeList": {
-        if (this.ReadyToCollapseAll(this._g.rootReturns[0].MailTypeList))
-          this.NextLevel(this._g.rootReturns[0], this._g.rootReturns[0].MailTypeList);
-        data = this._g.rootReturns[0].MailTypeList.slice();
+        if (this.ReadyToCollapseAll(this.rootReturns[0].MailTypeList))
+          this.NextLevel(this.rootReturns[0], this.rootReturns[0].MailTypeList);
+        data = this.rootReturns[0].MailTypeList.slice();
         break;
       }
       case "MailType": {
@@ -221,7 +242,7 @@ export class ReturnsComponent {
     switch (myType) {
       case "MailTypeList": {
         sort.active = "MailType";
-        this._g.rootReturns[0].MailTypeList = sortedData;
+        this.rootReturns[0].MailTypeList = sortedData;
         break;
       }
       case "MailType": {
@@ -241,11 +262,9 @@ export class ReturnsComponent {
         break;
       }
     }
-    this._g.SetLastElements();
+    this._g.SetLastElements(this.rootReturns[0]);
   }
-
 }
-
 
 function compare(a: string, b: string, isAsc) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);

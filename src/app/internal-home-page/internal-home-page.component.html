@@ -11,18 +11,27 @@
                 <mat-tab label="Active">
                     <div class='dictionaryContent'>
                         <ul class='dictionary'>
-                            <li *ngFor="let client of ClientArr" class="clientNameLI" (click)="NavigateToReturns(client?.gClientAcronym, currentYear, currentYear)"> {{ client.gClientName }}
+                            <li *ngFor="let client of ClientArr" class="clientNameLI">
                                 <!-- <a routerLink='/returns/{{client?.gClientAcronym}}/0101{{ currentYear }}/1231{{ currentYear }}'>{{ client?.gClientName }}</a> -->
-                                    </li>
+                            <button mat-button (click)="NavigateToReturns(client?.gClientAcronym, currentYear, currentYear)"> {{ client.gClientName }} </button>       
+                            </li>
                         </ul>
                     </div>
                 </mat-tab>
-                <mat-tab label="Archived">
+                <mat-tab label="Active w/Archived">
                     <div class='dictionaryContent'>
                         <ul class='dictionary'>
                                 <li *ngFor="let client of ClientArr" class="clientNameLI" (click)="NavigateToReturns(client?.gClientAcronym, 2000, currentYear)"> {{ client.gClientName }} </li>
                                         <!-- <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/01012000/1231{{ currentYear }}'>{{
                                     client?.gClientName }}</a></li> -->
+                        </ul>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Inactive">
+                    <div class='dictionaryContent'>
+                        <ul class='dictionary'>
+                            <p>Update with Inactive after migration</p>    
+                            <!-- <li *ngFor="let client of ClientArr" class="clientNameLI" (click)="NavigateToReturns(client?.gClientAcronym, 2000, currentYear)"> {{ client.gClientName }} </li> -->
                         </ul>
                     </div>
                 </mat-tab>

@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ClientList } from '../../../Models/ClientList.model';
 import { AuthService } from '../../../Services/auth.service';
 import { GlobalService } from '../../../Services/global.service'
 import { resolve } from 'url';
+import { RootReturns } from '../../../Models/RootReturns.model';
 
 @Component({
   selector: 'app-main-returns-toolbox',
@@ -23,6 +24,7 @@ export class MainReturnsToolboxComponent implements OnInit {
   l2Icon: string = "group";
   public ClientArr: ClientList[];
 
+  @Output() results: EventEmitter<any> = new EventEmitter<any>();
 
   toggle(tag: number) {
     if (tag === 1) {
@@ -55,26 +57,35 @@ export class MainReturnsToolboxComponent implements OnInit {
   }
 
 
-  constructor(private _authService: AuthService, private router: Router, private _g: GlobalService) {
-    this.client = _g.client;
-    this.fromDate = _g.startDate;
-    this.toDate = _g.endDate;
+  constructor(private _authService: AuthService, private router: Router, private _g: GlobalService, route: ActivatedRoute) {
+    // this.client = _g.client;
+    // this.fromDate = _g.startDate;
+    // this.toDate = _g.endDate;
+    route.params.subscribe(params => {
+      this.LoadValues(params['client'], params['from'], params['to']);   
+    });
     this._authService.getClientList("All")
     .subscribe(data => {
         this.ClientArr = data;
-      });
+      });  
+
+  }
+
+  LoadValues(client:string, startDate:any, endDate:any)
+  {
+    this.client = client;
+    this.fromDate = new Date(Date.parse(startDate.split('.')[0].toString() + '/' + startDate.split('.')[1].toString() + '/' + startDate.split('.')[2].toString())) ;
+    this.toDate = new Date(Date.parse(endDate.split('.')[0].toString() + '/' + endDate.split('.')[1].toString() + '/' + endDate.split('.')[2].toString())) ;
   }
 
   applyChanges() {
-    this._g.startDate = this.fromDate;
-    this._g.endDate = this.toDate;
-    this._g.client = this.client;
-    this._g.clientName = this.ClientArr.find(p => p.gClientAcronym == this.client).gClientName;
-    this._authService.getReturns(this._g.client, this._g.startDate, this._g.endDate).subscribe(data => {
+
+    var Results:RootReturns;
+    this._authService.getReturns(this.client, this.fromDate, this.toDate).subscribe(data => {
       if (data)
-      this._g.rootReturns = data;
-      this._g.SetLastElements();
-      this._g.showlistperformance = false;
+      Results = data;
+      Results = this._g.SetLastElements(Results);
+      this.results.emit(Results);
     });
   }
 

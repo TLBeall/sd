@@ -1,45 +1,42 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable }    from 'rxjs';
-import { RootReturns } from '../Models/RootReturns.model';
+// import { Subject, Observable } from 'rxjs';
+// import { RootReturns } from '../Models/RootReturns.model';
 import { ClientList } from '../Models/ClientList.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalService {
-    
-public cwWidth: number;
-public size_lg:number = 1200;
-public size_md:number = 992;
-public size_sm:number = 768;
-public size_xs:number = 576;
-public client: string = "FDFL";
-public startDate:Date = new Date("01/01/" + new Date().getFullYear());
-public endDate:Date = new Date("12/31/" + new Date().getFullYear());
-public listowner: number;
-public listmanager: number;
-public recency: number;
-public rootReturns: RootReturns;
-public showlistperformance: boolean;
-public clientName: string = "40 Days for Life";
 
-constructor() { 
+  public cwWidth: number;
+  public size_lg: number = 1200;
+  public size_md: number = 992;
+  public size_sm: number = 768;
+  public size_xs: number = 576;
+
+  public clientArr: ClientList[];
+  public clearCurCache: boolean = false;
+
+  constructor() {
   }
 
-  SetLastElements()
-  {
-    this.rootReturns[0].MailTypeList.forEach(element => {
-      element.Measure.IsLast = false;
-      element.CampaignList.forEach(element => {
+  SetLastElements(rootReturns: any): any {
+    if (rootReturns)
+      rootReturns[0].MailTypeList.forEach(element => {
         element.Measure.IsLast = false;
-        element.PhaseList.forEach(element => {
+        element.CampaignList.forEach(element => {
           element.Measure.IsLast = false;
+          element.PhaseList.forEach(element => {
+            element.Measure.IsLast = false;
+          });
+          element.PhaseList[element.PhaseList.length - 1].Measure.IsLast = true;
         });
-        element.PhaseList[element.PhaseList.length-1].Measure.IsLast = true;  
+        element.CampaignList[element.CampaignList.length - 1].Measure.IsLast = true;
       });
-      element.CampaignList[element.CampaignList.length-1].Measure.IsLast = true;
-    });
-    this.rootReturns[0].MailTypeList[this.rootReturns[0].MailTypeList.length-1].Measure.IsLast = true;
+    rootReturns[0].MailTypeList[rootReturns[0].MailTypeList.length - 1].Measure.IsLast = true;
+    return rootReturns;
   }
-
 }
+
+
+

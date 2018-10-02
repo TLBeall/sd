@@ -12,25 +12,34 @@
 
 .dictionary{
     li{
-        float: none;
+        // float: none;
         display: inline-block;
         width:20em;
-        margin-bottom: 5px;
-        font-size: 11pt;
-        padding: 0;
-        border-radius:5px;
-        a{
-            color:$color-mineshaft;
-            text-decoration: none;
-            display: block;
-            padding: 5px 0px 5px 5px;
+        // margin-bottom: 5px;
+        // font-size: 11pt;
+        // padding: 0;
+        // border-radius:5px;
+        button {
+          // display: inline-block;
+          width: 20em;
+          text-overflow: wrap;
+          text-align: left;
+          // &:hover{
+
+          // }
         }
+        // a{
+        //     color:$color-mineshaft;
+        //     text-decoration: none;
+        //     display: block;
+        //     padding: 5px 0px 5px 5px;
+        // }
     }
-    li:hover{
-        background-color: $color-whitesmoke;
-        box-shadow: 1px 1px 2px 0px $color-dovegray;
-        cursor: pointer;
-    }
+    // li:hover{
+    //     background-color: $color-whitesmoke;
+    //     box-shadow: 1px 1px 2px 0px $color-dovegray;
+    //     cursor: pointer;
+    // }
 }
 
 .fullPage{

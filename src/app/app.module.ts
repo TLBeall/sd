@@ -7,10 +7,6 @@ import { AuthService } from './Services/auth.service';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-<<<<<<< HEAD
-import { MatTreeModule, MatSort, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule, MatSortModule, MatSlideToggleModule} from '@angular/material';
-=======
->>>>>>> f00a3035a63d74cb31129fdae436e35ec365e2d1
 import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { LoaderService } from './Loader/loader.service';
@@ -24,7 +20,7 @@ import { HomePageInternalToolbarComponent } from './toolbar/home-page-internal-t
 import { MatTableModule } from '@angular/material/table';
 import { MatTreeModule, MatSort, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule, 
         MatSortModule, MatProgressSpinnerModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatInputModule, 
-        MatCheckboxModule, MatTooltipModule, MatProgressBarModule } from '@angular/material';
+        MatCheckboxModule, MatTooltipModule, MatProgressBarModule, MatSlideToggleModule } from '@angular/material';
 import { InternalHomePageComponent } from './internal-home-page/internal-home-page.component';
 import { InternalHomeDashboardComponent } from './internal-home-page/internal-home-dashboard/internal-home-dashboard.component';
 import { GlobalService } from './Services/global.service';
@@ -75,13 +71,10 @@ import { ListPerformanceToolbarComponent } from './toolbar/list-performance-tool
     MatInputModule,
     FormsModule,
     MatProgressSpinnerModule,
-<<<<<<< HEAD
-    MatSlideToggleModule
-=======
+    MatSlideToggleModule,
     MatCheckboxModule,
     MatTooltipModule,
     MatProgressBarModule
->>>>>>> f00a3035a63d74cb31129fdae436e35ec365e2d1
   ],
   providers: [
     AuthService,

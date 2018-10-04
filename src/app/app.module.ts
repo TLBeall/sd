@@ -7,7 +7,7 @@ import { AuthService } from './Services/auth.service';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTreeModule, MatSort, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule, MatSortModule} from '@angular/material';
+import { MatTreeModule, MatSort, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule, MatSortModule, MatSlideToggleModule} from '@angular/material';
 import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { LoaderService } from './Loader/loader.service';
@@ -67,7 +67,8 @@ import { CustomReuseStrategy } from './Services/CustomReuseStrategy.service';
     MatNativeDateModule,
     MatInputModule,
     FormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSlideToggleModule
   ],
   providers: [
     AuthService,

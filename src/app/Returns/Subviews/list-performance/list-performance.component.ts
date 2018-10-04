@@ -21,6 +21,50 @@ import { trigger, state, transition, style, animate } from '@angular/animations'
 })
 export class ListPerformanceComponent implements OnInit {
 
+  //Toolbox
+  client: string;
+  clientName: string;
+  fromDate: Date;
+  toDate: Date;
+  toolsOpened: Boolean;
+  demoOpened: Boolean;
+  hide: Boolean = false;
+  visibility: string = "hidden";
+  toolsIcon: string = "settings";
+  l2Icon: string = "group";
+
+  
+  toggle(tag: number) {
+    if (tag === 1) {
+      this.toolsOpened = !this.toolsOpened;
+      this.hide = !this.hide;
+      this.toolsIcon = this.toolsOpened ? "arrow_forward_ios" : "settings";
+      this.visibleFunction();
+    } else if (tag === 2) {
+      this.demoOpened = !this.demoOpened;
+      this.hide = !this.hide;
+      this.l2Icon = this.demoOpened ? "arrow_forward_ios" : "group";
+      this.visibleFunction();
+    }
+  }
+
+  visibleFunction() {
+    if (this.visibility == "hidden") {
+      setTimeout(() => {
+        this.visibility = "visible";
+      }, 200);
+    } else {
+      this.visibility = "hidden";
+    }
+  }
+
+  closeToolbox() {
+    // this.opened = !this.opened;
+    // this.demoOpened = false;
+    //not sure if these should close on click outside?
+  }
+  ////////////////////////////////////
+
   private route: any;
   public ListOwner: number = 0;
   public ListManager: number = 0;
@@ -29,9 +73,15 @@ export class ListPerformanceComponent implements OnInit {
   public endDate: any;
   public pageReady: boolean = false;
   public ListPerformanceArr: ListPerformance[];
-  columnsToDisplay: string[] = ['Expand','Client', 'Phase', 'MailCode', 'ListOwner', 'ListManager', 'RecencyString', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
-  packageColumns: string[] = ['None','None', 'PackageTitle', 'None','None','None','None','None','PackageMailed', 'PackageCaged', 'PackageQuantity', 'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 'PackageGross', 'PackageCost', 'PackageNet', 'PackageGPP', 'PackageCLM', 'PackageNLM', 'PackageIO'];
-  package2Columns: string[] = ['None','None', 'PackageFormat', 'None','None','None','None','None','None', 'None', 'None', 'None', 'None', 'None', 'RSPPerformance', 'AVGPerformance', 'None', 'None', 'None', 'None', 'None', 'None', 'IOPerformance'];
+  private clientFilter: any[];
+  private phaseFilter: any[];
+  private mailCodeFilter: any[];
+  private listFilter: any[];
+  private managerFilter: any[];
+  private recencyFilter: any[];
+  columnsToDisplay: string[] = ['Expand', 'ListOwner', 'ListManager', 'RecencyString', 'Client', 'Phase', 'MailCode', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
+  packageColumns: string[] = ['None','None','None','None','None', 'PackageTitle' , 'None', 'None','PackageMailed', 'PackageCaged', 'PackageQuantity', 'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 'PackageGross', 'PackageCost', 'PackageNet', 'PackageGPP', 'PackageCLM', 'PackageNLM', 'PackageIO'];
+  package2Columns: string[] = ['None','None', 'None','None','None', 'PackageFormat', 'None', 'None','None', 'None', 'None', 'None', 'None', 'None', 'RSPPerformance', 'AVGPerformance', 'None', 'None', 'None', 'None', 'None', 'None', 'IOPerformance'];
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private _g: GlobalService) {
     this.route = route;
@@ -81,7 +131,14 @@ export class ListPerformanceComponent implements OnInit {
       this._authService.getListPerformance(this.ListOwner, this.ListManager, this.Recency, this.startDate, this.endDate)
       .subscribe(data => {
         this.ListPerformanceArr = data;
-        this.ListPerformanceArr.forEach(p => { p.Measure.Expanded = false; })
+        this.ListPerformanceArr.forEach(p => { p.Measure.Expanded = false; });
+        this.clientFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.Client, checked : false}))));
+        this.phaseFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.Phase, checked : false}))));
+        this.mailCodeFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.MailCode, checked : false}))));
+        this.listFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.ListOwnerAbbrev, checked : false}))));
+        this.managerFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.ListManagerAbbrev, checked : false}))));
+        this.recencyFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.RecencyString, checked : false}))));
+        console.log(this.clientFilter);
         this.pageReady = true;
       });    
    });

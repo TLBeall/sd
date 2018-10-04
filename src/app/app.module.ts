@@ -7,7 +7,6 @@ import { AuthService } from './Services/auth.service';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTreeModule, MatSort, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule, MatSortModule} from '@angular/material';
 import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { LoaderService } from './Loader/loader.service';
@@ -19,12 +18,15 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { MainReturnsToolbarComponent } from './toolbar/main-returns-toolbar/main-returns-toolbar.component';
 import { HomePageInternalToolbarComponent } from './toolbar/home-page-internal-toolbar/home-page-internal-toolbar.component';
 import { MatTableModule } from '@angular/material/table';
-import { MatProgressSpinnerModule,   MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatInputModule } from '@angular/material';
+import { MatTreeModule, MatSort, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule, 
+        MatSortModule, MatProgressSpinnerModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatInputModule, 
+        MatCheckboxModule, MatTooltipModule, MatProgressBarModule } from '@angular/material';
 import { InternalHomePageComponent } from './internal-home-page/internal-home-page.component';
 import { InternalHomeDashboardComponent } from './internal-home-page/internal-home-dashboard/internal-home-dashboard.component';
 import { GlobalService } from './Services/global.service';
 import { FormsModule } from '@angular/forms';
 import { CustomReuseStrategy } from './Services/CustomReuseStrategy.service';
+import { ListPerformanceToolbarComponent } from './toolbar/list-performance-toolbar/list-performance-toolbar.component';
 
 
 @NgModule({
@@ -42,7 +44,8 @@ import { CustomReuseStrategy } from './Services/CustomReuseStrategy.service';
     ToolbarComponent,
     MainReturnsToolbarComponent,
     HomePageInternalToolbarComponent,
-    InternalHomeDashboardComponent
+    InternalHomeDashboardComponent,
+    ListPerformanceToolbarComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +69,11 @@ import { CustomReuseStrategy } from './Services/CustomReuseStrategy.service';
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatProgressSpinnerModule,
+    MatCheckboxModule,
+    MatTooltipModule,
+    MatProgressBarModule
   ],
   providers: [
     AuthService,

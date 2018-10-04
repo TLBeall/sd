@@ -1,7 +1,8 @@
-<div class="toolbar" #toolbar>
+<div class="toolbar">
     <app-main-returns-toolbar *ngIf="location.includes('/returns')"></app-main-returns-toolbar>
     <app-home-page-internal-toolbar *ngIf="location.includes('/homepage')"></app-home-page-internal-toolbar>
-    </div>
+    <app-list-performance-toolbar *ngIf="location.includes('/listperformance')"></app-list-performance-toolbar>    
+</div>
     
     <!--Below is a psuedo clearfix to load all content across all pages below the toolbar-->
     <div id="psuedoClearFix" [style.height.px]="clearFixHeight"></div>

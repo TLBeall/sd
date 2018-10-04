@@ -27,6 +27,7 @@ export class ListPerformanceComponent implements OnInit {
   public Recency: number = 0;
   public startDate: any;
   public endDate: any;
+  public pageReady: boolean = false;
   public ListPerformanceArr: ListPerformance[];
   columnsToDisplay: string[] = ['Expand','Client', 'Phase', 'MailCode', 'ListOwner', 'ListManager', 'RecencyString', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   packageColumns: string[] = ['None','None', 'PackageTitle', 'None','None','None','None','None','PackageMailed', 'PackageCaged', 'PackageQuantity', 'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 'PackageGross', 'PackageCost', 'PackageNet', 'PackageGPP', 'PackageCLM', 'PackageNLM', 'PackageIO'];
@@ -81,6 +82,7 @@ export class ListPerformanceComponent implements OnInit {
       .subscribe(data => {
         this.ListPerformanceArr = data;
         this.ListPerformanceArr.forEach(p => { p.Measure.Expanded = false; })
+        this.pageReady = true;
       });    
    });
   }

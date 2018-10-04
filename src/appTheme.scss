@@ -31,6 +31,7 @@ $shiftWidth:300px;
 $shiftSpeed: 0.4s;
 $shiftStyle: cubic-bezier(0.175, 0.885, 0.32, 1.1);
 
+
 @mixin toolboxBase{
     border-top: 1px $color-gallery solid;
     background-color:$color-white;
@@ -87,6 +88,42 @@ $shiftStyle: cubic-bezier(0.175, 0.885, 0.32, 1.1);
     clear: both;
     display: table;
 }
+
+//Setup for underline that appears left to right
+// just apply to any element, ex: a{ @include underlineOne }
+@mixin underlineOne{
+    &{
+        position: relative;
+        color: inherit;
+        text-decoration: none;
+        overflow: hidden;
+        display: inline-block;
+        &:before{
+          content: '';
+          position: absolute;
+          transition: transform .5s ease;
+          display: inline-block;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 1px;
+          background: $color-blue-default;
+          transform:  translateX(-100%);
+        }
+        &:after {
+          content: '';
+          position: absolute;
+          transition: transform .5s ease;
+        }
+        &:hover:before {
+          transform:  translateX(0);
+        }
+        &:active{
+          color: $color-blue-default;
+        }
+      }
+}
+
 
 //<><><> Material Icon's (mi) Converted to Classes <><><>
   .mi_expand_less::after{
@@ -177,8 +214,16 @@ $shiftStyle: cubic-bezier(0.175, 0.885, 0.32, 1.1);
       content: "more_vertical";
   }
 
-  //Creating custom class image
-  .custom_line_weight{
+  .mi_assessment::after{
+      content: "assessment";
+  }
+
+  .mi_arrow_forward_ios::after{
+      content: "arrow_forward_ios";
+  }
+
+  //Creating custom image that can be used as a class
+  .custom_line_weight_icon{
     display: inline-block;
     // position: absolute;
     // float:left;

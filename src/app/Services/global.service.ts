@@ -14,6 +14,9 @@ export class GlobalService {
   public size_sm: number = 768;
   public size_xs: number = 576;
 
+  mi_tooltipShowDelay: number = 750;
+  mi_tooltipHideDelay: number = 250;
+
   public clientArr: ClientList[];
   public clearCurCache: boolean = false;
 

@@ -3,8 +3,8 @@
   <span>Back</span>
 </button> -->
 <div>
-  <button *ngIf="this._g.cwWidth < size_md" id="LwidgetScrollBtn" class="returnsToolbarScrollBtn btn btn-sm material-icons" (click)="scrollLeft()">
-    chevron_left
+  <button *ngIf="this._g.cwWidth < size_md" id="LwidgetScrollBtn" 
+  class="returnsToolbarScrollBtn btn btn-sm material-icons mi_chevron_left" (click)="scrollLeft()">
   </button>
   <div #widgetContent class="widgetContainer">
     <button>Donor Lookup</button>
@@ -15,7 +15,7 @@
     <button>New Donor</button>
     <button>Recency</button>
   </div>
-  <button *ngIf="this._g.cwWidth < size_md" id="RwidgetScrollBtn" class="returnsToolbarScrollBtn btn btn-sm material-icons" (click)="scrollRight()">
-    chevron_right
+  <button *ngIf="this._g.cwWidth < size_md" id="RwidgetScrollBtn"
+   class="returnsToolbarScrollBtn btn btn-sm material-icons mi_chevron_right" (click)="scrollRight()">
   </button>
 </div>

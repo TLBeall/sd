@@ -25,6 +25,40 @@ table {
     }
   }
 }
+.loading-indicator {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Transparent Overlay */
+.loading-indicator:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3);
+}
+
+//Controls material expand/collapse buttons at all levels
+.returnsExpCollBtn{
+  width:30px;
+  height:30px;
+  opacity: 0.4;
+  i{
+    padding: 0px 0px 10px 0px;
+  }
+}
 
 //Controls hover and selected for the rows
 tr.example-element-row:not(.example-expanded-row):hover {
@@ -70,6 +104,12 @@ tr.example-element-row:not(.example-expanded-row):active {
   min-width:$btnColumnShift; //FF and IE
 }
 
+.selectionBoxColumn{
+  padding: 0 !important;
+  border-bottom:none !important;
+  border-top:none !important;
+}
+
 //controls the most left column of the list table - created to make a buffer equal to the button width columns in parent tables
 .pseudoExpand{
   padding: 0;
@@ -82,7 +122,18 @@ tr.example-element-row:not(.example-expanded-row):active {
 //controls the client/type/campaign/phase/mailcode column width
 .mailLevelColumn{
   width:110px !important;
-  min-width: 110px; //FF and IE
+  min-width: 110px !important; //FF and IE
+  max-width: 110px !important;
+  overflow: visible; //so that it does not expand td
+  white-space: nowrap; //so that it does not wrap the text
+}
+
+//web-kit specific (Google Chrome) - bottom borders appear in the header cells that we manually attach classes/sizes to
+.headerCollapsed{
+  border-bottom: none !important;
+}
+.headerExpanded{
+  border-bottom: 1px solid $color-gainsboro;
 }
 
 //controls the psuedo description column found in parent tables (to help alignment with child table)
@@ -150,6 +201,11 @@ tr.mat-footer-row{
   padding-top: 6px;
   padding-bottom: 80px;
 }
+.mailTypeElementDefault{
+    td{
+    padding-top: 6px;
+  }
+}
 // Cell setting end
 
 //Controls the settings for the header information above each list table
@@ -159,11 +215,11 @@ tr.mat-footer-row{
   float:left;
 }
 .pPackageTitle{
-font-size: 14px;
+font-size: 12px;
 font-weight:bold;
 }
 .pPackageFormat{
-font-size: 13px;
+font-size: 12px;
 font-weight: bold;
 }
 .aPackagePDF{
@@ -188,9 +244,28 @@ font-weight: bold;
 //Controls the settings for the links to the list performance page from the list tables (prospect)
 .prospectListDescription{
   a{
-    cursor: pointer;
-    text-decoration: underline;
+    @include underlineOne;
   }
+  span{ //required since the anchor tags would be shifted up by a couple pixels above the "/" span tags
+    position: relative;
+    color: inherit;
+    text-decoration: none;
+    overflow: hidden;
+    display: inline-block;
+    &:before{
+    position: absolute;
+      display: inline-block;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+    }
+  }
+}
+
+.noCellBorder{
+  border-top: none;
+  border-bottom: none;
 }
 
 //Controls font size for headers of tables depending on expanded/collapsed state
@@ -198,29 +273,19 @@ $font-leader:20px;
 .font-client-lg{
 font-size:($font-leader*1.2) !important;
 font-weight: bolder;
-// padding-left:30px;
-width:100% !important;
-  min-width: 100%; //FF and IE
 }
 .font-mailType-lg{
   font-size:($font-leader*1.1) !important;
   font-weight:bold;
-  // padding-left:20px;
-  // width:100% !important;
-  // min-width: 100%; //FF and IE
 }
 .font-campaignName-lg{
-  font-size:($font-leader*1.0) !important;
+  font-size:($font-leader*0.95) !important;
   font-weight:bold;
-  // padding-left:10px;
-  // width:100% !important;
-  // min-width: 100%; //FF and IE
+  text-decoration: underline;
 }
 .font-phase-lg{
   font-size:($font-leader*0.7) !important;
   font-weight:bold;
-  // width:100% !important;
-  // min-width: 100%; //FF and IE
 }
 .font-sm{
 font-size:inherit;

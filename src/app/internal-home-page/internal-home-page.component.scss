@@ -5,31 +5,26 @@
     width:100%;
     padding-top:25px;
     margin: 0 auto;
-    -moz-column-width: 20em; /*Multi-columns Firefox */
-    -webkit-column-width: 20em; /*Multi-columns webkit, Safari, Chrome */
-    column-width: 20em; /*Multi-columns*/
+    -moz-column-width: 22em; /*Multi-columns Firefox */
+    -webkit-column-width: 22em; /*Multi-columns webkit, Safari, Chrome */
+    column-width: 22em; /*Multi-columns*/
 }
 
 .dictionary{
+
     li{
-        float: none;
         display: inline-block;
-        width:20em;
-        margin-bottom: 5px;
-        font-size: 11pt;
-        padding: 0;
-        border-radius:5px;
-        a{
-            color:$color-mineshaft;
-            text-decoration: none;
-            display: block;
-            padding: 5px 0px 5px 5px;
+        width:100%;
+
+        button {
+          width: 100%;
+          text-align: left;
+            text-overflow: wrap;
+            white-space: normal !important;
+            line-height: normal !important;
+            padding-top: 8px;
+            padding-bottom: 8px;
         }
-    }
-    li:hover{
-        background-color: $color-whitesmoke;
-        box-shadow: 1px 1px 2px 0px $color-dovegray;
-        cursor: pointer;
     }
 }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, Output, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, HostListener, ElementRef, Renderer2, Injectable } from '@angular/core';
 import { Router } from '@angular/router'
 import { AuthService } from '../Services/auth.service'
 import { TokenParams } from '../Models/TokenParams.model';
@@ -6,6 +6,8 @@ import { ClientList } from '../Models/ClientList.model';
 import * as $ from 'jquery';
 import { GlobalService } from '../Services/global.service';
 import { Subscription } from 'rxjs';
+import { templateJitUrl } from '@angular/compiler';
+
 
 
 @Component({
@@ -19,21 +21,16 @@ export class InternalHomePageComponent implements OnInit {
     public pYear: string;
     public tempYearVal: number;
     public selectedYear: string;
-    toolsOpened: Boolean;
-    hide: Boolean = false;
-    visibility: string = "hidden";
-    toolsIcon: string = "assessment";
-    subscription: Subscription;
+    public toolsOpened: Boolean;
+    public hide: Boolean = false;
+    public visibility: string = "hidden";
     public currentYear: number;
     public size_lg = this._g.size_lg;
     public size_md = this._g.size_md;
     public size_sm = this._g.size_sm;
     public size_xs = this._g.size_xs;
 
-
-
-
-    constructor(private _authService: AuthService, private _g: GlobalService, private router:Router) {
+    constructor(private _authService: AuthService, private _g: GlobalService, private router:Router, private rd: Renderer2) {
         this.currentYear = (new Date()).getFullYear();
     }
 
@@ -69,7 +66,7 @@ export class InternalHomePageComponent implements OnInit {
             .subscribe(data => {
                 this.ClientArr = data;
             });
-    }
+        }
 
     setYear(val) {
         this.selectedYear = val.target.textContent;
@@ -85,7 +82,6 @@ export class InternalHomePageComponent implements OnInit {
         if (tag === 1) {
             this.toolsOpened = !this.toolsOpened;
             this.hide = !this.hide;
-            this.toolsIcon = this.toolsOpened ? "arrow_forward_ios" : "assessment";
             this.visibleFunction();
         }
     }

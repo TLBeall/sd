@@ -10,6 +10,7 @@
 <div class="toolbox" [ngClass]="{
         'shifted': toolsOpened
       }">
+<<<<<<< HEAD
   <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
   <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
     <p>
@@ -50,6 +51,29 @@
           </td>
         </tr>
       </table>
+=======
+    <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
+    <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
+        <mat-form-field>
+          <mat-select [(value)]="client">
+            <mat-option *ngFor="let client of ClientArr" [value]="client.gClientAcronym">
+              {{client.gClientName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="fromDate" placeholder="start date">
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [matDatepicker]="endDatePicker" [(ngModel)]="toDate" placeholder="end date">
+          <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker></mat-datepicker>
+        </mat-form-field>
+      <p>Insert Filter(s)</p>
+      <button mat-raised-button color="accent" (click)="applyChanges()"> OK </button>
+>>>>>>> f00a3035a63d74cb31129fdae436e35ec365e2d1
     </div>
   </div>
 </div>
@@ -65,6 +89,7 @@
 <div class="toolbox" [ngClass]="{
     'shifted': demoOpened
   }">
+<<<<<<< HEAD
   <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
   <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
 
@@ -106,6 +131,55 @@
         </p>
       </mat-tab>
     </mat-tab-group>
+=======
+    <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
+    <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
+      <h5 id="L2Header">Donor Information</h5>
+      <hr>
+      <p>
+          Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball tip turducken. Pork belly meatball
+          t-bone bresaola tail filet mignon kevin turkey ribeye shank flank doner cow kielbasa shankle. Pig swine chicken
+          hamburger, tenderloin turkey rump ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison
+          brisket tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye tail short
+          ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger flank. Doner rump frankfurter meatball
+          meatloaf, cow kevin pork pork loin venison fatback spare ribs salami beef ribs.
+        </p>
+        <p>
+          Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas filet mignon brisket beef kevin tenderloin
+          porchetta. Capicola fatback venison shank kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami
+          prosciutto pancetta. Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip leberkas
+          flank sausage ham hock filet mignon beef ribs pancetta turkey.
+        </p>
+        <div style="height: 100px; width:100%;"></div>
+      <!-- <mat-tab-group color="accent" id="mainReturnsL2box">
+        <mat-tab class="test2" label="Mailed">
+          <p>
+            Donizzle doggy auctor maurizzle. Bling bling a tellivizzle izzle nibh pretizzle bizzle. Maecenizzle fo yippiyo. Bizzle fo
+            shizzle my nizzle lacus shizzlin dizzle maurizzle elementum tristique. Nunc rizzle tortizzle sizzle shiznit yo
+            porta. In velit fo shizzle, ultricizzle izzle, for sure quizzle, adipiscing quizzle, its fo rizzle. Etizzle my
+            shizz leo, for sure that's the shizzle, pharetra nizzle, fo shizzle sizzle, turpis. Daahng dawg tellivizzle.
+            Cras lorem. Cool vitae erat ut libero check it out adipiscing. Fusce ac crunk shizznit black ullamcorper brizzle.
+          </p>
+        </mat-tab>
+        <mat-tab label="Donors">
+          <p>
+            Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball tip turducken. Pork belly meatball
+            t-bone bresaola tail filet mignon kevin turkey ribeye shank flank doner cow kielbasa shankle. Pig swine chicken
+            hamburger, tenderloin turkey rump ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison
+            brisket tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye tail short
+            ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger flank. Doner rump frankfurter meatball
+            meatloaf, cow kevin pork pork loin venison fatback spare ribs salami beef ribs.
+          </p>
+          <p>
+            Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas filet mignon brisket beef kevin tenderloin
+            porchetta. Capicola fatback venison shank kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami
+            prosciutto pancetta. Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip leberkas
+            flank sausage ham hock filet mignon beef ribs pancetta turkey.
+          </p>
+        </mat-tab>
+      </mat-tab-group> -->
+    </div>
+>>>>>>> f00a3035a63d74cb31129fdae436e35ec365e2d1
   </div>
 </div>
 <!-- </div> -->

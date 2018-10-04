@@ -46,14 +46,20 @@
   display: none;
 }
 
+#L2Header{
+  text-align: center;
+  color: $color-blue-default;
+  
+}
 
- //Removes pagination (prev/next) on the mat tab 
- ::ng-deep .mat-tab-header-pagination {
-  display: none !important;
-}
-//Makes the tab header width roughly 50% of the toolbox (% doesnt work)
-::ng-deep #mainReturnsL2box .mat-tab-label{
-  padding: 0 !important;
-  width:136px;
-  min-width: 0px !important;
-}
+
+//  //Removes pagination (prev/next) on the mat tab 
+//  ::ng-deep .mat-tab-header-pagination {
+//   display: none !important;
+// }
+// //Makes the tab header width roughly 50% of the toolbox (% doesnt work)
+// ::ng-deep #mainReturnsL2box .mat-tab-label{
+//   padding: 0 !important;
+//   width:136px;
+//   min-width: 0px !important;
+// }

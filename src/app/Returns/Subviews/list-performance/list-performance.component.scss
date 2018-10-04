@@ -100,20 +100,7 @@ $btnColumnShift: 62px;
   }
 }
   
-#table1{
-  // width: 98%;
-  // margin: 0 auto;
-  // background-color:$color-gainsboro;
-}
-#table2{
-// background-color:$color-gallery;
-}
-#table3{
-// background-color:$color-whitesmoke;
-}
-#table4{
-// background-color:$color-white;
-}
+
 
 //Removes padding from all nested tables
 ::ng-deep table > tbody > tr > td.cdk-column-expandedDetail.mat-column-expandedDetail{
@@ -309,5 +296,3 @@ $font-leader:20px;
 .font-sm{
 // font-size:inherit;
 }
-
-

@@ -33,15 +33,17 @@ export class ReturnsComponent {
   private client:string;
   private clientName: string;
   private rootReturns: RootReturns;
+  private showFilterColumn: boolean = false;
+  private TTShow = this._g.mi_tooltipShowDelay;
+  private TTHide = this._g.mi_tooltipHideDelay;
 
 
-  // @ViewChild('PseudoDescription', { read: ElementRef })
-  // public pseudoDescription: ElementRef;
-  clientDisplayedColumns: string[] = ['Expand', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
-  mailTypeDisplayedColumns: string[] = ['Expand', 'MailType', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
-  campaignDisplayedColumns: string[] = ['Expand', 'CampaignName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
-  phaseDisplayedColumns: string[] = ['Expand', 'PhaseName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
-  mailListDisplayedColumns: string[] = ['PseudoExpand', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
+  clientDisplayedColumns: string[] = ['Expand', 'selectionBox', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  mailTypeDisplayedColumns: string[] = ['Expand', 'selectionBox', 'MailType', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  campaignDisplayedColumns: string[] = ['Expand', 'selectionBox', 'CampaignName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  phaseDisplayedColumns: string[] = ['Expand', 'selectionBox', 'PhaseName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  mailListDisplayedColumns: string[] = ['PseudoExpand', 'selectionBox', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+
 
   constructor(route: ActivatedRoute, private _authService:AuthService, private _g: GlobalService, private router:Router) {
     this.route = route;
@@ -68,7 +70,6 @@ export class ReturnsComponent {
     this.endDate = new Date(Date.parse(endDate.split('.')[0].toString() + '/' + endDate.split('.')[1].toString() + '/' + endDate.split('.')[2].toString())) ;
   }
 
-  // NavigateToListPerformance(element.ListOwner, element.ListManager, element.Recency, '01/01/2018', '12/31/2018')
 
   NavigateToListPerformance(ListOwner:number, ListManager:number, Recency:number, startDate:Date, endDate:Date) {
     this._g.clearCurCache = true;
@@ -104,6 +105,7 @@ export class ReturnsComponent {
     return RetValue;
   }
 
+
   NextLevel(Parent: any, ChildList: any[]) {
     var SetToExpand = true;
     if (this.ReadyToCollapseAll(ChildList))
@@ -138,7 +140,8 @@ export class ReturnsComponent {
     if (Parent.Measure.Expanded == false)
       Parent.Measure.Expanded = true;
   }
-  toggleState: boolean;
+
+
   ToggleExpansion(Element: any) {
     if (Element.Measure)
       Element.Measure.Expanded = !Element.Measure.Expanded;
@@ -151,7 +154,6 @@ export class ReturnsComponent {
   }
 
   SortFunction(sort: Sort, Element: any) {
-
     var data: any;
     var myType: string = "";
 
@@ -214,6 +216,7 @@ export class ReturnsComponent {
       }
     }
 
+    
     var sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
@@ -241,7 +244,6 @@ export class ReturnsComponent {
     });
 
     
-
     switch (myType) {
       case "MailTypeList": {
         sort.active = "MailType";

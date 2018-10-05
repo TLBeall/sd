@@ -12,7 +12,6 @@ import { NavigationBarComponent } from './navigation-bar/navigation-bar.componen
 import { LoaderService } from './Loader/loader.service';
 import { LoaderComponent } from './Loader/loader.component';
 import { ListPerformanceComponent } from './returns/Subviews/list-performance/list-performance.component';
-import { MainReturnsToolboxComponent } from './Returns/Toolbox-and-L2/main-returns-toolbox/main-returns-toolbox.component';
 import { ClickOutsideDirective } from './click-outside.directive';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { MainReturnsToolbarComponent } from './toolbar/main-returns-toolbar/main-returns-toolbar.component';
@@ -39,7 +38,6 @@ import { ListPerformanceToolbarComponent } from './toolbar/list-performance-tool
     InternalHomePageComponent,
     routingComponents,
     LoaderComponent,
-    MainReturnsToolboxComponent,
     ClickOutsideDirective,
     ToolbarComponent,
     MainReturnsToolbarComponent,

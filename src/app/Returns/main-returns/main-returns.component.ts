@@ -1,12 +1,13 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { Sort, MatTableModule, MatTable } from '@angular/material';
 import { LoaderService } from '../../Loader/loader.service';
-import { ActivatedRoute, Params } from "@angular/router";
+import { Router, ActivatedRoute, Params } from "@angular/router";
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { RootReturns } from '../../Models/RootReturns.model';
 import { GlobalService } from '../../Services/global.service';
-import { Router } from '@angular/router'
-import { AuthService } from '../../Services/auth.service'
+import { AuthService } from '../../Services/auth.service';
+import { ClientList } from '../../Models/ClientList.model';
+
 
 @Component({
   selector: 'app-main-returns',
@@ -36,7 +37,15 @@ export class ReturnsComponent {
   private showFilterColumn: boolean = false;
   private TTShow = this._g.mi_tooltipShowDelay;
   private TTHide = this._g.mi_tooltipHideDelay;
-
+  fromDate: Date;
+  toDate: Date;
+  toolsOpened: Boolean;
+  demoOpened: Boolean;
+  hide: Boolean = false;
+  visibility: string = "hidden";
+  toolsIcon: string = "settings";
+  l2Icon: string = "group";
+  public ClientArr: ClientList[];
 
   clientDisplayedColumns: string[] = ['Expand', 'selectionBox', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
   mailTypeDisplayedColumns: string[] = ['Expand', 'selectionBox', 'MailType', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
@@ -44,6 +53,7 @@ export class ReturnsComponent {
   phaseDisplayedColumns: string[] = ['Expand', 'selectionBox', 'PhaseName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
   mailListDisplayedColumns: string[] = ['PseudoExpand', 'selectionBox', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
 
+  @Output() results: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(route: ActivatedRoute, private _authService:AuthService, private _g: GlobalService, private router:Router) {
     this.route = route;
@@ -57,6 +67,10 @@ export class ReturnsComponent {
         this.rootReturns = this._g.SetLastElements(this.rootReturns)
         this.pageReady = true;
       });
+      this._authService.getClientList("All")
+    .subscribe(data => {
+        this.ClientArr = data;
+      });  
       this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.client).gClientName;
         // In a real app: dispatch action to load the details here.
    });
@@ -269,6 +283,48 @@ export class ReturnsComponent {
     }
     this._g.SetLastElements(this.rootReturns[0]);
   }
+
+  toggle(tag: number) {
+    if (tag === 1) {
+      this.toolsOpened = !this.toolsOpened;
+      this.hide = !this.hide;
+      this.toolsIcon = this.toolsOpened ? "arrow_forward_ios" : "settings";
+      this.visibleFunction();
+    } else if (tag === 2) {
+      this.demoOpened = !this.demoOpened;
+      this.hide = !this.hide;
+      this.l2Icon = this.demoOpened ? "arrow_forward_ios" : "group";
+      this.visibleFunction();
+    }
+  }
+
+  visibleFunction() {
+    if (this.visibility == "hidden") {
+      setTimeout(() => {
+        this.visibility = "visible";
+      }, 200);
+    } else {
+      this.visibility = "hidden";
+    }
+  }
+
+  closeToolbox() {
+    // this.opened = !this.opened;
+    // this.demoOpened = false;
+    //not sure if these should close on click outside?
+  }
+
+  applyChanges() {
+
+    var Results:RootReturns;
+    this._authService.getReturns(this.client, this.fromDate, this.toDate).subscribe(data => {
+      if (data)
+      Results = data;
+      Results = this._g.SetLastElements(Results);
+      this.results.emit(Results);
+    });
+  }
+
 }
 
 function compare(a: string, b: string, isAsc) {

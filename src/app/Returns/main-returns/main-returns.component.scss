@@ -1,9 +1,6 @@
 @import '~src/appTheme.scss'; 
 
-
 $btnColumnShift: 72px; //used to control the left column for both parent and child tables
-
-
 
 table {
   width: 100%;
@@ -291,5 +288,69 @@ font-weight: bolder;
 font-size:inherit;
 }
 
+
+
+// <><><><><><><><><><><><><><><><><><><><><>
+//<><><><><> TOOLBOX SETTINGS START <><<><><>
+/*Button Settings Start*/
+#toolboxBtn{
+  top: 92px;
+  border-radius:0 0 0 0.25rem !important;
+}
+
+#demoToolboxBtn{
+  top: 124px;
+  border-radius:0.25rem 0 0 0.25rem !important;
+}
+
+.toolboxButtonCollection{
+  @include toolboxBtnCollMain;
+  &.btnShifted{
+    @include toolboxBtnCollShifted;
+  }
+  i{
+    font-size:20px;
+    margin:auto;
+  }
+}
+/*Button Settings End*/
+/*<><><><><><><><>*/
+
+.toolbox{
+  @include toolboxBase;
+}
+/*In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll*/
+.toolboxScrollContainer{
+  @include toolboxScrolling;
+}
+.psuedoClearfix {
+  @include toolboxClearfix;
+}
+
+.toolbox.shifted{
+  @include toolboxShifted;
+}
+
+.hidden{
+  display: none;
+}
+
+#L2Header{
+  text-align: center;
+  color: $color-blue-default;
+  
+}
+//  //Removes pagination (prev/next) on the mat tab 
+//  ::ng-deep .mat-tab-header-pagination {
+//   display: none !important;
+// }
+// //Makes the tab header width roughly 50% of the toolbox (% doesnt work)
+// ::ng-deep #mainReturnsL2box .mat-tab-label{
+//   padding: 0 !important;
+//   width:136px;
+//   min-width: 0px !important;
+// }
+// <><><><><><><><><><><><><><><><><><><><><>
+//<><><><><> TOOLBOX SETTINGS END <><<><><>
 
 

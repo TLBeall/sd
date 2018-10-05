@@ -1,6 +1,6 @@
 <div *ngIf="this.pageReady == false" class="loading-indicator">
-    <mat-progress-spinner mode="determinate" color="accent"></mat-progress-spinner>
-</div>
+    <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+  </div>
 <div *ngIf="this.pageReady == true">
     <app-toolbar></app-toolbar>
     <table id="table1" mat-table [dataSource]="this.rootReturns" multiTemplateDataRows #PseudoDescription>

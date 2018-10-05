@@ -46,9 +46,11 @@ export class AuthService {
     return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 
+  // + ".SFLA.AFA.AIG"
+
   getReturns(client: string, startDate: Date, endDate: Date):Observable<RootReturns> {
     var Token = "";
-    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/Returns?ClientAcronyms="+ client + "&startdate=" + startDate.toDateString() + "&enddate=" + endDate.toDateString();
+    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/Returns?ClientAcronyms="+ client  + "&startdate=" + startDate.toDateString() + "&enddate=" + endDate.toDateString();
 
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
     return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));

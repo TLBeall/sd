@@ -2,7 +2,6 @@
     <mat-progress-spinner mode="determinate" color="accent"></mat-progress-spinner>
 </div>
 <div *ngIf="this.pageReady == true">
-
     <app-main-returns-toolbox (results)='onResults($event)'></app-main-returns-toolbox>
     <app-toolbar></app-toolbar>
     <table id="table1" mat-table [dataSource]="this.rootReturns" multiTemplateDataRows #PseudoDescription>
@@ -13,7 +12,7 @@
                     <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_arrow_drop_down' : 'mi_arrow_right'"></i>
                     <!-- [ngStyle]="{'visibility':CollapseListBtn(element) ? 'expand' : 'collapse'}" -->
                 </button>
-                <button mat-icon-button (click)="NextLevel(this.rootReturns[0], this.rootReturns[0].MailTypeList)"
+                <button mat-icon-button (click)="NextLevel(element, element.MailTypeList)"
                     class="returnsExpCollBtn">
                     <i class="material-icons" [ngClass]="ReadyToCollapseAll(this.rootReturns[0].MailTypeList) ? 'custom_line_weight_icon' : 'mi_drag_handle'"></i>
                 </button>
@@ -31,11 +30,11 @@
             <th mat-header-cell *matHeaderCellDef class="mailLevelColumn testColumn" [ngClass]="this.rootReturns[0].Measure.Expanded ? 'headerCollapsed' : 'headerExpanded'">
                 Client </th>
             <td mat-cell *matCellDef="let element" class="mailLevelColumn" [ngClass]="{
-                                                    'font-client-lg': GetVisibilityStyle(! this.rootReturns[0].Measure.Expanded) == 'collapse',
-                                                    'font-sm': GetVisibilityStyle(! this.rootReturns[0].Measure.Expanded) == 'expand'
+                                                    'font-client-lg': GetVisibilityStyle(! element.Measure.Expanded) == 'collapse',
+                                                    'font-sm': GetVisibilityStyle(! element.Measure.Expanded) == 'expand'
                                                 }">
-                {{ this.clientName }} </td>
-            <td mat-footer-cell *matFooterCellDef class="mailLevelColumn"> Total {{ this.clientName }} </td>
+                {{ element.ClientName }} </td>
+            <td mat-footer-cell *matFooterCellDef class="mailLevelColumn"> Total {{ element.ClientName }} </td>
         </ng-container>
         <ng-container matColumnDef="PseudoDescription">
             <th mat-header-cell *matHeaderCellDef class="descriptionColumn" [ngClass]="this.rootReturns[0].Measure.Expanded ? 'headerCollapsed' : 'headerExpanded'"></th>

@@ -20,14 +20,14 @@ export class ToolbarComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    this.toolbarHeight = this.toolbar.nativeElement.clientHeight;
-    this.clearFixHeight = this.toolbarHeight + 73;
+    // this.toolbarHeight = this.toolbar.nativeElement.clientHeight;
+    // this.clearFixHeight = this.toolbarHeight + 73;
   }
 
   @ViewChild('toolbar', { read: ElementRef })
   public toolbar: ElementRef<any>;
   ngOnInit() {
-    this.toolbarHeight = this.toolbar.nativeElement.clientHeight;
+    // this.toolbarHeight = this.toolbar.nativeElement.clientHeight;
   }
 
   runPageReference() {

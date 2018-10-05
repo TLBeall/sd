@@ -1,7 +1,14 @@
 @import '~src/appTheme.scss';
 
 
-/*<><><><><><><><>*/
+
+
+
+
+
+
+// <><><><><><><><><><><><><><><><><><><><><>
+//<><><><><> TOOLBOX SETTINGS START <><<><><>
 /*Button Settings Start*/
 #toolboxBtn{
   top: 92px;
@@ -25,7 +32,6 @@
 }
 /*Button Settings End*/
 /*<><><><><><><><>*/
-
 
 .toolbox{
   @include toolboxBase;
@@ -51,8 +57,6 @@
   color: $color-blue-default;
   
 }
-
-
 //  //Removes pagination (prev/next) on the mat tab 
 //  ::ng-deep .mat-tab-header-pagination {
 //   display: none !important;
@@ -63,3 +67,5 @@
 //   width:136px;
 //   min-width: 0px !important;
 // }
+// <><><><><><><><><><><><><><><><><><><><><>
+//<><><><><> TOOLBOX SETTINGS END <><<><><>

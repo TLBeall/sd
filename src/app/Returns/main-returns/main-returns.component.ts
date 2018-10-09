@@ -29,9 +29,9 @@ export class ReturnsComponent {
 
   private route: any;
   private startDate: any;
-  private endDate:any;
-  private pageReady:boolean=false;
-  private selectedClients:string[] = new Array<string>();
+  private endDate: any;
+  private pageReady: boolean = false;
+  private selectedClients: string[] = new Array<string>();
   private clientName: string;
   private rootReturns: RootReturns;
   private showFilterColumn: boolean = false;
@@ -39,52 +39,75 @@ export class ReturnsComponent {
   private TTHide = this._g.mi_tooltipHideDelay;
   toolsOpened: Boolean;
   demoOpened: Boolean;
+  private starttimer: number = 0;
+  private endtimer: number = 0;
   hide: Boolean = false;
   visibility: string = "hidden";
   toolsIcon: string = "settings";
   l2Icon: string = "group";
   public ClientArr: ClientList[];
 
-  clientDisplayedColumns: string[] = ['Expand', 'selectionBox', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
-  mailTypeDisplayedColumns: string[] = ['Expand', 'selectionBox', 'MailType', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
-  campaignDisplayedColumns: string[] = ['Expand', 'selectionBox', 'CampaignName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
-  phaseDisplayedColumns: string[] = ['Expand', 'selectionBox', 'PhaseName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
-  mailListDisplayedColumns: string[] = ['PseudoExpand', 'selectionBox', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
-  
-  constructor(route: ActivatedRoute, private _authService:AuthService, private _g: GlobalService, private router:Router) {
+  clientDisplayedColumns: string[] = ['Expand', 'selectionBox','PseudoDescription',  'ExchangeFlag', 'Client', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  mailTypeDisplayedColumns: string[] = ['Expand','selectionBox', 'PseudoDescription', 'ExchangeFlag', 'MailType', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  campaignDisplayedColumns: string[] = ['Expand', 'selectionBox','PseudoDescription', 'ExchangeFlag', 'CampaignName', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  phaseDisplayedColumns: string[] = ['Expand',  'selectionBox','PseudoDescription', 'ExchangeFlag', 'PhaseName', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  mailListDisplayedColumns: string[] = ['PseudoExpand','selectionBox','MailDescription',  'ExchangeFlag', 'MailCode', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'MailDescription', 'ExchangeFlag' 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+
+  constructor(route: ActivatedRoute, private _authService: AuthService, private _g: GlobalService, private router: Router) {
     this.route = route;
   }
 
   ngOnInit() {
+    if (this.pageReady == false) {
+      if (this.starttimer == 0)
+        this.starttimer = new Date().getTime();
+    }
+    else
+      this.starttimer = 0;
     this.route.params.subscribe(params => {
-      this.LoadValues(params['client'], params['from'], params['to']); 
+      this.LoadValues(params['client'], params['from'], params['to']);
       this._authService.getReturns(this.selectedClients[0], this.startDate, this.endDate).subscribe(data => {
         this.rootReturns = data;
         this.rootReturns = this._g.SetLastElements(this.rootReturns)
         this.pageReady = true;
       });
       this._authService.getClientList("All")
-    .subscribe(data => {
-        this.ClientArr = data;
-      });  
+        .subscribe(data => {
+          this.ClientArr = data;
+        });
       this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.selectedClients[0]).gClientName;
-        // In a real app: dispatch action to load the details here.
-   });
+      // In a real app: dispatch action to load the details here.
+    });
 
   }
 
-  LoadValues(client:string, startDate:any, endDate:any)
-  {
+  ngDoCheck() {
+    if (this.pageReady == false) {
+      if (this.starttimer == 0)
+        this.starttimer = new Date().getTime();
+    }
+    else
+      this.starttimer = 0;
+  }
+
+  // When change detection has finished:
+  // child components created, all *ngIfs evaluated
+  ngAfterViewChecked() {
+    if ((this.pageReady == false) || ( this.starttimer != 0 && this.pageReady == true))
+      this.endtimer = new Date().getTime() - this.starttimer;
+  }
+
+  LoadValues(client: string, startDate: any, endDate: any) {
     this.selectedClients.push(client);
-    this.startDate = new Date(Date.parse(startDate.split('.')[0].toString() + '/' + startDate.split('.')[1].toString() + '/' + startDate.split('.')[2].toString())) ;
-    this.endDate = new Date(Date.parse(endDate.split('.')[0].toString() + '/' + endDate.split('.')[1].toString() + '/' + endDate.split('.')[2].toString())) ;
+    this.startDate = new Date(Date.parse(startDate.split('.')[0].toString() + '/' + startDate.split('.')[1].toString() + '/' + startDate.split('.')[2].toString()));
+    this.endDate = new Date(Date.parse(endDate.split('.')[0].toString() + '/' + endDate.split('.')[1].toString() + '/' + endDate.split('.')[2].toString()));
   }
 
 
-  NavigateToListPerformance(ListOwner:number, ListManager:number, Recency:number, startDate:Date, endDate:Date) {
+  NavigateToListPerformance(ListOwner: number, ListManager: number, Recency: number, startDate: Date, endDate: Date) {
     this._g.clearCurCache = true;
     this.router.navigate(['listperformance' + '/' + ListOwner + '/' + ListManager + '/' + Recency + '/' + startDate.toLocaleDateString().split('/').join('.') + '/' + endDate.toLocaleDateString().split('/').join('.')]);
-}
+  }
 
   GetVisibilityStyle(state: boolean): string {
     if (state)
@@ -106,11 +129,11 @@ export class ReturnsComponent {
     var RetValue: boolean = false;
     list.forEach(b => {
       if (b.Measure)
-      if (b.Measure.Expanded == true) {
-        RetValue = true;
-        return RetValue;
-      } else {
-      }
+        if (b.Measure.Expanded == true) {
+          RetValue = true;
+          return RetValue;
+        } else {
+        }
     })
     return RetValue;
   }
@@ -157,8 +180,7 @@ export class ReturnsComponent {
       Element.Measure.Expanded = !Element.Measure.Expanded;
   }
 
-  onResults(ReturnedResults:any):any
-  {
+  onResults(ReturnedResults: any): any {
     this.clientName = this._g.clientArr.find(p => p.gClientAcronym == ReturnedResults[0].Client).gClientName;
     this.rootReturns = ReturnedResults;
   }
@@ -226,7 +248,7 @@ export class ReturnsComponent {
       }
     }
 
-    
+
     var sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
@@ -253,7 +275,7 @@ export class ReturnsComponent {
       }
     });
 
-    
+
     switch (myType) {
       case "MailTypeList": {
         sort.active = "MailType";
@@ -312,21 +334,20 @@ export class ReturnsComponent {
 
   applyChanges() {
 
-    var Results:RootReturns;
+    var Results: RootReturns;
 
     var clientsStr = "";
     this.pageReady = false;
 
-    if (this.selectedClients.length > 1)
-    {
-      this.selectedClients.forEach(element => { clientsStr = element + "." + clientsStr;});
+    if (this.selectedClients.length > 1) {
+      this.selectedClients.forEach(element => { clientsStr = element + "." + clientsStr; });
       clientsStr = clientsStr.substring(0, clientsStr.length - 1);
     }
-    else clientsStr = this.selectedClients[0];  
+    else clientsStr = this.selectedClients[0];
 
     this._authService.getReturns(clientsStr, this.startDate, this.endDate).subscribe(data => {
       if (data)
-      this.rootReturns = data;
+        this.rootReturns = data;
       Results = data;
       Results = this._g.SetLastElements(Results);
       this.pageReady = true;

@@ -93,6 +93,7 @@ $shiftStyle: cubic-bezier(0.175, 0.885, 0.32, 1.1);
 // just apply to any element, ex: a{ @include underlineOne }
 @mixin underlineOne{
     &{
+        cursor: pointer;
         position: relative;
         color: inherit;
         text-decoration: none;

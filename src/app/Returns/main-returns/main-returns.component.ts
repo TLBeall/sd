@@ -35,8 +35,6 @@ export class ReturnsComponent {
   private clientName: string;
   private rootReturns: RootReturns;
   private showFilterColumn: boolean = false;
-  private TTShow = this._g.mi_tooltipShowDelay;
-  private TTHide = this._g.mi_tooltipHideDelay;
   toolsOpened: Boolean;
   demoOpened: Boolean;
   hide: Boolean = false;

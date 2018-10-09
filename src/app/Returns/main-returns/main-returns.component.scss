@@ -21,6 +21,10 @@ table {
       font-size: inherit !important;
     }
   }
+  //controls the list table
+  .listTable{
+    margin-top: 10px;
+  }
 }
 .loading-indicator {
   position: fixed;
@@ -211,23 +215,24 @@ tr.mat-footer-row{
   height:1px;
   float:left;
 }
-.pPackageTitle{
+.sPackageTitle{
 font-size: 12px;
 font-weight:bold;
+font-style: italic;
+color: $color-blue-dark;
 }
-.pPackageFormat{
+.sPackageFormat{
 font-size: 12px;
 font-weight: bold;
 }
 .aPackagePDF{
+  @include underlineOne;
   font-size: 12px;
   float:left;
-  &:hover{
-    text-decoration: underline;
-  }
+  color: $color-blue-dark !important;
 }
-.pPackageDoubling{
-  font-size:13px;
+.sPackageDoubling{
+  font-size:12px;
 }
 .formatDiv{
   text-align: right;
@@ -242,7 +247,6 @@ font-weight: bold;
 .prospectListDescription{
   a{
     @include underlineOne;
-    cursor: pointer;
   }
   span{ //required since the anchor tags would be shifted up by a couple pixels above the "/" span tags
     position: relative;

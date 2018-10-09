@@ -1,5 +1,4 @@
 import { BrowserModule, platformBrowser } from '@angular/platform-browser';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -19,7 +18,7 @@ import { HomePageInternalToolbarComponent } from './toolbar/home-page-internal-t
 import { MatTableModule } from '@angular/material/table';
 import { MatTreeModule, MatSort, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule, 
         MatSortModule, MatProgressSpinnerModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatInputModule, 
-        MatCheckboxModule, MatTooltipModule, MatProgressBarModule, MatSlideToggleModule } from '@angular/material';
+        MatCheckboxModule, MatProgressBarModule, MatSlideToggleModule } from '@angular/material';
 import { InternalHomePageComponent } from './internal-home-page/internal-home-page.component';
 import { InternalHomeDashboardComponent } from './internal-home-page/internal-home-dashboard/internal-home-dashboard.component';
 import { GlobalService } from './Services/global.service';
@@ -52,7 +51,6 @@ import { ListPerformanceToolbarComponent } from './toolbar/list-performance-tool
     RouterModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    AngularFontAwesomeModule,
     MatTableModule,
     MatSortModule,
     BrowserAnimationsModule,
@@ -71,7 +69,6 @@ import { ListPerformanceToolbarComponent } from './toolbar/list-performance-tool
     MatProgressSpinnerModule,
     MatSlideToggleModule,
     MatCheckboxModule,
-    MatTooltipModule,
     MatProgressBarModule
   ],
   providers: [

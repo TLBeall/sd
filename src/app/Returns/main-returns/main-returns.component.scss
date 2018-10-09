@@ -15,11 +15,15 @@ table {
       font-weight: bold;
       border-bottom:none;
       border-top: 1px solid $color-gainsboro;
-      
+
     }
     &.cdk-column-expandedDetail{
       font-size: inherit !important;
     }
+  }
+  //controls the list table
+  .listTable{
+    margin-top: 10px;
   }
 }
 .loading-indicator {
@@ -211,23 +215,24 @@ tr.mat-footer-row{
   height:1px;
   float:left;
 }
-.pPackageTitle{
+.sPackageTitle{
 font-size: 12px;
 font-weight:bold;
+font-style: italic;
+color: $color-blue-dark;
 }
-.pPackageFormat{
+.sPackageFormat{
 font-size: 12px;
 font-weight: bold;
 }
 .aPackagePDF{
+  @include underlineOne;
   font-size: 12px;
   float:left;
-  &:hover{
-    text-decoration: underline;
-  }
+  color: $color-blue-dark !important;
 }
-.pPackageDoubling{
-  font-size:13px;
+.sPackageDoubling{
+  font-size:12px;
 }
 .formatDiv{
   text-align: right;
@@ -338,7 +343,6 @@ font-size:inherit;
 #L2Header{
   text-align: center;
   color: $color-blue-default;
-  
 }
 //  //Removes pagination (prev/next) on the mat tab 
 //  ::ng-deep .mat-tab-header-pagination {

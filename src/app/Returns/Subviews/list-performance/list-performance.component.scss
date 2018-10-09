@@ -1,69 +1,6 @@
 @import '~src/appTheme.scss';  
 $btnColumnShift: 62px;
 
-// <><><><><><><><><><><><><><><><><><><><><>
-//<><><><><> TOOLBOX SETTINGS START <><<><><>
-
-
-/*<><><><><><><><>*/
-/*Button Settings Start*/
-#toolboxBtn{
-  top: 92px;
-  border-radius:0 0 0 0.25rem !important;
-}
-
-#demoToolboxBtn{
-  top: 124px;
-  border-radius:0.25rem 0 0 0.25rem !important;
-}
-
-.toolboxButtonCollection{
-  @include toolboxBtnCollMain;
-  &.btnShifted{
-    @include toolboxBtnCollShifted;
-  }
-  i{
-    font-size:20px;
-    margin:auto;
-  }
-}
-/*Button Settings End*/
-/*<><><><><><><><>*/
-
-
-.toolbox{
-  @include toolboxBase;
-}
-/*In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll*/
-.toolboxScrollContainer{
-  @include toolboxScrolling;
-}
-.psuedoClearfix {
-  @include toolboxClearfix;
-}
-
-.toolbox.shifted{
-  @include toolboxShifted;
-}
-
-.hidden{
-  display: none;
-}
-
-
- //Removes pagination (prev/next) on the mat tab 
- ::ng-deep .mat-tab-header-pagination {
-  display: none !important;
-}
-//Makes the tab header width roughly 50% of the toolbox (% doesnt work)
-::ng-deep #mainReturnsL2box .mat-tab-label{
-  padding: 0 !important;
-  width:136px;
-  min-width: 0px !important;
-}
-
-
-//end Toolbox
 
 .loading-indicator {
   position: fixed;
@@ -96,6 +33,7 @@ $btnColumnShift: 62px;
   height:30px;
   i{
     padding: 0px 0px 10px 0px;
+    opacity: 0.4;
   }
 }
   
@@ -160,30 +98,10 @@ $btnColumnShift: 62px;
     th{
       font-size:12px !important;
     }
-    //controls the list table
     td{
       font-size:11px;
-      &.mat-footer-cell{
-        font-weight: bold;
-        border-bottom:none;
-        border-top: 1px solid $color-gainsboro;
-        
-      }
-      &.cdk-column-expandedDetail{
-        font-size: inherit !important;
       }
   }
-}
-
-.campaignFooterCell{
-  border-top:none !important;
-}
-
-//Controls the location of the phase button within the left-most column
-.phaseToggleButton{
-  float:right;
-  margin-right:2px;
-}
 
 //Collectively control the row settings and cell settings (set the row height of all the tables)
 .mat-row {
@@ -206,92 +124,85 @@ tr.mat-footer-row{
 td.mat-footer-cell{
   padding-top:6px;
   padding-bottom:30px;
+  font-weight: bold;
+  border-bottom:none;
+  border-top: 1px solid $color-gainsboro;
 }
 
-
-.phaseInfoBuffer{
-  width:($btnColumnShift - 15);
-  height:1px;
-  float:left;
+//Controls hover and selected for the row?
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: #e3eff7;
 }
-.pPackageTitle{
-font-size: 14px;
-font-weight:bold;
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #e3eff7;
 }
-
-.pPackageFormat{
-font-size: 13px;
-font-weight: bold;
-}
-
-.aPackagePDF{
-  font-size: 12px;
-  float:left;
-  &:hover{
-    text-decoration: underline;
-  }
-}
-
-.pPackageDoubling{
-  font-size:13px;
-}
-
-.formatDiv{
-  text-align: right;
-}
-  @media screen and (max-width:$size-md){
-    .formatDiv{
-    text-align:left;
-  }
-}
-
-
-  //Controls hover and selected for the row?
-  tr.example-element-row:not(.example-expanded-row):hover {
-    background: #e3eff7;
-  }
-  tr.example-element-row:not(.example-expanded-row):active {
-    background: #e3eff7;
-  }
-  
-
-
-//Controls child view initial settings
-  .example-element-detail {
-    overflow: hidden;
-    display: flex;
-  }
-
 
 //Controls color of negative values on table
 .negative {
   color: red;
 }
 
+#L2Header{
+  text-align: center;
+  color: $color-blue-default;
+}
 
 
-//Controls font size for headers of tables depending on expanded/collapsed state
-$font-leader:20px;
-.font-client-lg{
-// font-size:($font-leader*1.2) !important;
-// font-weight: bolder;
-// color: $color-blue-default;
-// padding-left:30px;
+// <><><><><><><><><><><><><><><><><><><><><>
+//<><><><><> TOOLBOX SETTINGS START <><<><><>
+/*<><><><><><><><>*/
+/*Button Settings Start*/
+#toolboxBtn{
+  top: 92px;
+  border-radius:0 0 0 0.25rem !important;
 }
-.font-mailType-lg{
-  // font-size:($font-leader*1.1) !important;
-  // font-weight:bold;
-  // padding-left:20px;
+
+#demoToolboxBtn{
+  top: 124px;
+  border-radius:0.25rem 0 0 0.25rem !important;
 }
-.font-campaignName-lg{
-  // font-size:($font-leader*1.0) !important;
-  // font-weight:bold;
-  // padding-left:10px;
+
+.toolboxButtonCollection{
+  @include toolboxBtnCollMain;
+  &.btnShifted{
+    @include toolboxBtnCollShifted;
+  }
+  i{
+    font-size:20px;
+    margin:auto;
+  }
 }
-.font-phase-lg{
-  // font-size:($font-leader*0.8) !important;
-  // font-weight:bold;
+/*Button Settings End*/
+/*<><><><><><><><>*/
+
+.toolbox{
+  @include toolboxBase;
 }
-.font-sm{
-// font-size:inherit;
+/*In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll*/
+.toolboxScrollContainer{
+  @include toolboxScrolling;
 }
+.psuedoClearfix {
+  @include toolboxClearfix;
+}
+
+.toolbox.shifted{
+  @include toolboxShifted;
+}
+
+.hidden{
+  display: none;
+}
+
+//  //Removes pagination (prev/next) on the mat tab 
+//  ::ng-deep .mat-tab-header-pagination {
+//   display: none !important;
+// }
+// //Makes the tab header width roughly 50% of the toolbox (% doesnt work)
+// ::ng-deep #mainReturnsL2box .mat-tab-label{
+//   padding: 0 !important;
+//   width:136px;
+//   min-width: 0px !important;
+// }
+// <><><><><><><><><><><><><><><><><><><><><>
+//<><><><><> TOOLBOX SETTINGS END <><<><><>

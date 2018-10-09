@@ -12,20 +12,20 @@ export class ToolbarComponent implements OnInit {
   public location = '';
   public toolbarHeight: any;
   public clearFixHeight: any = 115;
+  // @ViewChild('toolbar', { read: ElementRef })
+  // public toolbar: ElementRef<any>;
 
 
   constructor(private _router: Router) {
     this.location = _router.url;
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    // this.toolbarHeight = this.toolbar.nativeElement.clientHeight;
-    // this.clearFixHeight = this.toolbarHeight + 73;
-  }
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event) {
+  //   this.toolbarHeight = this.toolbar.nativeElement.clientHeight;
+  //   this.clearFixHeight = this.toolbarHeight + 73;
+  // }
 
-  @ViewChild('toolbar', { read: ElementRef })
-  public toolbar: ElementRef<any>;
   ngOnInit() {
     // this.toolbarHeight = this.toolbar.nativeElement.clientHeight;
   }

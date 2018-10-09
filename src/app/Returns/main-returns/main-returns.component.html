@@ -8,12 +8,12 @@
             <th mat-header-cell *matHeaderCellDef class="expandBtnColumn"></th>
             <td mat-cell *matCellDef="let element" class="expandBtnColumn">
                 <button mat-icon-button (click)="ToggleExpansion(element)" class="returnsExpCollBtn"
-                 [matTooltipShowDelay]="TTShow" [matTooltipHideDelay]="TTHide" matTooltip="Minimize Client">
+                 [matTooltipShowDelay]="TTShow" [matTooltipHideDelay]="TTHide" matTooltipPosition="right" matTooltip="Expand/Collapse Client">
                     <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_arrow_drop_down' : 'mi_arrow_right'"></i>
                     <!-- [ngStyle]="{'visibility':CollapseListBtn(element) ? 'expand' : 'collapse'}" -->
                 </button>
-                <button mat-icon-button (click)="NextLevel(element, element.MailTypeList)"
-                    class="returnsExpCollBtn" [matTooltipShowDelay]="TTShow" [matTooltipHideDelay]="TTHide" matTooltip="Collapse Mail Types">
+                <button mat-icon-button (click)="NextLevel(element, element.MailTypeList)" class="returnsExpCollBtn" 
+                    [matTooltipShowDelay]="TTShow" [matTooltipHideDelay]="TTHide" matTooltipPosition="right" matTooltip="Expand/Collapse all Mail Types">
                     <i class="material-icons" [ngClass]="ReadyToCollapseAll(this.rootReturns[0].MailTypeList) ? 'custom_line_weight_icon' : 'mi_drag_handle'"></i>
                 </button>
             </td>
@@ -159,10 +159,12 @@
                                 <ng-container matColumnDef="Expand" >
                 <th mat-header-cell *matHeaderCellDef class="expandBtnColumn"></th>
                 <td mat-cell *matCellDef="let element" class="expandBtnColumn">
-                    <button mat-icon-button (click)="ToggleExpansion(element)" class="returnsExpCollBtn">
+                    <button mat-icon-button (click)="ToggleExpansion(element)" class="returnsExpCollBtn"
+                    [matTooltipShowDelay]="TTShow" [matTooltipHideDelay]="TTHide" matTooltipPosition="right" matTooltip="Expand/Collapse Mail Type">
                         <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_arrow_drop_down' : 'mi_arrow_right'"></i>
                     </button>
-                    <button mat-icon-button (click)="NextLevel(element, element.CampaignList)" class="returnsExpCollBtn">
+                    <button mat-icon-button (click)="NextLevel(element, element.CampaignList)" class="returnsExpCollBtn"
+                    [matTooltipShowDelay]="TTShow" [matTooltipHideDelay]="TTHide" matTooltipPosition="right" matTooltip="Expand/Collapse all Campaigns ">
                         <i class="material-icons" [ngClass]="ReadyToCollapseAll(element.CampaignList) ? 'custom_line_weight_icon' : 'mi_drag_handle'"></i>
                     </button>
                 </td>
@@ -330,10 +332,12 @@
                                     <ng-container matColumnDef="Expand" >
                     <th mat-header-cell *matHeaderCellDef class="expandBtnColumn"></th>
                     <td mat-cell *matCellDef="let element" class="expandBtnColumn">
-                        <button mat-icon-button (click)="ToggleExpansion(element)" class="returnsExpCollBtn">
+                        <button mat-icon-button (click)="ToggleExpansion(element)" class="returnsExpCollBtn"
+                        [matTooltipShowDelay]="TTShow" [matTooltipHideDelay]="TTHide" matTooltipPosition="right" matTooltip="Expand/Collapse Campaign">
                             <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_arrow_drop_down' : 'mi_arrow_right'"></i>
                         </button>
-                        <button mat-icon-button (click)="NextLevel(element, element.PhaseList)" class="returnsExpCollBtn">
+                        <button mat-icon-button (click)="NextLevel(element, element.PhaseList)" class="returnsExpCollBtn"
+                        [matTooltipShowDelay]="TTShow" [matTooltipHideDelay]="TTHide" matTooltipPosition="right" matTooltip="Expand/Collapse all Phases">
                             <i class="material-icons" [ngClass]="ReadyToCollapseAll(element.PhaseList) ? 'custom_line_weight_icon' : 'mi_drag_handle'"></i>
                         </button>
                     </td>
@@ -566,7 +570,8 @@
                             <ng-container matColumnDef="Expand" >
             <th mat-header-cell *matHeaderCellDef class="expandBtnColumn"></th>
             <td mat-cell *matCellDef="let element" class="expandBtnColumn">
-                <button class="phaseToggleButton returnsExpCollBtn" mat-icon-button (click)="ToggleExpansion(element)">
+                <button class="phaseToggleButton returnsExpCollBtn" mat-icon-button (click)="ToggleExpansion(element)"
+                [matTooltipShowDelay]="TTShow" [matTooltipHideDelay]="TTHide" matTooltipPosition="right" matTooltip="Expand/Collapse Phase">
                     <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_arrow_drop_down' : 'mi_arrow_right'"></i>
                 </button> </td>
             <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"> </td>
@@ -1202,7 +1207,7 @@
     'btnShifted': toolsOpened,
     'hidden': hide
   }">
-    <i class="material-icons">{{toolsIcon}}</i>
+    <i class="material-icons" [ngClass]="toolsOpened ? 'mi_arrow_forward_ios' : 'mi_settings'"></i>
 </button>
 <div class="toolbox" [ngClass]="{
     'shifted': toolsOpened
@@ -1257,7 +1262,7 @@
 'btnShifted': demoOpened,
 'hidden': hide
 }">
-    <i class="material-icons">{{l2Icon}}</i>
+    <i class="material-icons" [ngClass]="toolsOpened ? 'mi_arrow_forward_ios' : 'mi_group'"></i>
 </button>
 <div class="toolbox" [ngClass]="{
 'shifted': demoOpened

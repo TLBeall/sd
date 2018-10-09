@@ -15,7 +15,7 @@ table {
       font-weight: bold;
       border-bottom:none;
       border-top: 1px solid $color-gainsboro;
-      
+
     }
     &.cdk-column-expandedDetail{
       font-size: inherit !important;
@@ -242,6 +242,7 @@ font-weight: bold;
 .prospectListDescription{
   a{
     @include underlineOne;
+    cursor: pointer;
   }
   span{ //required since the anchor tags would be shifted up by a couple pixels above the "/" span tags
     position: relative;
@@ -338,7 +339,6 @@ font-size:inherit;
 #L2Header{
   text-align: center;
   color: $color-blue-default;
-  
 }
 //  //Removes pagination (prev/next) on the mat tab 
 //  ::ng-deep .mat-tab-header-pagination {

@@ -43,8 +43,6 @@ export class ReturnsComponent {
   demoOpened: Boolean;
   hide: Boolean = false;
   visibility: string = "hidden";
-  toolsIcon: string = "settings";
-  l2Icon: string = "group";
   public ClientArr: ClientList[];
 
   clientDisplayedColumns: string[] = ['Expand', 'selectionBox', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
@@ -288,12 +286,10 @@ export class ReturnsComponent {
     if (tag === 1) {
       this.toolsOpened = !this.toolsOpened;
       this.hide = !this.hide;
-      this.toolsIcon = this.toolsOpened ? "arrow_forward_ios" : "settings";
       this.visibleFunction();
     } else if (tag === 2) {
       this.demoOpened = !this.demoOpened;
       this.hide = !this.hide;
-      this.l2Icon = this.demoOpened ? "arrow_forward_ios" : "group";
       this.visibleFunction();
     }
   }

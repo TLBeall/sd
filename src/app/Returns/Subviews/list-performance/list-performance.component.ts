@@ -76,7 +76,7 @@ export class ListPerformanceComponent implements OnInit {
   private listFilter: any[];
   private managerFilter: any[];
   private recencyFilter: any[];
-  columnsToDisplay: string[] = ['Expand', 'ListOwner', 'ListManager', 'RecencyString', 'Client', 'Phase', 'MailCode', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
+  columnsToDisplay: string[] = ['Expand', 'ListOwner', 'ListManager', 'RecencyString', 'Client', 'Phase', 'MailCode', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG',  'Cost', 'CLM',  'GPP', 'IO'];
   packageColumns: string[] = ['None','None','None','None','None', 'PackageTitle' , 'None', 'None','PackageMailed', 'PackageCaged', 'PackageQuantity', 'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 'PackageGross', 'PackageCost', 'PackageNet', 'PackageGPP', 'PackageCLM', 'PackageNLM', 'PackageIO'];
   package2Columns: string[] = ['None','None', 'None','None','None', 'PackageFormat', 'None', 'None','None', 'None', 'None', 'None', 'None', 'None', 'RSPPerformance', 'AVGPerformance', 'None', 'None', 'None', 'None', 'None', 'None', 'IOPerformance'];
 

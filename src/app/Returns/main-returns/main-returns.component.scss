@@ -15,15 +15,11 @@ table {
       font-weight: bold;
       border-bottom:none;
       border-top: 1px solid $color-gainsboro;
-
+      
     }
     &.cdk-column-expandedDetail{
       font-size: inherit !important;
     }
-  }
-  //controls the list table
-  .listTable{
-    margin-top: 10px;
   }
 }
 .loading-indicator {
@@ -215,24 +211,23 @@ tr.mat-footer-row{
   height:1px;
   float:left;
 }
-.sPackageTitle{
+.pPackageTitle{
 font-size: 12px;
 font-weight:bold;
-font-style: italic;
-color: $color-blue-dark;
 }
-.sPackageFormat{
+.pPackageFormat{
 font-size: 12px;
 font-weight: bold;
 }
 .aPackagePDF{
-  @include underlineOne;
   font-size: 12px;
   float:left;
-  color: $color-blue-dark !important;
+  &:hover{
+    text-decoration: underline;
+  }
 }
-.sPackageDoubling{
-  font-size:12px;
+.pPackageDoubling{
+  font-size:13px;
 }
 .formatDiv{
   text-align: right;
@@ -244,26 +239,26 @@ font-weight: bold;
 }
 
 //Controls the settings for the links to the list performance page from the list tables (prospect)
-// .prospectListDescription{
-//   a{
-//     @include underlineOne;
-//   }
-//   span{ //required since the anchor tags would be shifted up by a couple pixels above the "/" span tags
-//     position: relative;
-//     color: inherit;
-//     text-decoration: none;
-//     overflow: hidden;
-//     display: inline-block;
-//     &:before{
-//     position: absolute;
-//       display: inline-block;
-//       left: 0;
-//       bottom: 0;
-//       width: 100%;
-//       height: 1px;
-//     }
-//   }
-// }
+.prospectListDescription{
+  a{
+    @include underlineOne;
+  }
+  span{ //required since the anchor tags would be shifted up by a couple pixels above the "/" span tags
+    position: relative;
+    color: inherit;
+    text-decoration: none;
+    overflow: hidden;
+    display: inline-block;
+    &:before{
+    position: absolute;
+      display: inline-block;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+    }
+  }
+}
 
 .noCellBorder{
   border-top: none;
@@ -343,6 +338,7 @@ font-size:inherit;
 #L2Header{
   text-align: center;
   color: $color-blue-default;
+  
 }
 //  //Removes pagination (prev/next) on the mat tab 
 //  ::ng-deep .mat-tab-header-pagination {

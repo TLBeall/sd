@@ -6,6 +6,10 @@ import { ListPerformance } from '../../../Models/ListPerformance.model';
 import { GlobalService } from '../../../Services/global.service';
 import { Sort } from '@angular/material';
 import { trigger, state, transition, style, animate } from '@angular/animations';
+import { ListOwner } from '../../../Models/ListOwner.model';
+import { ListManager } from '../../../Models/ListManager.model';
+import { Segment } from '../../../Models/Segment.model';
+import { ClientList } from '../../../Models/ClientList.model';
 
 @Component({
   selector: 'app-list-performance',
@@ -76,6 +80,14 @@ export class ListPerformanceComponent implements OnInit {
   private listFilter: any[];
   private managerFilter: any[];
   private recencyFilter: any[];
+  private listOwners:ListOwner[];
+  private listManagers:ListManager[];
+  private segments: Segment[];
+  private clientArr: ClientList[];
+  private selectedClients: string[];
+  private selectedOwners: string[];
+  private selectedManagers: string[];
+  private selectedSegments: string[];
   columnsToDisplay: string[] = ['Expand', 'ListOwner', 'ListManager', 'RecencyString', 'Client', 'Phase', 'MailCode', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'Donors', 'NonDonors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'Cost', 'Net', 'GPP', 'CLM', 'NLM', 'IO'];
   packageColumns: string[] = ['None','None','None','None','None', 'PackageTitle' , 'None', 'None','PackageMailed', 'PackageCaged', 'PackageQuantity', 'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 'PackageGross', 'PackageCost', 'PackageNet', 'PackageGPP', 'PackageCLM', 'PackageNLM', 'PackageIO'];
   package2Columns: string[] = ['None','None', 'None','None','None', 'PackageFormat', 'None', 'None','None', 'None', 'None', 'None', 'None', 'None', 'RSPPerformance', 'AVGPerformance', 'None', 'None', 'None', 'None', 'None', 'None', 'IOPerformance'];
@@ -123,6 +135,16 @@ export class ListPerformanceComponent implements OnInit {
 
   ngOnInit() {
 
+    this.clientArr = this._g.clientArr;
+    this._authService.getListOwners().subscribe(data => { 
+      this.listOwners = data;
+    });
+    this._authService.getListManagers().subscribe(data => { 
+      this.listManagers = data;
+    });
+    this._authService.getSegments().subscribe(data => { 
+      this.segments = data;
+    });    
     this.route.params.subscribe(params => {
       this.LoadValues(params['listowner'], params['listmanager'], params['recency'], params['startdate'], params['enddate']); 
       this._authService.getListPerformance(this.ListOwner, this.ListManager, this.Recency, this.startDate, this.endDate)

@@ -43,23 +43,17 @@ export class ReturnsComponent {
   visibility: string = "hidden";
   public ClientArr: ClientList[];
 
-  clientDisplayedColumns: string[] = ['Expand', 'selectionBox','PseudoDescription',  'ExchangeFlag', 'Client', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
-  mailTypeDisplayedColumns: string[] = ['Expand','selectionBox', 'PseudoDescription', 'ExchangeFlag', 'MailType', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
-  campaignDisplayedColumns: string[] = ['Expand', 'selectionBox','PseudoDescription', 'ExchangeFlag', 'CampaignName', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
-  phaseDisplayedColumns: string[] = ['Expand',  'selectionBox','PseudoDescription', 'ExchangeFlag', 'PhaseName', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
-  mailListDisplayedColumns: string[] = ['PseudoExpand','selectionBox','MailDescription',  'ExchangeFlag', 'MailCode', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'MailDescription', 'ExchangeFlag' 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  clientDisplayedColumns: string[] = ['Expand', 'selectionBox', 'Client','PseudoDescription', 'ExchangeFlag',  'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  mailTypeDisplayedColumns: string[] = ['Expand','selectionBox', 'MailType', 'PseudoDescription', 'ExchangeFlag',  'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  campaignDisplayedColumns: string[] = ['Expand', 'selectionBox', 'CampaignName', 'PseudoDescription', 'ExchangeFlag',  'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  phaseDisplayedColumns: string[] = ['Expand',  'selectionBox', 'PhaseName', 'PseudoDescription', 'ExchangeFlag',  'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  mailListDisplayedColumns: string[] = ['PseudoExpand','selectionBox', 'MailCode', 'MailDescription',  'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'MailDescription', 'ExchangeFlag' 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
 
   constructor(route: ActivatedRoute, private _authService: AuthService, private _g: GlobalService, private router: Router) {
     this.route = route;
   }
 
   ngOnInit() {
-    if (this.pageReady == false) {
-      if (this.starttimer == 0)
-        this.starttimer = new Date().getTime();
-    }
-    else
-      this.starttimer = 0;
     this.route.params.subscribe(params => {
       this.LoadValues(params['client'], params['from'], params['to']);
       this._authService.getReturns(this.selectedClients[0], this.startDate, this.endDate).subscribe(data => {
@@ -75,22 +69,6 @@ export class ReturnsComponent {
       // In a real app: dispatch action to load the details here.
     });
 
-  }
-
-  ngDoCheck() {
-    if (this.pageReady == false) {
-      if (this.starttimer == 0)
-        this.starttimer = new Date().getTime();
-    }
-    else
-      this.starttimer = 0;
-  }
-
-  // When change detection has finished:
-  // child components created, all *ngIfs evaluated
-  ngAfterViewChecked() {
-    if ((this.pageReady == false) || ( this.starttimer != 0 && this.pageReady == true))
-      this.endtimer = new Date().getTime() - this.starttimer;
   }
 
   LoadValues(client: string, startDate: any, endDate: any) {

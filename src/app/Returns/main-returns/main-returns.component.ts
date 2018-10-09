@@ -31,14 +31,12 @@ export class ReturnsComponent {
   private startDate: any;
   private endDate:any;
   private pageReady:boolean=false;
-  private client:string;
+  private selectedClients:string[] = new Array<string>();
   private clientName: string;
   private rootReturns: RootReturns;
   private showFilterColumn: boolean = false;
   private TTShow = this._g.mi_tooltipShowDelay;
   private TTHide = this._g.mi_tooltipHideDelay;
-  fromDate: Date;
-  toDate: Date;
   toolsOpened: Boolean;
   demoOpened: Boolean;
   hide: Boolean = false;
@@ -50,9 +48,7 @@ export class ReturnsComponent {
   campaignDisplayedColumns: string[] = ['Expand', 'selectionBox', 'CampaignName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
   phaseDisplayedColumns: string[] = ['Expand', 'selectionBox', 'PhaseName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
   mailListDisplayedColumns: string[] = ['PseudoExpand', 'selectionBox', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
-
-  @Output() results: EventEmitter<any> = new EventEmitter<any>();
-
+  
   constructor(route: ActivatedRoute, private _authService:AuthService, private _g: GlobalService, private router:Router) {
     this.route = route;
   }
@@ -60,7 +56,7 @@ export class ReturnsComponent {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.LoadValues(params['client'], params['from'], params['to']); 
-      this._authService.getReturns(this.client, this.startDate, this.endDate).subscribe(data => {
+      this._authService.getReturns(this.selectedClients[0], this.startDate, this.endDate).subscribe(data => {
         this.rootReturns = data;
         this.rootReturns = this._g.SetLastElements(this.rootReturns)
         this.pageReady = true;
@@ -69,15 +65,15 @@ export class ReturnsComponent {
     .subscribe(data => {
         this.ClientArr = data;
       });  
-      this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.client).gClientName;
+      this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.selectedClients[0]).gClientName;
         // In a real app: dispatch action to load the details here.
    });
 
   }
 
-  LoadValues(client:any, startDate:any, endDate:any)
+  LoadValues(client:string, startDate:any, endDate:any)
   {
-    this.client = client;
+    this.selectedClients.push(client);
     this.startDate = new Date(Date.parse(startDate.split('.')[0].toString() + '/' + startDate.split('.')[1].toString() + '/' + startDate.split('.')[2].toString())) ;
     this.endDate = new Date(Date.parse(endDate.split('.')[0].toString() + '/' + endDate.split('.')[1].toString() + '/' + endDate.split('.')[2].toString())) ;
   }
@@ -313,11 +309,23 @@ export class ReturnsComponent {
   applyChanges() {
 
     var Results:RootReturns;
-    this._authService.getReturns(this.client, this.fromDate, this.toDate).subscribe(data => {
+
+    var clientsStr = "";
+    this.pageReady = false;
+
+    if (this.selectedClients.length > 1)
+    {
+      this.selectedClients.forEach(element => { clientsStr = element + "." + clientsStr;});
+      clientsStr = clientsStr.substring(0, clientsStr.length - 1);
+    }
+    else clientsStr = this.selectedClients[0];  
+
+    this._authService.getReturns(clientsStr, this.startDate, this.endDate).subscribe(data => {
       if (data)
+      this.rootReturns = data;
       Results = data;
       Results = this._g.SetLastElements(Results);
-      this.results.emit(Results);
+      this.pageReady = true;
     });
   }
 

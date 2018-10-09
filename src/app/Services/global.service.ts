@@ -91,7 +91,7 @@ export class GlobalService {
   }
 
   SetLastElements(rootReturns: any): any {
-    var expandState = false;
+    var expandState = true;
     rootReturns = this.CalculateSummaries(rootReturns);
     if (rootReturns.length > 1)
       expandState = false;
@@ -109,7 +109,7 @@ export class GlobalService {
             element.Measure.Expanded = expandState;
           });
           element.CampaignList[element.CampaignList.length - 1].Measure.IsLast = true;
-          element.Measure.Expanded = false;
+          element.Measure.Expanded = expandState;
         });
         element.MailTypeList[element.MailTypeList.length - 1].Measure.IsLast = true;
         element.Measure.Expanded = true;

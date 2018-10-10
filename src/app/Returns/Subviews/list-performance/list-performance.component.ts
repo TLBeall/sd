@@ -77,8 +77,8 @@ export class ListPerformanceComponent implements OnInit {
   private managerFilter: any[];
   private recencyFilter: any[];
   columnsToDisplay: string[] = ['Expand', 'ListOwner', 'ListManager', 'RecencyString', 'Client', 'Phase', 'MailCode', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG',  'Cost', 'CLM',  'GPP', 'IO'];
-  packageColumns: string[] = ['None','None','None','None','None', 'PackageTitle' , 'None', 'None','PackageMailed', 'PackageCaged', 'PackageQuantity', 'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 'PackageGross', 'PackageCost', 'PackageNet', 'PackageGPP', 'PackageCLM', 'PackageNLM', 'PackageIO'];
-  package2Columns: string[] = ['None','None', 'None','None','None', 'PackageFormat', 'None', 'None','None', 'None', 'None', 'None', 'None', 'None', 'RSPPerformance', 'AVGPerformance', 'None', 'None', 'None', 'None', 'None', 'None', 'IOPerformance'];
+  packageColumns: string[] = ['None','None','None','None','None', 'None' , 'None', 'None','PackageMailed', 'PackageCaged', 'PackageQuantity', 'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 'PackageGross', 'PackageCost', 'PackageNet', 'PackageGPP', 'PackageCLM', 'PackageNLM', 'PackageIO'];
+  package2Columns: string[] = ['PackageTitle', 'PackageFormat'];
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private _g: GlobalService) {
     this.route = route;

@@ -70,9 +70,9 @@ export class ReturnsComponent {
 
   }
 
-testChange(clientTable){
+testChange(event, clientTable){
 
-// this.toggleChecked = event.checked;
+this.toggleChecked = event.checked;
 console.log(clientTable);
 }
 

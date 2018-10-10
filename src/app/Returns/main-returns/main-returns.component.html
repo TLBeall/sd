@@ -19,9 +19,11 @@
         <ng-container matColumnDef="selectionBox" >
                 <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
                 <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                    <mat-checkbox #clientTable [checked]="clientChecked" *ngIf="selectionMode == true" [ngClass]="{
+                    <!-- <mat-checkbox #clientTable [checked]="clientChecked" *ngIf="selectionMode == true" [ngClass]="{
                         'selectionBoxUnchecked': !checked
-                    }"></mat-checkbox>
+                    }"></mat-checkbox> -->
+                    <mat-checkbox *ngIf="selectionMode == true"></mat-checkbox>
+                    <!-- <input type="checkbox"> -->
                 </td>
                 <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
         </ng-container>
@@ -1232,10 +1234,14 @@
             <button mat-raised-button color="accent" (click)="applyChanges()"> Search </button>
         </p>
         <div>
-                <mat-slide-toggle [(ngModel)]="selectionMode" (change)="testChange(clientTable)">
+                <mat-slide-toggle [(ngModel)]="selectionMode" (change)="testChange($event, clientTable)">
                     Omit Data
                 </mat-slide-toggle>
                 <p>{{toggleChecked}}</p>
+                <br>
+                <mat-checkbox></mat-checkbox>
+                <br>
+                <mat-checkbox id="testCheckbox"></mat-checkbox>
             <!-- <table *ngIf="selectionMode == true">
                 <tr>
                     <td>

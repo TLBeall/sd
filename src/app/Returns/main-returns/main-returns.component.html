@@ -3,13 +3,12 @@
 </div>
 <div *ngIf="this.pageReady == true">
     <app-toolbar></app-toolbar>
-    <table id="table1" mat-table [dataSource]="this.rootReturns" multiTemplateDataRows #PseudoDescription>
+    <table id="table1" mat-table [dataSource]="this.rootReturns" multiTemplateDataRows>
         <ng-container matColumnDef="Expand">
             <th mat-header-cell *matHeaderCellDef class="expandBtnColumn"></th>
             <td mat-cell *matCellDef="let element" class="expandBtnColumn">
                 <button mat-icon-button (click)="ToggleExpansion(element)" class="returnsExpCollBtn" title="Minimize Client">
                     <i class="material-icons" [ngClass]="CollapseListBtn(element) ? 'mi_arrow_drop_down' : 'mi_arrow_right'"></i>
-                    <!-- [ngStyle]="{'visibility':CollapseListBtn(element) ? 'expand' : 'collapse'}" -->
                 </button>
                 <button mat-icon-button (click)="NextLevel(element, element.MailTypeList)" class="returnsExpCollBtn"
                     title="Collapse Mail Types">
@@ -21,7 +20,9 @@
         <ng-container matColumnDef="selectionBox">
             <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
             <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                <mat-checkbox *ngIf="showFilterColumn"></mat-checkbox>
+                <mat-checkbox #clientTable [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (click)="ToogleChecks(element)()" *ngIf="selectionMode == true" [ngClass]="{
+                        'selectionBoxUnchecked': !checked
+                    }"></mat-checkbox>
             </td>
             <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
         </ng-container>
@@ -171,7 +172,7 @@
         <ng-container matColumnDef="selectionBox">
             <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
             <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                <mat-checkbox *ngIf="showFilterColumn"></mat-checkbox>
+                <mat-checkbox *ngIf="selectionMode == true" [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (click)="ToogleChecks(element)()"></mat-checkbox>
             </td>
             <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
         </ng-container>
@@ -180,9 +181,9 @@
                 Mail Type </th>
             <!-- <td mat-cell *matCellDef="let element" class="mailLevelColumn"> {{element.MailType}} </td> -->
             <td mat-cell *matCellDef="let element" class="mailLevelColumn" [ngClass]="{
-                                                                                                                    'font-mailType-lg': GetVisibilityStyle(! element.Measure.Expanded) == 'collapse',
-                                                                                                                    'font-sm': GetVisibilityStyle(! element.Measure.Expanded) == 'expand'
-                                                                                                                        }">{{element.MailType}}</td>
+                                                                                                                'font-mailType-lg': GetVisibilityStyle(! element.Measure.Expanded) == 'collapse',
+                                                                                                                'font-sm': GetVisibilityStyle(! element.Measure.Expanded) == 'expand'
+                                                                                                                    }">{{element.MailType}}</td>
             <td mat-footer-cell *matFooterCellDef class="mailLevelColumn" [ngClass]="ReadyToCollapseAll(element.MailTypeList)? 'elementExpanded' : 'elementCollapsed'">
                 Total {{element.Client}}</td>
         </ng-container>
@@ -260,23 +261,23 @@
             <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.Net < 0" [ngStyle]="{'visibility':element.Measure.Expanded ? 'collapse' : 'visible' }">
                 {{element.Measure.Net | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
             <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                                                                                                                'elementCollapsed': ReadyToCollapseAll(element.MailTypeList) == false,
-                                                                                                                'elementExpanded' : ReadyToCollapseAll(element.MailTypeList) == true,
-                                                                                                                'negative': element.Measure.Net < 0
-                                                                                                            }">
+                                                                                                            'elementCollapsed': ReadyToCollapseAll(element.MailTypeList) == false,
+                                                                                                            'elementExpanded' : ReadyToCollapseAll(element.MailTypeList) == true,
+                                                                                                            'negative': element.Measure.Net < 0
+                                                                                                        }">
                 {{element.Measure.Net | currency : 'USD' : 'symbol' : '1.0-0'}}
             </td>
         </ng-container>
         <ng-container matColumnDef="NLM">
-            <th mat-header-cell *matHeaderCellDef title="Amount donated divided by quantity of letters mailed"> N$LM
-            </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount donated divided by quantity of letters mailed">
+                N$LM </th>
             <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.NLM < 0" [ngStyle]="{'visibility':element.Measure.Expanded ? 'collapse' : 'visible' }">
                 {{element.Measure.NLM | currency}} </td>
             <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                                                                                                                    'elementCollapsed': ReadyToCollapseAll(element.MailTypeList) == false,
-                                                                                                                    'elementExpanded' : ReadyToCollapseAll(element.MailTypeList) == true,
-                                                                                                                    'negative': element.Measure.NLM < 0
-                                                                                                                }">
+                                                                                                                'elementCollapsed': ReadyToCollapseAll(element.MailTypeList) == false,
+                                                                                                                'elementExpanded' : ReadyToCollapseAll(element.MailTypeList) == true,
+                                                                                                                'negative': element.Measure.Net < 0
+                                                                                                            }">
                 {{element.Measure.NLM | currency}} </td>
         </ng-container>
         <ng-container matColumnDef="AVG">
@@ -296,7 +297,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="CLM">
-            <th mat-header-cell *matHeaderCellDef title="Cost per Letter Mailed"> CLM </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per Letter Mailed"> CLM </th>
             <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility':element.Measure.Expanded ? 'collapse' : 'visible' }">
                 {{element.Measure.CLM | currency}} </td>
             <td mat-footer-cell *matFooterCellDef [ngClass]="ReadyToCollapseAll(element.MailTypeList)? 'elementExpanded' : 'elementCollapsed'">
@@ -343,7 +344,7 @@
         <ng-container matColumnDef="selectionBox">
             <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
             <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                <mat-checkbox *ngIf="showFilterColumn"></mat-checkbox>
+                <mat-checkbox *ngIf="selectionMode == true"  [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (click)="ToogleChecks(element)()"></mat-checkbox>
             </td>
             <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
         </ng-container>
@@ -353,15 +354,15 @@
             </th>
             <!-- <td mat-cell *matCellDef="let element" class="mailLevelColumn"> {{element.CampaignName}} </td> -->
             <td mat-cell *matCellDef="let element" class="mailLevelColumn" [ngClass]="{
-                    'font-campaignName-lg': GetVisibilityStyle(! element.Measure.Expanded) == 'collapse',
-                    'font-sm': GetVisibilityStyle(! element.Measure.Expanded) == 'expand'
-                    }">{{element.CampaignName}}</td>
+                'font-campaignName-lg': GetVisibilityStyle(! element.Measure.Expanded) == 'collapse',
+                'font-sm': GetVisibilityStyle(! element.Measure.Expanded) == 'expand'
+                }">{{element.CampaignName}}</td>
             <td mat-footer-cell *matFooterCellDef class="mailLevelColumn" [ngClass]="{
-                        'elementCollapsed': ReadyToCollapseAll(element.CampaignList) == false,
-                        'elementExpanded' : ReadyToCollapseAll(element.CampaignList) == true,
-                        'elementLast': element.Measure.IsLast == true,
-                        'campaignElementDefault': element.Measure.IsLast == false
-                    }">Total
+                    'elementCollapsed': ReadyToCollapseAll(element.CampaignList) == false,
+                    'elementExpanded' : ReadyToCollapseAll(element.CampaignList) == true,
+                    'elementLast': element.Measure.IsLast == true,
+                    'campaignElementDefault': element.Measure.IsLast == false
+                }">Total
                 {{element.MailType}}</td>
         </ng-container>
         <ng-container matColumnDef="PseudoDescription">
@@ -593,7 +594,7 @@
         <ng-container matColumnDef="selectionBox">
             <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
             <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                <mat-checkbox *ngIf="showFilterColumn"></mat-checkbox>
+                <mat-checkbox *ngIf="selectionMode == true"  [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (click)="ToogleChecks(element)()"></mat-checkbox>
             </td>
             <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
         </ng-container>
@@ -907,7 +908,7 @@
         <ng-container matColumnDef="selectionBox">
             <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
             <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                <mat-checkbox *ngIf="showFilterColumn"></mat-checkbox>
+                <mat-checkbox *ngIf="selectionMode == true"  [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (click)="ToogleChecks(element)()"></mat-checkbox>
             </td>
             <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
         </ng-container>
@@ -1226,7 +1227,7 @@
         'btnShifted': toolsOpened,
         'hidden': hide
       }">
-      <i class="material-icons" [ngClass]="toolsOpened ? 'mi_arrow_forward_ios' : 'mi_settings'"></i>
+    <i class="material-icons" [ngClass]="toolsOpened ? 'mi_arrow_forward_ios' : 'mi_settings'"></i>
 </button>
 <div class="toolbox" [ngClass]="{
         'shifted': toolsOpened
@@ -1256,12 +1257,11 @@
             <button mat-raised-button color="accent" (click)="applyChanges()"> Search </button>
         </p>
         <div>
-            <p>
-                <mat-slide-toggle [(ngModel)]="selectionMode">
-                    Select Mode
-                </mat-slide-toggle>
-            </p>
-            <table *ngIf="selectionMode == true">
+            <mat-slide-toggle [(ngModel)]="selectionMode" (change)="testChange(clientTable)">
+                Omit Data
+            </mat-slide-toggle>
+            <p>{{toggleChecked}}</p>
+            <!-- <table *ngIf="selectionMode == true">
                 <tr>
                     <td>
                         <button mat-raised-button color="accent" (click)="applySelection()"> Show Selected</button>
@@ -1270,7 +1270,7 @@
                         <button mat-raised-button color="accent" (click)="clearSelection()"> Show All</button>
                     </td>
                 </tr>
-            </table>
+            </table> -->
         </div>
     </div>
 </div>

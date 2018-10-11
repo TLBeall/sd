@@ -72,19 +72,11 @@ export class ReturnsComponent {
 
   }
 
-<<<<<<< HEAD
-testChange(event, clientTable){
-
-this.toggleChecked = event.checked;
-console.log(clientTable);
-}
-=======
   testChange(clientTable) {
 
     // this.toggleChecked = event.checked;
     console.log(clientTable);
   }
->>>>>>> 8f03d26978c4a33fe3c26d1e986f8b4d7fd302b8
 
   saveCheckedStatus() {
 

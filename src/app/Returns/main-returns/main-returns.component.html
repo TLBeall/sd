@@ -17,18 +17,6 @@
             </td>
             <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"> </td>.
         </ng-container>
-<<<<<<< HEAD
-        <ng-container matColumnDef="selectionBox" >
-                <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
-                <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                    <!-- <mat-checkbox #clientTable [checked]="clientChecked" *ngIf="selectionMode == true" [ngClass]="{
-                        'selectionBoxUnchecked': !checked
-                    }"></mat-checkbox> -->
-                    <mat-checkbox *ngIf="selectionMode == true"></mat-checkbox>
-                    <!-- <input type="checkbox"> -->
-                </td>
-                <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
-=======
         <ng-container matColumnDef="selectionBox">
             <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
             <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
@@ -37,7 +25,6 @@
                     }"></mat-checkbox>
             </td>
             <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
->>>>>>> 8f03d26978c4a33fe3c26d1e986f8b4d7fd302b8
         </ng-container>
         <ng-container matColumnDef="Client">
             <th mat-header-cell *matHeaderCellDef class="mailLevelColumn testColumn" [ngClass]="this.rootReturns[0].Measure.Expanded ? 'headerCollapsed' : 'headerExpanded'">
@@ -1270,7 +1257,6 @@
             <button mat-raised-button color="accent" (click)="applyChanges()"> Search </button>
         </p>
         <div>
-<<<<<<< HEAD
                 <mat-slide-toggle [(ngModel)]="selectionMode" (change)="testChange($event, clientTable)">
                     Omit Data
                 </mat-slide-toggle>
@@ -1279,12 +1265,6 @@
                 <mat-checkbox></mat-checkbox>
                 <br>
                 <mat-checkbox id="testCheckbox"></mat-checkbox>
-=======
-            <mat-slide-toggle [(ngModel)]="selectionMode" (change)="testChange(clientTable)">
-                Omit Data
-            </mat-slide-toggle>
-            <p>{{toggleChecked}}</p>
->>>>>>> 8f03d26978c4a33fe3c26d1e986f8b4d7fd302b8
             <!-- <table *ngIf="selectionMode == true">
                 <tr>
                     <td>

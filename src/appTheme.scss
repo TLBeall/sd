@@ -20,6 +20,26 @@ $color-blue-light: #59a1d3;
 $color-blue-dark: #0a5caa;
 
 
+//Changes size of the material design checkbox (default hw is 20x20) to a medium size checkbox
+//Apply "md-checkbox" as a class on the mat-checkbox element
+.md-checkbox{
+    label{
+        margin-bottom: 0px;
+        div.mat-checkbox-inner-container {
+            height: 15px !important;
+            width: 15px !important;
+            div.mat-checkbox-ripple.mat-ripple{
+                left: calc(50% - 16px);
+                top: calc(50% - 16px);
+                border-radius: 50%;
+                z-index: 1000 !important; //ripple was hiding behind rows above it in table
+                height: 30px !important;
+                width: 30px !important;
+            }
+          }
+    }
+}
+
 $material-box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 
 $size-lg: 1200px;

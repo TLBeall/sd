@@ -18,13 +18,13 @@
             <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"> </td>.
         </ng-container>
         <ng-container matColumnDef="selectionBox">
-            <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
-            <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                <mat-checkbox #clientTable [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (change)="ToogleChecks(element)" *ngIf="selectionMode == true" [ngClass]="{
+            <th mat-header-cell *matHeaderCellDef [ngClass]="selectionMode? 'sbcShifted' : 'sbc'"></th>
+            <td mat-cell *matCellDef="let element" [ngClass]="selectionMode? 'sbcShifted' : 'sbc'">
+                <mat-checkbox class="md-checkbox" #clientTable [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (change)="ToogleChecks(element)" *ngIf="selectionMode == true" [ngClass]="{
                         'selectionBoxUnchecked': !checked
                     }"></mat-checkbox>
             </td>
-            <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="selectionMode? 'sbcShifted' : 'sbc'"></td>
         </ng-container>
         <ng-container matColumnDef="Client">
             <th mat-header-cell *matHeaderCellDef class="mailLevelColumn testColumn" [ngClass]="this.rootReturns[0].Measure.Expanded ? 'headerCollapsed' : 'headerExpanded'">
@@ -170,11 +170,11 @@
             <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"> </td>
         </ng-container>
         <ng-container matColumnDef="selectionBox">
-            <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
-            <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                <mat-checkbox *ngIf="selectionMode == true" [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (change)="ToogleChecks(element)"></mat-checkbox>
+            <th mat-header-cell *matHeaderCellDef [ngClass]="selectionMode? 'sbcShifted' : 'sbc'"></th>
+            <td mat-cell *matCellDef="let element" [ngClass]="selectionMode? 'sbcShifted' : 'sbc'">
+                <mat-checkbox class="md-checkbox" *ngIf="selectionMode == true" [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (change)="ToogleChecks(element)"></mat-checkbox>
             </td>
-            <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="selectionMode? 'sbcShifted' : 'sbc'"></td>
         </ng-container>
         <ng-container matColumnDef="MailType">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="mailLevelColumn" [ngClass]="element.MailTypeList[0].Measure.Expanded ? 'headerCollapsed' : 'headerExpanded'">
@@ -342,11 +342,11 @@
             <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"> </td>
         </ng-container>
         <ng-container matColumnDef="selectionBox">
-            <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
-            <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                <mat-checkbox *ngIf="selectionMode == true"  [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (change)="ToogleChecks(element)"></mat-checkbox>
+            <th mat-header-cell *matHeaderCellDef [ngClass]="selectionMode? 'sbcShifted' : 'sbc'"></th>
+            <td mat-cell *matCellDef="let element" [ngClass]="selectionMode? 'sbcShifted' : 'sbc'">
+                <mat-checkbox class="md-checkbox" *ngIf="selectionMode == true"  [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (change)="ToogleChecks(element)"></mat-checkbox>
             </td>
-            <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="selectionMode? 'sbcShifted' : 'sbc'"></td>
         </ng-container>
         <ng-container matColumnDef="CampaignName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="mailLevelColumn" [ngClass]="element.CampaignList[0].Measure.Expanded ? 'headerCollapsed' : 'headerExpanded'">
@@ -592,11 +592,11 @@
             <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"> </td>
         </ng-container>
         <ng-container matColumnDef="selectionBox">
-            <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
-            <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                <mat-checkbox *ngIf="selectionMode == true"  [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (change)="ToogleChecks(element)"></mat-checkbox>
+            <th mat-header-cell *matHeaderCellDef [ngClass]="selectionMode? 'sbcShifted' : 'sbc'"></th>
+            <td mat-cell *matCellDef="let element" [ngClass]="selectionMode? 'sbcShifted' : 'sbc'">
+                <mat-checkbox class="md-checkbox" *ngIf="selectionMode == true"  [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (change)="ToogleChecks(element)"></mat-checkbox>
             </td>
-            <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="selectionMode? 'sbcShifted' : 'sbc'"></td>
         </ng-container>
         <ng-container matColumnDef="PhaseName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="mailLevelColumn" [ngClass]="element.PhaseList[0].Measure.Expanded ? 'headerCollapsed' : 'headerExpanded'">
@@ -875,7 +875,7 @@
                 <div class="example-element-detail" [@detailExpand]="element.Measure.Expanded ? 'expanded' : 'collapsed'"
                     [style.height]="element.Measure.Expanded ? 'unset' : '0 !important'">
                     <div style="width:100%">
-                        <div class="phaseInfoBuffer"></div>
+                        <div [ngClass]="selectionMode ? 'phaseInfoBuffer2' : 'phaseInfoBuffer'"></div>
                         <div class="row">
                             <div class="col-lg-6">
                                 <span class="sPackageTitle"> {{element.Title}}</span>
@@ -884,7 +884,7 @@
                                 <span class="sPackageFormat"> {{element.Format}}</span>
                             </div>
                         </div>
-                        <div class="phaseInfoBuffer"></div>
+                        <div [ngClass]="selectionMode? 'phaseInfoBuffer2' : 'phaseInfoBuffer'"></div>
                         <div class="row phaseInfoHeader">
                             <div class="col-lg-8"></div>
                             <div class="col-lg-2">
@@ -907,11 +907,11 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="selectionBox">
-            <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
-            <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                <mat-checkbox *ngIf="selectionMode == true"  [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (change)="ToogleChecks(element)"></mat-checkbox>
+            <th mat-header-cell *matHeaderCellDef [ngClass]="selectionMode? 'sbcShifted' : 'sbc'"></th>
+            <td mat-cell *matCellDef="let element" [ngClass]="selectionMode? 'sbcShifted' : 'sbc'">
+                <mat-checkbox class="md-checkbox" *ngIf="selectionMode == true"  [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (change)="ToogleChecks(element)"></mat-checkbox>
             </td>
-            <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="selectionMode? 'sbcShifted' : 'sbc'"></td>
         </ng-container>
         <ng-container matColumnDef="MailCode">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="mailLevelColumn"> Mail
@@ -1261,11 +1261,6 @@
                 <mat-slide-toggle [(ngModel)]="selectionMode" (change)="testChange($event, clientTable)">
                     Omit Data
                 </mat-slide-toggle>
-                <p>{{toggleChecked}}</p>
-                <br>
-                <mat-checkbox></mat-checkbox>
-                <br>
-                <mat-checkbox id="testCheckbox"></mat-checkbox>
             <!-- <table *ngIf="selectionMode == true">
                 <tr>
                     <td>

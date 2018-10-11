@@ -42,12 +42,14 @@ export class GlobalService {
   }
 
   AddToMeasure(SourceMeasure: Returns, DestinationMeasure: Returns): Returns {
-    if (DestinationMeasure.Mailed)
-      if (DestinationMeasure.Mailed.toString() == "0001-01-01T00:00:00") DestinationMeasure.Mailed = SourceMeasure.Mailed;
+    if (DestinationMeasure.Mailed != null)
+      if (DestinationMeasure.Mailed == "01/01/1900")
+        DestinationMeasure.Mailed = SourceMeasure.Mailed;
     if (DestinationMeasure.Mailed > SourceMeasure.Mailed)
       DestinationMeasure.Mailed = SourceMeasure.Mailed;
-    if (DestinationMeasure.Caged)
-      if (DestinationMeasure.Caged.toString() == "0001-01-01T00:00:00") DestinationMeasure.Caged = SourceMeasure.Caged;
+    if (DestinationMeasure.Caged != null)
+      if (DestinationMeasure.Caged == "01/01/1900")
+        DestinationMeasure.Caged = SourceMeasure.Caged;
     if (DestinationMeasure.Caged < SourceMeasure.Caged)
       DestinationMeasure.Caged = SourceMeasure.Caged;
 
@@ -61,39 +63,65 @@ export class GlobalService {
     return DestinationMeasure;
   }
 
+  InitializeMeasure(element: Returns): Returns {
+    element.Caged = "01/01/1900";
+    element.Mailed = "01/01/1900";
+    element.Cost = 0;
+    element.Donors = 0;
+    element.Gross = 0;
+    element.Net = 0;
+    element.NewDonors = 0;
+    element.NonDonors = 0;
+    element.Quantity = 0;
+    element.AVG = 0;
+    element.RSP = 0;
+    element.IO = 0;
+    element.NLM = 0;
+    element.GPP = 0;
+    element.CLM = 0;
+    return element;
+  }
+
   CalculateSummaries(rootReturns: any): any {
-    if (rootReturns)
+    var grandTotal:Returns = new Returns();
+    this.InitializeMeasure(grandTotal);
+    if (rootReturns)    
       rootReturns.forEach(client => {
+        client.Measure = this.InitializeMeasure(client.Measure);
         client.MailTypeList.forEach(type => {
-          type.Measure.Quantity = 0;
+          type.Measure = this.InitializeMeasure(type.Measure);
           type.CampaignList.forEach(campaign => {
-            campaign.Measure.Quantity = 0;
+            campaign.Measure = this.InitializeMeasure(campaign.Measure);
             campaign.PhaseList.forEach(phase => {
-              phase.Measure.Quantity = 0;
+              phase.Measure = this.InitializeMeasure(phase.Measure);
               phase.MailList.forEach(list => {
                 if (list.Measure.Selected)
                   phase.Measure = this.AddToMeasure(list.Measure, phase.Measure);
               });
               phase.Measure = this.CalculateRates(phase.Measure);
-              if (phase.Measure.Selected)
-              campaign.Measure = this.AddToMeasure(phase.Measure, campaign.Measure);
+              if (phase.Measure.Selected  || phase.Measure.Indeterminate)
+                campaign.Measure = this.AddToMeasure(phase.Measure, campaign.Measure);
             });
             campaign.Measure = this.CalculateRates(campaign.Measure);
-            if (campaign.Measure.Selected)            
-            type.Measure = this.AddToMeasure(campaign.Measure, type.Measure);
+            if (campaign.Measure.Selected || campaign.Measure.Indeterminate)
+              type.Measure = this.AddToMeasure(campaign.Measure, type.Measure);
           });
           type.Measure = this.CalculateRates(type.Measure);
-          if (type.Measure.Selected)            
-          client.Measure = this.AddToMeasure(type.Measure, client.Measure);
+          if (type.Measure.Selected  || type.Measure.Indeterminate)
+            client.Measure = this.AddToMeasure(type.Measure, client.Measure);
         });
         client.Measure = this.CalculateRates(client.Measure);
+        grandTotal = this.AddToMeasure(client.Measure, grandTotal);
       })
-    return rootReturns;
+      grandTotal = this.CalculateRates(grandTotal)
+     return {
+      grandTotal: grandTotal,
+      rootReturns: rootReturns
+  };;
   }
 
   SetLastElements(rootReturns: any): any {
     var expandState = true;
-    rootReturns = this.CalculateSummaries(rootReturns);
     if (rootReturns.length > 1)
       expandState = false;
     if (rootReturns)

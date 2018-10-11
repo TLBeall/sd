@@ -1,6 +1,6 @@
 export class Returns {
-    Mailed: Date;
-    Caged: Date;
+    Mailed: string;
+    Caged: string;
     Quantity: number;
     Donors: number;
     NonDonors: number;

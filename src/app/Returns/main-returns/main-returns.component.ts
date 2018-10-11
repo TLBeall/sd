@@ -34,14 +34,15 @@ export class ReturnsComponent {
   private selectedClients: string[] = new Array<string>();
   private clientName: string;
   private rootReturns: RootReturns;
-  toolsOpened: Boolean;
-  demoOpened: Boolean;
+  private toolsOpened: Boolean;
+  private demoOpened: Boolean;
   private starttimer: number = 0;
   private endtimer: number = 0;
-  hide: Boolean = false;
-  visibility: string = "hidden";
-  public ClientArr: ClientList[];
-  toggleChecked: boolean = false;
+  private hide: Boolean = false;
+  private visibility: string = "hidden";
+  private ClientArr: ClientList[];
+  private toggleChecked: boolean = false;
+  private grandTotal: Returns;
 
   clientDisplayedColumns: string[] = ['Expand', 'selectionBox', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
   mailTypeDisplayedColumns: string[] = ['Expand', 'selectionBox', 'MailType', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
@@ -60,6 +61,9 @@ export class ReturnsComponent {
         this.rootReturns = data;
         this.rootReturns = this._g.SetLastElements(this.rootReturns);
         this.CheckLevel(this.rootReturns[0], true);
+        var calculations = this._g.CalculateSummaries(this.rootReturns);
+        this.rootReturns = calculations.rootReturns;
+        this.grandTotal = calculations.grandTotal;
         this.pageReady = true;
       });
       this._authService.getClientList("All")
@@ -205,8 +209,10 @@ export class ReturnsComponent {
         d.Measure.Selected = newState;
       });
     }
-    this.rootReturns = this._g.CalculateSummaries(this.rootReturns);
     this.RefreshChecks();
+    var calculations = this._g.CalculateSummaries(this.rootReturns);
+    this.rootReturns = calculations.rootReturns;
+    this.grandTotal = calculations.grandTotal;
   }
 
   RefreshChecks() {
@@ -527,7 +533,9 @@ export class ReturnsComponent {
         this.CheckLevel(this.rootReturns[i], true);
         i = i + 1;
       }
-
+      var calculations = this._g.CalculateSummaries(this.rootReturns);
+      this.rootReturns = calculations.rootReturns;
+      this.grandTotal = calculations.grandTotal;
     });
   }
 

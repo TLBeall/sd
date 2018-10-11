@@ -1216,7 +1216,7 @@
     [class.example-expanded-row]="element.Measure.Expanded">
 </tr>
 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-<tr mat-footer-row *matFooterRowDef="clientDisplayedColumns"
+<tr mat-footer-row *matFooterRowDef="clientDisplayedColumns" [ngStyle]="{'visibility':this.rootReturns.length > 1 ? 'visible' : 'collapse' }"
     class="clientElementDefault"></tr>
 </table>
 </div>

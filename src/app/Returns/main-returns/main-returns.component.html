@@ -878,22 +878,23 @@
                         <div class="phaseInfoBuffer"></div>
                         <div class="row">
                             <div class="col-lg-6">
-                                <p class="pPackageTitle"> {{element.Title}}</p>
+                                <span class="sPackageTitle"> {{element.Title}}</span>
                             </div>
                             <div class="col-lg-6 formatDiv">
-                                <p class="pPackageFormat"> {{element.Format}}</p>
+                                <span class="sPackageFormat"> {{element.Format}}</span>
                             </div>
                         </div>
                         <div class="phaseInfoBuffer"></div>
-                        <div class="row">
-                            <div class="col-12">
-                                <a class="aPackagePDF">Package PDF
-                                </a>
-                                <p class="pPackageDoubling">
-                                    - Doubling Days ({{element.DoublingDays}})</p>
+                        <div class="row phaseInfoHeader">
+                            <div class="col-lg-8"></div>
+                            <div class="col-lg-2">
+                                <a class="aPackagePDF">Package PDF</a>
+                            </div>
+                            <div class="col-lg-2">
+                                <span class="sPackageDoubling">Doubling Days ({{element.DoublingDays}})</span>
                             </div>
                         </div>
-                        <table mat-table [dataSource]="element.MailList" multiTemplateDataRows matSort (matSortChange)="SortFunction($event, element)">
+                        <table class="listTable" mat-table [dataSource]="element.MailList" multiTemplateDataRows matSort (matSortChange)="SortFunction($event, element)">
                             <ng-container matColumnDef="PseudoExpand">
             <th mat-header-cell *matHeaderCellDef class="pseudoExpand">
             </th>

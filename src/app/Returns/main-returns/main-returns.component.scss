@@ -44,6 +44,9 @@ table {
       font-size: inherit !important;
     }
   }
+  // &.listTable{
+  //   margin-top: 10px;
+  // }
 }
 .loading-indicator {
   position: fixed;
@@ -234,23 +237,33 @@ tr.mat-footer-row{
   height:1px;
   float:left;
 }
-.pPackageTitle{
-font-size: 12px;
-font-weight:bold;
+@media screen and (min-width:$size-md){
+  .phaseInfoHeader{
+    div{
+      text-align: right;
+    }
+  }
 }
-.pPackageFormat{
+
+.sPackageTitle{
+font-size: 13px;
+font-weight:bold;
+font-style: italic;
+color: $color-blue-dark;
+}
+.sPackageFormat{
 font-size: 12px;
 font-weight: bold;
 }
 .aPackagePDF{
   font-size: 12px;
-  float:left;
-  &:hover{
-    text-decoration: underline;
-  }
+  font-style: italic;
+  color: $color-blue-dark !important;
+  @include underlineOne;
 }
-.pPackageDoubling{
-  font-size:13px;
+.sPackageDoubling{
+  font-size:12px;
+  vertical-align: top;
 }
 .formatDiv{
   text-align: right;

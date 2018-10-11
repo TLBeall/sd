@@ -71,15 +71,19 @@ export class GlobalService {
             campaign.PhaseList.forEach(phase => {
               phase.Measure.Quantity = 0;
               phase.MailList.forEach(list => {
-                phase.Measure = this.AddToMeasure(list.Measure, phase.Measure);
+                if (list.Measure.Selected)
+                  phase.Measure = this.AddToMeasure(list.Measure, phase.Measure);
               });
               phase.Measure = this.CalculateRates(phase.Measure);
+              if (phase.Measure.Selected)
               campaign.Measure = this.AddToMeasure(phase.Measure, campaign.Measure);
             });
             campaign.Measure = this.CalculateRates(campaign.Measure);
+            if (campaign.Measure.Selected)            
             type.Measure = this.AddToMeasure(campaign.Measure, type.Measure);
           });
           type.Measure = this.CalculateRates(type.Measure);
+          if (type.Measure.Selected)            
           client.Measure = this.AddToMeasure(type.Measure, client.Measure);
         });
         client.Measure = this.CalculateRates(client.Measure);

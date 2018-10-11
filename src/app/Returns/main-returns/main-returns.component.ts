@@ -29,70 +29,79 @@ export class ReturnsComponent {
 
   private route: any;
   private startDate: any;
-  private endDate:any;
-  private pageReady:boolean = false;
-  private selectedClients:string[] = new Array<string>();
+  private endDate: any;
+  private pageReady: boolean = false;
+  private selectedClients: string[] = new Array<string>();
   private clientName: string;
   private rootReturns: RootReturns;
   toolsOpened: Boolean;
   demoOpened: Boolean;
+  private starttimer: number = 0;
+  private endtimer: number = 0;
   hide: Boolean = false;
   visibility: string = "hidden";
   public ClientArr: ClientList[];
   toggleChecked: boolean = false;
-  clientChecked = true;
 
-  clientDisplayedColumns: string[] = ['Expand', 'selectionBox', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
-  mailTypeDisplayedColumns: string[] = ['Expand', 'selectionBox', 'MailType', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
-  campaignDisplayedColumns: string[] = ['Expand', 'selectionBox', 'CampaignName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
-  phaseDisplayedColumns: string[] = ['Expand', 'selectionBox', 'PhaseName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
-  mailListDisplayedColumns: string[] = ['PseudoExpand', 'selectionBox', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
-  
-  constructor(route: ActivatedRoute, private _authService:AuthService, private _g: GlobalService, private router:Router) {
+  clientDisplayedColumns: string[] = ['Expand', 'selectionBox', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  mailTypeDisplayedColumns: string[] = ['Expand', 'selectionBox', 'MailType', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  campaignDisplayedColumns: string[] = ['Expand', 'selectionBox', 'CampaignName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  phaseDisplayedColumns: string[] = ['Expand', 'selectionBox', 'PhaseName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+  mailListDisplayedColumns: string[] = ['PseudoExpand', 'selectionBox', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'MailDescription', 'ExchangeFlag' 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
+
+  constructor(route: ActivatedRoute, private _authService: AuthService, private _g: GlobalService, private router: Router) {
     this.route = route;
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.LoadValues(params['client'], params['from'], params['to']); 
+      this.LoadValues(params['client'], params['from'], params['to']);
       this._authService.getReturns(this.selectedClients[0], this.startDate, this.endDate).subscribe(data => {
         this.rootReturns = data;
-        this.rootReturns = this._g.SetLastElements(this.rootReturns)
+        this.rootReturns = this._g.SetLastElements(this.rootReturns);
+        this.CheckLevel(this.rootReturns[0], true);
         this.pageReady = true;
       });
       this._authService.getClientList("All")
-    .subscribe(data => {
-        this.ClientArr = data;
-      });  
+        .subscribe(data => {
+          this.ClientArr = data;
+        });
       this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.selectedClients[0]).gClientName;
-        // In a real app: dispatch action to load the details here.
-   });
+      // In a real app: dispatch action to load the details here.
+    });
 
   }
 
+<<<<<<< HEAD
 testChange(event, clientTable){
 
 this.toggleChecked = event.checked;
 console.log(clientTable);
 }
+=======
+  testChange(clientTable) {
 
-saveCheckedStatus(){
+    // this.toggleChecked = event.checked;
+    console.log(clientTable);
+  }
+>>>>>>> 8f03d26978c4a33fe3c26d1e986f8b4d7fd302b8
 
-}
+  saveCheckedStatus() {
 
-
-  LoadValues(client:string, startDate:any, endDate:any)
-  {
-    this.selectedClients.push(client);
-    this.startDate = new Date(Date.parse(startDate.split('.')[0].toString() + '/' + startDate.split('.')[1].toString() + '/' + startDate.split('.')[2].toString())) ;
-    this.endDate = new Date(Date.parse(endDate.split('.')[0].toString() + '/' + endDate.split('.')[1].toString() + '/' + endDate.split('.')[2].toString())) ;
   }
 
 
-  NavigateToListPerformance(ListOwner:number, ListManager:number, Recency:number, startDate:Date, endDate:Date) {
+  LoadValues(client: string, startDate: any, endDate: any) {
+    this.selectedClients.push(client);
+    this.startDate = new Date(Date.parse(startDate.split('.')[0].toString() + '/' + startDate.split('.')[1].toString() + '/' + startDate.split('.')[2].toString()));
+    this.endDate = new Date(Date.parse(endDate.split('.')[0].toString() + '/' + endDate.split('.')[1].toString() + '/' + endDate.split('.')[2].toString()));
+  }
+
+
+  NavigateToListPerformance(ListOwner: number, ListManager: number, Recency: number, startDate: Date, endDate: Date) {
     this._g.clearCurCache = true;
     this.router.navigate(['listperformance' + '/' + ListOwner + '/' + ListManager + '/' + Recency + '/' + startDate.toLocaleDateString().split('/').join('.') + '/' + endDate.toLocaleDateString().split('/').join('.')]);
-}
+  }
 
   GetVisibilityStyle(state: boolean): string {
     if (state)
@@ -114,11 +123,11 @@ saveCheckedStatus(){
     var RetValue: boolean = false;
     list.forEach(b => {
       if (b.Measure)
-      if (b.Measure.Expanded == true) {
-        RetValue = true;
-        return RetValue;
-      } else {
-      }
+        if (b.Measure.Expanded == true) {
+          RetValue = true;
+          return RetValue;
+        } else {
+        }
     })
     return RetValue;
   }
@@ -160,13 +169,166 @@ saveCheckedStatus(){
   }
 
 
+  ToogleChecks(element: any) {
+    var newState = false;
+    switch (element.Measure.Selected) {
+      case false: newState = true; break;
+      case true: newState = false; break;
+      default: newState = true;
+    }
+
+    if (element.Client) {
+      element.MailTypeList.forEach(a => {
+        a.Measure.Selected = newState;
+        a.CampaignList.forEach(b => {
+          b.Measure.Selected = newState;
+          b.PhaseList.forEach(c => {
+            c.Measure.Selected = newState;
+            c.MailList.forEach(d => {
+              d.Measure.Selected = newState;
+            });
+          });
+        });
+      });
+    }
+    if (element.MailType) {
+        element.CampaignList.forEach(b => {
+          b.Measure.Selected = newState;
+          b.PhaseList.forEach(c => {
+            c.Measure.Selected = newState;
+            c.MailList.forEach(d => {
+              d.Measure.Selected = newState;
+            });
+          });
+        });
+      }
+      if (element.CampaignName) {
+          element.PhaseList.forEach(c => {
+            c.Measure.Selected = newState;
+            c.MailList.forEach(d => {
+              d.Measure.Selected = newState;
+          });
+        });
+      }      
+      if (element.PhaseName) {
+          element.MailList.forEach(d => {
+            d.Measure.Selected = newState;
+      });
+    }      
+    this.rootReturns = this._g.CalculateSummaries(this.rootReturns);
+    //  this.RefreshChecks();
+  }
+
+  RefreshChecks() {
+    var i = 0;
+    while (this.rootReturns[i]) {
+      this.rootReturns[i].MailTypeList.forEach(a => {
+        a.Measure["Selected"] = false;
+        var allcampSelected = true;
+        var allcampUnselected = true;
+        a.CampaignList.forEach(b => {
+          b.Measure["Selected"] = false;
+          var allphasesSelected = true;
+          var allphasesUnselected = true;
+          b.PhaseList.forEach(c => {
+            c.Measure["Selected"] = false;
+            var alllistsSelected = true;
+            var alllistsUnselected = true;
+            c.MailList.forEach(d => {
+              if (d.Measure["Selected"] == false)
+                alllistsSelected = false;
+              if (d.Measure["Selected"] == true)
+                alllistsUnselected = false;
+            })
+            if ((!alllistsSelected) && (!alllistsUnselected))
+              c.Measure["Selected"] = 2;
+            if (alllistsSelected)
+              c.Measure["Selected"] = true;
+            if (c.Measure["Selected"] == false)
+              allphasesSelected = false;
+            if (c.Measure["Selected"] == true)
+              allphasesUnselected = false;
+          })
+          if ((!allphasesSelected) && (!allphasesUnselected))
+            b.Measure["Selected"] = 2;
+          if (allphasesSelected)
+            b.Measure["Selected"] = true;
+          if (a.Measure["Selected"] == false)
+            allphasesSelected = false;
+          if (a.Measure["Selected"] == true)
+            allphasesUnselected = false;
+        })
+        if ((!allcampSelected) && (!allcampUnselected))
+          a.Measure["Selected"] = 2;
+        if (allcampSelected)
+          a.Measure["Selected"] = true;
+      })
+      i = i + 1;
+    }
+  }
+
+  //Indeterminate
+  CheckLevel(Node: any, State: boolean): RootReturns {
+    if (Node.MailTypeList != null) {
+      Node.MailTypeList.forEach(a => {
+        a.CampaignList.forEach(b => {
+          b.PhaseList.forEach(c => {
+            c.MailList.forEach(d => { d.Measure["Selected"] = State; d.Measure["Indeterminate"] = false; });
+            c.Measure["Selected"] = State;
+            c.Measure["Indeterminate"] = State;
+
+          });
+          b.Measure["Selected"] = State;
+          b.Measure["Indeterminate"] = State;
+        });
+        a.Measure["Selected"] = State;
+        a.Measure["Indeterminate"] = State;
+      });
+      Node.Measure["Selected"] = State;
+      Node.Measure["Indeterminate"] = State;
+      return Node;
+    }
+    else {
+
+      if (Node.CampaignList != null) {
+        Node.CampaignList.forEach(a => {
+          a.PhaseList.forEach(c => {
+            c.MailList.forEach(d => { d.Measure["Selected"] = State; d.Measure["Indeterminate"] = false;})
+            c.Measure["Selected"] = State;
+            c.Measure["Indeterminate"] = State;
+          })
+          a.Measure["Selected"] = State;
+          a.Measure["Indeterminate"] = State;
+        });
+        Node.Measure["Selected"] = State;
+        Node.Measure["Indeterminate"] = State;
+        return Node;
+      }
+      else {
+
+        if (Node.PhaseList != null) {
+          Node.PhaseList.forEach(a => {
+            a.MailList.forEach(d => { d.Measure["Selected"] = State; d.Measure["Indeterminate"] = false;})
+            a.Measure["Selected"] = State;
+            a.Measure["Indeterminate"] = State;            
+          });
+          Node.Measure["Selected"] = State;
+          Node.Measure["Indeterminate"] = State;          
+          return Node;
+        }
+      }
+    }
+    Node.Measure["Selected"] = State;
+    Node.Measure["Indeterminate"] = State;    
+    return Node;
+  }
+
   ToggleExpansion(Element: any) {
     if (Element.Measure)
       Element.Measure.Expanded = !Element.Measure.Expanded;
   }
 
-  onResults(ReturnedResults:any):any
-  {
+  onResults(ReturnedResults: any): any {
     this.clientName = this._g.clientArr.find(p => p.gClientAcronym == ReturnedResults[0].Client).gClientName;
     this.rootReturns = ReturnedResults;
   }
@@ -234,7 +396,7 @@ saveCheckedStatus(){
       }
     }
 
-    
+
     var sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
@@ -261,7 +423,7 @@ saveCheckedStatus(){
       }
     });
 
-    
+
     switch (myType) {
       case "MailTypeList": {
         sort.active = "MailType";
@@ -318,24 +480,29 @@ saveCheckedStatus(){
 
   applyChanges() {
 
-    var Results:RootReturns;
+    var Results: RootReturns;
 
     var clientsStr = "";
     this.pageReady = false;
 
-    if (this.selectedClients.length > 1)
-    {
-      this.selectedClients.forEach(element => { clientsStr = element + "." + clientsStr;});
+    if (this.selectedClients.length > 1) {
+      this.selectedClients.forEach(element => { clientsStr = element + "." + clientsStr; });
       clientsStr = clientsStr.substring(0, clientsStr.length - 1);
     }
-    else clientsStr = this.selectedClients[0];  
+    else clientsStr = this.selectedClients[0];
 
     this._authService.getReturns(clientsStr, this.startDate, this.endDate).subscribe(data => {
       if (data)
-      this.rootReturns = data;
+        this.rootReturns = data;
       Results = data;
       Results = this._g.SetLastElements(Results);
       this.pageReady = true;
+      var i = 0;
+      while (this.rootReturns[i]) {
+        this.CheckLevel(this.rootReturns[i], true);
+        i = i + 1;
+      }
+
     });
   }
 

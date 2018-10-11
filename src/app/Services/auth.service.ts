@@ -9,6 +9,9 @@ import { RootReturns } from '../Models/RootReturns.model';
 import { ListPerformance } from '../Models/ListPerformance.model';
 import { NewReturns } from '../Models/NewReturns.model';
 import { Returns } from '../Models/Returns.model';
+import { ListOwner } from '../Models/ListOwner.model';
+import { ListManager } from '../Models/ListManager.model';
+import { Segment } from '../Models/Segment.model';
 // import { LoaderService } from '../loader/loader.service';
 
 @Injectable()
@@ -55,6 +58,31 @@ export class AuthService {
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
     return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
+
+  getListOwners():Observable<ListOwner[]> {
+    var Token = "";
+    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/GetListOwners";
+
+    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  }
+
+  getListManagers():Observable<ListManager[]> {
+    var Token = "";
+    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/GetListOwners";
+
+    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  }
+
+  getSegments():Observable<Segment[]> {
+    var Token = "";
+    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/GetSegments";
+
+    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  }
+
 
   getNewReturns(client: string, startDate: Date, endDate: Date):Observable<NewReturns[]> {
     var Token = "";

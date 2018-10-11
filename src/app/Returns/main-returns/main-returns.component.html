@@ -20,7 +20,7 @@
         <ng-container matColumnDef="selectionBox">
             <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
             <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                <mat-checkbox #clientTable [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (click)="ToogleChecks(element)()" *ngIf="selectionMode == true" [ngClass]="{
+                <mat-checkbox #clientTable [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (change)="ToogleChecks(element)" *ngIf="selectionMode == true" [ngClass]="{
                         'selectionBoxUnchecked': !checked
                     }"></mat-checkbox>
             </td>
@@ -172,7 +172,7 @@
         <ng-container matColumnDef="selectionBox">
             <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
             <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                <mat-checkbox *ngIf="selectionMode == true" [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (click)="ToogleChecks(element)()"></mat-checkbox>
+                <mat-checkbox *ngIf="selectionMode == true" [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (change)="ToogleChecks(element)"></mat-checkbox>
             </td>
             <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
         </ng-container>
@@ -344,7 +344,7 @@
         <ng-container matColumnDef="selectionBox">
             <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
             <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                <mat-checkbox *ngIf="selectionMode == true"  [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (click)="ToogleChecks(element)()"></mat-checkbox>
+                <mat-checkbox *ngIf="selectionMode == true"  [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (change)="ToogleChecks(element)"></mat-checkbox>
             </td>
             <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
         </ng-container>
@@ -594,7 +594,7 @@
         <ng-container matColumnDef="selectionBox">
             <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
             <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                <mat-checkbox *ngIf="selectionMode == true"  [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (click)="ToogleChecks(element)()"></mat-checkbox>
+                <mat-checkbox *ngIf="selectionMode == true"  [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (change)="ToogleChecks(element)"></mat-checkbox>
             </td>
             <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
         </ng-container>
@@ -908,7 +908,7 @@
         <ng-container matColumnDef="selectionBox">
             <th mat-header-cell *matHeaderCellDef class="selectionBoxColumn"></th>
             <td mat-cell *matCellDef="let element" class="selectionBoxColumn">
-                <mat-checkbox *ngIf="selectionMode == true"  [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (click)="ToogleChecks(element)()"></mat-checkbox>
+                <mat-checkbox *ngIf="selectionMode == true"  [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate" (change)="ToogleChecks(element)"></mat-checkbox>
             </td>
             <td mat-footer-cell *matFooterCellDef class="selectionBoxColumn"></td>
         </ng-container>

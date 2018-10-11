@@ -162,12 +162,10 @@ export class ReturnsComponent {
 
 
   ToogleChecks(element: any) {
-    var newState = false;
-    switch (element.Measure.Selected) {
-      case false: newState = true; break;
-      case true: newState = false; break;
-      default: newState = true;
-    }
+    if (element.Measure.Indeterminate)
+      element.Measure.Indeterminate = false;
+
+    var newState = element.Measure.Selected;
 
     if (element.Client) {
       element.MailTypeList.forEach(a => {
@@ -184,46 +182,49 @@ export class ReturnsComponent {
       });
     }
     if (element.MailType) {
-        element.CampaignList.forEach(b => {
-          b.Measure.Selected = newState;
-          b.PhaseList.forEach(c => {
-            c.Measure.Selected = newState;
-            c.MailList.forEach(d => {
-              d.Measure.Selected = newState;
-            });
-          });
-        });
-      }
-      if (element.CampaignName) {
-          element.PhaseList.forEach(c => {
-            c.Measure.Selected = newState;
-            c.MailList.forEach(d => {
-              d.Measure.Selected = newState;
-          });
-        });
-      }      
-      if (element.PhaseName) {
-          element.MailList.forEach(d => {
+      element.CampaignList.forEach(b => {
+        b.Measure.Selected = newState;
+        b.PhaseList.forEach(c => {
+          c.Measure.Selected = newState;
+          c.MailList.forEach(d => {
             d.Measure.Selected = newState;
+          });
+        });
       });
-    }      
+    }
+    if (element.CampaignName) {
+      element.PhaseList.forEach(c => {
+        c.Measure.Selected = newState;
+        c.MailList.forEach(d => {
+          d.Measure.Selected = newState;
+        });
+      });
+    }
+    if (element.PhaseName) {
+      element.MailList.forEach(d => {
+        d.Measure.Selected = newState;
+      });
+    }
     this.rootReturns = this._g.CalculateSummaries(this.rootReturns);
-    //  this.RefreshChecks();
+    this.RefreshChecks();
   }
 
   RefreshChecks() {
     var i = 0;
     while (this.rootReturns[i]) {
+      this.rootReturns[i].Measure["Indeterminate"] = false;
+      var alltypeSelected = true;
+      var alltypeUnselected = true;
       this.rootReturns[i].MailTypeList.forEach(a => {
-        a.Measure["Selected"] = false;
+        a.Measure["Indeterminate"] = false;
         var allcampSelected = true;
         var allcampUnselected = true;
         a.CampaignList.forEach(b => {
-          b.Measure["Selected"] = false;
+          b.Measure["Indeterminate"] = false;
           var allphasesSelected = true;
           var allphasesUnselected = true;
           b.PhaseList.forEach(c => {
-            c.Measure["Selected"] = false;
+            c.Measure["Indeterminate"] = false;
             var alllistsSelected = true;
             var alllistsUnselected = true;
             c.MailList.forEach(d => {
@@ -233,28 +234,60 @@ export class ReturnsComponent {
                 alllistsUnselected = false;
             })
             if ((!alllistsSelected) && (!alllistsUnselected))
-              c.Measure["Selected"] = 2;
-            if (alllistsSelected)
+              c.Measure["Indeterminate"] = true;
+            if (alllistsSelected) {
               c.Measure["Selected"] = true;
-            if (c.Measure["Selected"] == false)
+              c.Measure["Indeterminate"] = false;
+            }
+            if (alllistsUnselected) {
+              c.Measure["Selected"] = false;
+              c.Measure["Indeterminate"] = false;
+            }
+            if (c.Measure["Selected"] == false || c.Measure["Indeterminate"])
               allphasesSelected = false;
-            if (c.Measure["Selected"] == true)
+            if (c.Measure["Selected"] == true || c.Measure["Indeterminate"])
               allphasesUnselected = false;
           })
           if ((!allphasesSelected) && (!allphasesUnselected))
-            b.Measure["Selected"] = 2;
-          if (allphasesSelected)
+            b.Measure["Indeterminate"] = true;
+          if (allphasesSelected) {
             b.Measure["Selected"] = true;
-          if (a.Measure["Selected"] == false)
-            allphasesSelected = false;
-          if (a.Measure["Selected"] == true)
-            allphasesUnselected = false;
+            b.Measure["Indeterminate"] = false;
+          }
+          if (allphasesUnselected) {
+            b.Measure["Selected"] = false;
+            b.Measure["Indeterminate"] = false;
+          }
+          if (b.Measure["Selected"] == false || b.Measure["Indeterminate"])
+            allcampSelected = false;
+          if (b.Measure["Selected"] == true || b.Measure["Indeterminate"])
+            allcampUnselected = false;
         })
         if ((!allcampSelected) && (!allcampUnselected))
-          a.Measure["Selected"] = 2;
-        if (allcampSelected)
+          a.Measure["Indeterminate"] = true;
+        if (allcampSelected) {
           a.Measure["Selected"] = true;
-      })
+          a.Measure["Indeterminate"] = false;
+        }
+        if (allcampUnselected) {
+          a.Measure["Selected"] = false;
+          a.Measure["Indeterminate"] = false;
+        }
+        if (a.Measure["Selected"] == false || a.Measure["Indeterminate"])
+          alltypeSelected = false;
+        if (a.Measure["Selected"] == true || a.Measure["Indeterminate"])
+          alltypeUnselected = false;
+      });
+      if ((!alltypeSelected) && (!alltypeUnselected))
+        this.rootReturns[i].Measure["Indeterminate"] = true;
+      if (alltypeSelected) {
+        this.rootReturns[i].Measure["Selected"] = true;
+        this.rootReturns[i].Measure["Indeterminate"] = false;
+      }
+      if (alltypeUnselected) {
+        this.rootReturns[i].Measure["Selected"] = false;
+        this.rootReturns[i].Measure["Indeterminate"] = false;
+      }
       i = i + 1;
     }
   }
@@ -267,17 +300,17 @@ export class ReturnsComponent {
           b.PhaseList.forEach(c => {
             c.MailList.forEach(d => { d.Measure["Selected"] = State; d.Measure["Indeterminate"] = false; });
             c.Measure["Selected"] = State;
-            c.Measure["Indeterminate"] = State;
+            c.Measure["Indeterminate"] = false;
 
           });
           b.Measure["Selected"] = State;
-          b.Measure["Indeterminate"] = State;
+          b.Measure["Indeterminate"] = false;
         });
         a.Measure["Selected"] = State;
-        a.Measure["Indeterminate"] = State;
+        a.Measure["Indeterminate"] = false;
       });
       Node.Measure["Selected"] = State;
-      Node.Measure["Indeterminate"] = State;
+      Node.Measure["Indeterminate"] = false;
       return Node;
     }
     else {
@@ -285,33 +318,33 @@ export class ReturnsComponent {
       if (Node.CampaignList != null) {
         Node.CampaignList.forEach(a => {
           a.PhaseList.forEach(c => {
-            c.MailList.forEach(d => { d.Measure["Selected"] = State; d.Measure["Indeterminate"] = false;})
+            c.MailList.forEach(d => { d.Measure["Selected"] = State; d.Measure["Indeterminate"] = false; })
             c.Measure["Selected"] = State;
-            c.Measure["Indeterminate"] = State;
+            c.Measure["Indeterminate"] = false;
           })
           a.Measure["Selected"] = State;
-          a.Measure["Indeterminate"] = State;
+          a.Measure["Indeterminate"] = false;
         });
         Node.Measure["Selected"] = State;
-        Node.Measure["Indeterminate"] = State;
+        Node.Measure["Indeterminate"] = false;
         return Node;
       }
       else {
 
         if (Node.PhaseList != null) {
           Node.PhaseList.forEach(a => {
-            a.MailList.forEach(d => { d.Measure["Selected"] = State; d.Measure["Indeterminate"] = false;})
+            a.MailList.forEach(d => { d.Measure["Selected"] = State; d.Measure["Indeterminate"] = false; })
             a.Measure["Selected"] = State;
-            a.Measure["Indeterminate"] = State;            
+            a.Measure["Indeterminate"] = false;
           });
           Node.Measure["Selected"] = State;
-          Node.Measure["Indeterminate"] = State;          
+          Node.Measure["Indeterminate"] = false;
           return Node;
         }
       }
     }
     Node.Measure["Selected"] = State;
-    Node.Measure["Indeterminate"] = State;    
+    Node.Measure["Indeterminate"] = false;
     return Node;
   }
 

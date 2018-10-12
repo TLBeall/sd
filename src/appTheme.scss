@@ -19,6 +19,7 @@ $color-blue-default: #1279C0;
 $color-blue-light: #59a1d3;
 $color-blue-dark: #0a5caa;
 
+$color-very-pale-orange: #ffdfc7;
 
 //Changes size of the material design checkbox (default hw is 20x20) to a medium size checkbox
 //Apply "md-checkbox" as a class on the mat-checkbox element
@@ -107,42 +108,6 @@ $shiftStyle: cubic-bezier(0.175, 0.885, 0.32, 1.1);
     content: "";
     clear: both;
     display: table;
-}
-
-//Setup for underline that appears left to right
-// just apply to any element, ex: a{ @include underlineOne }
-@mixin underlineOne{
-    &{
-        cursor: pointer;
-        position: relative;
-        color: inherit;
-        text-decoration: none;
-        overflow: hidden;
-        display: inline-block;
-        &:before{
-          content: '';
-          position: absolute;
-          transition: transform .5s ease;
-          display: inline-block;
-          left: 0;
-          bottom: 0;
-          width: 100%;
-          height: 1px;
-          background: $color-blue-default;
-          transform:  translateX(-100%);
-        }
-        &:after {
-          content: '';
-          position: absolute;
-          transition: transform .5s ease;
-        }
-        &:hover:before {
-          transform:  translateX(0);
-        }
-        &:active{
-          color: $color-blue-default;
-        }
-      }
 }
 
 
@@ -281,12 +246,6 @@ $shiftStyle: cubic-bezier(0.175, 0.885, 0.32, 1.1);
   //Creating custom image that can be used as a class
   .custom_line_weight_icon{
     display: inline-block;
-    // position: absolute;
-    // float:left;
-    // top: 0;
-    // right: 0;
-    // left: 0;
-    // bottom: 0;
     background: url(/assets/Editing-Line-Width-icon.png) center center no-repeat;
     background-size: contain;
     width: 90%;

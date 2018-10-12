@@ -2,9 +2,7 @@
 
 $btnColumnShift: 72px; //used to control the left column for both parent and child tables
 $selectionColumnShift: 32px;
-// .selectionBoxUnchecked{
-//   background-color:red;
-// }
+
 
 
 table {
@@ -229,7 +227,10 @@ font-weight: bold;
   font-size: 12px;
   font-style: italic;
   color: $color-blue-dark !important;
-  @include underlineOne;
+  &:hover{
+    text-decoration: underline !important;
+    cursor: pointer;
+  }
 }
 .sPackageDoubling{
   font-size:12px;
@@ -247,21 +248,10 @@ font-weight: bold;
 //Controls the settings for the links to the list performance page from the list tables (prospect)
 .prospectListDescription{
   a{
-    @include underlineOne;
-  }
-  span{ //required since the anchor tags would be shifted up by a couple pixels above the "/" span tags
-    position: relative;
-    color: inherit;
-    text-decoration: none;
-    overflow: hidden;
-    display: inline-block;
-    &:before{
-    position: absolute;
-      display: inline-block;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 1px;
+    &:hover{
+      text-decoration: underline;
+      color: $color-blue-dark;
+      cursor: pointer;
     }
   }
 }
@@ -345,6 +335,14 @@ font-size:inherit;
   text-align: center;
   color: $color-blue-default;
   
+}
+
+//Controls the styling of the rows when they are unchecked by the toggle filter
+.selectionBoxUnchecked{
+  background-color: $color-very-pale-orange !important;
+  &:hover{
+  background-color: $color-very-pale-orange !important;
+  }
 }
 //  //Removes pagination (prev/next) on the mat tab 
 //  ::ng-deep .mat-tab-header-pagination {

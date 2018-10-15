@@ -56,7 +56,7 @@ export class ReturnsComponent {
   }
 
   ngOnInit() {
-    this.filteredClientArr = new Array<string>;
+    this.filteredClientArr = new Array<string>();
     this.route.params.subscribe(params => {
       this.LoadValues(params['client'], params['from'], params['to']);
       this._authService.getReturns(this.selectedClients[0], this.startDate, this.endDate).subscribe(data => {

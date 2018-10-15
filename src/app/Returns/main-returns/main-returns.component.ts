@@ -41,6 +41,8 @@ export class ReturnsComponent {
   private hide: Boolean = false;
   private visibility: string = "hidden";
   private ClientArr: ClientList[];
+  private filteredClientArr: Array<string>;
+  private filteredClientArrSource: Array<string>;
   private grandTotal: any;
 
   clientDisplayedColumns: string[] = ['Expand', 'selectionBox', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
@@ -54,6 +56,7 @@ export class ReturnsComponent {
   }
 
   ngOnInit() {
+    this.filteredClientArr = new Array<string>;
     this.route.params.subscribe(params => {
       this.LoadValues(params['client'], params['from'], params['to']);
       this._authService.getReturns(this.selectedClients[0], this.startDate, this.endDate).subscribe(data => {
@@ -68,6 +71,7 @@ export class ReturnsComponent {
       this._authService.getClientList("All")
         .subscribe(data => {
           this.ClientArr = data;
+          data.forEach(a => { this.filteredClientArr.push(a.gClientName);  this.filteredClientArrSource.push(a.gClientName); });
         });
       this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.selectedClients[0]).gClientName;
       // In a real app: dispatch action to load the details here.
@@ -75,6 +79,10 @@ export class ReturnsComponent {
 
   }
 
+  filterclientArr(val) {
+    console.log(val);
+    this.filteredClientArr = this.filteredClientArrSource.filter((client) => client.indexOf(val));
+  }
 
   LoadValues(client: string, startDate: any, endDate: any) {
     this.selectedClients.push(client);

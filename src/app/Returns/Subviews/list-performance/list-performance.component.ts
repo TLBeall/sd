@@ -60,10 +60,11 @@ export class ListPerformanceComponent implements OnInit {
   }
 
   closeToolbox() {
-    // this.opened = !this.opened;
-    // this.demoOpened = false;
+    this.toolsOpened = !this.toolsOpened;
+    this.demoOpened = false;
     //not sure if these should close on click outside?
   }
+
   ////////////////////////////////////
 
   private route: any;
@@ -213,7 +214,12 @@ export class ListPerformanceComponent implements OnInit {
     sortedData.forEach(p => { p.Measure.Expanded = false; })
     this.ListPerformanceArr = sortedData;
   }
+
+  applyChanges(){
+    this.closeToolbox();
+  }
 }
+
 
 function compare(a: string, b: string, isAsc) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);

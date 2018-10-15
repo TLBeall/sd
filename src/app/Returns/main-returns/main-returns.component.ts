@@ -7,6 +7,9 @@ import { RootReturns } from '../../Models/RootReturns.model';
 import { GlobalService } from '../../Services/global.service';
 import { AuthService } from '../../Services/auth.service';
 import { ClientList } from '../../Models/ClientList.model';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 
 @Component({
@@ -23,7 +26,9 @@ import { ClientList } from '../../Models/ClientList.model';
 })
 
 export class ReturnsComponent {
-
+  myControl = new FormControl();
+  // options: string[] = ['One', 'Two', 'Three'];
+  filteredOptions: Observable<string[]>;
 
   title = 'SD360-Reporting-Angular';
 
@@ -73,6 +78,17 @@ export class ReturnsComponent {
       // In a real app: dispatch action to load the details here.
     });
 
+    this.filteredOptions = this.myControl.valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.selectedClients.filter(client => client.toLowerCase().includes(filterValue));
   }
 
 
@@ -493,9 +509,9 @@ export class ReturnsComponent {
   }
 
   closeToolbox() {
-    // this.opened = !this.opened;
-    // this.demoOpened = false;
-    //not sure if these should close on click outside?
+    this.toolsOpened = !this.toolsOpened;
+    this.hide = !this.hide;
+    this.visibleFunction();
   }
 
   applyChanges() {
@@ -526,6 +542,7 @@ export class ReturnsComponent {
       this.rootReturns = calculations.rootReturns;
       this.grandTotal = calculations.grandTotal;
     });
+    this.closeToolbox();
   }
 
 }

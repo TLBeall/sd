@@ -306,10 +306,11 @@ font-size:inherit;
 .allCollapseHeader{
   &:active{
     color: $color-dovegray !important;
+    text-shadow: none !important;
   }
   &:hover{
-    color: $color-blue-dark;
     cursor: pointer;
+    text-shadow: 1px 1px 2px $color-silver;
   }
 }
 

@@ -46,6 +46,8 @@ export class ReturnsComponent {
   private hide: Boolean = false;
   private visibility: string = "hidden";
   private ClientArr: ClientList[];
+  private filteredClientArr: Array<string>;
+  private filteredClientArrSource: Array<string>;
   private grandTotal: any;
 
   clientDisplayedColumns: string[] = ['Expand', 'selectionBox', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
@@ -90,7 +92,6 @@ export class ReturnsComponent {
 
     return this.selectedClients.filter(client => client.toLowerCase().includes(filterValue));
   }
-
 
   LoadValues(client: string, startDate: any, endDate: any) {
     this.selectedClients.push(client);

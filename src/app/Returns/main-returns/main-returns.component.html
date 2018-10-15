@@ -14,7 +14,7 @@
                     <i class="material-icons" [ngClass]="ReadyToCollapseAll(element.MailTypeList)?'custom_line_weight_icon':'mi_drag_handle'"></i>
                 </button> -->
             </td>
-            <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"> </td>
+            <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"> </td>.
         </ng-container>
         <ng-container matColumnDef="selectionBox">
             <th mat-header-cell *matHeaderCellDef [ngClass]="selectionMode? 'sbcShifted':'sbc'"></th>
@@ -1254,8 +1254,8 @@
                         <!-- <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                           {{option}}
                         </mat-option> -->
-                        <mat-option *ngFor="let selectedClients of ClientArr" [value]="client">
-                                {{selectedClients.gClientName}}
+                        <mat-option *ngFor="let client of ClientArr" [value]="client">
+                                {{client.gClientName}}
                         </mat-option>
                       </mat-autocomplete>
                     </mat-form-field>

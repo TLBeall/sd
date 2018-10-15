@@ -27,7 +27,7 @@ import { startWith, map } from 'rxjs/operators';
 
 export class ReturnsComponent {
   myControl = new FormControl();
-  // options: string[] = ['One', 'Two', 'Three'];
+  options: string[] = ['One', 'Two', 'Three'];
   filteredOptions: Observable<string[]>;
 
   title = 'SD360-Reporting-Angular';
@@ -46,8 +46,6 @@ export class ReturnsComponent {
   private hide: Boolean = false;
   private visibility: string = "hidden";
   private ClientArr: ClientList[];
-  private filteredClientArr: Array<string>;
-  private filteredClientArrSource: Array<string>;
   private grandTotal: any;
 
   clientDisplayedColumns: string[] = ['Expand', 'selectionBox', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
@@ -79,19 +77,20 @@ export class ReturnsComponent {
       this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.selectedClients[0]).gClientName;
       // In a real app: dispatch action to load the details here.
     });
-
-    this.filteredOptions = this.myControl.valueChanges
-    .pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
+//This is in the ngOninut
+    // this.filteredOptions = this.myControl.valueChanges
+    // .pipe(
+    //   startWith(''),
+    //   map(value => this._filter(value))
+    // );
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+  // private _filter(value: string): string[] {
+  //   const filterValue = value.toLowerCase();
 
-    return this.selectedClients.filter(client => client.toLowerCase().includes(filterValue));
-  }
+  //   return this.ClientArr.filter(client => client.toLowerCase().includes(filterValue));
+  // }
+
 
   LoadValues(client: string, startDate: any, endDate: any) {
     this.selectedClients.push(client);

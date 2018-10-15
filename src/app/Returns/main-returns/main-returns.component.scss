@@ -1,10 +1,7 @@
 @import '~src/appTheme.scss'; 
 
-$btnColumnShift: 72px; //used to control the left column for both parent and child tables
+$btnColumnShift: 46px; //used to control the left column for both parent and child tables
 $selectionColumnShift: 32px;
-// .selectionBoxUnchecked{
-//   background-color:red;
-// }
 
 
 table {
@@ -30,20 +27,43 @@ table {
 
 //Controls material expand/collapse buttons at all levels
 .returnsExpCollBtn{
+  margin-left:10px;
   width:30px;
   height:30px;
-  opacity: 0.4;
+  // box-shadow: $material-box-shadow;
+  // background-color:$color-whitesmoke !important;
+  // opacity: 0.4;
   i{
     padding: 0px 0px 10px 0px;
   }
 }
 
+// .testButton{
+//   opacity:0.15 !important;
+//   -webkit-transition: 1s; /* For Safari 3.1 to 6.0 */
+//     transition: 0.6s;
+//   &:hover{
+//     opacity: 0.4 !important;
+//   }
+// }
+
 //Controls hover and selected for the rows
 tr.example-element-row:not(.example-expanded-row):hover {
   background: #e3eff7;
+  td{
+    .returnsExpCollBtn{
+      background-color:$color-whitesmoke !important;
+    }
+  }
 }
 tr.example-element-row:not(.example-expanded-row):active {
   background: #e3eff7;
+  td{
+    .returnsExpCollBtn{
+      background-color:$color-whitesmoke !important;
+    }
+  }
+  
 }
 
 //Controls child view initial settings
@@ -142,10 +162,10 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 //Controls the location of the expand/collapse button within the left-most column of the phase table
-.phaseToggleButton{
-  float:right;
-  margin-right:12px;
-}
+// .phaseToggleButton{
+//   float:right;
+//   margin-right:12px;
+// }
 
 //Collectively control the row settings and cell settings (set the row height of all the tables)
 .mat-row {
@@ -177,20 +197,19 @@ tr.mat-footer-row{
 }
 .listElementDefault{
   padding-top: 6px;
-  padding-bottom: 15px;
+  padding-bottom: 10px;
 }
 .phaseElementDefault{
   padding-top: 6px;
-  padding-bottom: 35px;
+  padding-bottom: 25px;
 }
 .campaignElementDefault{
   padding-top: 6px;
-  padding-bottom: 80px;
+  padding-bottom: 55px;
 }
 .mailTypeElementDefault{
-    td{
     padding-top: 6px;
-  }
+    padding-bottom: 80px;
 }
 // Cell setting end
 
@@ -229,11 +248,13 @@ font-weight: bold;
   font-size: 12px;
   font-style: italic;
   color: $color-blue-dark !important;
-  @include underlineOne;
+  &:hover{
+    text-decoration: underline !important;
+    cursor: pointer;
+  }
 }
 .sPackageDoubling{
   font-size:12px;
-  vertical-align: top;
 }
 .formatDiv{
   text-align: right;
@@ -247,29 +268,18 @@ font-weight: bold;
 //Controls the settings for the links to the list performance page from the list tables (prospect)
 .prospectListDescription{
   a{
-    @include underlineOne;
-  }
-  span{ //required since the anchor tags would be shifted up by a couple pixels above the "/" span tags
-    position: relative;
-    color: inherit;
-    text-decoration: none;
-    overflow: hidden;
-    display: inline-block;
-    &:before{
-    position: absolute;
-      display: inline-block;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 1px;
+    &:hover{
+      text-decoration: underline;
+      color: $color-blue-dark;
+      cursor: pointer;
     }
   }
 }
 
-.noCellBorder{
-  border-top: none;
-  border-bottom: none;
-}
+// .noCellBorder{
+//   border-top: none;
+//   border-bottom: none;
+// }
 
 //Controls font size for headers of tables depending on expanded/collapsed state
 $font-leader:20px;
@@ -284,7 +294,7 @@ font-weight: bolder;
 .font-campaignName-lg{
   font-size:($font-leader*0.95) !important;
   font-weight:bold;
-  text-decoration: underline;
+  font-style: italic;
 }
 .font-phase-lg{
   font-size:($font-leader*0.7) !important;
@@ -293,6 +303,16 @@ font-weight: bolder;
 .font-sm{
 font-size:inherit;
 }
+.allCollapseHeader{
+  &:active{
+    color: $color-dovegray !important;
+  }
+  &:hover{
+    color: $color-blue-dark;
+    cursor: pointer;
+  }
+}
+
 
 
 
@@ -346,6 +366,15 @@ font-size:inherit;
   color: $color-blue-default;
   
 }
+
+//Controls the styling of the rows when they are unchecked by the toggle filter
+.selectionBoxUnchecked{
+  background-color: $color-very-pale-orange !important;
+  &:hover{
+  background-color: $color-very-pale-orange !important;
+  }
+}
+
 //  //Removes pagination (prev/next) on the mat tab 
 //  ::ng-deep .mat-tab-header-pagination {
 //   display: none !important;
@@ -358,5 +387,3 @@ font-size:inherit;
 // }
 // <><><><><><><><><><><><><><><><><><><><><>
 //<><><><><> TOOLBOX SETTINGS END <><<><><>
-
-

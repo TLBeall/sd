@@ -33,7 +33,10 @@ export class GlobalService {
     }
 
     if (DestinationMeasure.Donors > 0)
+    {
       DestinationMeasure.AVG = DestinationMeasure.Gross / DestinationMeasure.Donors;
+      DestinationMeasure.CPD = DestinationMeasure.Cost / DestinationMeasure.Donors;
+    }
 
     if (DestinationMeasure.Gross > 0)
       DestinationMeasure.IO = DestinationMeasure.Gross / DestinationMeasure.Cost;
@@ -58,7 +61,7 @@ export class GlobalService {
     DestinationMeasure.NonDonors = SourceMeasure.NonDonors + DestinationMeasure.NonDonors;
     DestinationMeasure.NewDonors = SourceMeasure.NewDonors + DestinationMeasure.NewDonors;
     DestinationMeasure.Gross = SourceMeasure.Gross + DestinationMeasure.Gross;
-    DestinationMeasure.Cost = SourceMeasure.Cost + DestinationMeasure.Cost;
+    DestinationMeasure.Cost = SourceMeasure.Cost + DestinationMeasure.Cost;    
 
     return DestinationMeasure;
   }
@@ -79,6 +82,7 @@ export class GlobalService {
     element.NLM = 0;
     element.GPP = 0;
     element.CLM = 0;
+    element.CPD = 0;
     return element;
   }
 

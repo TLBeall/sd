@@ -13,6 +13,7 @@ export class Returns {
     GPP: number;
     CLM: number;
     NLM: number;
+    CPD: number;
     IO: number;
     Expanded: boolean = true;
     IsLast:boolean = false;

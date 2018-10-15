@@ -56,7 +56,6 @@ export class ReturnsComponent {
   }
 
   ngOnInit() {
-    this.filteredClientArr = new Array<string>();
     this.route.params.subscribe(params => {
       this.LoadValues(params['client'], params['from'], params['to']);
       this._authService.getReturns(this.selectedClients[0], this.startDate, this.endDate).subscribe(data => {
@@ -71,17 +70,11 @@ export class ReturnsComponent {
       this._authService.getClientList("All")
         .subscribe(data => {
           this.ClientArr = data;
-          data.forEach(a => { this.filteredClientArr.push(a.gClientName);  this.filteredClientArrSource.push(a.gClientName); });
         });
       this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.selectedClients[0]).gClientName;
       // In a real app: dispatch action to load the details here.
     });
 
-  }
-
-  filterclientArr(val) {
-    console.log(val);
-    this.filteredClientArr = this.filteredClientArrSource.filter((client) => client.indexOf(val));
   }
 
   LoadValues(client: string, startDate: any, endDate: any) {

@@ -1250,9 +1250,8 @@
         <p>
             <mat-form-field>
                 <mat-select [(value)]="this.selectedClients" multiple>
-                    <input matInput type="text" (keyup)="filterclientArr($event.target.value)">
-                    <mat-option *ngFor="let client of filteredClientArr" [value]="client" multiple>
-                        {{client}}
+                    <mat-option *ngFor="let client of ClientArr" [value]="client.gClientAcronym" multiple>
+                        {{client.gClientName}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>

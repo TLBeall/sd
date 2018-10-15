@@ -83,9 +83,9 @@ export class GlobalService {
   }
 
   CalculateSummaries(rootReturns: any): any {
-    var grandTotal:Returns = new Returns();
+    var grandTotal: Returns = new Returns();
     this.InitializeMeasure(grandTotal);
-    if (rootReturns)    
+    if (rootReturns)
       rootReturns.forEach(client => {
         client.Measure = this.InitializeMeasure(client.Measure);
         client.MailTypeList.forEach(type => {
@@ -99,7 +99,7 @@ export class GlobalService {
                   phase.Measure = this.AddToMeasure(list.Measure, phase.Measure);
               });
               phase.Measure = this.CalculateRates(phase.Measure);
-              if (phase.Measure.Selected  || phase.Measure.Indeterminate)
+              if (phase.Measure.Selected || phase.Measure.Indeterminate)
                 campaign.Measure = this.AddToMeasure(phase.Measure, campaign.Measure);
             });
             campaign.Measure = this.CalculateRates(campaign.Measure);
@@ -107,17 +107,17 @@ export class GlobalService {
               type.Measure = this.AddToMeasure(campaign.Measure, type.Measure);
           });
           type.Measure = this.CalculateRates(type.Measure);
-          if (type.Measure.Selected  || type.Measure.Indeterminate)
+          if (type.Measure.Selected || type.Measure.Indeterminate)
             client.Measure = this.AddToMeasure(type.Measure, client.Measure);
         });
         client.Measure = this.CalculateRates(client.Measure);
         grandTotal = this.AddToMeasure(client.Measure, grandTotal);
       })
-      grandTotal = this.CalculateRates(grandTotal)
-     return {
+    grandTotal = this.CalculateRates(grandTotal)
+    return {
       grandTotal: grandTotal,
       rootReturns: rootReturns
-  };;
+    };;
   }
 
   SetLastElements(rootReturns: any): any {
@@ -126,23 +126,25 @@ export class GlobalService {
       expandState = false;
     if (rootReturns)
       rootReturns.forEach(element => {
-        element.MailTypeList.forEach(element => {
-          element.Measure.IsLast = false;
-          element.CampaignList.forEach(element => {
+        element.Measure.IsLast = false;
+          element.MailTypeList.forEach(element => {
             element.Measure.IsLast = false;
-            element.PhaseList.forEach(element => {
+            element.CampaignList.forEach(element => {
               element.Measure.IsLast = false;
+              element.PhaseList.forEach(element => {
+                element.Measure.IsLast = false;
+                element.Measure.Expanded = expandState;
+              });
+              element.PhaseList[element.PhaseList.length - 1].Measure.IsLast = true;
               element.Measure.Expanded = expandState;
             });
-            element.PhaseList[element.PhaseList.length - 1].Measure.IsLast = true;
+            element.CampaignList[element.CampaignList.length - 1].Measure.IsLast = true;
             element.Measure.Expanded = expandState;
           });
-          element.CampaignList[element.CampaignList.length - 1].Measure.IsLast = true;
-          element.Measure.Expanded = expandState;
-        });
-        element.MailTypeList[element.MailTypeList.length - 1].Measure.IsLast = true;
-        element.Measure.Expanded = true;
+          element.MailTypeList[element.MailTypeList.length - 1].Measure.IsLast = true;
+          element.Measure.Expanded = true;
       })
+    rootReturns[rootReturns.length - 1].Measure.IsLast = true;
     return rootReturns;
   }
 }

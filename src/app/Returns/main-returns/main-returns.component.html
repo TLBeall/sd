@@ -1249,13 +1249,13 @@
     <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
             <form class="example-form">
                     <mat-form-field class="example-full-width">
-                      <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                      <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="clientControl" [matAutocomplete]="auto">
                       <mat-autocomplete #auto="matAutocomplete">
                         <!-- <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                           {{option}}
                         </mat-option> -->
-                        <mat-option *ngFor="let client of ClientArr" [value]="client">
-                                {{client.gClientName}}
+                        <mat-option *ngFor="let client of filteredOptions | async" [value]="client">
+                                {{client}}
                         </mat-option>
                       </mat-autocomplete>
                     </mat-form-field>

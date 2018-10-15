@@ -26,9 +26,6 @@ import { startWith, map } from 'rxjs/operators';
 })
 
 export class ReturnsComponent {
-  myControl = new FormControl();
-  options: string[] = ['One', 'Two', 'Three'];
-  filteredOptions: Observable<string[]>;
 
   title = 'SD360-Reporting-Angular';
 
@@ -46,7 +43,10 @@ export class ReturnsComponent {
   private hide: Boolean = false;
   private visibility: string = "hidden";
   private ClientArr: ClientList[];
+  private ClientStrArr: string[] = new Array<string>();
   private grandTotal: any;
+  private clientControl = new FormControl();
+  private filteredOptions: Observable<string[]>;
 
   clientDisplayedColumns: string[] = ['Expand', 'selectionBox', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
   mailTypeDisplayedColumns: string[] = ['Expand', 'selectionBox', 'MailType', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
@@ -56,6 +56,11 @@ export class ReturnsComponent {
 
   constructor(route: ActivatedRoute, private _authService: AuthService, private _g: GlobalService, private router: Router) {
     this.route = route;
+  }
+
+  private _filter(name: string): string[] {
+    const filterValue = name.toLowerCase();
+    return this.ClientStrArr.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
   ngOnInit() {
@@ -72,25 +77,18 @@ export class ReturnsComponent {
       });
       this._authService.getClientList("All")
         .subscribe(data => {
-          this.ClientArr = data;
+          this.ClientArr = data;          
+          this.ClientArr.forEach(p => { this.ClientStrArr.push(p.gClientName + ' - ' + p.gClientAcronym ) });
+          this.filteredOptions = this.clientControl.valueChanges
+          .pipe(
+            startWith(''),
+            map(value => this._filter(value))
+          );          
         });
       this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.selectedClients[0]).gClientName;
+      });
       // In a real app: dispatch action to load the details here.
-    });
-//This is in the ngOninut
-    // this.filteredOptions = this.myControl.valueChanges
-    // .pipe(
-    //   startWith(''),
-    //   map(value => this._filter(value))
-    // );
-  }
-
-  // private _filter(value: string): string[] {
-  //   const filterValue = value.toLowerCase();
-
-  //   return this.ClientArr.filter(client => client.toLowerCase().includes(filterValue));
-  // }
-
+    }
 
   LoadValues(client: string, startDate: any, endDate: any) {
     this.selectedClients.push(client);

@@ -12,6 +12,7 @@ import { Returns } from '../Models/Returns.model';
 import { ListOwner } from '../Models/ListOwner.model';
 import { ListManager } from '../Models/ListManager.model';
 import { Segment } from '../Models/Segment.model';
+import { PerformanceHierarchy } from '../Models/PerformanceHierarchy.model';
 // import { LoaderService } from '../loader/loader.service';
 
 @Injectable()
@@ -59,28 +60,36 @@ export class AuthService {
     return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 
-  getListOwners():Observable<ListOwner[]> {
+  getPerformanceHierarchy():Observable<PerformanceHierarchy[]> {
     var Token = "";
-    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/GetListOwners";
+    var GetLPAPI = "https://sd360.sunrisedataservices.com/api/GetListPerformanceHierarchy";
 
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
-    return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+    return this.http.get(GetLPAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  }  
+
+  getListOwners():Observable<ListOwner[]> {
+    var Token = "";
+    var GetLOAPI = "https://sd360.sunrisedataservices.com/api/GetListOwners";
+
+    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(GetLOAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 
   getListManagers():Observable<ListManager[]> {
     var Token = "";
-    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/GetListOwners";
+    var GetLMAPI = "https://sd360.sunrisedataservices.com/api/GetListOwners";
 
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
-    return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+    return this.http.get(GetLMAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 
   getSegments():Observable<Segment[]> {
     var Token = "";
-    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/GetSegments";
+    var GetSegAPI = "https://sd360.sunrisedataservices.com/api/GetSegments";
 
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
-    return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+    return this.http.get(GetSegAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 
 

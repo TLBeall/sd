@@ -220,6 +220,33 @@
   <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
   <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
     <p>
+        <!-- <mat-form-field class="example-chip-list">
+            <mat-chip-list #ownerchipList>
+              <mat-chip
+                *ngFor="let list of lists"
+                [selectable]="selectable"
+                [removable]="removable"
+                (removed)="remove(list)">
+                {{list}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input
+                placeholder="Select list..."
+                #clientListInput
+                [formControl]="listControl"
+                [matAutocomplete]="auto"
+                [matChipInputFor]="listchipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur"
+                (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let list of filteredlists | async" [value]="list">
+                    {{list}}
+            </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
       <mat-form-field>
         <mat-select [(value)]="this.selectedOwners" multiple>
           <mat-option *ngFor="let owner of listOwners" [value]="owner.ID" multiple>
@@ -247,7 +274,7 @@
             {{client.gClientAcronym}} - {{client.gClientName}}
           </mat-option>
         </mat-select>
-      </mat-form-field>
+      </mat-form-field> -->
       <mat-form-field>
         <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="fromDate" placeholder="start date">
         <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>

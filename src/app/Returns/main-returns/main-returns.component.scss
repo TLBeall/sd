@@ -33,7 +33,7 @@ table {
   margin-left:10px;
   width:30px;
   height:30px;
-  // box-shadow: $material-box-shadow;
+  // box-shadow: $material-box-shadow-default;
   // background-color:$color-whitesmoke !important;
   // opacity: 0.4;
   i{
@@ -41,14 +41,6 @@ table {
   }
 }
 
-// .testButton{
-//   opacity:0.15 !important;
-//   -webkit-transition: 1s; /* For Safari 3.1 to 6.0 */
-//     transition: 0.6s;
-//   &:hover{
-//     opacity: 0.4 !important;
-//   }
-// }
 
 //Controls hover and selected for the rows
 tr.example-element-row:not(.example-expanded-row):hover {
@@ -90,7 +82,11 @@ tr.example-element-row:not(.example-expanded-row):active {
 .returnsExpCollBtn{
   width:30px;
   height:30px;
-  opacity: 0.4;
+  opacity: 0.6;
+  &:hover{
+    opacity: 0.8;
+    color: $color-blue-dark;
+  }
   i{
     padding: 0px 0px 10px 0px;
   }
@@ -304,16 +300,21 @@ font-weight: bolder;
   font-weight:bold;
 }
 .font-sm{
-font-size:inherit;
+  font-size:11px !important;
+  font-weight: normal !important;
 }
 .allCollapseHeader{
+  padding-left:8px;
+  padding-right:8px;
+  border-radius: 2px;
   &:active{
     color: $color-dovegray !important;
-    text-shadow: none !important;
+    box-shadow: $material-box-shadow-pressed !important;
   }
   &:hover{
     cursor: pointer;
-    text-shadow: 1px 1px 2px $color-silver;
+    padding-bottom: 2px !important;
+    box-shadow: $material-box-shadow-default;
   }
 }
 

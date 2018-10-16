@@ -43,11 +43,11 @@ export class ReturnsComponent {
   private hide: Boolean = false;
   private visibility: string = "hidden";
   private ClientArr: ClientList[];
-  private ClientStrArr: string[] = new Array<string>(); //allfruits
+  private ClientStrArr: string[] = new Array<string>();
   private grandTotal: any;
-  private clientControl = new FormControl(); //fruitCtrl
-  private clients: string[] = []; //fruits ---might need to use ClientArr?
-  private filteredOptions: Observable<string[]>; //filteredFruits
+  private clientControl = new FormControl();
+  private clients: string[] = [];
+  private filteredOptions: Observable<string[]>;
 
   clientDisplayedColumns: string[] = ['Expand', 'selectionBox', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
   mailTypeDisplayedColumns: string[] = ['Expand', 'selectionBox', 'MailType', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];

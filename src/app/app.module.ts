@@ -18,7 +18,7 @@ import { HomePageInternalToolbarComponent } from './toolbar/home-page-internal-t
 import { MatTableModule } from '@angular/material/table';
 import { MatTreeModule, MatSort, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule, 
         MatSortModule, MatProgressSpinnerModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatInputModule, 
-        MatCheckboxModule, MatProgressBarModule, MatSlideToggleModule, MatAutocompleteModule  } from '@angular/material';
+        MatCheckboxModule, MatProgressBarModule, MatSlideToggleModule, MatAutocompleteModule, MatChipsModule  } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';        
 import { InternalHomePageComponent } from './internal-home-page/internal-home-page.component';
 import { InternalHomeDashboardComponent } from './internal-home-page/internal-home-dashboard/internal-home-dashboard.component';
@@ -72,7 +72,8 @@ import { ListPerformanceToolbarComponent } from './toolbar/list-performance-tool
     MatCheckboxModule,
     MatProgressBarModule,
     MatAutocompleteModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatChipsModule
   ],
   providers: [
     AuthService,

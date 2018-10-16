@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
-import { Sort, MatTableModule, MatTable } from '@angular/material';
+import { Sort, MatTableModule, MatTable, MatChipInputEvent, MatAutocompleteSelectedEvent } from '@angular/material';
 import { LoaderService } from '../../Loader/loader.service';
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -10,7 +10,7 @@ import { ClientList } from '../../Models/ClientList.model';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-main-returns',
@@ -46,6 +46,7 @@ export class ReturnsComponent {
   private ClientStrArr: string[] = new Array<string>();
   private grandTotal: any;
   private clientControl = new FormControl();
+  private clients: string[] = [];
   private filteredOptions: Observable<string[]>;
 
   clientDisplayedColumns: string[] = ['Expand', 'selectionBox', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
@@ -54,9 +55,54 @@ export class ReturnsComponent {
   phaseDisplayedColumns: string[] = ['Expand', 'selectionBox', 'PhaseName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
   mailListDisplayedColumns: string[] = ['PseudoExpand', 'selectionBox', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];//, 'MailDescription', 'ExchangeFlag' 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
 
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = false;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  @ViewChild('clientListInput') clientListInput: ElementRef<HTMLInputElement>;
+
   constructor(route: ActivatedRoute, private _authService: AuthService, private _g: GlobalService, private router: Router) {
     this.route = route;
+    this.filteredOptions = this.clientControl.valueChanges.pipe(
+      startWith(null),
+      map((client: string | null) => client ? this._filter(client) : this.ClientStrArr.slice())
+    );
   }
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our client
+    if ((value || '').trim()) {
+      this.clients.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+
+    this.clientControl.setValue(null);
+  }
+
+  remove(client: string): void {
+    const index = this.clients.indexOf(client);
+
+    if (index >= 0) {
+      this.clients.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.clients.push(event.option.viewValue);
+    this.clientListInput.nativeElement.value = '';
+    this.clientControl.setValue(null);
+  }
+
+
 
   private _filter(name: string): string[] {
     const filterValue = name.toLowerCase();

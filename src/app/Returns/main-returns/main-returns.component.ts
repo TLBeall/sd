@@ -100,6 +100,12 @@ export class ReturnsComponent {
     this.clients.push(event.option.viewValue);
     this.clientListInput.nativeElement.value = '';
     this.clientControl.setValue(null);
+    this.filteredOptions = this.clientControl.valueChanges.pipe(
+      startWith(null),
+      map((client: string | null) => client ? this._filter(client) : this.ClientStrArr.slice())
+    );    
+    // this.clientListInput.nativeElement.focus();
+    this.clientListInput.nativeElement.blur();
   }
 
 

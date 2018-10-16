@@ -10,7 +10,7 @@ import { ClientList } from '../../Models/ClientList.model';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-main-returns',
@@ -103,20 +103,22 @@ export class ReturnsComponent {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    if (! this.clients.includes(this.getAcronym(event.option.viewValue)))
+    if (!this.clients.includes(this.getAcronym(event.option.viewValue)))
       this.clients.push(this.getAcronym(event.option.viewValue));
     this.clientListInput.nativeElement.value = '';
     this.clientControl.setValue(null);
     this.filteredOptions = this.clientControl.valueChanges.pipe(
       startWith(null),
       map((client: string | null) => client ? this._filter(client) : this.ClientStrArr.slice())
-    );   
+    );
     this.clientListInput.nativeElement.blur();
   }
 
 
 
   private _filter(name: string): string[] {
+    if (name == null)
+      return null;
     const filterValue = name.toLowerCase();
     return this.ClientStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
   }
@@ -127,6 +129,7 @@ export class ReturnsComponent {
       this._authService.getReturns(this.selectedClients[0], this.startDate, this.endDate).subscribe(data => {
         this.rootReturns = data;
         this.rootReturns = this._g.SetLastElements(this.rootReturns);
+        this.rootReturns = this._g.ExpandAll(this.rootReturns);
         this.CheckLevel(this.rootReturns[0], true);
         var calculations = this._g.CalculateSummaries(this.rootReturns);
         this.rootReturns = calculations.rootReturns;
@@ -135,19 +138,19 @@ export class ReturnsComponent {
       });
       this._authService.getClientList("All")
         .subscribe(data => {
-          this.ClientArr = data;          
-          this.ClientArr.forEach(p => { this.ClientStrArr.push(p.gClientName + ' - ' + p.gClientAcronym ) });
+          this.ClientArr = data;
+          this.ClientArr.forEach(p => { this.ClientStrArr.push(p.gClientName + ' - ' + p.gClientAcronym) });
           this.filteredOptions = this.clientControl.valueChanges
-          .pipe(
-            startWith(''),
-            map(value => this._filter(value))
-          );          
+            .pipe(
+              startWith(''),
+              map(value => this._filter(value))
+            );
         });
       this.clients.push(this.selectedClients[0]);
       this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.selectedClients[0]).gClientName;
-      });
-      // In a real app: dispatch action to load the details here.
-    }
+    });
+    // In a real app: dispatch action to load the details here.
+  }
 
   LoadValues(client: string, startDate: any, endDate: any) {
     this.selectedClients.push(client);
@@ -193,9 +196,11 @@ export class ReturnsComponent {
 
   NextLevel(Parent: any, ChildList: any[]) {
     var SetToExpand = true;
+    var flag: boolean = false;
     if (this.ReadyToCollapseAll(ChildList))
       SetToExpand = false;
     if (Parent.MailTypeList != null) {
+      flag = true;
       ChildList.forEach(a => {
         a.CampaignList.forEach(b => {
           b.PhaseList.forEach(c => {
@@ -208,6 +213,7 @@ export class ReturnsComponent {
     }
 
     if (Parent.CampaignList != null) {
+      flag = true;
       ChildList.forEach(a => {
         a.PhaseList.forEach(c => {
           c.Measure.Expanded = SetToExpand;
@@ -217,13 +223,33 @@ export class ReturnsComponent {
     }
 
     if (Parent.PhaseList != null) {
+      flag = true;
       ChildList.forEach(a => {
         a.Measure.Expanded = SetToExpand;
       })
     }
 
-    if (Parent.Measure.Expanded == false)
-      Parent.Measure.Expanded = true;
+    if (Parent.Measure) {
+      flag = true;
+      if (Parent.Measure.Expanded == false)
+        Parent.Measure.Expanded = true;
+    }
+
+    if (flag == false)
+    {
+      ChildList.forEach(x => {
+      x.MailTypeList.forEach(a => {
+        a.CampaignList.forEach(b => {
+          b.PhaseList.forEach(c => {
+            c.Measure.Expanded = SetToExpand;
+          })
+          b.Measure.Expanded = SetToExpand;
+        })
+        a.Measure.Expanded = SetToExpand;
+      })      
+      x.Measure.Expanded = SetToExpand;
+    })
+    }
   }
 
 
@@ -430,16 +456,23 @@ export class ReturnsComponent {
     var data: any;
     var myType: string = "";
 
+    if (Element.MailTypeList != null) myType = "MailTypeList";
     if (Element.CampaignList != null) myType = "MailType";
     if (Element.PhaseList != null) myType = "Campaign";
     if (Element.MailList != null) myType = "Phase";
-    if (myType == "") myType = "MailTypeList";
+    if (myType == "") myType = "Client";
 
     switch (myType) {
+      case "Client": {
+        if (this.ReadyToCollapseAll(Element))
+          this.NextLevel(Element, Element);
+        data = Element.slice();
+        break;
+      }
       case "MailTypeList": {
-        if (this.ReadyToCollapseAll(this.rootReturns[0].MailTypeList))
-          this.NextLevel(this.rootReturns[0], this.rootReturns[0].MailTypeList);
-        data = this.rootReturns[0].MailTypeList.slice();
+        if (this.ReadyToCollapseAll(Element.MailTypeList))
+          this.NextLevel(Element, Element.MailTypeList);
+        data = Element.MailTypeList.slice();
         break;
       }
       case "MailType": {
@@ -466,6 +499,10 @@ export class ReturnsComponent {
     if (!sort.active || sort.direction === '') {
       sort.direction = "asc";
       switch (myType) {
+        case "Client": {
+          sort.active = "Client";
+          break;
+        }
         case "MailTypeList": {
           sort.active = "MailType";
           break;
@@ -483,7 +520,6 @@ export class ReturnsComponent {
           break;
         }
         default: {
-          //statements; 
           break;
         }
       }
@@ -493,6 +529,7 @@ export class ReturnsComponent {
     var sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
+        case 'Client': return compare(a.Client, b.Client, isAsc);
         case 'MailType': return compare(a.MailType, b.MailType, isAsc);
         case 'CampaignName': return compare(a.CampaignName, b.CampaignName, isAsc);
         case 'PhaseName': return compare(a.PhaseName, b.PhaseName, isAsc);
@@ -518,9 +555,14 @@ export class ReturnsComponent {
 
 
     switch (myType) {
+      case "Client": {
+        sort.active = "Client";
+        this.rootReturns = sortedData;
+        break;
+      }
       case "MailTypeList": {
         sort.active = "MailType";
-        this.rootReturns[0].MailTypeList = sortedData;
+        Element.MailTypeList = sortedData;
         break;
       }
       case "MailType": {
@@ -536,11 +578,10 @@ export class ReturnsComponent {
         break;
       }
       default: {
-        //statements; 
         break;
       }
     }
-    this._g.SetLastElements(this.rootReturns[0]);
+    this._g.SetLastElements(this.rootReturns);
   }
 
   toggle(tag: number) {
@@ -589,6 +630,7 @@ export class ReturnsComponent {
         this.rootReturns = data;
       Results = data;
       Results = this._g.SetLastElements(Results);
+      Results = this._g.ExpandAll(Results);
       this.pageReady = true;
       var i = 0;
       while (this.rootReturns[i]) {

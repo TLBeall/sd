@@ -1305,13 +1305,13 @@
 
 
 
-            <mat-form-field>
+            <!-- <mat-form-field>
                 <mat-select [(value)]="this.selectedClients" multiple>
                     <mat-option *ngFor="let client of ClientArr" [value]="client.gClientAcronym" multiple>
                         {{client.gClientName}}
                     </mat-option>
                 </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
             <mat-form-field>
                 <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="startDate" placeholder="start date">
                 <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>

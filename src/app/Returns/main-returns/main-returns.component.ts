@@ -96,15 +96,21 @@ export class ReturnsComponent {
     }
   }
 
+  getAcronym(clientName: string): string {
+    var retString: string;
+    retString = clientName.substring(clientName.indexOf('-') + 1, clientName.length).trim();
+    return retString;
+  }
+
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.clients.push(event.option.viewValue);
+    if (! this.clients.includes(this.getAcronym(event.option.viewValue)))
+      this.clients.push(this.getAcronym(event.option.viewValue));
     this.clientListInput.nativeElement.value = '';
     this.clientControl.setValue(null);
     this.filteredOptions = this.clientControl.valueChanges.pipe(
       startWith(null),
       map((client: string | null) => client ? this._filter(client) : this.ClientStrArr.slice())
-    );    
-    // this.clientListInput.nativeElement.focus();
+    );   
     this.clientListInput.nativeElement.blur();
   }
 
@@ -112,7 +118,7 @@ export class ReturnsComponent {
 
   private _filter(name: string): string[] {
     const filterValue = name.toLowerCase();
-    return this.ClientStrArr.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+    return this.ClientStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
   }
 
   ngOnInit() {
@@ -137,6 +143,7 @@ export class ReturnsComponent {
             map(value => this._filter(value))
           );          
         });
+      this.clients.push(this.selectedClients[0]);
       this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.selectedClients[0]).gClientName;
       });
       // In a real app: dispatch action to load the details here.
@@ -571,11 +578,11 @@ export class ReturnsComponent {
     var clientsStr = "";
     this.pageReady = false;
 
-    if (this.selectedClients.length > 1) {
-      this.selectedClients.forEach(element => { clientsStr = element + "." + clientsStr; });
+    if (this.clients.length > 1) {
+      this.clients.forEach(element => { clientsStr = element + "." + clientsStr; });
       clientsStr = clientsStr.substring(0, clientsStr.length - 1);
     }
-    else clientsStr = this.selectedClients[0];
+    else clientsStr = this.clients[0];
 
     this._authService.getReturns(clientsStr, this.startDate, this.endDate).subscribe(data => {
       if (data)

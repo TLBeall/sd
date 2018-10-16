@@ -124,10 +124,28 @@ export class GlobalService {
     };;
   }
 
-  SetLastElements(rootReturns: any): any {
+  ExpandAll(rootReturns: any): any {
     var expandState = true;
     if (rootReturns.length > 1)
-      expandState = false;
+      return rootReturns;
+    if (rootReturns)
+      rootReturns.forEach(element => {
+          element.MailTypeList.forEach(element => {
+            element.CampaignList.forEach(element => {
+              element.PhaseList.forEach(element => {
+                element.Measure.Expanded = expandState;
+              });
+              element.Measure.Expanded = expandState;
+            });
+            element.Measure.Expanded = expandState;
+          });
+          element.Measure.Expanded = true;
+      })
+    return rootReturns;
+  }
+
+
+  SetLastElements(rootReturns: any): any {
     if (rootReturns)
       rootReturns.forEach(element => {
         element.Measure.IsLast = false;
@@ -137,16 +155,12 @@ export class GlobalService {
               element.Measure.IsLast = false;
               element.PhaseList.forEach(element => {
                 element.Measure.IsLast = false;
-                element.Measure.Expanded = expandState;
               });
               element.PhaseList[element.PhaseList.length - 1].Measure.IsLast = true;
-              element.Measure.Expanded = expandState;
             });
             element.CampaignList[element.CampaignList.length - 1].Measure.IsLast = true;
-            element.Measure.Expanded = expandState;
           });
           element.MailTypeList[element.MailTypeList.length - 1].Measure.IsLast = true;
-          element.Measure.Expanded = true;
       })
     rootReturns[rootReturns.length - 1].Measure.IsLast = true;
     return rootReturns;

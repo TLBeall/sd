@@ -95,7 +95,7 @@
                 <td mat-footer-cell *matFooterCellDef><span>{{ this.grandTotal.RSP|percent:'1.2-2'}}</span></td>
             </ng-container>
             <ng-container matColumnDef="AVG">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header c
+                <th mat-header-cell *matHeaderCellDef mat-sort-header title="Average donation"
                 [ngClass]="this.rootReturns[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
                     Avg </th>
                 <td mat-cell *matCellDef="let element"><span *ngIf="!element.Measure.Expanded">{{element.Measure.AVG|number:'1.2-2'}}</span></td>
@@ -134,7 +134,7 @@
                 <td mat-footer-cell *matFooterCellDef><span>{{ this.grandTotal.GPP|currency}}</span></td>
             </ng-container>
             <ng-container matColumnDef="NLM">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header title="Net per letter mailed"
+                <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount net per letter mailed"
                     [ngClass]="this.rootReturns[0].Measure.Expanded?'headerCollapsed':'headerExpanded'"> NLM</th>
                 <td mat-cell *matCellDef="let element">
                     <span [ngClass]="{'negative':element.Measure.NLM < 0}" *ngIf="!element.Measure.Expanded">{{element.Measure.NLM|currency}}</span></td>
@@ -378,7 +378,7 @@
                 }"><span>{{element.Measure.GPP|currency}}</span></td>
             </ng-container>
             <ng-container matColumnDef="NLM">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header title="Net per letter mailed"
+                <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount net per letter mailed"
                     [ngClass]="element.MailTypeList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
                     NLM </th>
                 <td mat-cell *matCellDef="let element">
@@ -639,7 +639,7 @@
                         }"><span>{{element.Measure.GPP|currency}}</span></td>
             </ng-container>
             <ng-container matColumnDef="NLM">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header title="Net per letter mailed"
+                <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount net per letter mailed"
                     [ngClass]="element.CampaignList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'"> NLM </th>
                 <td mat-cell *matCellDef="let element">
                     <span [ngClass]="{'negative':element.Measure.NLM < 0}" *ngIf="!element.Measure.Expanded">{{element.Measure.NLM|currency}}</span></td>
@@ -903,7 +903,7 @@
                                  }"><span>{{element.Measure.GPP|currency}}</span></td>
             </ng-container>
             <ng-container matColumnDef="NLM">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header title="Net per letter mailed"
+                <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount net per letter mailed"
                     [ngClass]="element.PhaseList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
                     NLM
                 </th>
@@ -1181,7 +1181,7 @@
                     {{element.Measure.GPP|currency}} </td>
             </ng-container>
             <ng-container matColumnDef="NLM">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header title="Net per letter mailed">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount net per letter mailed">
                     NLM </th>
                 <td mat-cell *matCellDef="let element" [ngClass]="{'negative':element.Measure.NLM < 0}">
                     {{element.Measure.NLM|

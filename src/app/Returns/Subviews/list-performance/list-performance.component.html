@@ -69,7 +69,6 @@
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Donors </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.Donors | number}} </td>
     </ng-container>
-
     <ng-container matColumnDef="NewDonors">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> New </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.NewDonors | number}} </td>
@@ -77,6 +76,14 @@
     <ng-container matColumnDef="RSP">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Response Rate"> Rsp </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.RSP | percent:'1.2-2'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="AVG">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef title="Average donation"> Avg </th>
+      <td mat-cell *matCellDef="let element"> {{element.Measure.AVG | number:'1.2-2'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="CPD">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef title="Cost per donor"> CPD </th>
+      <td mat-cell *matCellDef="let element"> {{element.Measure.CPD | number:'1.2-2'}} </td>
     </ng-container>
     <ng-container matColumnDef="Gross">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Gross </th>
@@ -87,29 +94,25 @@
       <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.Net < 0">
         {{element.Measure.Net | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
     </ng-container>
-    <ng-container matColumnDef="NLM">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef title="Amount donated divided by quantity of letters mailed"> N$LM </th>
-      <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.NLM < 0">
-        {{element.Measure.NLM | currency}} </td>
-    </ng-container>
-    <ng-container matColumnDef="AVG">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef> Avg </th>
-      <td mat-cell *matCellDef="let element"> {{element.Measure.AVG | number:'1.2-2'}} </td>
-    </ng-container>
     <ng-container matColumnDef="Cost">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Cost </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.Cost | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
     </ng-container>
-    <ng-container matColumnDef="CLM">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef title="Cost per Letter Mailed"> CLM </th>
-      <td mat-cell *matCellDef="let element"> {{element.Measure.CLM | currency}} </td>
-    </ng-container>
-    <ng-container matColumnDef="GPP">
+    <ng-container matColumnDef="GPP" title="Amount grossed per Letter Mailed">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Amount grossed per Letter Mailed"> GLM </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.GPP | currency}} </td>
     </ng-container>
+    <ng-container matColumnDef="NLM">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef title="Amount net per letter mailed"> N$LM </th>
+      <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.NLM < 0">
+        {{element.Measure.NLM | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="CLM">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef title="Cost per letter Mailed"> CLM </th>
+      <td mat-cell *matCellDef="let element"> {{element.Measure.CLM | currency}} </td>
+    </ng-container>
     <ng-container matColumnDef="IO">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef> IO </th>
+      <th mat-header-cell mat-sort-header *matHeaderCellDef title="Gross/Cost"> IO </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.IO | number : '1.2-2'}} </td>
     </ng-container>
 
@@ -118,7 +121,7 @@
   'PackageGross', 'PackageCost', 'PackageNet', 'PackageGPP', 'PackageCLM', 'PackageNLM', 'PackageIO']; -->
 
   <ng-container matColumnDef="detailsColumn">
-    <td mat-cell *matCellDef="let element" colspan="22"> {{element.PackageTitle}} </td>
+    <td mat-cell *matCellDef="let element" colspan="23"> {{element.PackageTitle}} </td>
   </ng-container>
     <!-- <ng-container matColumnDef="PackageTitle">
       <td mat-cell *matCellDef="let element" colspan="6"> {{element.PackageTitle}} </td>
@@ -155,30 +158,33 @@
     <ng-container matColumnDef="PackageAVG">
       <td mat-cell *matCellDef="let element"> {{element.PackageAVG | number:'1.2-2'}} </td>
     </ng-container>
+    <ng-container matColumnDef="PackageCPD">
+      <td mat-cell *matCellDef="let element"> {{element.PackageCPD | number:'1.2-2'}} </td>
+    </ng-container>
     <ng-container matColumnDef="PackageGross">
       <td mat-cell *matCellDef="let element"> {{element.PackageGross | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
-    </ng-container>
-    <ng-container matColumnDef="PackageCost">
-      <td mat-cell *matCellDef="let element"> {{element.PackageCost | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
     </ng-container>
     <ng-container matColumnDef="PackageNet">
       <td mat-cell *matCellDef="let element" [class.negative]="element.PackageNet < 0">
         {{element.PackageNet | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
     </ng-container>
+    <ng-container matColumnDef="PackageCost">
+      <td mat-cell *matCellDef="let element"> {{element.PackageCost | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+    </ng-container>
     <ng-container matColumnDef="PackageGPP">
       <td mat-cell *matCellDef="let element"> {{element.PackageGPP | currency}} </td>
-    </ng-container>
-    <ng-container matColumnDef="PackageCLM">
-      <td mat-cell *matCellDef="let element"> {{element.PackageCLM | currency}} </td>
     </ng-container>
     <ng-container matColumnDef="PackageNLM">
       <td mat-cell *matCellDef="let element" [class.negative]="element.PackageNLM < 0">
         {{element.PackageNLM | currency}} </td>
     </ng-container>
+    <ng-container matColumnDef="PackageCLM">
+      <td mat-cell *matCellDef="let element"> {{element.PackageCLM | currency}} </td>
+    </ng-container>
     <ng-container matColumnDef="PackageIO">
       <td mat-cell *matCellDef="let element"> {{element.PackageIO | number : '1.2-2'}} </td>
     </ng-container>
-    <ng-container matColumnDef="RSPPerformance">
+    <!-- <ng-container matColumnDef="RSPPerformance">
       <td mat-cell *matCellDef="let element"> <i class="material-icons" [ngStyle]="{'color':element.PackageRSP > element.Measure.RSP ? 'red' : 'green' }"
           [ngClass]="element.PackageRSP > element.Measure.RSP ? 'mi_expand_more' : 'mi_expand_less'"></i></td>
     </ng-container>
@@ -189,7 +195,7 @@
     <ng-container matColumnDef="IOPerformance">
       <td mat-cell *matCellDef="let element"> <i class="material-icons" [ngStyle]="{'color':element.PackageIO > element.Measure.IO ? 'red' : 'green' }"
           [ngClass]="element.PackageIO > element.Measure.IO ? 'mi_expand_more' : 'mi_expand_less'"></i></td>
-    </ng-container>
+    </ng-container> -->
 
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" [ngStyle]="{'background-color':element.Measure.Expanded ? '#e6e6e6' : 'white' }">
@@ -219,35 +225,111 @@
 }">
   <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
   <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
-    <p>
-        <!-- <mat-form-field class="example-chip-list">
-            <mat-chip-list #ownerchipList>
-              <mat-chip
-                *ngFor="let list of lists"
-                [selectable]="selectable"
-                [removable]="removable"
-                (removed)="remove(list)">
-                {{list}}
-                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-              </mat-chip>
-              <input
-                placeholder="Select list..."
-                #clientListInput
-                [formControl]="listControl"
-                [matAutocomplete]="auto"
-                [matChipInputFor]="listchipList"
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                [matChipInputAddOnBlur]="addOnBlur"
-                (matChipInputTokenEnd)="add($event)">
-            </mat-chip-list>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                <mat-option *ngFor="let list of filteredlists | async" [value]="list">
-                    {{list}}
-            </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
 
-      <mat-form-field>
+    <!-- LIST OWNER - LO -->
+        <mat-form-field class="tbElement">
+            <mat-chip-list #LOchipList>
+                <mat-chip *ngFor="let listowner of LOList" 
+                [selectable]="selectable" 
+                [removable]="removable" 
+                (removed)="LOremove(listowner)">
+                    {{listowner}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="List(s)" #LOInput 
+                [formControl]="LOControl" 
+                [matAutocomplete]="auto"
+                [matChipInputFor]="LOchipList" 
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur" 
+                (matChipInputTokenEnd)="LOadd($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="LOselected($event)">
+                <mat-option *ngFor="let listowner of LOfilteredOptions | async" [value]="listowner">
+                    {{listowner}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+    <!-- LIST MANAGER - LM -->
+    <!-- <mat-form-field class="tbElement">
+        <mat-chip-list #LMchipList>
+            <mat-chip *ngFor="let listmanager of LMList" 
+            [selectable]="selectable" 
+            [removable]="removable" 
+            (removed)="remove(listmanager)">
+                {{listmanager}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="List(s)" #LMInput 
+            [formControl]="LMControl" 
+            [matAutocomplete]="auto"
+            [matChipInputFor]="LMchipList" 
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur" 
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let listmanager of LMfilteredOptions | async" [value]="listmanager">
+                {{listmanager}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field> -->
+
+    <!-- List Recency - Rec -->
+    <!-- <mat-form-field class="tbElement">
+        <mat-chip-list #RecchipList>
+            <mat-chip *ngFor="let recency of RecList" 
+            [selectable]="selectable" 
+            [removable]="removable" 
+            (removed)="remove(recency)">
+                {{recency}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="List(s)" #SegInput 
+            [formControl]="RecControl" 
+            [matAutocomplete]="auto"
+            [matChipInputFor]="RecchipList" 
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur" 
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let recency of RecfilteredOptions | async" [value]="recency">
+                {{recency}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field> -->
+
+    <!-- Client Input - Cl -->
+    <!-- <mat-form-field class="tbElement">
+        <mat-chip-list #ClchipList>
+            <mat-chip *ngFor="let client of ClList" 
+            [selectable]="selectable" 
+            [removable]="removable" 
+            (removed)="remove(client)">
+                {{client}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="List(s)" #ClInput 
+            [formControl]="ClControl" 
+            [matAutocomplete]="auto"
+            [matChipInputFor]="ClchipList" 
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur" 
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let client of ClfilteredOptions | async" [value]="client">
+                {{client}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field> -->
+
+
+
+
+      <!-- <mat-form-field>
         <mat-select [(value)]="this.selectedOwners" multiple>
           <mat-option *ngFor="let owner of listOwners" [value]="owner.ID" multiple>
             {{owner.Abbrev}} - {{owner.Name}}
@@ -285,7 +367,6 @@
         <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #endDatePicker></mat-datepicker>
       </mat-form-field>
-    </p>
     <p>
       <button mat-raised-button color="accent" (click)="applyChanges()"> Search </button>
     </p>

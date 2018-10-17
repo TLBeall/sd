@@ -278,7 +278,7 @@
         <mat-chip-list #LMchipList>
             <mat-chip *ngFor="let listmanager of LMList" 
             [selectable]="selectable" 
-            [removable]="semovable" 
+            [removable]="removable" 
             (removed)="LM_Remove(listmanager)">
                 {{listmanager}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
@@ -302,13 +302,13 @@
     <mat-form-field class="tbRecency">
         <mat-chip-list #RecchipList>
             <mat-chip *ngFor="let recency of RecList" 
-            [selectable]="selectable" 
+            [selectable]="selectable"
             [removable]="removable" 
             (removed)="Rec_Remove(recency)">
                 {{recency}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
-            <input placeholder="Recency" #SegInput 
+            <input placeholder="Recency" #RecInput 
             [formControl]="RecControl" 
             [matAutocomplete]="Recauto"
             [matChipInputFor]="RecchipList" 

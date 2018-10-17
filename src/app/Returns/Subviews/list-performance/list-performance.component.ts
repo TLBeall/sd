@@ -65,7 +65,7 @@ export class ListPerformanceComponent implements OnInit {
 
   @ViewChild('LOInput') LOInput: ElementRef<HTMLInputElement>; //LO = List Owner
   @ViewChild('LMInput') LMInput: ElementRef<HTMLInputElement>; //LM = List Manager
-  @ViewChild('SegInput') SegInput: ElementRef<HTMLInputElement>; //Rec = List Recency
+  @ViewChild('RecInput') RecInput: ElementRef<HTMLInputElement>; //Rec = List Recency
   @ViewChild('ClInput') ClInput: ElementRef<HTMLInputElement>; //Cl = Client
 
   private LOStrArr: string[] = new Array<string>();
@@ -219,13 +219,13 @@ export class ListPerformanceComponent implements OnInit {
   Rec_Selected(event: MatAutocompleteSelectedEvent): void {
     if (!this.RecList.includes(this.getAcronym(event.option.viewValue)))
       this.RecList.push(this.getAcronym(event.option.viewValue));
-    this.SegInput.nativeElement.value = '';
+    this.RecInput.nativeElement.value = '';
     this.RecControl.setValue(null);
     this.RecfilteredOptions = this.RecControl.valueChanges.pipe(
       startWith(null),
       map((recency: string | null) => recency ? this.Rec_filter(recency) : this.RecStrArr.slice())
     );
-    this.SegInput.nativeElement.blur();
+    this.RecInput.nativeElement.blur();
   }
   Cl_Selected(event: MatAutocompleteSelectedEvent): void {
     if (!this.ClList.includes(this.getAcronym(event.option.viewValue)))
@@ -292,7 +292,7 @@ export class ListPerformanceComponent implements OnInit {
         data = data.sort((n1,n2) => n1.SegmentSort > n2.SegmentSort ? 1:n2.SegmentSort > n1.SegmentSort ? -1:0);
         this.LMStrArr = Array.from(new Set(data.map(item =>  item.ListManagerName + ' - '+ item.ListManagerAbbrev))).sort();
         this.LOStrArr = Array.from(new Set(data.map(item =>  item.ListName + ' - '+ item.ListAbbrev))).sort();
-        this.LOInput.nativeElement.blur();
+        // this.LOInput.nativeElement.blur();
         this.RecStrArr = Array.from(new Set(data.map(item =>  item.SegmentName )));
         this.ClStrArr = Array.from(new Set(data.map(item =>  item.ClientName + ' - '+ item.ClientAbbrev))).sort();
         this.LOfilteredOptions = this.LOControl.valueChanges.pipe(

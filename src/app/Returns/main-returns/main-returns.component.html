@@ -1362,7 +1362,8 @@
                 <br>
             <hr class="tbHR">
                 <div>
-                <mat-slide-toggle [(ngModel)]="selectionMode" (change)="testChange($event, clientTable)">
+                        <!-- (change)="testChange($event, clientTable)" -->
+                <mat-slide-toggle [(ngModel)]="selectionMode">
                     Omit Data
                 </mat-slide-toggle>
                 <!-- <table *ngIf="selectionMode == true">

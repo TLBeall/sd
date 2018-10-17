@@ -14,6 +14,13 @@
       </td>
       <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"> </td>
     </ng-container>
+    <ng-container matColumnDef="selectionBox">
+      <th mat-header-cell *matHeaderCellDef [ngClass]="selectionMode? 'sbcShifted':'sbc'"></th>
+      <td mat-cell *matCellDef="let element" [ngClass]="selectionMode? 'sbcShifted':'sbc'">
+          <mat-checkbox class="md-checkbox" #listTable [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate"
+              (change)="ToogleChecks(element)" *ngIf="selectionMode == true"></mat-checkbox>
+      </td>
+    </ng-container>
     <ng-container matColumnDef="ListOwner">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="List Owner"> List </th>
       <td mat-cell *matCellDef="let element" title="{{ element.ListOwnerName }}"> {{element.ListOwnerAbr}} </td>
@@ -119,10 +126,6 @@
     <!-- ['Expand','PackageTitle', 'PackageFormat', 'None','None','PackageMailed', 'PackageCaged', 'PackageQuantity', 
   'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 
   'PackageGross', 'PackageCost', 'PackageNet', 'PackageGPP', 'PackageCLM', 'PackageNLM', 'PackageIO']; -->
-
-  <ng-container matColumnDef="detailsColumn">
-    <td mat-cell *matCellDef="let element" colspan="23"> {{element.PackageTitle}} </td>
-  </ng-container>
     <!-- <ng-container matColumnDef="PackageTitle">
       <td mat-cell *matCellDef="let element" colspan="6"> {{element.PackageTitle}} </td>
     </ng-container>
@@ -132,6 +135,12 @@
     <ng-container matColumnDef="None">
       <td mat-cell *matCellDef="let element"> </td>
     </ng-container>
+       <ng-container matColumnDef="PackageHeader">
+        <td mat-cell *matCellDef="let element" colspan="8"><div class="dPackageInfoHeader"> Package Information </div></td>
+      </ng-container>
+    <!-- <ng-container matColumnDef="PackageTitle">
+        <td mat-cell *matCellDef="let element" colspan="8"> {{element.PackageTitle}} </td>
+      </ng-container> -->
     <ng-container matColumnDef="PackageMailed">
       <td mat-cell *matCellDef="let element"> {{element.PackageMailed | date:'shortDate'}} </td>
       <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
@@ -184,6 +193,14 @@
     <ng-container matColumnDef="PackageIO">
       <td mat-cell *matCellDef="let element"> {{element.PackageIO | number : '1.2-2'}} </td>
     </ng-container>
+
+
+    <ng-container matColumnDef="detailsColumn">
+        <td mat-cell *matCellDef="let element" colspan="8"><div class="dPackageInfo">  {{element.PackageFormat}} </div></td>
+      </ng-container>
+      <ng-container matColumnDef="detailsColumn2">
+        <td mat-cell *matCellDef="let element" colspan="8"><div class="dPackageInfo"> {{element.PackageTitle}} </div></td>
+      </ng-container>
     <!-- <ng-container matColumnDef="RSPPerformance">
       <td mat-cell *matCellDef="let element"> <i class="material-icons" [ngStyle]="{'color':element.PackageRSP > element.Measure.RSP ? 'red' : 'green' }"
           [ngClass]="element.PackageRSP > element.Measure.RSP ? 'mi_expand_more' : 'mi_expand_less'"></i></td>
@@ -198,12 +215,17 @@
     </ng-container> -->
 
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" [ngStyle]="{'background-color':element.Measure.Expanded ? '#e6e6e6' : 'white' }">
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" [ngStyle]="{'background-color':element.Measure.Expanded ? '#e6e6e6' : 'white' }" [ngClass]="{
+      'selectionBoxUnchecked': element.Measure.Selected == false
+  }">
     </tr>
-    <tr mat-row *matRowDef="let element; columns: detailsColumns;" [ngStyle]="{'visibility':element.Measure.Expanded ? 'visible' : 'collapse' }"
-      style="background-color:#F8F8F8"></tr>
     <tr mat-row *matRowDef="let element; columns: packageColumns;" [ngStyle]="{'visibility':element.Measure.Expanded ? 'visible' : 'collapse' }"
       style="background-color:#F8F8F8"></tr>
+    <tr mat-row *matRowDef="let element; columns: detailsColumns;" [ngStyle]="{'visibility':element.Measure.Expanded ? 'visible' : 'collapse' }"
+      style="background-color:#F8F8F8"></tr>
+      <tr mat-row *matRowDef="let element; columns: detailsColumns2;" [ngStyle]="{'visibility':element.Measure.Expanded ? 'visible' : 'collapse' }"
+      style="background-color:#F8F8F8"></tr>
+    
   </table>
 </div>
 
@@ -367,9 +389,13 @@
         <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #endDatePicker></mat-datepicker>
       </mat-form-field>
-    <p>
+      <br>
       <button mat-raised-button color="accent" (click)="applyChanges()"> Search </button>
-    </p>
+      <br>
+      <hr class="tbHR">
+      <mat-slide-toggle [(ngModel)]="selectionMode">
+        Omit Data
+    </mat-slide-toggle>
   </div>
 </div>
 

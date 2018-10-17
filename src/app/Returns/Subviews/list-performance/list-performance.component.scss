@@ -1,5 +1,7 @@
 @import '~src/appTheme.scss';  
 $btnColumnShift: 36px;
+$selectionColumnShift: 32px;
+
 
 
 //Removes padding from all nested tables
@@ -19,15 +21,40 @@ $btnColumnShift: 36px;
 .returnsExpCollBtn{
   width:30px;
   height:30px;
+  opacity: 0.6;
+  &:hover{
+    opacity: 0.8;
+    color: $color-blue-dark;
+  }
   i{
     padding: 0px 0px 10px 0px;
-    opacity: 0.4;
   }
-} 
+}
 
 .expandBtnColumn{
   border-bottom:none !important;
   border-top:none !important;
+}
+
+.sbc{ //selectionBoxColumn
+  padding: 0 !important;
+  border-bottom:none !important;
+  border-top:none !important;
+}
+.sbcShifted{
+  padding: 0 !important;
+  border-bottom:none !important;
+  border-top:none !important;
+  min-width: $selectionColumnShift;
+  width: $selectionColumnShift; 
+}
+
+//Controls the styling of the rows when they are unchecked by the toggle filter
+.selectionBoxUnchecked{
+  background-color: $color-very-pale-orange !important;
+  &:hover{
+  background-color: $color-very-pale-orange !important;
+  }
 }
 
 .exchangeFlagColumn{
@@ -90,6 +117,20 @@ tr.example-element-row:not(.example-expanded-row):active {
   color: $color-blue-default;
 }
 
+.dPackageInfoHeader{
+  width:100%;
+  text-align: center;
+  font-weight: bold !important;
+  color: $color-blue-dark;
+}
+
+.dPackageInfo{
+  width:100%;
+  text-align: center;
+}
+
+
+
 
 // <><><><><><><><><><><><><><><><><><><><><>
 //<><><><><> TOOLBOX SETTINGS START <><<><><>
@@ -135,6 +176,10 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .hidden{
   display: none;
+}
+
+.tbHR{
+  background-color: $color-blue-default;
 }
 
 //  //Removes pagination (prev/next) on the mat tab 

@@ -3,9 +3,6 @@
 $btnColumnShift: 46px; //used to control the left column for both parent and child tables
 $selectionColumnShift: 32px;
 
-.example-chip-list {
-  width: 100%;
-}
 
 table {
   width: 100%;
@@ -318,6 +315,26 @@ font-weight: bolder;
   }
 }
 
+//Controls the styling of the rows when they are unchecked by the toggle filter
+.selectionBoxUnchecked{
+  background-color: $color-very-pale-orange !important;
+  &:hover{
+  background-color: $color-very-pale-orange !important;
+  }
+}
+
+//  //Removes pagination (prev/next) on the mat tab 
+//  ::ng-deep .mat-tab-header-pagination {
+//   display: none !important;
+// }
+// //Makes the tab header width roughly 50% of the toolbox (% doesnt work)
+// ::ng-deep #mainReturnsL2box .mat-tab-label{
+//   padding: 0 !important;
+//   width:136px;
+//   min-width: 0px !important;
+// }
+
+
 
 
 
@@ -372,23 +389,17 @@ font-weight: bolder;
   
 }
 
-//Controls the styling of the rows when they are unchecked by the toggle filter
-.selectionBoxUnchecked{
-  background-color: $color-very-pale-orange !important;
-  &:hover{
-  background-color: $color-very-pale-orange !important;
-  }
+.center-align{
+  text-align: center;
 }
 
-//  //Removes pagination (prev/next) on the mat tab 
-//  ::ng-deep .mat-tab-header-pagination {
-//   display: none !important;
-// }
-// //Makes the tab header width roughly 50% of the toolbox (% doesnt work)
-// ::ng-deep #mainReturnsL2box .mat-tab-label{
-//   padding: 0 !important;
-//   width:136px;
-//   min-width: 0px !important;
-// }
+.tbElement{
+  width:96%;
+  margin: 0 auto;
+}
+
+.tbHR{
+  background-color: $color-blue-default;
+}
 // <><><><><><><><><><><><><><><><><><><><><>
 //<><><><><> TOOLBOX SETTINGS END <><<><><>

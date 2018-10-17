@@ -249,7 +249,7 @@
   <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
 
     <!-- LIST OWNER - LO -->
-        <mat-form-field class="tbElement">
+        <mat-form-field class="tbOwner">
             <mat-chip-list #LOchipList>
                 <mat-chip *ngFor="let listowner of LOList" 
                 [selectable]="LO_Selectable" 
@@ -260,13 +260,13 @@
                 </mat-chip>
                 <input placeholder="List(s)" #LOInput 
                 [formControl]="LOControl" 
-                [matAutocomplete]="auto"
+                [matAutocomplete]="LOauto"
                 [matChipInputFor]="LOchipList" 
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 [matChipInputAddOnBlur]="addOnBlur" 
                 (matChipInputTokenEnd)="LO_Add($event)">
             </mat-chip-list>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="LOselected($event)">
+            <mat-autocomplete #LOauto="matAutocomplete" (optionSelected)="LO_Selected($event)">
                 <mat-option *ngFor="let listowner of LOfilteredOptions | async" [value]="listowner">
                     {{listowner}}
                 </mat-option>
@@ -274,7 +274,7 @@
         </mat-form-field>
 
     <!-- LIST MANAGER - LM -->
-    <mat-form-field class="tbElement">
+    <mat-form-field class="tbManager">
         <mat-chip-list #LMchipList>
             <mat-chip *ngFor="let listmanager of LMList" 
             [selectable]="LM_Selectable" 
@@ -285,13 +285,13 @@
             </mat-chip>
             <input placeholder="List Manager(s)" #LMInput 
             [formControl]="LMControl" 
-            [matAutocomplete]="auto"
+            [matAutocomplete]="LMauto"
             [matChipInputFor]="LMchipList" 
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             [matChipInputAddOnBlur]="addOnBlur" 
             (matChipInputTokenEnd)="LM_Add($event)">
         </mat-chip-list>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-autocomplete #LMauto="matAutocomplete" (optionSelected)="LM_Selected($event)">
             <mat-option *ngFor="let listmanager of LMfilteredOptions | async" [value]="listmanager">
                 {{listmanager}}
             </mat-option>
@@ -299,7 +299,7 @@
     </mat-form-field>
 
     <!-- List Recency - Rec -->
-    <mat-form-field class="tbElement">
+    <mat-form-field class="tbRecency">
         <mat-chip-list #RecchipList>
             <mat-chip *ngFor="let recency of RecList" 
             [selectable]="Rec_Selectable" 
@@ -310,13 +310,13 @@
             </mat-chip>
             <input placeholder="Recency" #SegInput 
             [formControl]="RecControl" 
-            [matAutocomplete]="auto"
+            [matAutocomplete]="Recauto"
             [matChipInputFor]="RecchipList" 
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             [matChipInputAddOnBlur]="addOnBlur" 
             (matChipInputTokenEnd)="Rec_Add($event)">
         </mat-chip-list>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-autocomplete #Recauto="matAutocomplete" (optionSelected)="Rec_Selected($event)">
             <mat-option *ngFor="let recency of RecfilteredOptions | async" [value]="recency">
                 {{recency}}
             </mat-option>
@@ -324,7 +324,7 @@
     </mat-form-field>
 
     <!-- Client Input - Cl -->
-    <mat-form-field class="tbElement">
+    <mat-form-field class="tbClient">
         <mat-chip-list #ClchipList>
             <mat-chip *ngFor="let client of ClList" 
             [selectable]="Cl_Selectable" 
@@ -335,13 +335,13 @@
             </mat-chip>
             <input placeholder="Client(s)" #ClInput 
             [formControl]="ClControl" 
-            [matAutocomplete]="auto"
+            [matAutocomplete]="Clauto"
             [matChipInputFor]="ClchipList" 
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             [matChipInputAddOnBlur]="addOnBlur" 
             (matChipInputTokenEnd)="Cl_Add($event)">
         </mat-chip-list>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-autocomplete #Clauto="matAutocomplete" (optionSelected)="Cl_Selected($event)">
             <mat-option *ngFor="let client of ClfilteredOptions | async" [value]="client">
                 {{client}}
             </mat-option>

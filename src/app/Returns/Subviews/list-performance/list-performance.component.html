@@ -215,7 +215,7 @@
     </ng-container> -->
 
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" [ngStyle]="{'background-color':element.Measure.Expanded ? '#e6e6e6' : 'white' }" [ngClass]="{
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row" [ngStyle]="{'background-color':element.Measure.Expanded ? '#e6e6e6' : 'white' }" [ngClass]="{
       'selectionBoxUnchecked': element.Measure.Selected == false
   }">
     </tr>
@@ -396,6 +396,8 @@
       <mat-slide-toggle [(ngModel)]="selectionMode">
         Omit Data
     </mat-slide-toggle>
+    <!-- Scroll-fix (when height of screen is smaller) -->
+    <div style="height: 150px; width:100%;"></div> 
   </div>
 </div>
 

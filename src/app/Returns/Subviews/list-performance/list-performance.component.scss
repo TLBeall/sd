@@ -99,13 +99,15 @@ td.mat-footer-cell{
   border-top: 1px solid $color-gainsboro;
 }
 
-//Controls hover and selected for the row?
-// tr.example-element-row:not(.example-expanded-row):hover {
-//   background: #e3eff7;
-// }
-// tr.example-element-row:not(.example-expanded-row):active {
-//   background: #e3eff7;
-// }
+//Controls hover and selected for the rows
+tr.example-element-row:hover {
+  background: #e3eff7 !important;
+  td{
+    .returnsExpCollBtn{
+      background-color:$color-whitesmoke !important;
+    }
+  }
+}
 
 //Controls color of negative values on table
 .negative {

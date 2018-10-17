@@ -1366,6 +1366,8 @@
                 <mat-slide-toggle [(ngModel)]="selectionMode">
                     Omit Data
                 </mat-slide-toggle>
+                <!-- Scroll-fix (when height of screen is smaller) -->
+                <div style="height: 150px; width:100%;"></div>
                 <!-- <table *ngIf="selectionMode == true">
                         <tr>
                             <td>

@@ -19,13 +19,13 @@ import { startWith, map } from 'rxjs/operators';
   selector: 'app-list-performance',
   templateUrl: './list-performance.component.html',
   styleUrls: ['./list-performance.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed, void', style({ height: '0px', minHeight: '0', display: 'none' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('1000ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
-    ]),
-  ],
+  // animations: [
+  //   trigger('detailExpand', [
+  //     state('collapsed, void', style({ height: '0px', minHeight: '0', display: 'none' })),
+  //     state('expanded', style({ height: '*' })),
+  //     transition('expanded <=> collapsed', animate('1000ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+  //   ]),
+  // ],
 })
 export class ListPerformanceComponent implements OnInit {
 
@@ -198,31 +198,26 @@ export class ListPerformanceComponent implements OnInit {
     this.ClControl.setValue(null);
   }
   
-
   LO_Remove(listowner: string): void {
     const index = this.LOList.indexOf(listowner);
-
     if (index >= 0) {
       this.LOList.splice(index, 1);
     }
   }
   LM_Remove(listmanager: string): void {
     const index = this.LOList.indexOf(listmanager);
-
     if (index >= 0) {
       this.LMList.splice(index, 1);
     }
   }
   Rec_Remove(recency: string): void {
     const index = this.RecList.indexOf(recency);
-
     if (index >= 0) {
       this.RecList.splice(index, 1);
     }
   }
   Cl_Remove(client: string): void {
     const index = this.LOList.indexOf(client);
-
     if (index >= 0) {
       this.ClList.splice(index, 1);
     }
@@ -312,8 +307,9 @@ export class ListPerformanceComponent implements OnInit {
             Element['PackageCPD'] = 0;
         });
       }
-      if (Element.Measure)
+      if (Element.Measure) {
       Element.Measure.Expanded = !Element.Measure.Expanded;
+    }
   }
   
 

@@ -103,21 +103,21 @@ export class ListPerformanceComponent implements OnInit {
           Element['PackageName'] = p.Name;
           Element['PackageTitle'] = p.Title;
           Element['PackageFormat'] = p.Format;
-          Element['PackageAVG'] = p.Measure.AVG;
-          Element['PackageCaged'] = p.Measure.Caged;
-          Element['PackageMailed'] = p.Measure.Mailed;
-          Element['PackageIO'] = p.Measure.IO;
-          Element['PackageRSP'] = p.Measure.RSP;
-          Element['PackageGross'] = p.Measure.Gross;
-          Element['PackageCost'] = p.Measure.Cost;
-          Element['PackageNet'] = p.Measure.Net;
-          Element['PackageDonors'] = p.Measure.Donors;
-          Element['PackageNonDonors'] = p.Measure.NonDonors;
-          Element['PackageNewDonors'] = p.Measure.NewDonors;
-          Element['PackageQuantity'] = p.Measure.Quantity;
-          Element['PackageCLM'] = p.Measure.CLM;
-          Element['PackageNLM'] = p.Measure.NLM;
-          Element['PackageGPP'] = p.Measure.GPP;
+          // Element['PackageAVG'] = p.Measure.AVG;
+          // Element['PackageCaged'] = p.Measure.Caged;
+          // Element['PackageMailed'] = p.Measure.Mailed;
+          // Element['PackageIO'] = p.Measure.IO;
+          // Element['PackageRSP'] = p.Measure.RSP;
+          // Element['PackageGross'] = p.Measure.Gross;
+          // Element['PackageCost'] = p.Measure.Cost;
+          // Element['PackageNet'] = p.Measure.Net;
+          // Element['PackageDonors'] = p.Measure.Donors;
+          // Element['PackageNonDonors'] = p.Measure.NonDonors;
+          // Element['PackageNewDonors'] = p.Measure.NewDonors;
+          // Element['PackageQuantity'] = p.Measure.Quantity;
+          // Element['PackageCLM'] = p.Measure.CLM;
+          // Element['PackageNLM'] = p.Measure.NLM;
+          // Element['PackageGPP'] = p.Measure.GPP;
         });
       }
       if (Element.Measure)
@@ -127,11 +127,12 @@ export class ListPerformanceComponent implements OnInit {
   ngOnInit() {
 
     this.route.params.subscribe(params => {
-      this.LoadValues(params['listowner'], params['listmanager'], params['recency'], params['startdate'], params['enddate']);       
+      this.LoadValues(params['listowner'], params['listmanager'], params['recency'], params['startdate'], params['enddate']);             
       this._authService.getPerformanceHierarchy().subscribe(data => {
+        data = data.sort((n1,n2) => n1.SegmentSort > n2.SegmentSort ? 1:n2.SegmentSort > n1.SegmentSort ? -1:0);
         this.managerFilter = Array.from(new Set(data.map(item =>  item.ListManagerName + ' - '+ item.ListManagerAbbrev)));
         this.listFilter = Array.from(new Set(data.map(item =>  item.ListName + ' - '+ item.ListAbbrev)));
-        this.recencyFilter = Array.from(new Set(data.map(item =>  item.SegmentName)));
+        this.recencyFilter = Array.from(new Set(data.map(item =>  item.SegmentName )));
         this.clientFilter = Array.from(new Set(data.map(item =>  item.ClientName + ' - '+ item.ClientAbbrev)));
       });
       this._authService.getListPerformance(this.ListOwner, this.ListManager, this.Recency, this.startDate, this.endDate)

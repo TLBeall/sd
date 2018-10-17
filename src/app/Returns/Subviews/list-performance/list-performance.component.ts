@@ -176,7 +176,7 @@ export class ListPerformanceComponent implements OnInit {
     }
   }
   LM_Remove(listmanager: string): void {
-    const index = this.LOList.indexOf(listmanager);
+    const index = this.LMList.indexOf(listmanager);
     if (index >= 0) {
       this.LMList.splice(index, 1);
     }
@@ -188,7 +188,7 @@ export class ListPerformanceComponent implements OnInit {
     }
   }
   Cl_Remove(client: string): void {
-    const index = this.LOList.indexOf(client);
+    const index = this.ClList.indexOf(client);
     if (index >= 0) {
       this.ClList.splice(index, 1);
     }

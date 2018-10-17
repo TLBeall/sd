@@ -252,8 +252,8 @@
         <mat-form-field class="tbOwner">
             <mat-chip-list #LOchipList>
                 <mat-chip *ngFor="let listowner of LOList" 
-                [selectable]="LO_Selectable" 
-                [removable]="LO_Removable" 
+                [selectable]="selectable" 
+                [removable]="removable" 
                 (removed)="LO_Remove(listowner)">
                     {{listowner}}
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
@@ -277,8 +277,8 @@
     <mat-form-field class="tbManager">
         <mat-chip-list #LMchipList>
             <mat-chip *ngFor="let listmanager of LMList" 
-            [selectable]="LM_Selectable" 
-            [removable]="LM_Removable" 
+            [selectable]="selectable" 
+            [removable]="semovable" 
             (removed)="LM_Remove(listmanager)">
                 {{listmanager}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
@@ -302,8 +302,8 @@
     <mat-form-field class="tbRecency">
         <mat-chip-list #RecchipList>
             <mat-chip *ngFor="let recency of RecList" 
-            [selectable]="Rec_Selectable" 
-            [removable]="Rec_Removable" 
+            [selectable]="selectable" 
+            [removable]="removable" 
             (removed)="Rec_Remove(recency)">
                 {{recency}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
@@ -327,8 +327,8 @@
     <mat-form-field class="tbClient">
         <mat-chip-list #ClchipList>
             <mat-chip *ngFor="let client of ClList" 
-            [selectable]="Cl_Selectable" 
-            [removable]="Cl_Removable" 
+            [selectable]="selectable" 
+            [removable]="removable" 
             (removed)="Cl_Remove(client)">
                 {{client}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>

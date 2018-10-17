@@ -77,13 +77,8 @@ export class ListPerformanceComponent implements OnInit {
 
   @ViewChild('LOInput') LOInput: ElementRef<HTMLInputElement>; //LO = List Owner
   @ViewChild('LMInput') LMInput: ElementRef<HTMLInputElement>; //LM = List Manager
-  @ViewChild('RecInput') SegInput: ElementRef<HTMLInputElement>; //Rec = List Recency
+  @ViewChild('RecInput') RecInput: ElementRef<HTMLInputElement>; //Rec = List Recency
   @ViewChild('ClInput') ClInput: ElementRef<HTMLInputElement>; //Cl = Client
-
-  // private clientFilter: string[];
-  // private listFilter: string[];
-  // private managerFilter: string[];
-  // private recencyFilter: string[];
 
   private LOStrArr: string[] = new Array<string>();
   private LOControl = new FormControl();
@@ -108,6 +103,10 @@ export class ListPerformanceComponent implements OnInit {
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private _g: GlobalService) {
     this.route = route;
+    // this.LOfilteredOptions = this.LOControl.valueChanges.pipe(
+    //   startWith(null),
+    //   map((listowner: string | null) => listowner ? this.LO_filter(listowner) : this.LOStrArr.slice())
+    // );
 
     // this.LMfilteredOptions = this.LMControl.valueChanges.pipe(
     //   startWith(null),
@@ -135,32 +134,101 @@ export class ListPerformanceComponent implements OnInit {
     const filterValue = name.toLowerCase();
     return this.LOStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
   }
+  private LM_filter(name: string): string[] {
+    if (name == null)
+      return null;
+    const filterValue = name.toLowerCase();
+    return this.LMStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
+  }
+  private Rec_filter(name: string): string[] {
+    if (name == null)
+      return null;
+    const filterValue = name.toLowerCase();
+    return this.RecStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
+  }
+  private Cl_filter(name: string): string[] {
+    if (name == null)
+      return null;
+    const filterValue = name.toLowerCase();
+    return this.ClStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
+  }
 
-  LOadd(event: MatChipInputEvent): void {
+  LO_Add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
-
-    // Add our list owner
     if ((value || '').trim()) {
       this.LOList.push(value.trim());
     }
-
-    // Reset the input value
     if (input) {
       input.value = '';
     }
     this.LOControl.setValue(null);
   }
+  LM_Add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) {
+      this.LMList.push(value.trim());
+    }
+    if (input) {
+      input.value = '';
+    }
+    this.LMControl.setValue(null);
+  }
+  Rec_Add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) {
+      this.RecList.push(value.trim());
+    }
+    if (input) {
+      input.value = '';
+    }
+    this.RecControl.setValue(null);
+  }
+  Cl_Add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) {
+      this.ClList.push(value.trim());
+    }
+    if (input) {
+      input.value = '';
+    }
+    this.ClControl.setValue(null);
+  }
+  
 
-  LOremove(listowner: string): void {
+  LO_Remove(listowner: string): void {
     const index = this.LOList.indexOf(listowner);
 
     if (index >= 0) {
       this.LOList.splice(index, 1);
     }
   }
+  LM_Remove(listmanager: string): void {
+    const index = this.LOList.indexOf(listmanager);
 
-  LOselected(event: MatAutocompleteSelectedEvent): void {
+    if (index >= 0) {
+      this.LMList.splice(index, 1);
+    }
+  }
+  Rec_Remove(recency: string): void {
+    const index = this.RecList.indexOf(recency);
+
+    if (index >= 0) {
+      this.RecList.splice(index, 1);
+    }
+  }
+  Cl_Remove(client: string): void {
+    const index = this.LOList.indexOf(client);
+
+    if (index >= 0) {
+      this.ClList.splice(index, 1);
+    }
+  }
+
+  LO_Selected(event: MatAutocompleteSelectedEvent): void {
     if (!this.LOList.includes(this.getAcronym(event.option.viewValue)))
       this.LOList.push(this.getAcronym(event.option.viewValue));
     this.LOInput.nativeElement.value = '';
@@ -170,6 +238,39 @@ export class ListPerformanceComponent implements OnInit {
       map((listowner: string | null) => listowner ? this.LO_filter(listowner) : this.LOStrArr.slice())
     );
     this.LOInput.nativeElement.blur();
+  }
+  LM_Selected(event: MatAutocompleteSelectedEvent): void {
+    if (!this.LMList.includes(this.getAcronym(event.option.viewValue)))
+      this.LMList.push(this.getAcronym(event.option.viewValue));
+    this.LMInput.nativeElement.value = '';
+    this.LMControl.setValue(null);
+    this.LMfilteredOptions = this.LMControl.valueChanges.pipe(
+      startWith(null),
+      map((listmanager: string | null) => listmanager ? this.LM_filter(listmanager) : this.LMStrArr.slice())
+    );
+    this.LMInput.nativeElement.blur();
+  }
+  Rec_Selected(event: MatAutocompleteSelectedEvent): void {
+    if (!this.RecList.includes(this.getAcronym(event.option.viewValue)))
+      this.RecList.push(this.getAcronym(event.option.viewValue));
+    this.RecInput.nativeElement.value = '';
+    this.RecControl.setValue(null);
+    this.RecfilteredOptions = this.RecControl.valueChanges.pipe(
+      startWith(null),
+      map((recency: string | null) => recency ? this.Rec_filter(recency) : this.RecStrArr.slice())
+    );
+    this.RecInput.nativeElement.blur();
+  }
+  Cl_Selected(event: MatAutocompleteSelectedEvent): void {
+    if (!this.ClList.includes(this.getAcronym(event.option.viewValue)))
+      this.ClList.push(this.getAcronym(event.option.viewValue));
+    this.ClInput.nativeElement.value = '';
+    this.ClControl.setValue(null);
+    this.ClfilteredOptions = this.ClControl.valueChanges.pipe(
+      startWith(null),
+      map((client: string | null) => client ? this.Cl_filter(client) : this.ClStrArr.slice())
+    );
+    this.ClInput.nativeElement.blur();
   }
 
 

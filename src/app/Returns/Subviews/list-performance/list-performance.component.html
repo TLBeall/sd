@@ -252,9 +252,9 @@
         <mat-form-field class="tbElement">
             <mat-chip-list #LOchipList>
                 <mat-chip *ngFor="let listowner of LOList" 
-                [selectable]="selectable" 
-                [removable]="removable" 
-                (removed)="LOremove(listowner)">
+                [selectable]="LO_Selectable" 
+                [removable]="LO_Removable" 
+                (removed)="LO_Remove(listowner)">
                     {{listowner}}
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
@@ -264,7 +264,7 @@
                 [matChipInputFor]="LOchipList" 
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 [matChipInputAddOnBlur]="addOnBlur" 
-                (matChipInputTokenEnd)="LOadd($event)">
+                (matChipInputTokenEnd)="LO_Add($event)">
             </mat-chip-list>
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="LOselected($event)">
                 <mat-option *ngFor="let listowner of LOfilteredOptions | async" [value]="listowner">
@@ -274,79 +274,79 @@
         </mat-form-field>
 
     <!-- LIST MANAGER - LM -->
-    <!-- <mat-form-field class="tbElement">
+    <mat-form-field class="tbElement">
         <mat-chip-list #LMchipList>
             <mat-chip *ngFor="let listmanager of LMList" 
-            [selectable]="selectable" 
-            [removable]="removable" 
-            (removed)="remove(listmanager)">
+            [selectable]="LM_Selectable" 
+            [removable]="LM_Removable" 
+            (removed)="LM_Remove(listmanager)">
                 {{listmanager}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
-            <input placeholder="List(s)" #LMInput 
+            <input placeholder="List Manager(s)" #LMInput 
             [formControl]="LMControl" 
             [matAutocomplete]="auto"
             [matChipInputFor]="LMchipList" 
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             [matChipInputAddOnBlur]="addOnBlur" 
-            (matChipInputTokenEnd)="add($event)">
+            (matChipInputTokenEnd)="LM_Add($event)">
         </mat-chip-list>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
             <mat-option *ngFor="let listmanager of LMfilteredOptions | async" [value]="listmanager">
                 {{listmanager}}
             </mat-option>
         </mat-autocomplete>
-    </mat-form-field> -->
+    </mat-form-field>
 
     <!-- List Recency - Rec -->
-    <!-- <mat-form-field class="tbElement">
+    <mat-form-field class="tbElement">
         <mat-chip-list #RecchipList>
             <mat-chip *ngFor="let recency of RecList" 
-            [selectable]="selectable" 
-            [removable]="removable" 
-            (removed)="remove(recency)">
+            [selectable]="Rec_Selectable" 
+            [removable]="Rec_Removable" 
+            (removed)="Rec_Remove(recency)">
                 {{recency}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
-            <input placeholder="List(s)" #SegInput 
+            <input placeholder="Recency" #SegInput 
             [formControl]="RecControl" 
             [matAutocomplete]="auto"
             [matChipInputFor]="RecchipList" 
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             [matChipInputAddOnBlur]="addOnBlur" 
-            (matChipInputTokenEnd)="add($event)">
+            (matChipInputTokenEnd)="Rec_Add($event)">
         </mat-chip-list>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
             <mat-option *ngFor="let recency of RecfilteredOptions | async" [value]="recency">
                 {{recency}}
             </mat-option>
         </mat-autocomplete>
-    </mat-form-field> -->
+    </mat-form-field>
 
     <!-- Client Input - Cl -->
-    <!-- <mat-form-field class="tbElement">
+    <mat-form-field class="tbElement">
         <mat-chip-list #ClchipList>
             <mat-chip *ngFor="let client of ClList" 
-            [selectable]="selectable" 
-            [removable]="removable" 
-            (removed)="remove(client)">
+            [selectable]="Cl_Selectable" 
+            [removable]="Cl_Removable" 
+            (removed)="Cl_Remove(client)">
                 {{client}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
-            <input placeholder="List(s)" #ClInput 
+            <input placeholder="Client(s)" #ClInput 
             [formControl]="ClControl" 
             [matAutocomplete]="auto"
             [matChipInputFor]="ClchipList" 
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             [matChipInputAddOnBlur]="addOnBlur" 
-            (matChipInputTokenEnd)="add($event)">
+            (matChipInputTokenEnd)="Cl_Add($event)">
         </mat-chip-list>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
             <mat-option *ngFor="let client of ClfilteredOptions | async" [value]="client">
                 {{client}}
             </mat-option>
         </mat-autocomplete>
-    </mat-form-field> -->
+    </mat-form-field>
 
 
 

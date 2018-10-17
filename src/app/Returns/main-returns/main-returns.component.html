@@ -1312,108 +1312,66 @@
     <!-- <div (clickOutside)="closeToolbox()"> -->
     <!--<><><> Main Toolbox <><><>-->
     <button title="Tools" (click)="toggle(1)" id="toolboxBtn" class="btn toolboxButtonCollection" [ngClass]="{
-            'btnShifted': toolsOpened,
-            'hidden': hide
-          }">
+                'btnShifted': toolsOpened,
+                'hidden': hide
+              }">
         <i class="material-icons" [ngClass]="toolsOpened?'mi_arrow_forward_ios':'mi_settings'"></i>
     </button>
     <div class="toolbox" [ngClass]="{
-            'shifted': toolsOpened
-          }">
+                'shifted': toolsOpened
+              }">
         <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
         <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
-                        <mat-form-field class="example-chip-list">
-                            <mat-chip-list #chipList>
-                              <mat-chip
-                                *ngFor="let client of clients"
-                                [selectable]="selectable"
-                                [removable]="removable"
-                                (removed)="remove(client)">
-                                {{client}}
-                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                              </mat-chip>
-                              <input
-                                placeholder="Client..."
-                                #clientListInput
-                                [formControl]="clientControl"
-                                [matAutocomplete]="auto"
-                                [matChipInputFor]="chipList"
-                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                [matChipInputAddOnBlur]="addOnBlur"
-                                (matChipInputTokenEnd)="add($event)">
-                            </mat-chip-list>
-                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                                <mat-option *ngFor="let client of filteredOptions | async" [value]="client">
-                                    {{client}}
-                            </mat-option>
-                            </mat-autocomplete>
-                          </mat-form-field>
-    
-    
-                        <!-- <mat-form-field class="example-chip-list">
-                            <mat-chip-list #chipList>
-                              <mat-chip
-                                *ngFor="let fruit of fruits"
-                                [selectable]="selectable"
-                                [removable]="removable"
-                                (removed)="remove(fruit)">
-                                {{fruit}}
-                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                              </mat-chip>
-                              <input
-                                placeholder="New fruit..."
-                                #fruitInput
-                                [formControl]="fruitCtrl"
-                                [matAutocomplete]="auto"
-                                [matChipInputFor]="chipList"
-                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                [matChipInputAddOnBlur]="addOnBlur"
-                                (matChipInputTokenEnd)="add($event)">
-                            </mat-chip-list>
-                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                              <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
-                                {{fruit}}
-                              </mat-option>
-                            </mat-autocomplete>
-                          </mat-form-field> -->
-    
-    
-    
-    
-                <!-- <mat-form-field>
-                    <mat-select [(value)]="this.selectedClients" multiple>
-                        <mat-option *ngFor="let client of ClientArr" [value]="client.gClientAcronym" multiple>
-                            {{client.gClientName}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field> -->
-                <mat-form-field>
-                    <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="startDate" placeholder="start date">
-                    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #startDatePicker></mat-datepicker>
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput [matDatepicker]="endDatePicker" [(ngModel)]="endDate" placeholder="end date">
-                    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #endDatePicker></mat-datepicker>
-                </mat-form-field>
+            <mat-form-field class="example-chip-list">
+                <mat-chip-list #chipList>
+                    <mat-chip *ngFor="let client of clients" 
+                    [selectable]="selectable" 
+                    [removable]="removable" 
+                    (removed)="remove(client)">
+                        {{client}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="Client..." #clientListInput 
+                    [formControl]="clientControl" 
+                    [matAutocomplete]="auto"
+                    [matChipInputFor]="chipList" 
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="addOnBlur" 
+                    (matChipInputTokenEnd)="add($event)">
+                </mat-chip-list>
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                    <mat-option *ngFor="let client of filteredOptions | async" [value]="client">
+                        {{client}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput #startDateInput (dateInput)="validateDate()" [matDatepicker]="startDatePicker" [(ngModel)]="startDate" placeholder="start date">
+                <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #startDatePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput #endDateInput (dateInput)="validateDate()" [matDatepicker]="endDatePicker" [(ngModel)]="endDate" placeholder="end date">
+                <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+            </mat-form-field>
             <p>
-                <button mat-raised-button color="accent" (click)="applyChanges()"> Search </button>
+                <button mat-raised-button color="accent" [disabled]="clients == '' || !validateDate()" (click)="applyChanges()"> Search </button>
             </p>
             <div>
                 <mat-slide-toggle [(ngModel)]="selectionMode" (change)="testChange($event, clientTable)">
                     Omit Data
                 </mat-slide-toggle>
                 <!-- <table *ngIf="selectionMode == true">
-                    <tr>
-                        <td>
-                            <button mat-raised-button color="accent" (click)="applySelection()"> Show Selected</button>
-                        </td>
-                        <td>
-                            <button mat-raised-button color="accent" (click)="clearSelection()"> Show All</button>
-                        </td>
-                    </tr>
-                </table> -->
+                        <tr>
+                            <td>
+                                <button mat-raised-button color="accent" (click)="applySelection()"> Show Selected</button>
+                            </td>
+                            <td>
+                                <button mat-raised-button color="accent" (click)="clearSelection()"> Show All</button>
+                            </td>
+                        </tr>
+                    </table> -->
             </div>
         </div>
     </div>

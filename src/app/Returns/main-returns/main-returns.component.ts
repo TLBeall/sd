@@ -48,6 +48,16 @@ export class ReturnsComponent {
   private clientControl = new FormControl();
   private clients: string[] = [];
   private filteredOptions: Observable<string[]>;
+  private tempStartDate;
+  private tempEndDate;
+
+  //For chip selection settings
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = false;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  //chip selection settings end
 
   clientDisplayedColumns: string[] = ['Expand', 'selectionBox', 'Client', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'AVG', 'CPD', 'Gross', 'Net', 'Cost', 'GPP', 'NLM', 'CLM', 'IO'];//, 'PseudoDescription', 'ExchangeFlag', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
   mailTypeDisplayedColumns: string[] = ['Expand', 'selectionBox', 'MailType', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'AVG', 'CPD', 'Gross', 'Net', 'Cost', 'GPP', 'NLM', 'CLM', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
@@ -55,13 +65,9 @@ export class ReturnsComponent {
   phaseDisplayedColumns: string[] = ['Expand', 'selectionBox', 'PhaseName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'AVG', 'CPD', 'Gross', 'Net', 'Cost', 'GPP', 'NLM', 'CLM', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
   mailListDisplayedColumns: string[] = ['PseudoExpand', 'selectionBox', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'AVG', 'CPD', 'Gross', 'Net', 'Cost', 'GPP', 'NLM', 'CLM', 'IO'];//, 'MailDescription', 'ExchangeFlag' 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
 
-
-  visible = true;
-  selectable = true;
-  removable = true;
-  addOnBlur = false;
-  separatorKeysCodes: number[] = [ENTER, COMMA];
   @ViewChild('clientListInput') clientListInput: ElementRef<HTMLInputElement>;
+  @ViewChild('startDateInput') startDateInput: ElementRef<HTMLInputElement>;
+  @ViewChild('endDateInput') endDateInput: ElementRef<HTMLInputElement>;
 
   constructor(route: ActivatedRoute, private _authService: AuthService, private _g: GlobalService, private router: Router) {
     this.route = route;
@@ -643,6 +649,17 @@ export class ReturnsComponent {
       this.grandTotal = calculations.grandTotal;
     });
     this.closeToolbox();
+  }
+
+  validateDate(): boolean{
+    this.tempStartDate = this.startDateInput.nativeElement.value;
+    this.tempEndDate = this.endDateInput.nativeElement.value;
+    var reg = /^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/;
+    if (this.tempStartDate.match(reg) && this.tempEndDate.match(reg)){
+      return true;
+    } else{
+      return false;
+    }
   }
 
 }

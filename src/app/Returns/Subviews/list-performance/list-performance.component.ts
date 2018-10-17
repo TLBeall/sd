@@ -57,18 +57,6 @@ export class ListPerformanceComponent implements OnInit {
   public endDate: any;
   public pageReady: boolean = false;
   public ListPerformanceArr: ListPerformance[];
-  // private clientFilter: any[];
-  // private phaseFilter: any[];
-  // private mailCodeFilter: any[];
-  // private recencyFilter: any[];
-  // private listOwners:ListOwner[];
-  // private listManagers:ListManager[];
-  // private segments: Segment[];
-  // private clientArr: ClientList[];
-  // private selectedClients: string[];
-  // private selectedOwners: string[];
-  // private selectedManagers: string[];
-  // private selectedSegments: string[];
 
   columnsToDisplay: string[] = ['Expand', 'selectionBox', 'ListOwner', 'ListManager', 'RecencyString', 'Client', 'Phase', 'MailCode', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP',  'AVG', 'CPD', 'Gross', 'Net', 'Cost',  'GPP', 'NLM', 'CLM', 'IO'];
   packageColumns: string[] = ['None','PackageHeader','PackageMailed', 'PackageCaged', 'PackageQuantity', 'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 'PackageCPD', 'PackageGross', 'PackageNet', 'PackageCost', 'PackageGPP', 'PackageNLM', 'PackageCLM', 'PackageIO'];
@@ -77,7 +65,7 @@ export class ListPerformanceComponent implements OnInit {
 
   @ViewChild('LOInput') LOInput: ElementRef<HTMLInputElement>; //LO = List Owner
   @ViewChild('LMInput') LMInput: ElementRef<HTMLInputElement>; //LM = List Manager
-  @ViewChild('RecInput') RecInput: ElementRef<HTMLInputElement>; //Rec = List Recency
+  @ViewChild('SegInput') SegInput: ElementRef<HTMLInputElement>; //Rec = List Recency
   @ViewChild('ClInput') ClInput: ElementRef<HTMLInputElement>; //Cl = Client
 
   private LOStrArr: string[] = new Array<string>();
@@ -103,23 +91,6 @@ export class ListPerformanceComponent implements OnInit {
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private _g: GlobalService) {
     this.route = route;
-    // this.LOfilteredOptions = this.LOControl.valueChanges.pipe(
-    //   startWith(null),
-    //   map((listowner: string | null) => listowner ? this.LO_filter(listowner) : this.LOStrArr.slice())
-    // );
-
-    // this.LMfilteredOptions = this.LMControl.valueChanges.pipe(
-    //   startWith(null),
-    //   map((listmanager: string | null) => listmanager ? this._filter(listmanager) : this.LMStrArr.slice())
-    // );
-    // this.RecfilteredOptions = this.RecControl.valueChanges.pipe(
-    //   startWith(null),
-    //   map((recency: string | null) => recency ? this._filter(recency) : this.RecStrArr.slice())
-    // );
-    // this.ClfilteredOptions = this.ClControl.valueChanges.pipe(
-    //   startWith(null),
-    //   map((client: string | null) => client ? this._filter(client) : this.ClStrArr.slice())
-    // );
   }
 
   getAcronym(Name: string): string {
@@ -248,13 +219,13 @@ export class ListPerformanceComponent implements OnInit {
   Rec_Selected(event: MatAutocompleteSelectedEvent): void {
     if (!this.RecList.includes(this.getAcronym(event.option.viewValue)))
       this.RecList.push(this.getAcronym(event.option.viewValue));
-    this.RecInput.nativeElement.value = '';
+    this.SegInput.nativeElement.value = '';
     this.RecControl.setValue(null);
     this.RecfilteredOptions = this.RecControl.valueChanges.pipe(
       startWith(null),
       map((recency: string | null) => recency ? this.Rec_filter(recency) : this.RecStrArr.slice())
     );
-    this.RecInput.nativeElement.blur();
+    this.SegInput.nativeElement.blur();
   }
   Cl_Selected(event: MatAutocompleteSelectedEvent): void {
     if (!this.ClList.includes(this.getAcronym(event.option.viewValue)))
@@ -323,11 +294,23 @@ export class ListPerformanceComponent implements OnInit {
         this.LOStrArr = Array.from(new Set(data.map(item =>  item.ListName + ' - '+ item.ListAbbrev))).sort();
         this.LOInput.nativeElement.blur();
         this.RecStrArr = Array.from(new Set(data.map(item =>  item.SegmentName )));
-        this.ClStrArr = Array.from(new Set(data.map(item =>  item.ClientName + ' - '+ item.ClientAbbrev)));
+        this.ClStrArr = Array.from(new Set(data.map(item =>  item.ClientName + ' - '+ item.ClientAbbrev))).sort();
         this.LOfilteredOptions = this.LOControl.valueChanges.pipe(
           startWith(null),
           map((listowner: string | null) => listowner ? this.LO_filter(listowner) : this.LOStrArr.slice())
-        );        
+        ); 
+        this.LMfilteredOptions = this.LMControl.valueChanges.pipe(
+          startWith(null),
+          map((listmanager: string | null) => listmanager ? this.LM_filter(listmanager) : this.LMStrArr.slice())
+        ); 
+        this.RecfilteredOptions = this.RecControl.valueChanges.pipe(
+          startWith(null),
+          map((recency: string | null) => recency ? this.Rec_filter(recency) : this.RecStrArr.slice())
+        ); 
+        this.ClfilteredOptions = this.ClControl.valueChanges.pipe(
+          startWith(null),
+          map((client: string | null) => client ? this.Cl_filter(client) : this.ClStrArr.slice())
+        );                                
       });
       this._authService.getListPerformance(this.ListOwner, this.ListManager, this.Recency, this.startDate, this.endDate)
       .subscribe(data => {

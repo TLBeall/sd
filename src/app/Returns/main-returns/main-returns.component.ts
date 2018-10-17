@@ -104,7 +104,7 @@ export class ReturnsComponent {
 
   getAcronym(Name: string): string {
     var retString: string;
-    retString = Name.substring(Name.indexOf('-') + 1, Name.length).trim();
+    retString = Name.substring(Name.lastIndexOf('-') + 1, Name.length).trim();
     return retString;
   }
 

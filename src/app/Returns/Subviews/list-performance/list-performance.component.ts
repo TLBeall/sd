@@ -1,15 +1,15 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../../../Services/auth.service';
 import { ActivatedRoute } from "@angular/router";
-import { LoaderService } from '../../../Loader/loader.service';
+// import { LoaderService } from '../../../Loader/loader.service';
 import { ListPerformance } from '../../../Models/ListPerformance.model';
 import { GlobalService } from '../../../Services/global.service';
 import { Sort } from '@angular/material';
 import { trigger, state, transition, style, animate } from '@angular/animations';
-import { ListOwner } from '../../../Models/ListOwner.model';
-import { ListManager } from '../../../Models/ListManager.model';
-import { Segment } from '../../../Models/Segment.model';
-import { ClientList } from '../../../Models/ClientList.model';
+// import { ListOwner } from '../../../Models/ListOwner.model';
+// import { ListManager } from '../../../Models/ListManager.model';
+// import { Segment } from '../../../Models/Segment.model';
+// import { ClientList } from '../../../Models/ClientList.model';
 
 @Component({
   selector: 'app-list-performance',
@@ -75,21 +75,10 @@ export class ListPerformanceComponent implements OnInit {
   public endDate: any;
   public pageReady: boolean = false;
   public ListPerformanceArr: ListPerformance[];
-  // private clientFilter: any[];
-  // private phaseFilter: any[];
-  // private mailCodeFilter: any[];
-  // private listFilter: any[];
-  // private filteredlists:any[];
-  // private managerFilter: any[];
-  // private recencyFilter: any[];
-  // private listOwners:ListOwner[];
-  // private listManagers:ListManager[];
-  // private segments: Segment[];
-  // private clientArr: ClientList[];
-  // private selectedClients: string[];
-  // private selectedOwners: string[];
-  // private selectedManagers: string[];
-  // private selectedSegments: string[];
+  private clientFilter: string[];
+  private listFilter: string[];
+  private managerFilter: string[];
+  private recencyFilter: string[];
   columnsToDisplay: string[] = ['Expand', 'ListOwner', 'ListManager', 'RecencyString', 'Client', 'Phase', 'MailCode', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG',  'Cost', 'CLM',  'GPP', 'IO'];
   packageColumns: string[] = ['None','None','None','None','None', 'None' , 'None', 'None','PackageMailed', 'PackageCaged', 'PackageQuantity', 'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 'PackageGross', 'PackageCost', 'PackageNet', 'PackageGPP', 'PackageCLM', 'PackageNLM', 'PackageIO'];
   detailsColumns: string[] = ['None','detailsColumn'];
@@ -137,32 +126,18 @@ export class ListPerformanceComponent implements OnInit {
 
   ngOnInit() {
 
-    // this.clientArr = this._g.clientArr;
-    // this._authService.getListOwners().subscribe(data => { 
-    //   this.listOwners = data;
-    // });
-    // this._authService.getListManagers().subscribe(data => { 
-    //   this.listManagers = data;
-    // });
-    // this._authService.getSegments().subscribe(data => { 
-    //   this.segments = data;
-    // });    
     this.route.params.subscribe(params => {
-      this.LoadValues(params['listowner'], params['listmanager'], params['recency'], params['startdate'], params['enddate']); 
+      this.LoadValues(params['listowner'], params['listmanager'], params['recency'], params['startdate'], params['enddate']);       
       this._authService.getPerformanceHierarchy().subscribe(data => {
-        alert(data.length.toString())
-      })
+        this.managerFilter = Array.from(new Set(data.map(item =>  item.ListManagerName + ' - '+ item.ListManagerAbbrev)));
+        this.listFilter = Array.from(new Set(data.map(item =>  item.ListName + ' - '+ item.ListAbbrev)));
+        this.recencyFilter = Array.from(new Set(data.map(item =>  item.SegmentName)));
+        this.clientFilter = Array.from(new Set(data.map(item =>  item.ClientName + ' - '+ item.ClientAbbrev)));
+      });
       this._authService.getListPerformance(this.ListOwner, this.ListManager, this.Recency, this.startDate, this.endDate)
       .subscribe(data => {
         this.ListPerformanceArr = data;
         this.ListPerformanceArr.forEach(p => { p.Measure.Expanded = false; });
-        // this.clientFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.Client, checked : false}))));
-        // this.phaseFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.Phase, checked : false}))));
-        // this.mailCodeFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.MailCode, checked : false}))));
-        // this.filteredlists = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.ListOwnerName + ' - ' + item.ListOwnerAbbrev, checked : false}))));
-        // this.managerFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.ListManagerAbbrev, checked : false}))));
-        // this.recencyFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.RecencyString, checked : false}))));
-        // console.log(this.clientFilter);
         this.pageReady = true;
       });    
    });

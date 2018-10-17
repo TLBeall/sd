@@ -57,20 +57,18 @@ export class ListPerformanceComponent implements OnInit {
   public endDate: any;
   public pageReady: boolean = false;
   public ListPerformanceArr: ListPerformance[];
-  private clientFilter: any[];
-  private phaseFilter: any[];
-  private mailCodeFilter: any[];
-  private listFilter: any[];
-  private managerFilter: any[];
-  private recencyFilter: any[];
-  private listOwners:ListOwner[];
-  private listManagers:ListManager[];
-  private segments: Segment[];
-  private clientArr: ClientList[];
-  private selectedClients: string[];
-  private selectedOwners: string[];
-  private selectedManagers: string[];
-  private selectedSegments: string[];
+  // private clientFilter: any[];
+  // private phaseFilter: any[];
+  // private mailCodeFilter: any[];
+  // private recencyFilter: any[];
+  // private listOwners:ListOwner[];
+  // private listManagers:ListManager[];
+  // private segments: Segment[];
+  // private clientArr: ClientList[];
+  // private selectedClients: string[];
+  // private selectedOwners: string[];
+  // private selectedManagers: string[];
+  // private selectedSegments: string[];
 
   columnsToDisplay: string[] = ['Expand', 'ListOwner', 'ListManager', 'RecencyString', 'Client', 'Phase', 'MailCode', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP',  'AVG', 'CPD', 'Gross', 'Net', 'Cost',  'GPP', 'NLM', 'CLM', 'IO'];
   packageColumns: string[] = ['None','None','None','None','None', 'None' , 'None', 'None','PackageMailed', 'PackageCaged', 'PackageQuantity', 'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 'PackageCPD', 'PackageGross', 'PackageNet', 'PackageCost', 'PackageGPP', 'PackageNLM', 'PackageCLM', 'PackageIO'];
@@ -126,7 +124,7 @@ export class ListPerformanceComponent implements OnInit {
 
   getAcronym(Name: string): string {
     var retString: string;
-    retString = Name.substring(Name.indexOf('-') + 1, Name.length).trim();
+    retString = Name.substring(Name.lastIndexOf('-') + 1, Name.length).trim();
     return retString;
   }
 
@@ -226,8 +224,8 @@ export class ListPerformanceComponent implements OnInit {
         this.LMStrArr = Array.from(new Set(data.map(item =>  item.ListManagerName + ' - '+ item.ListManagerAbbrev))).sort();
         this.LOStrArr = Array.from(new Set(data.map(item =>  item.ListName + ' - '+ item.ListAbbrev))).sort();
         this.LOInput.nativeElement.blur();
-        this.recencyFilter = Array.from(new Set(data.map(item =>  item.SegmentName )));
-        this.clientFilter = Array.from(new Set(data.map(item =>  item.ClientName + ' - '+ item.ClientAbbrev)));
+        this.RecStrArr = Array.from(new Set(data.map(item =>  item.SegmentName )));
+        this.ClStrArr = Array.from(new Set(data.map(item =>  item.ClientName + ' - '+ item.ClientAbbrev)));
         this.LOfilteredOptions = this.LOControl.valueChanges.pipe(
           startWith(null),
           map((listowner: string | null) => listowner ? this.LO_filter(listowner) : this.LOStrArr.slice())

@@ -1322,7 +1322,7 @@
               }">
         <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
         <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
-            <mat-form-field class="example-chip-list">
+            <mat-form-field class="tbElement">
                 <mat-chip-list #chipList>
                     <mat-chip *ngFor="let client of clients" 
                     [selectable]="selectable" 
@@ -1345,20 +1345,23 @@
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field class="tbElement">
                 <input matInput #startDateInput (dateInput)="validateDate()" [matDatepicker]="startDatePicker" [(ngModel)]="startDate" placeholder="start date">
                 <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
                 <mat-datepicker #startDatePicker></mat-datepicker>
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field class="tbElement">
                 <input matInput #endDateInput (dateInput)="validateDate()" [matDatepicker]="endDatePicker" [(ngModel)]="endDate" placeholder="end date">
                 <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
                 <mat-datepicker #endDatePicker></mat-datepicker>
             </mat-form-field>
-            <p>
+            <br>
+                <div class="center-align">
                 <button mat-raised-button color="accent" [disabled]="clients == '' || !validateDate()" (click)="applyChanges()"> Search </button>
-            </p>
-            <div>
+            </div>
+                <br>
+            <hr class="tbHR">
+                <div>
                 <mat-slide-toggle [(ngModel)]="selectionMode" (change)="testChange($event, clientTable)">
                     Omit Data
                 </mat-slide-toggle>

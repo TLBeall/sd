@@ -102,9 +102,9 @@ export class ReturnsComponent {
     }
   }
 
-  getAcronym(clientName: string): string {
+  getAcronym(Name: string): string {
     var retString: string;
-    retString = clientName.substring(clientName.indexOf('-') + 1, clientName.length).trim();
+    retString = Name.substring(Name.lastIndexOf('-') + 1, Name.length).trim();
     return retString;
   }
 

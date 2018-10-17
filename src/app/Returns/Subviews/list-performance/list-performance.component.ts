@@ -57,20 +57,18 @@ export class ListPerformanceComponent implements OnInit {
   public endDate: any;
   public pageReady: boolean = false;
   public ListPerformanceArr: ListPerformance[];
-  private clientFilter: any[];
-  private phaseFilter: any[];
-  private mailCodeFilter: any[];
-  private listFilter: any[];
-  private managerFilter: any[];
-  private recencyFilter: any[];
-  private listOwners:ListOwner[];
-  private listManagers:ListManager[];
-  private segments: Segment[];
-  private clientArr: ClientList[];
-  private selectedClients: string[];
-  private selectedOwners: string[];
-  private selectedManagers: string[];
-  private selectedSegments: string[];
+  // private clientFilter: any[];
+  // private phaseFilter: any[];
+  // private mailCodeFilter: any[];
+  // private recencyFilter: any[];
+  // private listOwners:ListOwner[];
+  // private listManagers:ListManager[];
+  // private segments: Segment[];
+  // private clientArr: ClientList[];
+  // private selectedClients: string[];
+  // private selectedOwners: string[];
+  // private selectedManagers: string[];
+  // private selectedSegments: string[];
 
   columnsToDisplay: string[] = ['Expand', 'selectionBox', 'ListOwner', 'ListManager', 'RecencyString', 'Client', 'Phase', 'MailCode', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP',  'AVG', 'CPD', 'Gross', 'Net', 'Cost',  'GPP', 'NLM', 'CLM', 'IO'];
   packageColumns: string[] = ['None','PackageHeader','PackageMailed', 'PackageCaged', 'PackageQuantity', 'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 'PackageCPD', 'PackageGross', 'PackageNet', 'PackageCost', 'PackageGPP', 'PackageNLM', 'PackageCLM', 'PackageIO'];
@@ -110,10 +108,7 @@ export class ListPerformanceComponent implements OnInit {
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private _g: GlobalService) {
     this.route = route;
-    this.LOfilteredOptions = this.LOControl.valueChanges.pipe(
-      startWith(null),
-      map((listowner: string | null) => listowner ? this.LO_filter(listowner) : this.LOStrArr.slice())
-    );
+
     // this.LMfilteredOptions = this.LMControl.valueChanges.pipe(
     //   startWith(null),
     //   map((listmanager: string | null) => listmanager ? this._filter(listmanager) : this.LMStrArr.slice())
@@ -126,6 +121,12 @@ export class ListPerformanceComponent implements OnInit {
     //   startWith(null),
     //   map((client: string | null) => client ? this._filter(client) : this.ClStrArr.slice())
     // );
+  }
+
+  getAcronym(Name: string): string {
+    var retString: string;
+    retString = Name.substring(Name.lastIndexOf('-') + 1, Name.length).trim();
+    return retString;
   }
 
   private LO_filter(name: string): string[] {
@@ -160,8 +161,8 @@ export class ListPerformanceComponent implements OnInit {
   }
 
   LOselected(event: MatAutocompleteSelectedEvent): void {
-    if (!this.LOList.includes(event.option.viewValue))
-      this.LOList.push(event.option.viewValue);
+    if (!this.LOList.includes(this.getAcronym(event.option.viewValue)))
+      this.LOList.push(this.getAcronym(event.option.viewValue));
     this.LOInput.nativeElement.value = '';
     this.LOControl.setValue(null);
     this.LOfilteredOptions = this.LOControl.valueChanges.pipe(
@@ -190,7 +191,6 @@ export class ListPerformanceComponent implements OnInit {
           Element['PackageTitle'] = p.Title;
           Element['PackageFormat'] = p.Format;
           Element['PackageAVG'] = p.Measure.AVG;
-          Element['PackageCPD'] = p.Measure.CPD;
           Element['PackageCaged'] = p.Measure.Caged;
           Element['PackageMailed'] = p.Measure.Mailed;
           Element['PackageIO'] = p.Measure.IO;
@@ -205,37 +205,37 @@ export class ListPerformanceComponent implements OnInit {
           Element['PackageCLM'] = p.Measure.CLM;
           Element['PackageNLM'] = p.Measure.NLM;
           Element['PackageGPP'] = p.Measure.GPP;
+          if (p.Measure.Donors > 0)
+            Element['PackageCPD'] = p.Measure.Cost / p.Measure.Donors;
+          else
+            Element['PackageCPD'] = 0;
         });
       }
       if (Element.Measure)
       Element.Measure.Expanded = !Element.Measure.Expanded;
   }
+  
 
   ngOnInit() {
-
-    this.clientArr = this._g.clientArr;
-    this._authService.getListOwners().subscribe(data => { 
-      this.listOwners = data;
-    });
-    this._authService.getListManagers().subscribe(data => { 
-      this.listManagers = data;
-    });
-    this._authService.getSegments().subscribe(data => { 
-      this.segments = data;
-    });    
     this.route.params.subscribe(params => {
-      this.LoadValues(params['listowner'], params['listmanager'], params['recency'], params['startdate'], params['enddate']); 
+      this.LoadValues(params['listowner'], params['listmanager'], params['recency'], params['startdate'], params['enddate']);             
+
+      this._authService.getPerformanceHierarchy().subscribe(data => {
+        data = data.sort((n1,n2) => n1.SegmentSort > n2.SegmentSort ? 1:n2.SegmentSort > n1.SegmentSort ? -1:0);
+        this.LMStrArr = Array.from(new Set(data.map(item =>  item.ListManagerName + ' - '+ item.ListManagerAbbrev))).sort();
+        this.LOStrArr = Array.from(new Set(data.map(item =>  item.ListName + ' - '+ item.ListAbbrev))).sort();
+        this.LOInput.nativeElement.blur();
+        this.RecStrArr = Array.from(new Set(data.map(item =>  item.SegmentName )));
+        this.ClStrArr = Array.from(new Set(data.map(item =>  item.ClientName + ' - '+ item.ClientAbbrev)));
+        this.LOfilteredOptions = this.LOControl.valueChanges.pipe(
+          startWith(null),
+          map((listowner: string | null) => listowner ? this.LO_filter(listowner) : this.LOStrArr.slice())
+        );        
+      });
       this._authService.getListPerformance(this.ListOwner, this.ListManager, this.Recency, this.startDate, this.endDate)
       .subscribe(data => {
         this.ListPerformanceArr = data;
         this.ListPerformanceArr.forEach(p => { p.Measure.Expanded = false; });
-        this.clientFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.Client, checked : false}))));
-        this.phaseFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.Phase, checked : false}))));
-        this.mailCodeFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.MailCode, checked : false}))));
-        this.listFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.ListOwnerAbbrev, checked : false}))));
-        this.managerFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.ListManagerAbbrev, checked : false}))));
-        this.recencyFilter = Array.from(new Set(this.ListPerformanceArr.map(item =>  ({ element : item.RecencyString, checked : false}))));
-        console.log(this.clientFilter);
         this.pageReady = true;
       });    
    });

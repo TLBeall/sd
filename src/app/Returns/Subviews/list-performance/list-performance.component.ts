@@ -14,6 +14,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { Returns } from '../../../Models/Returns.model';
 
 @Component({
   selector: 'app-list-performance',
@@ -57,6 +58,7 @@ export class ListPerformanceComponent implements OnInit {
   public endDate: any;
   public pageReady: boolean = false;
   public ListPerformanceArr: ListPerformance[];
+  private Summary: Returns;
 
   columnsToDisplay: string[] = ['Expand', 'selectionBox', 'ListOwner', 'ListManager', 'RecencyString', 'Client', 'Phase', 'MailCode', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP',  'AVG', 'CPD', 'Gross', 'Net', 'Cost',  'GPP', 'NLM', 'CLM', 'IO'];
   packageColumns: string[] = ['None','PackageHeader','PackageMailed', 'PackageCaged', 'PackageQuantity', 'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 'PackageCPD', 'PackageGross', 'PackageNet', 'PackageCost', 'PackageGPP', 'PackageNLM', 'PackageCLM', 'PackageIO'];
@@ -315,10 +317,16 @@ export class ListPerformanceComponent implements OnInit {
       this._authService.getListPerformance(this.ListOwner, this.ListManager, this.Recency, this.startDate, this.endDate)
       .subscribe(data => {
         this.ListPerformanceArr = data;
-        this.ListPerformanceArr.forEach(p => { p.Measure.Expanded = false; });
+        this.ListPerformanceArr.forEach(p => { p.Measure.Expanded = false; p.Measure["Selected"] = true; });
+        this.Summary = this._g.ListPerformanceSummary(this.ListPerformanceArr);
         this.pageReady = true;
       });    
    });
+  }
+
+  ToogleChecks(element: any) {
+    element.Measure["Checked"] = !element.Measure["Checked"];
+    this.Summary = this._g.ListPerformanceSummary(this.ListPerformanceArr);
   }
 
   LoadValues(listowner:any, listmanager:any, recency:any, startdate:any, enddate: any)

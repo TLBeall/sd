@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 // import { RootReturns } from '../Models/RootReturns.model';
 import { ClientList } from '../Models/ClientList.model';
 import { Returns } from '../Models/Returns.model';
+import { ListPerformance } from '../Models/ListPerformance.model';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,18 @@ export class GlobalService {
       DestinationMeasure.IO = DestinationMeasure.Gross / DestinationMeasure.Cost;
 
     return DestinationMeasure;
+  }
+
+  ListPerformanceSummary(ListPerformanceArray:ListPerformance[]):Returns
+  {
+      var Summary: Returns = new Returns;
+      this.InitializeMeasure(Summary);
+      ListPerformanceArray.forEach(element => {
+         if (element.Measure["Selected"] == true)
+          this.AddToMeasure(element.Measure, Summary);
+      });
+      Summary = this.CalculateRates(Summary);
+      return Summary;
   }
 
   AddToMeasure(SourceMeasure: Returns, DestinationMeasure: Returns): Returns {

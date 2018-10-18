@@ -18,109 +18,127 @@
       <th mat-header-cell *matHeaderCellDef [ngClass]="selectionMode? 'sbcShifted':'sbc'"></th>
       <td mat-cell *matCellDef="let element" [ngClass]="selectionMode? 'sbcShifted':'sbc'">
           <mat-checkbox class="md-checkbox" #listTable [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate"
-              (change)="ToogleChecks(element)" *ngIf="selectionMode == true"></mat-checkbox>
+              (change)="ToogleChecks(element)" *ngIf="selectionMode == true"></mat-checkbox>              
       </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
     </ng-container>
     <ng-container matColumnDef="ListOwner">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="List Owner"> List </th>
       <td mat-cell *matCellDef="let element" title="{{ element.ListOwnerName }}"> {{element.ListOwnerAbr}} </td>
-      <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
+      <td mat-footer-cell *matFooterCellDef> </td>
     </ng-container>
     <ng-container matColumnDef="ListManager">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="List Manager"> Manager </th>
       <td mat-cell *matCellDef="let element" title="{{ element.ListManagerName }}"> {{element.ListManagerAbr}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
       <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
     </ng-container>
     <ng-container matColumnDef="RecencyString">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Recency/Segment"> Recency </th>
       <td mat-cell *matCellDef="let element" title="{{ element.Description }}"> {{element.RecencyString}} </td>
-      <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
+      <td mat-footer-cell *matFooterCellDef> </td>
     </ng-container>
     <ng-container matColumnDef="Client">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Client </th>
       <td mat-cell *matCellDef="let element"> {{element.Client}} </td>
-      <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
+      <td mat-footer-cell *matFooterCellDef> </td>
     </ng-container>
     <ng-container matColumnDef="Phase">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Phase </th>
       <td mat-cell *matCellDef="let element"> {{element.Phase}} </td>
-      <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
+      <td mat-footer-cell *matFooterCellDef> </td>
     </ng-container>
     <ng-container matColumnDef="MailCode">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> MailCode </th>
       <td mat-cell *matCellDef="let element"> {{element.MailCode}} </td>
-      <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
+      <td mat-footer-cell *matFooterCellDef> </td>
     </ng-container>
     <ng-container matColumnDef="ExchangeFlag" >
       <th mat-header-cell *matHeaderCellDef title="Type of List Order (Rental, Exchange, or House" class="exchangeFlagColumn">T</th>
       <td mat-cell *matCellDef="let element" class="exchangeFlagColumn"> {{element.ExchangeFlag}} </td>
-      <!-- <td mat-footer-cell *matFooterCellDef> Total {{_g.rootReturns[0].Client}} </td> -->
+      <td mat-footer-cell *matFooterCellDef> </td>
     </ng-container>
     <ng-container matColumnDef="Mailed">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Drop Date"> Mailed </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.Mailed | date:'shortDate'}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.Mailed | date:'shortDate' }} </td>
     </ng-container>
     <ng-container matColumnDef="Caged">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Date of most recent cage data"> Caged </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.Caged | date:'shortDate'}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.Caged | date:'shortDate'}} </td>
     </ng-container>
     <ng-container matColumnDef="Quantity">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Qty </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.Quantity | number}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.Quantity | number}} </td>
     </ng-container>
     <ng-container matColumnDef="NonDonors">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Non </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.NonDonors | number}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.NonDonors| number}} </td>
     </ng-container>
     <ng-container matColumnDef="Donors">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Donors </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.Donors | number}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.Donors | number}} </td>
     </ng-container>
     <ng-container matColumnDef="NewDonors">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> New </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.NewDonors | number}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.NewDonors  | number}} </td>
     </ng-container>
     <ng-container matColumnDef="RSP">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Response Rate"> Rsp </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.RSP | percent:'1.2-2'}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.RSP | percent:'1.2-2'}} </td>
     </ng-container>
     <ng-container matColumnDef="AVG">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Average donation"> Avg </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.AVG | currency : 'USD' : 'symbol' : '1.2-2'}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.AVG | currency : 'USD' : 'symbol' : '1.2-2'}} </td>
     </ng-container>
     <ng-container matColumnDef="CPD">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Cost per donor"> CPD </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.CPD | currency : 'USD' : 'symbol' : '1.2-2'}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.CPD | currency : 'USD' : 'symbol' : '1.2-2' }} </td>
     </ng-container>
     <ng-container matColumnDef="Gross">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Gross </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.Gross | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.Gross | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
     </ng-container>
     <ng-container matColumnDef="Net">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Net </th>
       <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.Net < 0">
         {{element.Measure.Net | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
-    </ng-container>
+        <td mat-footer-cell *matFooterCellDef> {{ this.Summary.Net | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+      </ng-container>
     <ng-container matColumnDef="Cost">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Cost </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.Cost | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.Cost | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
     </ng-container>
     <ng-container matColumnDef="GPP" title="Amount grossed per Letter Mailed">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Amount grossed per Letter Mailed"> GLM </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.GPP | currency}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.GPP | currency}} </td>
     </ng-container>
     <ng-container matColumnDef="NLM">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Amount net per letter mailed"> N$LM </th>
       <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.NLM < 0">
         {{element.Measure.NLM | currency}} </td>
-    </ng-container>
+        <td mat-footer-cell *matFooterCellDef> {{ this.Summary.NLM | currency}} </td>
+      </ng-container>
     <ng-container matColumnDef="CLM">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Cost per letter Mailed"> CLM </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.CLM | currency}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.CLM | currency}} </td>
     </ng-container>
     <ng-container matColumnDef="IO">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Gross/Cost"> IO </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.IO | number : '1.2-2'}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.IO | number : '1.2-2' }} </td>
     </ng-container>
 
     <!-- ['Expand','PackageTitle', 'PackageFormat', 'None','None','PackageMailed', 'PackageCaged', 'PackageQuantity', 
@@ -225,7 +243,7 @@
       style="background-color:#F8F8F8"></tr>
       <tr mat-row *matRowDef="let element; columns: detailsColumns2;" [ngStyle]="{'visibility':element.Measure.Expanded ? 'visible' : 'collapse' }"
       style="background-color:#F8F8F8"></tr>
-    
+      <tr mat-footer-row *matFooterRowDef="columnsToDisplay"></tr>    
   </table>
 </div>
 

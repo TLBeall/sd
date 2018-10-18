@@ -86,11 +86,11 @@
     </ng-container>
     <ng-container matColumnDef="AVG">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Average donation"> Avg </th>
-      <td mat-cell *matCellDef="let element"> {{element.Measure.AVG | number:'1.2-2'}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.Measure.AVG | currency : 'USD' : 'symbol' : '1.2-2'}} </td>
     </ng-container>
     <ng-container matColumnDef="CPD">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Cost per donor"> CPD </th>
-      <td mat-cell *matCellDef="let element"> {{element.Measure.CPD | number:'1.2-2'}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.Measure.CPD | currency : 'USD' : 'symbol' : '1.2-2'}} </td>
     </ng-container>
     <ng-container matColumnDef="Gross">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Gross </th>
@@ -165,10 +165,10 @@
       <td mat-cell *matCellDef="let element"> {{element.PackageRSP | percent:'1.2-2'}} </td>
     </ng-container>
     <ng-container matColumnDef="PackageAVG">
-      <td mat-cell *matCellDef="let element"> {{element.PackageAVG | number:'1.2-2'}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.PackageAVG | currency : 'USD' : 'symbol' : '1.2-2'}} </td>
     </ng-container>
     <ng-container matColumnDef="PackageCPD">
-      <td mat-cell *matCellDef="let element"> {{element.PackageCPD | number:'1.2-2'}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.PackageCPD | currency : 'USD' : 'symbol' : '1.2-2'}} </td>
     </ng-container>
     <ng-container matColumnDef="PackageGross">
       <td mat-cell *matCellDef="let element"> {{element.PackageGross | currency : 'USD' : 'symbol' : '1.0-0'}} </td>

@@ -279,40 +279,55 @@ font-weight: bold;
 //Controls font size for headers of tables depending on expanded/collapsed state
 $font-leader:20px;
 .font-client-lg{
-font-size:($font-leader*1.2) !important;
+font-size:($font-leader*1.2);
 font-weight: bolder;
 }
 .font-mailType-lg{
-  font-size:($font-leader*1.1) !important;
+  font-size:($font-leader*1.1);
   font-weight:bold;
 }
 .font-campaignName-lg{
-  font-size:($font-leader*0.95) !important;
+  font-size:($font-leader*0.95);
   font-weight:bold;
   font-style: italic;
 }
 .font-phase-lg{
-  font-size:($font-leader*0.7) !important;
+  font-size:($font-leader*0.7);
   font-weight:bold;
 }
 .font-sm{
-  font-size:11px !important;
+  font-size:11px;
   font-weight: normal !important;
 }
 .allCollapseHeader{
   padding-left:8px;
   padding-right:8px;
   border-radius: 2px;
-  &:active{
-    color: $color-dovegray !important;
-    box-shadow: $material-box-shadow-pressed !important;
-  }
+  -webkit-transition: font-size 0.3s; /* Safari */
+  transition: font-size 0.3s;
   &:hover{
     cursor: pointer;
     padding-bottom: 2px !important;
     box-shadow: $material-box-shadow-default;
+    &.font-client-lg{
+      font-size: ($font-leader*1.22);
+    }
+    &.font-mailType-lg{
+      font-size:($font-leader*1.12);
+    }
+  }
+  &:active{
+    color: $color-dovegray !important;
+    box-shadow: $material-box-shadow-pressed !important;
+    &.font-client-lg{
+      font-size: ($font-leader*1.2);
+    }
+    &.font-mailType-lg{
+      font-size:($font-leader*1.1);
+    }
   }
 }
+
 
 //Controls the styling of the rows when they are unchecked by the toggle filter
 .selectionBoxUnchecked{

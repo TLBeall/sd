@@ -41,6 +41,22 @@ $color-very-pale-orange: #ffdfc7;
     }
 }
 
+//Sets the styling of the material option boxes to fit our style (no ellipses, smaller font for longer clients, etc)
+.md-custom-option{
+    font-size:10pt;
+    width: 100%;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    line-height: 1.6;
+    height: unset !important;
+    padding-top: 8px;
+    padding-bottom: 8px;
+      span{
+        overflow: visible !important;
+        height: 100%;
+      }
+  }
+
 $material-box-shadow-default:0 2px 3px 0 rgba(0, 0, 0, 0.14), 0 2px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 2px -2px rgba(0, 0, 0, 0.2);
 $material-box-shadow-pressed:0 1px 1px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
 

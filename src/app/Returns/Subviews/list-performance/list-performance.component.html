@@ -249,7 +249,7 @@
   <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
 
     <!-- LIST OWNER - LO -->
-        <mat-form-field class="tbOwner">
+        <mat-form-field class="tbElement">
             <mat-chip-list #LOchipList>
                 <mat-chip *ngFor="let listowner of LOList" 
                 [selectable]="selectable" 
@@ -267,14 +267,12 @@
                 (matChipInputTokenEnd)="LO_Add($event)">
             </mat-chip-list>
             <mat-autocomplete #LOauto="matAutocomplete" (optionSelected)="LO_Selected($event)">
-                <mat-option *ngFor="let listowner of LOfilteredOptions | async" [value]="listowner">
-                    {{listowner}}
-                </mat-option>
+                <mat-option class="md-custom-option" *ngFor="let listowner of LOfilteredOptions | async" [value]="listowner">{{listowner}}</mat-option>
             </mat-autocomplete>
         </mat-form-field>
 
     <!-- LIST MANAGER - LM -->
-    <mat-form-field class="tbManager">
+    <mat-form-field class="tbElement">
         <mat-chip-list #LMchipList>
             <mat-chip *ngFor="let listmanager of LMList" 
             [selectable]="selectable" 
@@ -292,14 +290,12 @@
             (matChipInputTokenEnd)="LM_Add($event)">
         </mat-chip-list>
         <mat-autocomplete #LMauto="matAutocomplete" (optionSelected)="LM_Selected($event)">
-            <mat-option *ngFor="let listmanager of LMfilteredOptions | async" [value]="listmanager">
-                {{listmanager}}
-            </mat-option>
+            <mat-option class="md-custom-option" *ngFor="let listmanager of LMfilteredOptions | async" [value]="listmanager">{{listmanager}}</mat-option>
         </mat-autocomplete>
     </mat-form-field>
 
     <!-- List Recency - Rec -->
-    <mat-form-field class="tbRecency">
+    <mat-form-field class="tbElement">
         <mat-chip-list #RecchipList>
             <mat-chip *ngFor="let recency of RecList" 
             [selectable]="selectable"
@@ -317,14 +313,12 @@
             (matChipInputTokenEnd)="Rec_Add($event)">
         </mat-chip-list>
         <mat-autocomplete #Recauto="matAutocomplete" (optionSelected)="Rec_Selected($event)">
-            <mat-option *ngFor="let recency of RecfilteredOptions | async" [value]="recency">
-                {{recency}}
-            </mat-option>
+            <mat-option class="md-custom-option" *ngFor="let recency of RecfilteredOptions | async" [value]="recency">{{recency}}</mat-option>
         </mat-autocomplete>
     </mat-form-field>
 
     <!-- Client Input - Cl -->
-    <mat-form-field class="tbClient">
+    <mat-form-field class="tbElement">
         <mat-chip-list #ClchipList>
             <mat-chip *ngFor="let client of ClList" 
             [selectable]="selectable" 
@@ -342,57 +336,26 @@
             (matChipInputTokenEnd)="Cl_Add($event)">
         </mat-chip-list>
         <mat-autocomplete #Clauto="matAutocomplete" (optionSelected)="Cl_Selected($event)">
-            <mat-option *ngFor="let client of ClfilteredOptions | async" [value]="client">
-                {{client}}
-            </mat-option>
+            <mat-option class="md-custom-option" *ngFor="let client of ClfilteredOptions | async" [value]="client">{{client}}</mat-option>
         </mat-autocomplete>
     </mat-form-field>
-
-
-
-
-      <!-- <mat-form-field>
-        <mat-select [(value)]="this.selectedOwners" multiple>
-          <mat-option *ngFor="let owner of listOwners" [value]="owner.ID" multiple>
-            {{owner.Abbrev}} - {{owner.Name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-select [(value)]="this.selectedManagers" multiple>
-          <mat-option *ngFor="let manager of listManagers" [value]="manager.ID" multiple>
-            {{manager.Abbrev}} - {{manager.Name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-select [(value)]="this.selectedSegments" multiple>
-          <mat-option *ngFor="let segment of segments" [value]="segment.ID" multiple>
-            {{segment.Description}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-select [(value)]="this.selectedClients" multiple>
-          <mat-option *ngFor="let client of clientArr" [value]="client.gClientAcronym" multiple>
-            {{client.gClientAcronym}} - {{client.gClientName}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field> -->
-      <mat-form-field>
+      <mat-form-field class="tbElement">
         <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="fromDate" placeholder="start date">
         <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #startDatePicker></mat-datepicker>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="tbElement">
         <input matInput [matDatepicker]="endDatePicker" [(ngModel)]="toDate" placeholder="end date">
         <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #endDatePicker></mat-datepicker>
       </mat-form-field>
       <br>
+      <div class="center-align">
       <button mat-raised-button color="accent" (click)="applyChanges()"> Search </button>
+    </div>
       <br>
-      <hr class="tbHR">
+      <hr>
+      <br>
       <mat-slide-toggle [(ngModel)]="selectionMode">
         Omit Data
     </mat-slide-toggle>

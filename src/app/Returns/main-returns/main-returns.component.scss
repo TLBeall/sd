@@ -393,12 +393,16 @@ font-weight: bolder;
 }
 
 .tbElement{
-  width:96%;
-  margin: 0 auto;
+  width:90%;
+  margin-left:5%;
 }
 
-.tbHR{
-  background-color: $color-blue-default;
-}
+
+// .tbHR{
+//   border-radius: 2px;
+//   background-color: $color-blue-default;
+//   height: 3px;
+//   width: 100%;
+// }
 // <><><><><><><><><><><><><><><><><><><><><>
 //<><><><><> TOOLBOX SETTINGS END <><<><><>

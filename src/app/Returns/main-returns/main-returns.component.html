@@ -1340,9 +1340,7 @@
                     (matChipInputTokenEnd)="add($event)">
                 </mat-chip-list>
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                    <mat-option *ngFor="let client of filteredOptions | async" [value]="client">
-                        {{client}}
-                    </mat-option>
+                    <mat-option class="md-custom-option" *ngFor="let client of filteredOptions | async" [value]="client">{{client}}</mat-option>
                 </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="tbElement">
@@ -1360,7 +1358,8 @@
                 <button mat-raised-button color="accent" [disabled]="clients == '' || !validateDate()" (click)="applyChanges()"> Search </button>
             </div>
                 <br>
-            <hr class="tbHR">
+            <hr>
+            <br>
                 <div>
                         <!-- (change)="testChange($event, clientTable)" -->
                 <mat-slide-toggle [(ngModel)]="selectionMode">

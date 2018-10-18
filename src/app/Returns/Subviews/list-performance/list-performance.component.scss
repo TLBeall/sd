@@ -180,9 +180,21 @@ tr.example-element-row:hover {
   display: none;
 }
 
-.tbHR{
-  background-color: $color-blue-default;
+.tbElement{
+  width:90%;
+  margin-left:5%;
 }
+
+.center-align{
+  text-align: center;
+}
+
+// .tbHR{
+//   border-radius: 2px;
+//   background-color: $color-blue-default;
+//   height: 3px;
+//   width: 100%;
+// }
 
 //  //Removes pagination (prev/next) on the mat tab 
 //  ::ng-deep .mat-tab-header-pagination {

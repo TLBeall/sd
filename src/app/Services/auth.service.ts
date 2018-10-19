@@ -101,9 +101,13 @@ export class AuthService {
     return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 
-  getListPerformance(ListOwner: number, ListManager: number, Recency: number, startDate: Date, endDate: Date):Observable<ListPerformance[]> {
+  getListPerformance(ListOwners: string, ListManagers: string, Segments: string, Clients:string, startDate: Date, endDate: Date):Observable<ListPerformance[]> {
     var Token = "";
-    var ListPerformanceAPI = "https://sd360.sunrisedataservices.com/api/ListPerformance?ListOwner=" + ListOwner.toString() + "&ListManager=" + ListManager.toString() + "&Recency=" + Recency.toString() + "&startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString();
+    if (Clients == '_') Clients = '';
+    if (ListOwners == '_') ListOwners = '';
+    if (ListManagers == '_') ListManagers = '';
+    if (Segments == '_') Segments = '';
+    var ListPerformanceAPI = "https://sd360.sunrisedataservices.com/api/ListPerformance?ListOwners=" + ListOwners + "&ListManagers=" + ListManagers + "&Segments=" + Segments + "&Clients=" + Clients + "&startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString();
 
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
     return this.http.get(ListPerformanceAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));

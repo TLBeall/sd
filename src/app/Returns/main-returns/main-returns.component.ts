@@ -165,8 +165,11 @@ export class ReturnsComponent {
   }
 
 
-  NavigateToListPerformance(ListOwner: number, ListManager: number, Recency: number, startDate: Date, endDate: Date) {
+  NavigateToListPerformance(ListOwner: string, ListManager: string, Recency: string, startDate: Date, endDate: Date) {
     this._g.clearCurCache = true;
+    if (!ListOwner) ListOwner = '_';
+    if (!ListManager) ListManager = '_';
+    if (!Recency) Recency = '_';
     this.router.navigate(['listperformance' + '/' + ListOwner + '/' + ListManager + '/' + Recency + '/' + startDate.toLocaleDateString().split('/').join('.') + '/' + endDate.toLocaleDateString().split('/').join('.')]);
   }
 

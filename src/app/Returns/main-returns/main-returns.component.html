@@ -1016,13 +1016,13 @@
                     </ng-container>
                     <ng-template #prospect>
                         <span class="prospectListDescription">
-                            <a title="{{ element.ListOwnerName }}" (click)="NavigateToListPerformance(element.ListOwner, 0, 0, startDate, endDate)">
+                            <a title="{{ element.ListOwnerName }}" (click)="NavigateToListPerformance(element.ListOwnerAbr,null,null, startDate, endDate)">
                                 {{element.ListOwnerAbr}}</a>
                             <span> / </span>
-                            <a title="{{ element.ListManagerName }}" (click)="NavigateToListPerformance(0, element.ListManager, 0, startDate, endDate)">
+                            <a title="{{ element.ListManagerName }}" (click)="NavigateToListPerformance(null, element.ListManagerAbr,null, startDate, endDate)">
                                 {{element.ListManagerAbr}}</a>
                             <span> / </span>
-                            <a (click)="NavigateToListPerformance(element.ListOwner, element.ListManager, element.Recency, startDate, endDate)">
+                            <a (click)="NavigateToListPerformance(element.ListOwnerAbr, element.ListManagerAbr, element.Recency, startDate, endDate)">
                                 {{element.RecencyString}}
                             </a>
                         </span>

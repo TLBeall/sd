@@ -169,11 +169,17 @@ export class GlobalService {
               element.PhaseList.forEach(element => {
                 element.Measure.IsLast = false;
               });
-              element.PhaseList[element.PhaseList.length - 1].Measure.IsLast = true;
+              if (element.PhaseList)
+                if (element.PhaseList.length >= 1)
+                  element.PhaseList[element.PhaseList.length - 1].Measure.IsLast = true;
             });
-            element.CampaignList[element.CampaignList.length - 1].Measure.IsLast = true;
+            if (element.CampaignList)
+              if (element.CampaignList.length >= 1)
+                element.CampaignList[element.CampaignList.length - 1].Measure.IsLast = true;
           });
-          element.MailTypeList[element.MailTypeList.length - 1].Measure.IsLast = true;
+          if (element.MailTypeList)
+              if (element.MailTypeList.length >= 1)
+                element.MailTypeList[element.MailTypeList.length - 1].Measure.IsLast = true;
       })
     rootReturns[rootReturns.length - 1].Measure.IsLast = true;
     return rootReturns;

@@ -51,9 +51,9 @@ export class ListPerformanceComponent implements OnInit {
 
 
   private route: any;
-  public ListOwner: number = 0;
-  public ListManager: number = 0;
-  public Recency: number = 0;
+  public ListOwner: string = '';
+  public ListManager: string = '';
+  public Recency: string = '';
   public startDate: any;
   public endDate: any;
   public pageReady: boolean = false;
@@ -314,7 +314,7 @@ export class ListPerformanceComponent implements OnInit {
           map((client: string | null) => client ? this.Cl_filter(client) : this.ClStrArr.slice())
         );                                
       });
-      this._authService.getListPerformance(this.ListOwner, this.ListManager, this.Recency, this.startDate, this.endDate)
+      this._authService.getListPerformance(this.ListOwner, this.ListManager, this.Recency, '', this.startDate, this.endDate)
       .subscribe(data => {
         this.ListPerformanceArr = data;
         this.ListPerformanceArr.forEach(p => { p.Measure.Expanded = false; p.Measure["Selected"] = true; });
@@ -329,7 +329,7 @@ export class ListPerformanceComponent implements OnInit {
     this.Summary = this._g.ListPerformanceSummary(this.ListPerformanceArr);
   }
 
-  LoadValues(listowner:any, listmanager:any, recency:any, startdate:any, enddate: any)
+  LoadValues(listowner:string, listmanager:string, recency:string, startdate:any, enddate: any)
   {
     this.ListOwner = listowner;
     this.ListManager = listmanager;

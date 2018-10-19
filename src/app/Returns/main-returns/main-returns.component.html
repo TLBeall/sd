@@ -1019,7 +1019,7 @@
                             <a title="{{ element.ListOwnerName }}" (click)="NavigateToListPerformance(element.ListOwnerAbr,null,null, startDate, endDate)">
                                 {{element.ListOwnerAbr}}</a>
                             <span> / </span>
-                            <a title="{{ element.ListManagerName }}" (click)="NavigateToListPerformance(null, element.ListManagerAbr,null, startDate, endDate)">
+                            <a title="{{ element.ListManagerName }}" (click)="NavigateToListPerformance(element.ListOwnerAbr, element.ListManagerAbr,null, startDate, endDate)">
                                 {{element.ListManagerAbr}}</a>
                             <span> / </span>
                             <a (click)="NavigateToListPerformance(element.ListOwnerAbr, element.ListManagerAbr, element.Recency, startDate, endDate)">

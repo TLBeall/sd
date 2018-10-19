@@ -169,7 +169,12 @@ export class ReturnsComponent {
     this._g.clearCurCache = true;
     if (!ListOwner) ListOwner = '_';
     if (!ListManager) ListManager = '_';
-    if (!Recency) Recency = '_';
+    if (!Recency)
+    {
+     Recency = '_';
+     if ((ListManager != 'NOVA') && (ListManager  != '_'))
+        ListOwner = '_';
+    }
     this.router.navigate(['listperformance' + '/' + ListOwner + '/' + ListManager + '/' + Recency + '/' + startDate.toLocaleDateString().split('/').join('.') + '/' + endDate.toLocaleDateString().split('/').join('.')]);
   }
 

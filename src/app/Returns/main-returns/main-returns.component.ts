@@ -151,9 +151,9 @@ export class ReturnsComponent {
               startWith(''),
               map(value => this._filter(value))
             );
-        });
-      this.clients.push(this.selectedClients[0]);
-      this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.selectedClients[0]).gClientName;
+            this.clients.push(this.selectedClients[0]);
+            this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.selectedClients[0]).gClientName;
+              });
     });
     // In a real app: dispatch action to load the details here.
   }

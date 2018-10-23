@@ -1,7 +1,7 @@
-<!-- <div *ngIf="this.pageReady == false" class="loading-indicator">
+<div *ngIf="this.pageReady == false" class="loading-indicator">
     <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
-</div> -->
-<div *ngIf="(this.pageReady == true)">
+</div>
+<div *ngIf="(this.pageReady == true) && (this.rootReturns)">
     <app-toolbar></app-toolbar>
     <table id="table1" mat-table [dataSource]="this.rootReturns" multiTemplateDataRows matSort (matSortChange)="SortFunction($event, this.rootReturns)">
         <ng-container matColumnDef="Expand">

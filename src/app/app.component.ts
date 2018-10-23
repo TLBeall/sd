@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-      // prevent nguniversal problems
+      // prevent nguniversal problems      
       this.addScrollTopListeners();
     }
   }

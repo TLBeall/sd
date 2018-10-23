@@ -131,46 +131,58 @@ export class ReturnsComponent {
   }
 
   ngOnInit() {
+
+    this.pageReady = false;
+    this.clients = [];
     this.route.params.subscribe(params => {
-      if (! params['client'])
-      this.LoadValues('ACRU', "1.1." +  (new Date()).getFullYear().toString(), "12.31." +  (new Date()).getFullYear().toString());
-      else
-      this.LoadValues(params['client'], params['from'], params['to']);
-      if (params['client'])
-      this._authService.getReturns(this.selectedClients[0], this.startDate, this.endDate).subscribe(data => {
-        this.rootReturns = data;
-        this.rootReturns = this._g.SetLastElements(this.rootReturns);
-        this.rootReturns = this._g.ExpandAll(this.rootReturns);
-        this.CheckLevel(this.rootReturns[0], true);
-        var calculations = this._g.CalculateSummaries(this.rootReturns);
-        this.rootReturns = calculations.rootReturns;
-        this.grandTotal = calculations.grandTotal;
+      if (!params['client'])
+      {
+        this.rootReturns = null;
         this.pageReady = true;
-      });
+        this.startDate = new Date("1/1/" + (new Date()).getFullYear().toString());
+        this.endDate = new Date("12/31/" + (new Date()).getFullYear().toString());
+      }
+      else
+        this.LoadValues(params['client'], params['from'], params['to']);
+      if (params['client'])
+        this._authService.getReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
+          if (data) {
+            this.rootReturns = data;
+            this.rootReturns = this._g.SetLastElements(this.rootReturns);
+            this.rootReturns = this._g.ExpandAll(this.rootReturns);
+            this.pageReady = true;
+            var i = 0;
+            while (this.rootReturns[i]) {
+              this.CheckLevel(this.rootReturns[i], true);
+              i = i + 1;
+            }
+            var calculations = this._g.CalculateSummaries(this.rootReturns);
+            this.rootReturns = calculations.rootReturns;
+            this.grandTotal = calculations.grandTotal;
+          }
+        });
+
       this._authService.getClientList("All")
         .subscribe(data => {
           this.ClientArr = data;
+          this.ClientStrArr = [];
           this.ClientArr.forEach(p => { this.ClientStrArr.push(p.gClientName + ' - ' + p.gClientAcronym) });
           this.filteredOptions = this.clientControl.valueChanges
             .pipe(
               startWith(''),
               map(value => this._filter(value))
             );
-            if (params['client'])
-            {
-            this.clients.push(this.selectedClients[0]);
-            this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.selectedClients[0]).gClientName;
-            }
-            // else        
-            // this.pageReady = true;
-              });
+          if (params['client'] && (this.clients.length != this.selectedClients.length)) {
+            this.clients = [];
+            this.selectedClients.forEach(p => this.clients.push(p));
+          }
+        });
     });
-    // In a real app: dispatch action to load the details here.
   }
 
   LoadValues(client: string, startDate: any, endDate: any) {
-    // this.customPage = false;
-    this.selectedClients.push(client);
+    this.selectedClients = [];
+    client.split('.').forEach(p => this.selectedClients.push(p));
     this.startDate = new Date(Date.parse(startDate.split('.')[0].toString() + '/' + startDate.split('.')[1].toString() + '/' + startDate.split('.')[2].toString()));
     this.endDate = new Date(Date.parse(endDate.split('.')[0].toString() + '/' + endDate.split('.')[1].toString() + '/' + endDate.split('.')[2].toString()));
   }
@@ -180,10 +192,9 @@ export class ReturnsComponent {
     this._g.clearCurCache = true;
     if (!ListOwner) ListOwner = '_';
     if (!ListManager) ListManager = '_';
-    if (!Recency)
-    {
-     Recency = '_';
-     if ((ListManager != 'NOVA') && (ListManager  != '_'))
+    if (!Recency) {
+      Recency = '_';
+      if ((ListManager != 'NOVA') && (ListManager != '_'))
         ListOwner = '_';
     }
     this.router.navigate(['listperformance' + '/' + ListOwner + '/' + ListManager + '/' + Recency + '/' + startDate.toLocaleDateString().split('/').join('.') + '/' + endDate.toLocaleDateString().split('/').join('.')]);
@@ -260,20 +271,19 @@ export class ReturnsComponent {
         Parent.Measure.Expanded = true;
     }
 
-    if (flag == false)
-    {
+    if (flag == false) {
       ChildList.forEach(x => {
-      x.MailTypeList.forEach(a => {
-        a.CampaignList.forEach(b => {
-          b.PhaseList.forEach(c => {
-            c.Measure.Expanded = SetToExpand;
+        x.MailTypeList.forEach(a => {
+          a.CampaignList.forEach(b => {
+            b.PhaseList.forEach(c => {
+              c.Measure.Expanded = SetToExpand;
+            })
+            b.Measure.Expanded = SetToExpand;
           })
-          b.Measure.Expanded = SetToExpand;
+          a.Measure.Expanded = SetToExpand;
         })
-        a.Measure.Expanded = SetToExpand;
-      })      
-      x.Measure.Expanded = SetToExpand;
-    })
+        x.Measure.Expanded = SetToExpand;
+      })
     }
   }
 
@@ -639,48 +649,26 @@ export class ReturnsComponent {
   }
 
   applyChanges() {
-
-    var Results: RootReturns;
-
     var clientsStr = "";
-    this.pageReady = false;
-
     if (this.clients.length > 1) {
       this.clients.forEach(element => { clientsStr = element + "." + clientsStr; });
       clientsStr = clientsStr.substring(0, clientsStr.length - 1);
     }
     else clientsStr = this.clients[0];
-
-    this._authService.getReturns(clientsStr, this.startDate, this.endDate).subscribe(data => {
-      if (data)
-        this.rootReturns = data;
-      Results = data;
-      Results = this._g.SetLastElements(Results);
-      Results = this._g.ExpandAll(Results);
-      this.pageReady = true;
-      var i = 0;
-      while (this.rootReturns[i]) {
-        this.CheckLevel(this.rootReturns[i], true);
-        i = i + 1;
-      }
-      var calculations = this._g.CalculateSummaries(this.rootReturns);
-      this.rootReturns = calculations.rootReturns;
-      this.grandTotal = calculations.grandTotal;
-    });
     this.closeToolbox();
+    this.router.navigate(['/returns/' + clientsStr + '/'+ this.startDate.toLocaleDateString().split('/').join('.') + '/' + this.endDate.toLocaleDateString().split('/').join('.')]);
   }
 
-  validateDate(): boolean{
+  validateDate(): boolean {
     this.tempStartDate = this.startDateInput.nativeElement.value;
     this.tempEndDate = this.endDateInput.nativeElement.value;
     var reg = /^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/;
-    if (this.tempStartDate.match(reg) && this.tempEndDate.match(reg)){
+    if (this.tempStartDate.match(reg) && this.tempEndDate.match(reg)) {
       return true;
-    } else{
+    } else {
       return false;
     }
   }
-
 }
 
 function compare(a: string, b: string, isAsc) {

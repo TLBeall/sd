@@ -169,7 +169,7 @@ export class ReturnsComponent {
   }
 
   LoadValues(client: string, startDate: any, endDate: any) {
-    this.customPage = false;
+    // this.customPage = false;
     this.selectedClients.push(client);
     this.startDate = new Date(Date.parse(startDate.split('.')[0].toString() + '/' + startDate.split('.')[1].toString() + '/' + startDate.split('.')[2].toString()));
     this.endDate = new Date(Date.parse(endDate.split('.')[0].toString() + '/' + endDate.split('.')[1].toString() + '/' + endDate.split('.')[2].toString()));

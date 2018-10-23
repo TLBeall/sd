@@ -84,7 +84,6 @@ export class AppComponent implements OnInit {
           // save scroll position of urls on router navigation
           // at NavigationStart, router.url is still the url of the current route (not the target of the navigation)
           this.saveScroll(this.router.url);
-          console.log(this.router.url);
         }
       }
 

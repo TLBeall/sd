@@ -50,6 +50,7 @@ export class ReturnsComponent {
   private filteredOptions: Observable<string[]>;
   private tempStartDate;
   private tempEndDate;
+  // private customPage: bool = true;
 
   //For chip selection settings
   visible = true;
@@ -131,7 +132,11 @@ export class ReturnsComponent {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
+      if (! params['client'])
+      this.LoadValues('ACRU', "1.1." +  (new Date()).getFullYear().toString(), "12.31." +  (new Date()).getFullYear().toString());
+      else
       this.LoadValues(params['client'], params['from'], params['to']);
+      if (params['client'])
       this._authService.getReturns(this.selectedClients[0], this.startDate, this.endDate).subscribe(data => {
         this.rootReturns = data;
         this.rootReturns = this._g.SetLastElements(this.rootReturns);
@@ -151,14 +156,20 @@ export class ReturnsComponent {
               startWith(''),
               map(value => this._filter(value))
             );
+            if (params['client'])
+            {
             this.clients.push(this.selectedClients[0]);
             this.clientName = this._g.clientArr.find(p => p.gClientAcronym == this.selectedClients[0]).gClientName;
+            }
+            // else        
+            // this.pageReady = true;
               });
     });
     // In a real app: dispatch action to load the details here.
   }
 
   LoadValues(client: string, startDate: any, endDate: any) {
+    this.customPage = false;
     this.selectedClients.push(client);
     this.startDate = new Date(Date.parse(startDate.split('.')[0].toString() + '/' + startDate.split('.')[1].toString() + '/' + startDate.split('.')[2].toString()));
     this.endDate = new Date(Date.parse(endDate.split('.')[0].toString() + '/' + endDate.split('.')[1].toString() + '/' + endDate.split('.')[2].toString()));

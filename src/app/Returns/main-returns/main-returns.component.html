@@ -1312,20 +1312,122 @@
               }">
     <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
     <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
+        
+        <!-- Client - CL -->
         <mat-form-field class="tbElement">
             <mat-chip-list #chipList>
-                <mat-chip *ngFor="let client of clients" [selectable]="selectable" [removable]="removable" (removed)="remove(client)">
+                <mat-chip *ngFor="let client of CLList"
+                 [selectable]="selectable" 
+                 [removable]="removable" 
+                 (removed)="CL_remove(client)">
                     {{client}}
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
-                <input placeholder="Client..." #clientListInput [formControl]="clientControl" [matAutocomplete]="auto"
-                    [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                    [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                <input placeholder="Client..." #CLInput 
+                [formControl]="CLControl" 
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipList" 
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur" 
+                (matChipInputTokenEnd)="CL_add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="CL_selected($event)">
+                <mat-option class="md-custom-option" *ngFor="let client of CLfilteredOptions | async" [value]="client">{{client}}</mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <!-- Mail Type - MT -->
+        <!-- <mat-form-field class="tbElement">
+            <mat-chip-list #chipList>
+                <mat-chip *ngFor="let client of clients"
+                 [selectable]="selectable" 
+                 [removable]="removable" 
+                 (removed)="remove(client)">
+                    {{client}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="Client..." #MTInput 
+                [formControl]="clientControl" 
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipList" 
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur" 
+                (matChipInputTokenEnd)="add($event)">
             </mat-chip-list>
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
                 <mat-option class="md-custom-option" *ngFor="let client of filteredOptions | async" [value]="client">{{client}}</mat-option>
             </mat-autocomplete>
-        </mat-form-field>
+        </mat-form-field> -->
+        
+        <!-- Campaign - CA -->
+        <!-- <mat-form-field class="tbElement">
+            <mat-chip-list #chipList>
+                <mat-chip *ngFor="let client of clients"
+                [selectable]="selectable" 
+                [removable]="removable" 
+                (removed)="remove(client)">
+                    {{client}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="Client..." #CAInput 
+                [formControl]="clientControl" 
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipList" 
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur" 
+                (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option class="md-custom-option" *ngFor="let client of filteredOptions | async" [value]="client">{{client}}</mat-option>
+            </mat-autocomplete>
+        </mat-form-field> -->
+
+        <!-- Phase - PH -->
+        <!-- <mat-form-field class="tbElement">
+            <mat-chip-list #chipList>
+                <mat-chip *ngFor="let client of clients"
+                 [selectable]="selectable" 
+                 [removable]="removable" 
+                 (removed)="remove(client)">
+                    {{client}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="Client..." #PHInput 
+                [formControl]="clientControl" 
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipList" 
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur" 
+                (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option class="md-custom-option" *ngFor="let client of filteredOptions | async" [value]="client">{{client}}</mat-option>
+            </mat-autocomplete>
+        </mat-form-field> -->
+
+<!-- 
+        <mat-form-field class="tbElement">
+            <mat-chip-list #chipList>
+                <mat-chip *ngFor="let client of clients"
+                 [selectable]="selectable" 
+                 [removable]="removable" 
+                 (removed)="remove(client)">
+                    {{client}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="Client..." #clientListInput 
+                [formControl]="clientControl" 
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipList" 
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur" 
+                (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option class="md-custom-option" *ngFor="let client of filteredOptions | async" [value]="client">{{client}}</mat-option>
+            </mat-autocomplete>
+        </mat-form-field> -->
+
         <mat-form-field class="tbElement">
             <input matInput #startDateInput (dateInput)="validateDate()" [matDatepicker]="startDatePicker" [(ngModel)]="startDate"
                 placeholder="start date">

@@ -43,11 +43,11 @@ export class ReturnsComponent {
   private hide: Boolean = false;
   private visibility: string = "hidden";
   private ClientArr: ClientList[];
-  private ClientStrArr: string[] = new Array<string>();
+  // private ClientStrArr: string[] = new Array<string>();
   private grandTotal: any;
-  private clientControl = new FormControl();
-  private clients: string[] = [];
-  private filteredOptions: Observable<string[]>;
+  // private clientControl = new FormControl();
+  // private clients: string[] = [];
+  // private filteredOptions: Observable<string[]>;
   private tempStartDate;
   private tempEndDate;
   // private customPage: bool = true;
@@ -66,74 +66,290 @@ export class ReturnsComponent {
   phaseDisplayedColumns: string[] = ['Expand', 'selectionBox', 'PhaseName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'AVG', 'CPD', 'Gross', 'Net', 'Cost', 'GPP', 'NLM', 'CLM', 'IO'];//, 'PseudoDescription', 'ExchangeFlag',  'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
   mailListDisplayedColumns: string[] = ['PseudoExpand', 'selectionBox', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'AVG', 'CPD', 'Gross', 'Net', 'Cost', 'GPP', 'NLM', 'CLM', 'IO'];//, 'MailDescription', 'ExchangeFlag' 'NewDonors', 'RSP', 'Gross', 'Net', 'NLM', 'AVG', 'Cost', 'CLM', 'GPP', 'IO'];
 
-  @ViewChild('clientListInput') clientListInput: ElementRef<HTMLInputElement>;
+  // @ViewChild('clientListInput') clientListInput: ElementRef<HTMLInputElement>;
   @ViewChild('startDateInput') startDateInput: ElementRef<HTMLInputElement>;
   @ViewChild('endDateInput') endDateInput: ElementRef<HTMLInputElement>;
+  @ViewChild('CLInput') CLInput: ElementRef<HTMLInputElement>;
+  @ViewChild('MTInput') MTInput: ElementRef<HTMLInputElement>;
+  @ViewChild('CAInput') CAInput: ElementRef<HTMLInputElement>;
+  @ViewChild('PHInput') PHInput: ElementRef<HTMLInputElement>;
+
+  private CLStrArr: string[] = new Array<string>();
+  private CLControl = new FormControl();
+  private CLList: string[] = []; //clients in main returns
+  private CLfilteredOptions: Observable<string[]>;
+
+  private MTStrArr: string[] = new Array<string>();
+  private MTControl = new FormControl();
+  private MTList: string[] = [];
+  private MTfilteredOptions: Observable<string[]>;
+
+  private CAStrArr: string[] = new Array<string>();
+  private CAControl = new FormControl();
+  private CAList: string[] = [];
+  private CAfilteredOptions: Observable<string[]>;
+
+  private PHStrArr: string[] = new Array<string>();
+  private PHControl = new FormControl();
+  private PHList: string[] = [];
+  private PHfilteredOptions: Observable<string[]>;
+
+
 
   constructor(route: ActivatedRoute, private _authService: AuthService, private _g: GlobalService, private router: Router) {
     this.route = route;
-    this.filteredOptions = this.clientControl.valueChanges.pipe(
-      startWith(null),
-      map((client: string | null) => client ? this._filter(client) : this.ClientStrArr.slice())
-    );
-  }
-
-  add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-
-    // Add our client
-    if ((value || '').trim()) {
-      this.clients.push(value.trim().toUpperCase());
-    }
-
-    // Reset the input value
-    if (input) {
-      input.value = '';
-    }
-
-    this.clientControl.setValue(null);
-  }
-
-  remove(client: string): void {
-    const index = this.clients.indexOf(client);
-
-    if (index >= 0) {
-      this.clients.splice(index, 1);
-    }
-  }
-
-  getAcronym(Name: string): string {
-    var retString: string;
-    retString = Name.substring(Name.lastIndexOf('-') + 1, Name.length).trim();
-    return retString;
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    if (!this.clients.includes(this.getAcronym(event.option.viewValue)))
-      this.clients.push(this.getAcronym(event.option.viewValue));
-    this.clientListInput.nativeElement.value = '';
-    this.clientControl.setValue(null);
-    this.filteredOptions = this.clientControl.valueChanges.pipe(
-      startWith(null),
-      map((client: string | null) => client ? this._filter(client) : this.ClientStrArr.slice())
-    );
-    this.clientListInput.nativeElement.blur();
+    // this.filteredOptions = this.clientControl.valueChanges.pipe(
+    //   startWith(null),
+    //   map((client: string | null) => client ? this._filter(client) : this.ClientStrArr.slice())
+    // );
   }
 
 
-
-  private _filter(name: string): string[] {
+  //CHIP FILTER START
+  private CL_filter(name: string): string[] {
     if (name == null)
       return null;
     const filterValue = name.toLowerCase();
-    return this.ClientStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
+    return this.CLStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
   }
+  private MT_filter(name: string): string[] {
+    if (name == null)
+      return null;
+    const filterValue = name.toLowerCase();
+    return this.MTStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
+  }
+  private CA_filter(name: string): string[] {
+    if (name == null)
+      return null;
+    const filterValue = name.toLowerCase();
+    return this.CAStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
+  }
+  private PH_filter(name: string): string[] {
+    if (name == null)
+      return null;
+    const filterValue = name.toLowerCase();
+    return this.PHStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
+  }
+
+  //CHIP ADD START
+  CL_Add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) {
+      this.CLList.push(value.trim());
+    }
+    if (input) {
+      input.value = '';
+    }
+    this.CLControl.setValue(null);
+  }
+  MT_Add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) {
+      this.MTList.push(value.trim());
+    }
+    if (input) {
+      input.value = '';
+    }
+    this.MTControl.setValue(null);
+  }
+  CA_Add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) {
+      this.CAList.push(value.trim());
+    }
+    if (input) {
+      input.value = '';
+    }
+    this.CAControl.setValue(null);
+  }
+  PH_Add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) {
+      this.PHList.push(value.trim());
+    }
+    if (input) {
+      input.value = '';
+    }
+    this.PHControl.setValue(null);
+  }
+
+  //CHIP REMOVE START
+  CL_Remove(listowner: string): void {
+    const index = this.CLList.indexOf(listowner);
+    if (index >= 0) {
+      this.CLList.splice(index, 1);
+    }
+  }
+  MT_Remove(listmanager: string): void {
+    const index = this.MTList.indexOf(listmanager);
+    if (index >= 0) {
+      this.MTList.splice(index, 1);
+    }
+  }
+  CA_Remove(recency: string): void {
+    const index = this.CAList.indexOf(recency);
+    if (index >= 0) {
+      this.CAList.splice(index, 1);
+    }
+  }
+  PH_Remove(client: string): void {
+    const index = this.PHList.indexOf(client);
+    if (index >= 0) {
+      this.PHList.splice(index, 1);
+    }
+  }
+
+  //CHIP DROPDOWN SELECTED START
+  CL_Selected(event: MatAutocompleteSelectedEvent): void {
+    if (!this.CLList.includes(this.getAcronym(event.option.viewValue)))
+      this.CLList.push(this.getAcronym(event.option.viewValue));
+    this.CLInput.nativeElement.value = '';
+    this.CLControl.setValue(null);
+    this.CLfilteredOptions = this.CLControl.valueChanges.pipe(
+      startWith(null),
+      map((client: string | null) => client ? this.CL_filter(client) : this.CLStrArr.slice())
+    );
+    this.CLInput.nativeElement.blur();
+  }
+  MT_Selected(event: MatAutocompleteSelectedEvent): void {
+    if (!this.MTList.includes(this.getAcronym(event.option.viewValue)))
+      this.MTList.push(this.getAcronym(event.option.viewValue));
+    this.MTInput.nativeElement.value = '';
+    this.MTControl.setValue(null);
+    this.MTfilteredOptions = this.MTControl.valueChanges.pipe(
+      startWith(null),
+      map((mailtype: string | null) => mailtype ? this.MT_filter(mailtype) : this.MTStrArr.slice())
+    );
+    this.MTInput.nativeElement.blur();
+  }
+  CA_Selected(event: MatAutocompleteSelectedEvent): void {
+    if (!this.CAList.includes(this.getAcronym(event.option.viewValue)))
+      this.CAList.push(this.getAcronym(event.option.viewValue));
+    this.CAInput.nativeElement.value = '';
+    this.CAControl.setValue(null);
+    this.CAfilteredOptions = this.CAControl.valueChanges.pipe(
+      startWith(null),
+      map((campaign: string | null) => campaign ? this.CA_filter(campaign) : this.CAStrArr.slice())
+    );
+    this.CAInput.nativeElement.blur();
+  }
+  PH_Selected(event: MatAutocompleteSelectedEvent): void {
+    if (!this.PHList.includes(this.getAcronym(event.option.viewValue)))
+      this.PHList.push(this.getAcronym(event.option.viewValue));
+    this.PHInput.nativeElement.value = '';
+    this.PHControl.setValue(null);
+    this.PHfilteredOptions = this.PHControl.valueChanges.pipe(
+      startWith(null),
+      map((phase: string | null) => phase ? this.PH_filter(phase) : this.PHStrArr.slice())
+    );
+    this.PHInput.nativeElement.blur();
+  }
+
+  // add(event: MatChipInputEvent): void {
+  //   const input = event.input;
+  //   const value = event.value;
+
+  //   // Add our client
+  //   if ((value || '').trim()) {
+  //     this.clients.push(value.trim().toUpperCase());
+  //   }
+
+  //   // Reset the input value
+  //   if (input) {
+  //     input.value = '';
+  //   }
+
+  //   this.clientControl.setValue(null);
+  // }
+
+  // remove(client: string): void {
+  //   const index = this.clients.indexOf(client);
+
+  //   if (index >= 0) {
+  //     this.clients.splice(index, 1);
+  //   }
+  // }
+
+
+  // selected(event: MatAutocompleteSelectedEvent): void {
+  //   if (!this.clients.includes(this.getAcronym(event.option.viewValue)))
+  //     this.clients.push(this.getAcronym(event.option.viewValue));
+  //   this.clientListInput.nativeElement.value = '';
+  //   this.clientControl.setValue(null);
+  //   this.filteredOptions = this.clientControl.valueChanges.pipe(
+  //     startWith(null),
+  //     map((client: string | null) => client ? this._filter(client) : this.ClientStrArr.slice())
+  //   );
+  //   this.clientListInput.nativeElement.blur();
+  // }
+
+
+
+  // private _filter(name: string): string[] {
+  //   if (name == null)
+  //     return null;
+  //   const filterValue = name.toLowerCase();
+  //   return this.ClientStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
+  // }
+
+  // ngOnInit() {
+
+  //   this.pageReady = false;
+  //   this.clients = [];
+  //   this.route.params.subscribe(params => {
+  //     if (!params['client'])
+  //     {
+  //       this.rootReturns = null;
+  //       this.pageReady = true;
+  //       this.startDate = new Date("1/1/" + (new Date()).getFullYear().toString());
+  //       this.endDate = new Date("12/31/" + (new Date()).getFullYear().toString());
+  //     }
+  //     else
+  //       this.LoadValues(params['client'], params['from'], params['to']);
+  //     if (params['client'])
+  //       this._authService.getReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
+  //         if (data) {
+  //           this.rootReturns = data;
+  //           this.rootReturns = this._g.SetLastElements(this.rootReturns);
+  //           this.rootReturns = this._g.ExpandAll(this.rootReturns);
+  //           this.pageReady = true;
+  //           var i = 0;
+  //           while (this.rootReturns[i]) {
+  //             this.CheckLevel(this.rootReturns[i], true);
+  //             i = i + 1;
+  //           }
+  //           var calculations = this._g.CalculateSummaries(this.rootReturns);
+  //           this.rootReturns = calculations.rootReturns;
+  //           this.grandTotal = calculations.grandTotal;
+  //         }
+  //       });
+
+  //     this._authService.getClientList("All")
+  //       .subscribe(data => {
+  //         this.ClientArr = data;
+  //         this.ClientStrArr = [];
+  //         this.ClientArr.forEach(p => { this.ClientStrArr.push(p.gClientName + ' - ' + p.gClientAcronym) });
+  //         this.filteredOptions = this.clientControl.valueChanges
+  //           .pipe(
+  //             startWith(''),
+  //             map(value => this._filter(value))
+  //           );
+  //         if (params['client'] && (this.clients.length != this.selectedClients.length)) {
+  //           this.clients = [];
+  //           this.selectedClients.forEach(p => this.clients.push(p));
+  //         }
+  //       });
+  //   });
+  // }
 
   ngOnInit() {
 
     this.pageReady = false;
-    this.clients = [];
+    this.CLList = [];
     this.route.params.subscribe(params => {
       if (!params['client'])
       {
@@ -143,7 +359,7 @@ export class ReturnsComponent {
         this.endDate = new Date("12/31/" + (new Date()).getFullYear().toString());
       }
       else
-        this.LoadValues(params['client'], params['from'], params['to']);
+        this.LoadValues(params['client'],  params['mailtype'],  params['campaign'],  params['phase'], params['startdate'], params['enddate']);
       if (params['client'])
         this._authService.getReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
           if (data) {
@@ -165,24 +381,30 @@ export class ReturnsComponent {
       this._authService.getClientList("All")
         .subscribe(data => {
           this.ClientArr = data;
-          this.ClientStrArr = [];
-          this.ClientArr.forEach(p => { this.ClientStrArr.push(p.gClientName + ' - ' + p.gClientAcronym) });
-          this.filteredOptions = this.clientControl.valueChanges
+          this.CLStrArr = [];
+          this.ClientArr.forEach(p => { this.CLStrArr.push(p.gClientName + ' - ' + p.gClientAcronym) });
+          this.CLfilteredOptions = this.CLControl.valueChanges
             .pipe(
               startWith(''),
-              map(value => this._filter(value))
+              map(value => this.CL_filter(value))
             );
-          if (params['client'] && (this.clients.length != this.selectedClients.length)) {
-            this.clients = [];
-            this.selectedClients.forEach(p => this.clients.push(p));
+          if (params['client'] && (this.CLList.length != this.selectedClients.length)) {
+            this.CLList = [];
+            this.selectedClients.forEach(p => this.CLList.push(p));
           }
         });
     });
   }
 
-  LoadValues(client: string, startDate: any, endDate: any) {
-    this.selectedClients = [];
-    client.split('.').forEach(p => this.selectedClients.push(p));
+  getAcronym(Name: string): string {
+    var retString: string;
+    retString = Name.substring(Name.lastIndexOf('-') + 1, Name.length).trim();
+    return retString;
+  }
+
+  LoadValues(client: string, mailtype: string, campaign: string, phase: string, startDate: any, endDate: any) {
+    // this.selectedClients = [];
+    client.split('.').forEach(p => this.CLList.push(p));
     this.startDate = new Date(Date.parse(startDate.split('.')[0].toString() + '/' + startDate.split('.')[1].toString() + '/' + startDate.split('.')[2].toString()));
     this.endDate = new Date(Date.parse(endDate.split('.')[0].toString() + '/' + endDate.split('.')[1].toString() + '/' + endDate.split('.')[2].toString()));
   }
@@ -650,11 +872,11 @@ export class ReturnsComponent {
 
   applyChanges() {
     var clientsStr = "";
-    if (this.clients.length > 1) {
-      this.clients.forEach(element => { clientsStr = element + "." + clientsStr; });
+    if (this.CLList.length > 1) {
+      this.CLList.forEach(element => { clientsStr = element + "." + clientsStr; });
       clientsStr = clientsStr.substring(0, clientsStr.length - 1);
     }
-    else clientsStr = this.clients[0];
+    else clientsStr = this.CLList[0];
     this.closeToolbox();
     this._g.clearCurCache = true;
     this.router.navigate(['/returns/' + clientsStr + '/'+ this.startDate.toLocaleDateString().split('/').join('.') + '/' + this.endDate.toLocaleDateString().split('/').join('.')]);

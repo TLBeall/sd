@@ -84,7 +84,7 @@ export class ReturnsComponent {
 
     // Add our client
     if ((value || '').trim()) {
-      this.clients.push(value.trim());
+      this.clients.push(value.trim().toUpperCase());
     }
 
     // Reset the input value
@@ -656,6 +656,7 @@ export class ReturnsComponent {
     }
     else clientsStr = this.clients[0];
     this.closeToolbox();
+    this._g.clearCurCache = true;
     this.router.navigate(['/returns/' + clientsStr + '/'+ this.startDate.toLocaleDateString().split('/').join('.') + '/' + this.endDate.toLocaleDateString().split('/').join('.')]);
   }
 

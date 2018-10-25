@@ -26,6 +26,8 @@ import { GlobalService } from './Services/global.service';
 import { FormsModule } from '@angular/forms';
 import { CustomReuseStrategy } from './Services/CustomReuseStrategy.service';
 import { ListPerformanceToolbarComponent } from './toolbar/list-performance-toolbar/list-performance-toolbar.component';
+import { ListGrossComponent } from './Returns/Subviews/list-gross/list-gross.component';
+import { PhaseGrossComponent } from './Returns/Subviews/phase-gross/phase-gross.component';
 
 
 @NgModule({
@@ -43,7 +45,9 @@ import { ListPerformanceToolbarComponent } from './toolbar/list-performance-tool
     MainReturnsToolbarComponent,
     HomePageInternalToolbarComponent,
     InternalHomeDashboardComponent,
-    ListPerformanceToolbarComponent
+    ListPerformanceToolbarComponent,
+    ListGrossComponent,
+    PhaseGrossComponent
   ],
   imports: [
     BrowserModule,

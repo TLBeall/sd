@@ -7,14 +7,17 @@ import { InternalHomePageComponent } from './internal-home-page/internal-home-pa
 import { ReturnsComponent } from './Returns/main-returns/main-returns.component';
 import { ListPerformanceComponent } from './returns/Subviews/list-performance/list-performance.component';
 import { CustomReuseStrategy } from './Services/CustomReuseStrategy.service';
+import { ListGrossComponent } from './Returns/Subviews/list-gross/list-gross.component';
 // import { ResolvelistperformanceComponent } from './Services/resolve-listperformance/resolve-listperformance.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/homepage', pathMatch: 'full'},  // this is how to set up the default page
   {path: 'homepage', component: InternalHomePageComponent },
-  {path: 'returns/:client/:from/:to', component: ReturnsComponent},
+  {path: 'returns/:client/:startdate/:enddate', component: ReturnsComponent},
   {path: 'returns', component: ReturnsComponent},
   {path: 'listperformance/:listowner/:listmanager/:recency/:startdate/:enddate', component: ListPerformanceComponent },
+  {path: 'listgross/:packagecode/:phasenumber/:mailcode', component: ListGrossComponent },
+
   // {path: 'listperformance', component: ListPerformanceComponent, resolve: {rowData: ResolvelistperformanceComponent} },
   {path: '**', component: PageNotFoundComponent} //Setup for if URL does not match
 ];
@@ -30,5 +33,5 @@ const routes: Routes = [
 })
 
 export class AppRoutingModule { }
-export const routingComponents = [InternalHomePageComponent, ReturnsComponent, PageNotFoundComponent];
+export const routingComponents = [InternalHomePageComponent, ReturnsComponent, ListPerformanceComponent, ListGrossComponent, PageNotFoundComponent];
 

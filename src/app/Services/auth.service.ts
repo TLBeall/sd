@@ -53,9 +53,9 @@ export class AuthService {
 
   // + ".SFLA.AFA.AIG"
 
-  getReturns(client: string, startDate: Date, endDate: Date):Observable<RootReturns> {
+  getReturns(clients: string, startDate: Date, endDate: Date):Observable<RootReturns> {
     var Token = "";
-    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/Returns?ClientAcronyms="+ client  + "&startdate=" + startDate.toDateString() + "&enddate=" + endDate.toDateString();
+    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/Returns?Clients="+ clients  + "&startdate=" + startDate.toDateString() + "&enddate=" + endDate.toDateString() + "&mailTypes=&campaigns=&phases=";
 
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
     return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
@@ -94,13 +94,13 @@ export class AuthService {
   }
 
 
-  getNewReturns(client: string, startDate: Date, endDate: Date):Observable<NewReturns[]> {
-    var Token = "";
-    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/PullReturns?ClientAcronym="+ client + "&startdate=" + startDate.toDateString() + "&enddate=" + endDate.toDateString();
+  // getNewReturns(client: string, startDate: Date, endDate: Date):Observable<NewReturns[]> {
+  //   var Token = "";
+  //   var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/PullReturns?ClientAcronym="+ client + "&startdate=" + startDate.toDateString() + "&enddate=" + endDate.toDateString();
 
-    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
-    return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
-  }
+  //   var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+  //   return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  // }
 
   getListPerformance(ListOwners: string, ListManagers: string, Segments: string, Clients:string, startDate: Date, endDate: Date):Observable<ListPerformance[]> {
     var Token = "";

@@ -1,95 +1,98 @@
-<app-toolbar></app-toolbar>
-<div class="row" [ngClass]="{
+<div *ngIf="this.pageReady == true">
+    <app-toolbar></app-toolbar>
+    <div class="row" [ngClass]="{
     'fullPage': this._g.cwWidth >= size_md
 }">
-    <div [ngClass]="{
+        <div [ngClass]="{
         'col-8': this._g.cwWidth >= size_md,
         'col-12': this._g.cwWidth < size_md
     }">
-        <mat-card>
-            <mat-tab-group (selectedTabChange)="GetArchived($event)" color="accent">
-                <mat-tab label="Active">
-                    <div class='dictionaryContent'>
-                        <ul class='dictionary'>
-                            <li *ngFor="let client of ClientArr" class="clientNameLI" >
-                                <!-- <a routerLink='/returns/{{client?.gClientAcronym}}/0101{{ currentYear }}/1231{{ currentYear }}'>{{ client?.gClientName }}</a> -->
-                            <button mat-button (click)="NavigateToReturns(client?.gClientAcronym, currentYear, currentYear)">{{client.gClientName}}</button>       
-                            </li>
-                        </ul>
-                    </div>
-                </mat-tab>
-                <mat-tab label="Active w/Archived">
-                    <div class='dictionaryContent'>
-                        <ul class='dictionary'>
+            <mat-card>
+                <mat-tab-group (selectedTabChange)="GetArchived($event)" color="accent">
+                    <mat-tab label="Active">
+                        <div class='dictionaryContent'>
+                            <ul class='dictionary'>
                                 <li *ngFor="let client of ClientArr" class="clientNameLI">
-                                        <!-- <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/01012000/1231{{ currentYear }}'>{{
-                                    client?.gClientName }}</a></li> -->
-                                    <button mat-button (click)="NavigateToReturns(client?.gClientAcronym, 2000, currentYear)">{{client.gClientName}}</button>   
+                                    <!-- <a routerLink='/returns/{{client?.gClientAcronym}}/0101{{ currentYear }}/1231{{ currentYear }}'>{{ client?.gClientName }}</a> -->
+                                    <button mat-button (click)="NavigateToReturns(client?.gClientAcronym, currentYear, currentYear)">{{client.gClientName}}</button>
                                 </li>
-                        </ul>
-                    </div>
-                </mat-tab>
-                <mat-tab label="Inactive">
-                    <div class='dictionaryContent'>
-                        <ul class='dictionary'>
-                            <p>Update with Inactive after migration</p>    
-                            <!-- <li *ngFor="let client of ClientArr" class="clientNameLI" (click)="NavigateToReturns(client?.gClientAcronym, 2000, currentYear)"> {{ client.gClientName }} </li> -->
-                        </ul>
-                    </div>
-                </mat-tab>
-                <mat-tab label="By Year">
-                    <ng-template mat-tab-label>
-                        <button mat-button [matMenuTriggerFor]="menu">By Year {{selectedYear }}
-                        </button>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="GetArchivedYear($event); setYear($event)">2016</button>
-                            <button mat-menu-item (click)="GetArchivedYear($event); setYear($event)">2017</button>
-                            <button mat-menu-item (click)="GetArchivedYear($event); setYear($event)">2018</button>
-                        </mat-menu>
-                    </ng-template>
-                    <div class='dictionaryContent'>
-                        <ul class='dictionary'>
-                                <li *ngFor="let client of ClientArr" class="clientNameLI" >
-                                    <button mat-button (click)="NavigateToReturns(client?.gClientAcronym, selectedYear, selectedYear)">{{ client.gClientName }}</button>
-                                </li>
-                                        <!-- <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/0101{{ selectedYear }}/1231{{ selectedYear }}'>{{
+                            </ul>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Active w/Archived">
+                        <div class='dictionaryContent'>
+                            <ul class='dictionary'>
+                                <li *ngFor="let client of ClientArr" class="clientNameLI">
+                                    <!-- <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/01012000/1231{{ currentYear }}'>{{
                                     client?.gClientName }}</a></li> -->
-                        </ul>
-                    </div>
-                </mat-tab>
-            </mat-tab-group>
-        </mat-card>
-    </div>
+                                    <button mat-button (click)="NavigateToReturns(client?.gClientAcronym, 2000, currentYear)">{{client.gClientName}}</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Inactive">
+                        <div class='dictionaryContent'>
+                            <ul class='dictionary'>
+                                <p>Update with Inactive after migration</p>
+                                <!-- <li *ngFor="let client of ClientArr" class="clientNameLI" (click)="NavigateToReturns(client?.gClientAcronym, 2000, currentYear)"> {{ client.gClientName }} </li> -->
+                            </ul>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="By Year">
+                        <ng-template mat-tab-label>
+                            <button mat-button [matMenuTriggerFor]="menu">By Year {{selectedYear }}
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="GetArchivedYear($event); setYear($event)">2016</button>
+                                <button mat-menu-item (click)="GetArchivedYear($event); setYear($event)">2017</button>
+                                <button mat-menu-item (click)="GetArchivedYear($event); setYear($event)">2018</button>
+                            </mat-menu>
+                        </ng-template>
+                        <div class='dictionaryContent'>
+                            <ul class='dictionary'>
+                                <li *ngFor="let client of ClientArr" class="clientNameLI">
+                                    <button mat-button (click)="NavigateToReturns(client?.gClientAcronym, selectedYear, selectedYear)">{{
+                                        client.gClientName }}</button>
+                                </li>
+                                <!-- <li *ngFor="let client of ClientArr" class="clientNameLI"><a routerLink='/returns/{{client?.gClientAcronym}}/0101{{ selectedYear }}/1231{{ selectedYear }}'>{{
+                                    client?.gClientName }}</a></li> -->
+                            </ul>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-card>
+        </div>
 
 
-    <!-- Dashboard in page form-->
-    <div *ngIf="this._g.cwWidth >=size_md" [ngClass]="{
+        <!-- Dashboard in page form-->
+        <div *ngIf="this._g.cwWidth >=size_md" [ngClass]="{
     'col-4': this._g.cwWidth >= size_md    
     }">
-        <app-internal-home-dashboard></app-internal-home-dashboard>
-    </div>
+            <app-internal-home-dashboard></app-internal-home-dashboard>
+        </div>
 
 
 
-    <!-- Dashboard in toolbox form-->
-    <ng-container *ngIf="this._g.cwWidth < size_md">
-        <button title="Tools" (click)="toggle(1)" id="toolboxBtn" class="btn toolboxButtonCollection" [ngClass]="{
+        <!-- Dashboard in toolbox form-->
+        <ng-container *ngIf="this._g.cwWidth < size_md">
+            <button title="Tools" (click)="toggle(1)" id="toolboxBtn" class="btn toolboxButtonCollection" [ngClass]="{
             'btnShifted': toolsOpened,
             'hidden': hide
           }">
-                    <i class="material-icons" [ngClass]="toolsOpened ? 'mi_arrow_forward_ios' : 'mi_assessment'"></i>
-                </button>
-                <div class="toolbox" [ngClass]="{
+                <i class="material-icons" [ngClass]="toolsOpened ? 'mi_arrow_forward_ios' : 'mi_assessment'"></i>
+            </button>
+            <div class="toolbox" [ngClass]="{
             'shifted': toolsOpened
           }">
-                    <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
-                    <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
-                        <figure style="width: 100%;">
-                            <img src="http://www.batikcompusoft.com/img/underconstruction.gif" width="100%">
-                            <figcaption style="text-align: center;">Under Construction</figcaption>
-                        </figure>
-                    </div>
+                <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
+                <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
+                    <figure style="width: 100%;">
+                        <img src="http://www.batikcompusoft.com/img/underconstruction.gif" width="100%">
+                        <figcaption style="text-align: center;">Under Construction</figcaption>
+                    </figure>
                 </div>
-    </ng-container>
+            </div>
+        </ng-container>
 
+    </div>
 </div>

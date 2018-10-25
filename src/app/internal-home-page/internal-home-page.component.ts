@@ -29,6 +29,7 @@ export class InternalHomePageComponent implements OnInit {
     public size_md = this._g.size_md;
     public size_sm = this._g.size_sm;
     public size_xs = this._g.size_xs;
+    public pageReady: boolean = false;
 
     constructor(private _authService: AuthService, private _g: GlobalService, private router:Router) {
         this.currentYear = (new Date()).getFullYear();
@@ -40,6 +41,7 @@ export class InternalHomePageComponent implements OnInit {
                 this.ClientArr = data;
                 this._g.clientArr = data;
                 this.selectedYear = new Date().getFullYear().toString();
+                this.pageReady = true;
             });
         }
 

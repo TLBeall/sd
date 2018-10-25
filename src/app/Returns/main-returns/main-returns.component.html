@@ -1133,7 +1133,7 @@
             </th>
             <td mat-cell *matCellDef="let mailList">
                 <span class="ListDescription">
-                    <a (click)="NavigateToListGross(null, null, mailList.MailCode)">{{mailList.Measure.Gross|currency:'USD':'symbol':'1.0-0'}}</a>
+                    <a (click)="NavigateToListGross(phase.PhaseName, null, mailList.MailCode)">{{mailList.Measure.Gross|currency:'USD':'symbol':'1.0-0'}}</a>
             </span>
             </td>
             <td mat-footer-cell *matFooterCellDef [ngClass]="{

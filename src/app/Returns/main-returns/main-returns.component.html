@@ -1005,7 +1005,7 @@
                 <ng-container *ngIf="element.ListOwner == 0; then house; else prospect">
                 </ng-container>
                 <ng-template #prospect>
-                    <span class="prospectListDescription">
+                    <span class="ListDescription">
                         <a title="{{ element.ListOwnerName }}" (click)="NavigateToListPerformance(element.ListOwnerAbr,null,null, startDate, endDate)">
                             {{element.ListOwnerAbr}}</a>
                         <span> / </span>
@@ -1131,12 +1131,16 @@
         <ng-container matColumnDef="Gross">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Gross
             </th>
-            <td mat-cell *matCellDef="let element"> {{element.Measure.Gross|currency:'USD':'symbol':'1.0-0'}} </td>
+            <td mat-cell *matCellDef="let element">
+                <span class="ListDescription">
+                    <a (click)="NavigateToListGross(element.PackageCode, element.Name, element.MailCode)">{{element.Measure.Gross|currency:'USD':'symbol':'1.0-0'}}</a>
+            </span>
+            </td>
             <td mat-footer-cell *matFooterCellDef [ngClass]="{
                                  'listElementDefault': element.Measure.IsLast == false,
                                  'elementLast': element.Measure.IsLast == true
                              }">
-                {{element.Measure.Gross|currency:'USD':'symbol':'1.0-0'}} </td>
+                             {{element.Measure.Gross|currency:'USD':'symbol':'1.0-0'}} </td>
         </ng-container>
         <ng-container matColumnDef="Net">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Net
@@ -1319,7 +1323,7 @@
                 <mat-chip *ngFor="let client of CLList"
                  [selectable]="selectable" 
                  [removable]="removable" 
-                 (removed)="CL_remove(client)">
+                 (removed)="CL_Remove(client)">
                     {{client}}
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
@@ -1329,81 +1333,81 @@
                 [matChipInputFor]="chipList" 
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 [matChipInputAddOnBlur]="addOnBlur" 
-                (matChipInputTokenEnd)="CL_add($event)">
+                (matChipInputTokenEnd)="CL_Add($event)">
             </mat-chip-list>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="CL_selected($event)">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="CL_Selected($event)">
                 <mat-option class="md-custom-option" *ngFor="let client of CLfilteredOptions | async" [value]="client">{{client}}</mat-option>
             </mat-autocomplete>
         </mat-form-field>
 
         <!-- Mail Type - MT -->
-        <!-- <mat-form-field class="tbElement">
+        <mat-form-field class="tbElement">
             <mat-chip-list #chipList>
-                <mat-chip *ngFor="let client of clients"
+                <mat-chip *ngFor="let mailtype of MTList"
                  [selectable]="selectable" 
                  [removable]="removable" 
-                 (removed)="remove(client)">
-                    {{client}}
+                 (removed)="MT_Remove(mailtype)">
+                    {{mailtype}}
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
-                <input placeholder="Client..." #MTInput 
-                [formControl]="clientControl" 
+                <input placeholder="Mail Type..." #MTInput 
+                [formControl]="MTControl" 
                 [matAutocomplete]="auto"
                 [matChipInputFor]="chipList" 
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 [matChipInputAddOnBlur]="addOnBlur" 
-                (matChipInputTokenEnd)="add($event)">
+                (matChipInputTokenEnd)="MT_Add($event)">
             </mat-chip-list>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                <mat-option class="md-custom-option" *ngFor="let client of filteredOptions | async" [value]="client">{{client}}</mat-option>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="MT_Selected($event)">
+                <mat-option class="md-custom-option" *ngFor="let mailtype of MTfilteredOptions | async" [value]="mailtype">{{mailtype}}</mat-option>
             </mat-autocomplete>
-        </mat-form-field> -->
+        </mat-form-field>
         
         <!-- Campaign - CA -->
-        <!-- <mat-form-field class="tbElement">
+        <mat-form-field class="tbElement">
             <mat-chip-list #chipList>
-                <mat-chip *ngFor="let client of clients"
+                <mat-chip *ngFor="let campaign of CAList"
                 [selectable]="selectable" 
                 [removable]="removable" 
-                (removed)="remove(client)">
-                    {{client}}
+                (removed)="CA_Remove(campaign)">
+                    {{campaign}}
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
-                <input placeholder="Client..." #CAInput 
-                [formControl]="clientControl" 
+                <input placeholder="Campaign..." #CAInput 
+                [formControl]="CAControl" 
                 [matAutocomplete]="auto"
                 [matChipInputFor]="chipList" 
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 [matChipInputAddOnBlur]="addOnBlur" 
-                (matChipInputTokenEnd)="add($event)">
+                (matChipInputTokenEnd)="CA_Add($event)">
             </mat-chip-list>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                <mat-option class="md-custom-option" *ngFor="let client of filteredOptions | async" [value]="client">{{client}}</mat-option>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="CA_Selected($event)">
+                <mat-option class="md-custom-option" *ngFor="let campaign of CAfilteredOptions | async" [value]="campaign">{{campaign}}</mat-option>
             </mat-autocomplete>
-        </mat-form-field> -->
+        </mat-form-field>
 
         <!-- Phase - PH -->
-        <!-- <mat-form-field class="tbElement">
+        <mat-form-field class="tbElement">
             <mat-chip-list #chipList>
-                <mat-chip *ngFor="let client of clients"
+                <mat-chip *ngFor="let phase of PHList"
                  [selectable]="selectable" 
                  [removable]="removable" 
-                 (removed)="remove(client)">
-                    {{client}}
+                 (removed)="PH_Remove(phase)">
+                    {{phase}}
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
-                <input placeholder="Client..." #PHInput 
-                [formControl]="clientControl" 
+                <input placeholder="Phase..." #PHInput 
+                [formControl]="PHControl" 
                 [matAutocomplete]="auto"
                 [matChipInputFor]="chipList" 
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 [matChipInputAddOnBlur]="addOnBlur" 
-                (matChipInputTokenEnd)="add($event)">
+                (matChipInputTokenEnd)="PH_Add($event)">
             </mat-chip-list>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                <mat-option class="md-custom-option" *ngFor="let client of filteredOptions | async" [value]="client">{{client}}</mat-option>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="PH_Selected($event)">
+                <mat-option class="md-custom-option" *ngFor="let phase of PHfilteredOptions | async" [value]="phase">{{phase}}</mat-option>
             </mat-autocomplete>
-        </mat-form-field> -->
+        </mat-form-field>
 
 <!-- 
         <mat-form-field class="tbElement">
@@ -1468,7 +1472,6 @@
         </div>
     </div>
 </div>
-
 
 <!--<><><> L2 Toolbox <><><>-->
 <button title="Donor Demographics" (click)="toggle(2)" id="demoToolboxBtn" class="btn toolboxButtonCollection"

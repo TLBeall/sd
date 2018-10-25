@@ -13,6 +13,7 @@ import { ListOwner } from '../Models/ListOwner.model';
 import { ListManager } from '../Models/ListManager.model';
 import { Segment } from '../Models/Segment.model';
 import { PerformanceHierarchy } from '../Models/PerformanceHierarchy.model';
+import { ListGross } from '../Models/ListGross.model';
 // import { LoaderService } from '../loader/loader.service';
 
 @Injectable()
@@ -111,6 +112,14 @@ export class AuthService {
 
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
     return this.http.get(ListPerformanceAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  }
+
+  getListGross(PackageCode: string, PhaseNumber: string, MailCode: string):Observable<ListGross[]> {
+    var Token = "";
+    var GetListGross = "https://sd360.sunrisedataservices.com/api/getListGross?PackageCode="+ PackageCode + "&PhaseNumber=" + PhaseNumber + "&MailCode=" + MailCode;
+
+    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(GetListGross, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 }
 

@@ -1,0 +1,10 @@
+<div *ngIf="this.pageReady == false" class="loading-indicator">
+</div>
+
+<div *ngIf="this.pageReady == true">
+  <app-toolbar></app-toolbar>
+  <ul>
+    <li *ngFor="let date of Date">{{date}}</li>
+  </ul>
+</div>
+<p>Test</p>

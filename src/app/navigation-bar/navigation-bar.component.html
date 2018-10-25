@@ -1,5 +1,5 @@
 <nav class="topnav navbar navbar-expand-lg fixed-top">
-  <a id="logoNavAnchor" routerLink="homepage"><span id="spanSD"><b>SD</b></span><span id="span360"><b>360</b></span></a>
+  <a id="logoNavAnchor" (click)="NavigateToHome()"><span id="spanSD"><b>SD</b></span><span id="span360"><b>360</b></span></a>
   <button class="navbar-toggler active" id="navBarToggleBtn" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <i class="material-icons mi_drag_handle"></i>
   </button>
@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarContent" >
     <ul class="navbar-nav mr-auto">
       <li class="nav-item mainNavItem">
-        <button  class="btn navbarBtn" (click)="NavigateToHome()">Reporting</button>
+        <button  class="btn navbarBtn" (click)="NavigateToReturns()">Reporting</button>
         <!-- routerLink="returns" -->
         <!-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
       </li>

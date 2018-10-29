@@ -1,0 +1,73 @@
+@import '~src/appTheme.scss'; 
+
+#table1{
+    width: 96%;
+    margin: 0 auto;
+    th{
+        font-size: 12px !important;
+    }
+    td{
+        font-size: 11px;
+        &.mat-footer-cell{
+            font-weight: bold;
+            border-bottom:none;
+            border-top: 1px solid $color-gainsboro;
+            
+          }
+    }
+}
+
+.totalColumn{
+    font-weight: bold;
+}
+
+.mat-row {
+    height: auto;
+  }
+  .mat-cell {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-bottom:none;
+    text-align: center;
+  }      
+.mat-header-cell{
+    text-align: center;
+}
+
+.mat-footer-cell{
+    text-align: center;
+    padding-top: 6px;
+}
+tr.mat-header-row{
+    height:auto;
+  }
+  th.mat-header-cell{
+    padding:0;
+  }
+  tr.mat-footer-row{
+    height:auto; //row height in mat tables is required to be manually controlled by each cell    
+}
+
+
+
+.dateColumn{
+    text-align: left;
+}
+
+  //Controls hover and selected for the rows
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: #e3eff7;
+    td{
+      .returnsExpCollBtn{
+        background-color:$color-whitesmoke !important;
+      }
+    }
+  }
+  tr.example-element-row:not(.example-expanded-row):active {
+    background: #e3eff7;
+    td{
+      .returnsExpCollBtn{
+        background-color:$color-whitesmoke !important;
+      }
+    }
+  }

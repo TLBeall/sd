@@ -379,6 +379,7 @@ export class ReturnsComponent {
 
     this.pageReady = false;
     this.CLList = [];
+
     this.route.params.subscribe(params => {
       if (!params['client']) {
         this.rootReturns = null;
@@ -388,7 +389,7 @@ export class ReturnsComponent {
       }
       else
         this.LoadValues(params['client'], params['mailtype'], params['campaign'], params['phase'], params['startdate'], params['enddate']);
-      if (params['client']) {
+
         this._authService.getClientsFilter(this.startDate, this.endDate).subscribe(data => {
           this.CLStrArr = Array.from(new Set(data.map(item => item.gClientName + ' - ' + item.gClientAcronym))).sort();
           this.CLfilteredOptions =  this.CLControl.valueChanges.pipe(
@@ -396,7 +397,8 @@ export class ReturnsComponent {
             map((client: string | null) => client ? this.CL_filter(client) : this.CLStrArr.slice())
           );
         });
-
+                
+      if (params['client']) {
         this._authService.getMailTypeFilter(params['client'], this.startDate, this.endDate).subscribe(data => {
           this.MTStrArr = Array.from(new Set(data.map(item => item))).sort();
           this.MTStrArr.forEach(p => this.MTList.push(p));          

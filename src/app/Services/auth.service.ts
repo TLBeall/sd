@@ -168,7 +168,7 @@ export class AuthService {
     return this.http.get(GetListGross, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 
-  getPhaseGross(PackageCode: string, PhaseNumber: string):Observable<PhaseGross[]> {
+  getPhaseGross(PackageCode: string, PhaseNumber: string):Observable<any> {
     var Token = "";
     var GetPhaseGross = "https://sd360.sunrisedataservices.com/api/getpackagegross?PackageCode="+ PackageCode + "&PhaseNumber=" + PhaseNumber;
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});

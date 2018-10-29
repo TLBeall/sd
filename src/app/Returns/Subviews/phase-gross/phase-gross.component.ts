@@ -14,11 +14,18 @@ export class PhaseGrossComponent implements OnInit {
   private pageReady: boolean = false;
   private PackageCode: string;
   private PhaseNumber: string;
-  private PhaseGrossArr: PhaseGross[];
+  private PhaseGrossArr: PhaseGross;
+
+  displayedColumns: string[] = ['Date', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
+
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private _g: GlobalService) {
     this.route = route;
    }
+
+   getTotalValue(measure: string) {
+    return this.PhaseGrossArr.dateGrossList.map(t => t[measure]).reduce((acc, value) => acc + value, 0);
+  }   
 
   ngOnInit() {
     this.route.params.subscribe(params => {

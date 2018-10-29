@@ -206,7 +206,36 @@ export class ReturnsComponent {
   //CHIP DROPDOWN SELECTED START
   CL_Selected(event: MatAutocompleteSelectedEvent): void {
     if (!this.CLList.includes(this.getAcronym(event.option.viewValue)))
+    {
       this.CLList.push(this.getAcronym(event.option.viewValue));
+      this._authService.getMailTypeFilter(this.getAcronym(event.option.viewValue), this.startDate, this.endDate).subscribe(data => {
+        this.MTStrArr = Array.from(new Set(data.map(item => item))).sort();
+        this.MTStrArr.forEach(p => this.MTList.push(p));          
+        this.MTfilteredOptions =  this.MTControl.valueChanges.pipe(
+          startWith(null),
+          map((mailType: string | null) => mailType ? this.MT_filter(mailType) : this.MTStrArr.slice())
+        );
+      });
+
+      this._authService.getCampaignFilterByClients(this.getAcronym(event.option.viewValue), this.startDate, this.endDate).subscribe(data => {
+        this.CAStrArr = Array.from(new Set(data.map(item => item))).sort();
+        this.CAStrArr.forEach(p => this.CAList.push(p));          
+        this.CAfilteredOptions =  this.CAControl.valueChanges.pipe(
+          startWith(null),
+          map((campaign: string | null) => campaign ? this.MT_filter(campaign) : this.CAStrArr.slice())
+        );
+      });     
+      
+      this._authService.getPhaseFilterByClients(this.getAcronym(event.option.viewValue), this.startDate, this.endDate).subscribe(data => {
+        this.PHStrArr = Array.from(new Set(data.map(item => item))).sort();
+        this.PHStrArr.forEach(p => this.PHList.push(p));            
+        this.PHfilteredOptions =  this.PHControl.valueChanges.pipe(
+          startWith(null),
+          map((phase: string | null) => phase ? this.MT_filter(phase) : this.PHStrArr.slice())
+        );
+      });         
+
+    }
     this.CLInput.nativeElement.value = '';
     this.CLControl.setValue(null);
     this.CLfilteredOptions = this.CLControl.valueChanges.pipe(
@@ -351,16 +380,50 @@ export class ReturnsComponent {
     this.pageReady = false;
     this.CLList = [];
     this.route.params.subscribe(params => {
-      if (!params['client'])
-      {
+      if (!params['client']) {
         this.rootReturns = null;
         this.pageReady = true;
         this.startDate = new Date("1/1/" + (new Date()).getFullYear().toString());
         this.endDate = new Date("12/31/" + (new Date()).getFullYear().toString());
       }
       else
-        this.LoadValues(params['client'],  params['mailtype'],  params['campaign'],  params['phase'], params['startdate'], params['enddate']);
-      if (params['client'])
+        this.LoadValues(params['client'], params['mailtype'], params['campaign'], params['phase'], params['startdate'], params['enddate']);
+      if (params['client']) {
+        this._authService.getClientsFilter(this.startDate, this.endDate).subscribe(data => {
+          this.CLStrArr = Array.from(new Set(data.map(item => item.gClientName + ' - ' + item.gClientAcronym))).sort();
+          this.CLfilteredOptions =  this.CLControl.valueChanges.pipe(
+            startWith(null),
+            map((client: string | null) => client ? this.CL_filter(client) : this.CLStrArr.slice())
+          );
+        });
+
+        this._authService.getMailTypeFilter(params['client'], this.startDate, this.endDate).subscribe(data => {
+          this.MTStrArr = Array.from(new Set(data.map(item => item))).sort();
+          this.MTStrArr.forEach(p => this.MTList.push(p));          
+          this.MTfilteredOptions =  this.MTControl.valueChanges.pipe(
+            startWith(null),
+            map((mailType: string | null) => mailType ? this.MT_filter(mailType) : this.MTStrArr.slice())
+          );
+        });
+
+        this._authService.getCampaignFilterByClients(params['client'], this.startDate, this.endDate).subscribe(data => {
+          this.CAStrArr = Array.from(new Set(data.map(item => item))).sort();
+          this.CAStrArr.forEach(p => this.CAList.push(p));          
+          this.CAfilteredOptions =  this.CAControl.valueChanges.pipe(
+            startWith(null),
+            map((campaign: string | null) => campaign ? this.MT_filter(campaign) : this.CAStrArr.slice())
+          );
+        });     
+        
+        this._authService.getPhaseFilterByClients(params['client'], this.startDate, this.endDate).subscribe(data => {
+          this.PHStrArr = Array.from(new Set(data.map(item => item))).sort();
+          this.PHStrArr.forEach(p => this.PHList.push(p));            
+          this.PHfilteredOptions =  this.PHControl.valueChanges.pipe(
+            startWith(null),
+            map((phase: string | null) => phase ? this.MT_filter(phase) : this.PHStrArr.slice())
+          );
+        });         
+        
         this._authService.getReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
           if (data) {
             this.rootReturns = data;
@@ -374,25 +437,26 @@ export class ReturnsComponent {
             }
             var calculations = this._g.CalculateSummaries(this.rootReturns);
             this.rootReturns = calculations.rootReturns;
-            this.grandTotal = calculations.grandTotal;
+            this.grandTotal = calculations.grandTotal;    
           }
         });
+      }
 
-      this._authService.getClientList("All")
-        .subscribe(data => {
-          this.ClientArr = data;
-          this.CLStrArr = [];
-          this.ClientArr.forEach(p => { this.CLStrArr.push(p.gClientName + ' - ' + p.gClientAcronym) });
-          this.CLfilteredOptions = this.CLControl.valueChanges
-            .pipe(
-              startWith(''),
-              map(value => this.CL_filter(value))
-            );
-          if (params['client'] && (this.CLList.length != this.selectedClients.length)) {
-            this.CLList = [];
-            this.selectedClients.forEach(p => this.CLList.push(p));
-          }
-        });
+      // this._authService.getClientList("All")
+      //   .subscribe(data => {
+      //     this.ClientArr = data;
+      //     this.CLStrArr = [];
+      //     this.ClientArr.forEach(p => { this.CLStrArr.push(p.gClientName + ' - ' + p.gClientAcronym) });
+      //     this.CLfilteredOptions = this.CLControl.valueChanges
+      //       .pipe(
+      //         startWith(''),
+      //         map(value => this.CL_filter(value))
+      //       );
+      //     if (params['client'] && (this.CLList.length != this.selectedClients.length)) {
+      //       this.CLList = [];
+      //       this.selectedClients.forEach(p => this.CLList.push(p));
+      //     }
+      //   });
     });
   }
 
@@ -891,7 +955,7 @@ export class ReturnsComponent {
     else clientsStr = this.CLList[0];
     this.closeToolbox();
     this._g.clearCurCache = true;
-    this.router.navigate(['/returns/' + clientsStr + '/'+ this.startDate.toLocaleDateString().split('/').join('.') + '/' + this.endDate.toLocaleDateString().split('/').join('.')]);
+    this.router.navigate(['/returns/' + clientsStr + '/' + this.startDate.toLocaleDateString().split('/').join('.') + '/' + this.endDate.toLocaleDateString().split('/').join('.')]);
   }
 
   validateDate(): boolean {

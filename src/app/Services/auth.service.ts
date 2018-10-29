@@ -51,15 +51,69 @@ export class AuthService {
     return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 
-  // + ".SFLA.AFA.AIG"
-
   getReturns(clients: string, startDate: Date, endDate: Date):Observable<RootReturns> {
     var Token = "";
-    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/Returns?Clients="+ clients  + "&startdate=" + startDate.toDateString() + "&enddate=" + endDate.toDateString() + "&mailTypes=&campaigns=&phases=";
+    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/Returns?Clients="+ clients  + "&startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&mailTypes=&campaigns=&phases=";
 
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
     return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
+
+  getClientsFilter(startDate: Date, endDate: Date):Observable<ClientList[]> { // all clients within a date range
+    var Token = "";
+    var GetClientFilterAPI = "https://sd360.sunrisedataservices.com/api/GetClientFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString();
+
+    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(GetClientFilterAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  }
+
+  getMailTypeFilter(clients:string, startDate: Date, endDate: Date):Observable<string[]> { // all mailtypes for the provided list of clients within date range
+    var Token = "";
+    var GetMailTypeFilterAPI = "https://sd360.sunrisedataservices.com/api/GetMailTypeFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&clients=" + clients;
+
+    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(GetMailTypeFilterAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  }
+
+  getCampaignFilterByClients(clients:string, startDate: Date, endDate: Date):Observable<string[]> {
+    var Token = "";
+    var GetCampaignFilterAPI = "https://sd360.sunrisedataservices.com/api/GetCampaignFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&clients=" + clients;
+
+    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(GetCampaignFilterAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  }  
+
+  getCampaignFilterByMailType(client:string, mailType:string, startDate: Date, endDate: Date):Observable<string[]> {
+    var Token = "";
+    var GetCampaignFilterAPI = "https://sd360.sunrisedataservices.com/api/GetCampaignFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&client=" + client + "&mailtype =" + mailType;
+
+    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(GetCampaignFilterAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  }  
+
+  getPhaseFilterByClients(clients:string, startDate: Date, endDate: Date):Observable<string[]> {
+    var Token = "";
+    var GetPhaseFilterAPI = "https://sd360.sunrisedataservices.com/api/GetPhaseFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&clients=" + clients;
+
+    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(GetPhaseFilterAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  }   
+
+  getPhaseFilterByMailType(client:string, mailType:string, startDate: Date, endDate: Date):Observable<string[]> {
+    var Token = "";
+    var GetPhaseFilterAPI = "https://sd360.sunrisedataservices.com/api/GetPhaseFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&client=" + client + "&mailtype=" + mailType;
+
+    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(GetPhaseFilterAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  }   
+
+  getPhaseFilterByCampaign(client:string, campaign:string, startDate: Date, endDate: Date):Observable<string[]> {
+    var Token = "";
+    var GetPhaseFilterAPI = "https://sd360.sunrisedataservices.com/api/GetPhaseFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&client=" + client + "&mailtype=&campaign=" + campaign;
+
+    var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(GetPhaseFilterAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
+  }   
 
   getPerformanceHierarchy():Observable<PerformanceHierarchy[]> {
     var Token = "";
@@ -92,15 +146,6 @@ export class AuthService {
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
     return this.http.get(GetSegAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
-
-
-  // getNewReturns(client: string, startDate: Date, endDate: Date):Observable<NewReturns[]> {
-  //   var Token = "";
-  //   var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/PullReturns?ClientAcronym="+ client + "&startdate=" + startDate.toDateString() + "&enddate=" + endDate.toDateString();
-
-  //   var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
-  //   return this.http.get(GetReturnsAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
-  // }
 
   getListPerformance(ListOwners: string, ListManagers: string, Segments: string, Clients:string, startDate: Date, endDate: Date):Observable<ListPerformance[]> {
     var Token = "";

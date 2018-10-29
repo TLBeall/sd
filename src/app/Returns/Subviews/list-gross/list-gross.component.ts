@@ -3,6 +3,7 @@ import { AuthService } from '../../../Services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalService } from 'src/app/Services/global.service';
 import { ListGross } from 'src/app/Models/ListGross.model';
+import { summaryFileName } from '@angular/compiler/src/aot/util';
 
 
 @Component({
@@ -16,50 +17,29 @@ export class ListGrossComponent implements OnInit {
   private PackageCode: string;
   private PhaseNumber: string;
   private MailCode: string;
-  private GrossListArr: ListGross[];
+  public ListGrossArr: ListGross[];
 
-  private Date: Date;
+  displayedColumns: string[] = ['Date', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private _g: GlobalService) {
     this.route = route;
+    
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.LoadValues(params['packagecode'], params['phasenumber'], params['mailcode']);             
 
-      // this._authService.getPerformanceHierarchy().subscribe(data => {
-      //   data = data.sort((n1,n2) => n1.SegmentSort > n2.SegmentSort ? 1:n2.SegmentSort > n1.SegmentSort ? -1:0);
-      //   this.LMStrArr = Array.from(new Set(data.map(item =>  item.ListManagerName + ' - '+ item.ListManagerAbbrev))).sort();
-      //   this.LOStrArr = Array.from(new Set(data.map(item =>  item.ListName + ' - '+ item.ListAbbrev))).sort();
-      //   // this.LOInput.nativeElement.blur();
-      //   this.RecStrArr = Array.from(new Set(data.map(item =>  item.SegmentName )));
-      //   this.ClStrArr = Array.from(new Set(data.map(item =>  item.ClientName + ' - '+ item.ClientAbbrev))).sort();
-      //   this.LOfilteredOptions = this.LOControl.valueChanges.pipe(
-      //     startWith(null),
-      //     map((listowner: string | null) => listowner ? this.LO_filter(listowner) : this.LOStrArr.slice())
-      //   ); 
-      //   this.LMfilteredOptions = this.LMControl.valueChanges.pipe(
-      //     startWith(null),
-      //     map((listmanager: string | null) => listmanager ? this.LM_filter(listmanager) : this.LMStrArr.slice())
-      //   ); 
-      //   this.RecfilteredOptions = this.RecControl.valueChanges.pipe(
-      //     startWith(null),
-      //     map((recency: string | null) => recency ? this.Rec_filter(recency) : this.RecStrArr.slice())
-      //   ); 
-      //   this.ClfilteredOptions = this.ClControl.valueChanges.pipe(
-      //     startWith(null),
-      //     map((client: string | null) => client ? this.Cl_filter(client) : this.ClStrArr.slice())
-      //   );                                
-      // });
-
       this._authService.getListGross(this.PackageCode, this.PhaseNumber, this.MailCode)
       .subscribe(data => {
-        this.GrossListArr = data;
-        // this.ListPerformanceArr.forEach(p => { p.Measure.Expanded = false; p.Measure["Selected"] = true; });
+        var temp = this.sortByStartDate(data);
+        this.ListGrossArr = temp;
+
         this.pageReady = true;
       });    
    });
+
+   
   }
 
 
@@ -70,5 +50,18 @@ export class ListGrossComponent implements OnInit {
     this.MailCode = mailcode;
   }
 
+  getTotalValue(measure: string) {
+    return this.ListGrossArr.map(t => t[measure]).reduce((acc, value) => acc + value, 0);
+  }
+
+  private getTime(date?: Date) {
+    return date != null ? new Date(date).getTime() : 0;
+  }
+
+  public sortByStartDate(data: ListGross[]): ListGross[] {
+    return data.sort((a: ListGross, b: ListGross) => {
+      return this.getTime(b.Date) - this.getTime(a.Date);
+    });
+  }
 
 }

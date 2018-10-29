@@ -8,6 +8,7 @@ import { ReturnsComponent } from './Returns/main-returns/main-returns.component'
 import { ListPerformanceComponent } from './returns/Subviews/list-performance/list-performance.component';
 import { CustomReuseStrategy } from './Services/CustomReuseStrategy.service';
 import { ListGrossComponent } from './Returns/Subviews/list-gross/list-gross.component';
+import { PhaseGrossComponent } from './Returns/Subviews/phase-gross/phase-gross.component';
 // import { ResolvelistperformanceComponent } from './Services/resolve-listperformance/resolve-listperformance.component';
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'returns', component: ReturnsComponent},
   {path: 'listperformance/:listowner/:listmanager/:recency/:startdate/:enddate', component: ListPerformanceComponent },
   {path: 'listgross/:packagecode/:phasenumber/:mailcode', component: ListGrossComponent },
+  {path: 'phasegross/:packagecode/:phasenumber', component: PhaseGrossComponent },
 
   // {path: 'listperformance', component: ListPerformanceComponent, resolve: {rowData: ResolvelistperformanceComponent} },
   {path: '**', component: PageNotFoundComponent} //Setup for if URL does not match
@@ -33,5 +35,7 @@ const routes: Routes = [
 })
 
 export class AppRoutingModule { }
-export const routingComponents = [InternalHomePageComponent, ReturnsComponent, ListPerformanceComponent, ListGrossComponent, PageNotFoundComponent];
+export const routingComponents = [InternalHomePageComponent, ReturnsComponent, 
+  ListPerformanceComponent, ListGrossComponent, PhaseGrossComponent,
+  PageNotFoundComponent];
 

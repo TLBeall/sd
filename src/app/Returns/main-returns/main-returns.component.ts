@@ -486,16 +486,18 @@ export class ReturnsComponent {
     this.router.navigate(['listperformance' + '/' + ListOwner + '/' + ListManager + '/' + Recency + '/' + startDate.toLocaleDateString().split('/').join('.') + '/' + endDate.toLocaleDateString().split('/').join('.')]);
   }
 
-  NavigateToListGross(PackageCode: string, Name: string, MailCode: string) {
+  NavigateToListGross(PackageCode: string, Phase: string, MailCode: string) {
     this._g.clearCurCache = true;
-    // if (!ListOwner) ListOwner = '_';
-    // if (!ListManager) ListManager = '_';
-    // if (!Recency) {
-    //   Recency = '_';
-    //   if ((ListManager != 'NOVA') && (ListManager != '_'))
-    //     ListOwner = '_';
-    // }
-    this.router.navigate(['listgross' + '/' + PackageCode + '/' + Name + '/' + MailCode]);
+    var phaseInput = Phase.match(/\d/g);
+    var PhaseNumber = phaseInput.join("");
+    this.router.navigate(['listgross' + '/' + PackageCode + '/' + PhaseNumber + '/' + MailCode]);
+  }
+
+  NavigateToPhaseGross(PackageCode: string, Phase: string){
+    this._g.clearCurCache = true;
+    var phaseInput = Phase.match(/\d/g);
+    var PhaseNumber = phaseInput.join("");
+    this.router.navigate(['phasegross' + '/' + PackageCode + '/' + PhaseNumber]);
   }
 
   GetVisibilityStyle(state: boolean): string {

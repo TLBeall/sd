@@ -1005,7 +1005,7 @@
                 <ng-container *ngIf="mailList.ListOwner == 0; then house; else prospect">
                 </ng-container>
                 <ng-template #prospect>
-                    <span class="ListDescription">
+                    <span class="LinkUnderline">
                         <a title="{{ mailList.ListOwnerName }}" (click)="NavigateToListPerformance(mailList.ListOwnerAbr,null,null, startDate, endDate)">
                             {{mailList.ListOwnerAbr}}</a>
                         <span> / </span>
@@ -1132,15 +1132,15 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Gross
             </th>
             <td mat-cell *matCellDef="let mailList">
-                <span class="ListDescription">
-                    <a (click)="NavigateToListGross(null, null, mailList.MailCode)">{{mailList.Measure.Gross|currency:'USD':'symbol':'1.0-0'}}</a>
+                <span class="LinkUnderline">
+                    <a (click)="NavigateToListGross(campaign.CampaignName, phase.PhaseName, mailList.MailCode)">{{mailList.Measure.Gross|currency:'USD':'symbol':'1.0-0'}}</a>
             </span>
             </td>
             <td mat-footer-cell *matFooterCellDef [ngClass]="{
                                  'listElementDefault': phase.Measure.IsLast == false,
                                  'elementLast': phase.Measure.IsLast == true
                              }">
-                             {{phase.Measure.Gross|currency:'USD':'symbol':'1.0-0'}} </td>
+                             <span class="LinkUnderline"><a (click)="NavigateToPhaseGross(campaign.CampaignName, phase.PhaseName)">{{phase.Measure.Gross|currency:'USD':'symbol':'1.0-0'}}</a></span></td>
         </ng-container>
         <ng-container matColumnDef="Net">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Net

@@ -109,7 +109,22 @@ export class ReturnsComponent {
     const filterValue = name.toLowerCase();
     return this.MTStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
   }
+<<<<<<< HEAD
 
+=======
+  private CA_filter(name: string): string[] {
+    if (name == null)
+      return null;
+    const filterValue = name.toLowerCase();
+    return this.CAStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
+  }
+  private PH_filter(name: string): string[] {
+    if (name == null)
+      return null;
+    const filterValue = name.toLowerCase();
+    return this.PHStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
+  }
+>>>>>>> a
 
   //CHIP ADD START
   CL_Add(event: MatChipInputEvent): void {
@@ -123,7 +138,39 @@ export class ReturnsComponent {
     }
     this.CLControl.setValue(null);
   }
-
+  MT_Add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) {
+      this.MTList.push(value.trim());
+    }
+    if (input) {
+      input.value = '';
+    }
+    this.MTControl.setValue(null);
+  }
+  CA_Add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) {
+      this.CAList.push(value.trim());
+    }
+    if (input) {
+      input.value = '';
+    }
+    this.CAControl.setValue(null);
+  }
+  PH_Add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) {
+      this.PHList.push(value.trim());
+    }
+    if (input) {
+      input.value = '';
+    }
+    this.PHControl.setValue(null);
+  }
 
   //CHIP REMOVE START
   CL_Remove(client: string): void {
@@ -132,7 +179,24 @@ export class ReturnsComponent {
       this.CLList.splice(index, 1);
     }
   }
-
+  MT_Remove(listmanager: string): void {
+    const index = this.MTList.indexOf(listmanager);
+    if (index >= 0) {
+      this.MTList.splice(index, 1);
+    }
+  }
+  CA_Remove(recency: string): void {
+    const index = this.CAList.indexOf(recency);
+    if (index >= 0) {
+      this.CAList.splice(index, 1);
+    }
+  }
+  PH_Remove(client: string): void {
+    const index = this.PHList.indexOf(client);
+    if (index >= 0) {
+      this.PHList.splice(index, 1);
+    }
+  }
 
   //CHIP DROPDOWN SELECTED START
   //CHIP DROPDOWN SELECTED START
@@ -176,7 +240,136 @@ export class ReturnsComponent {
     );
     this.CLInput.nativeElement.blur();
   }
- 
+  MT_Selected(event: MatAutocompleteSelectedEvent): void {
+    if (!this.MTList.includes(this.getAcronym(event.option.viewValue)))
+      this.MTList.push(this.getAcronym(event.option.viewValue));
+    this.MTInput.nativeElement.value = '';
+    this.MTControl.setValue(null);
+    this.MTfilteredOptions = this.MTControl.valueChanges.pipe(
+      startWith(null),
+      map((mailtype: string | null) => mailtype ? this.MT_filter(mailtype) : this.MTStrArr.slice())
+    );
+    this.MTInput.nativeElement.blur();
+  }
+  CA_Selected(event: MatAutocompleteSelectedEvent): void {
+    if (!this.CAList.includes(this.getAcronym(event.option.viewValue)))
+      this.CAList.push(this.getAcronym(event.option.viewValue));
+    this.CAInput.nativeElement.value = '';
+    this.CAControl.setValue(null);
+    this.CAfilteredOptions = this.CAControl.valueChanges.pipe(
+      startWith(null),
+      map((campaign: string | null) => campaign ? this.CA_filter(campaign) : this.CAStrArr.slice())
+    );
+    this.CAInput.nativeElement.blur();
+  }
+  PH_Selected(event: MatAutocompleteSelectedEvent): void {
+    if (!this.PHList.includes(this.getAcronym(event.option.viewValue)))
+      this.PHList.push(this.getAcronym(event.option.viewValue));
+    this.PHInput.nativeElement.value = '';
+    this.PHControl.setValue(null);
+    this.PHfilteredOptions = this.PHControl.valueChanges.pipe(
+      startWith(null),
+      map((phase: string | null) => phase ? this.PH_filter(phase) : this.PHStrArr.slice())
+    );
+    this.PHInput.nativeElement.blur();
+  }
+
+  // add(event: MatChipInputEvent): void {
+  //   const input = event.input;
+  //   const value = event.value;
+
+  //   // Add our client
+  //   if ((value || '').trim()) {
+  //     this.clients.push(value.trim().toUpperCase());
+  //   }
+
+  //   // Reset the input value
+  //   if (input) {
+  //     input.value = '';
+  //   }
+
+  //   this.clientControl.setValue(null);
+  // }
+
+  // remove(client: string): void {
+  //   const index = this.clients.indexOf(client);
+
+  //   if (index >= 0) {
+  //     this.clients.splice(index, 1);
+  //   }
+  // }
+
+
+  // selected(event: MatAutocompleteSelectedEvent): void {
+  //   if (!this.clients.includes(this.getAcronym(event.option.viewValue)))
+  //     this.clients.push(this.getAcronym(event.option.viewValue));
+  //   this.clientListInput.nativeElement.value = '';
+  //   this.clientControl.setValue(null);
+  //   this.filteredOptions = this.clientControl.valueChanges.pipe(
+  //     startWith(null),
+  //     map((client: string | null) => client ? this._filter(client) : this.ClientStrArr.slice())
+  //   );
+  //   this.clientListInput.nativeElement.blur();
+  // }
+
+
+
+  // private _filter(name: string): string[] {
+  //   if (name == null)
+  //     return null;
+  //   const filterValue = name.toLowerCase();
+  //   return this.ClientStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
+  // }
+
+  // ngOnInit() {
+
+  //   this.pageReady = false;
+  //   this.clients = [];
+  //   this.route.params.subscribe(params => {
+  //     if (!params['client'])
+  //     {
+  //       this.rootReturns = null;
+  //       this.pageReady = true;
+  //       this.startDate = new Date("1/1/" + (new Date()).getFullYear().toString());
+  //       this.endDate = new Date("12/31/" + (new Date()).getFullYear().toString());
+  //     }
+  //     else
+  //       this.LoadValues(params['client'], params['from'], params['to']);
+  //     if (params['client'])
+  //       this._authService.getReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
+  //         if (data) {
+  //           this.rootReturns = data;
+  //           this.rootReturns = this._g.SetLastElements(this.rootReturns);
+  //           this.rootReturns = this._g.ExpandAll(this.rootReturns);
+  //           this.pageReady = true;
+  //           var i = 0;
+  //           while (this.rootReturns[i]) {
+  //             this.CheckLevel(this.rootReturns[i], true);
+  //             i = i + 1;
+  //           }
+  //           var calculations = this._g.CalculateSummaries(this.rootReturns);
+  //           this.rootReturns = calculations.rootReturns;
+  //           this.grandTotal = calculations.grandTotal;
+  //         }
+  //       });
+
+  //     this._authService.getClientList("All")
+  //       .subscribe(data => {
+  //         this.ClientArr = data;
+  //         this.ClientStrArr = [];
+  //         this.ClientArr.forEach(p => { this.ClientStrArr.push(p.gClientName + ' - ' + p.gClientAcronym) });
+  //         this.filteredOptions = this.clientControl.valueChanges
+  //           .pipe(
+  //             startWith(''),
+  //             map(value => this._filter(value))
+  //           );
+  //         if (params['client'] && (this.clients.length != this.selectedClients.length)) {
+  //           this.clients = [];
+  //           this.selectedClients.forEach(p => this.clients.push(p));
+  //         }
+  //       });
+  //   });
+  // }
 
   ngOnInit() {
 
@@ -192,7 +385,7 @@ export class ReturnsComponent {
       }
       else
         this.LoadValues(params['client'], params['mailtype'], params['campaign'], params['phase'], params['startdate'], params['enddate']);
-
+      if (params['client']) {
         this._authService.getClientsFilter(this.startDate, this.endDate).subscribe(data => {
           this.CLStrArr = Array.from(new Set(data.map(item => item.gClientName + ' - ' + item.gClientAcronym))).sort();
           this.CLfilteredOptions =  this.CLControl.valueChanges.pipe(
@@ -200,8 +393,12 @@ export class ReturnsComponent {
             map((client: string | null) => client ? this.CL_filter(client) : this.CLStrArr.slice())
           );
         });
+<<<<<<< HEAD
                 
       if (params['client']) {
+=======
+
+>>>>>>> a
         this._authService.getMailTypeFilter(params['client'], this.startDate, this.endDate).subscribe(data => {
           this.CLStrArr = Array.from(new Set(data.map(item => item))).sort();
           this.CLStrArr.forEach(p => this.CLList.push(p));          
@@ -210,7 +407,28 @@ export class ReturnsComponent {
             map((client: string | null) => client ? this.CL_filter(client) : this.CLStrArr.slice())
           );
         });
+<<<<<<< HEAD
    
+=======
+
+        this._authService.getCampaignFilterByClients(params['client'], this.startDate, this.endDate).subscribe(data => {
+          this.CAStrArr = Array.from(new Set(data.map(item => item))).sort();
+          this.CAStrArr.forEach(p => this.CAList.push(p));          
+          this.CAfilteredOptions =  this.CAControl.valueChanges.pipe(
+            startWith(null),
+            map((campaign: string | null) => campaign ? this.MT_filter(campaign) : this.CAStrArr.slice())
+          );
+        });     
+        
+        this._authService.getPhaseFilterByClients(params['client'], this.startDate, this.endDate).subscribe(data => {
+          this.PHStrArr = Array.from(new Set(data.map(item => item))).sort();
+          this.PHStrArr.forEach(p => this.PHList.push(p));            
+          this.PHfilteredOptions =  this.PHControl.valueChanges.pipe(
+            startWith(null),
+            map((phase: string | null) => phase ? this.MT_filter(phase) : this.PHStrArr.slice())
+          );
+        });         
+>>>>>>> a
         
         this._authService.getReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
           if (data) {
@@ -229,6 +447,22 @@ export class ReturnsComponent {
           }
         });
       }
+
+      // this._authService.getClientList("All")
+      //   .subscribe(data => {
+      //     this.ClientArr = data;
+      //     this.CLStrArr = [];
+      //     this.ClientArr.forEach(p => { this.CLStrArr.push(p.gClientName + ' - ' + p.gClientAcronym) });
+      //     this.CLfilteredOptions = this.CLControl.valueChanges
+      //       .pipe(
+      //         startWith(''),
+      //         map(value => this.CL_filter(value))
+      //       );
+      //     if (params['client'] && (this.CLList.length != this.selectedClients.length)) {
+      //       this.CLList = [];
+      //       this.selectedClients.forEach(p => this.CLList.push(p));
+      //     }
+      //   });
     });
   }
 
@@ -262,7 +496,6 @@ export class ReturnsComponent {
     this._g.clearCurCache = true;
     var phaseInput = Phase.match(/\d/g);
     var PhaseNumber = phaseInput.join("");
-    this._g.clearCurCache = true;
     this.router.navigate(['listgross' + '/' + PackageCode + '/' + PhaseNumber + '/' + MailCode]);
   }
 
@@ -270,7 +503,6 @@ export class ReturnsComponent {
     this._g.clearCurCache = true;
     var phaseInput = Phase.match(/\d/g);
     var PhaseNumber = phaseInput.join("");
-    this._g.clearCurCache = true;
     this.router.navigate(['phasegross' + '/' + PackageCode + '/' + PhaseNumber]);
   }
 

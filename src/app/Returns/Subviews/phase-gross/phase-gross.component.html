@@ -1,14 +1,15 @@
 <div *ngIf="this.pageReady == false" class="loading-indicator">
+  <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
 </div>
 
 <div *ngIf="this.pageReady == true">
   <app-toolbar></app-toolbar>
-  <!-- <ul>
-    <li *ngFor="let element of ListGrossArr">{{element.Date}}</li>
-  </ul> -->
 
-
-  <table id="table1" mat-table [dataSource]="this.PhaseGrossArr.dateGrossList">
+  <h6>Client: {{this.PhaseGross.ClientName}} - {{this.PhaseGross.ClientAcronym}}</h6>
+  <h6>Package: {{this.PhaseGross.PackageName}} - {{this.PhaseGross.PackageTitle}}</h6>
+  <br>
+  <p>By Date</p>
+  <table id="table1" mat-table [dataSource]="this.PhaseGross.dateGrossList">
     <ng-container matColumnDef="Date">
       <th mat-header-cell class="dateColumn" *matHeaderCellDef> Date </th>
       <td mat-cell class="dateColumn" *matCellDef="let element"> {{element.Date|date:'fullDate'}} </td>
@@ -59,10 +60,145 @@
       <td mat-cell *matCellDef="let element"><span class="totalColumn">{{element.TotalGross|currency:'USD':'symbol':'1.2-2'}}</span></td>
       <td mat-footer-cell *matFooterCellDef>{{getTotalValue("TotalGross")|currency:'USD':'symbol':'1.2-2'}}</td>
     </ng-container>
-    
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row class="example-element-row" *matRowDef="let row; columns: displayedColumns;"></tr>
-    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-    </table>
+    <tr mat-header-row *matHeaderRowDef="dateColumns"></tr>
+    <tr mat-row class="example-element-row" *matRowDef="let row; columns: dateColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="dateColumns"></tr>
+  </table>
+  <br>
+  <p>By List</p>
+
+  <table id="table1" mat-table [dataSource]="this.PhaseGross.mailCodeList" multiTemplateDataRows>
+      <ng-container matColumnDef="Expand">
+          <th mat-header-cell *matHeaderCellDef class="expandBtnColumn"></th>
+          <td mat-cell *matCellDef="let element" class="expandBtnColumn">
+              <button mat-icon-button (click)="ToggleExpansion(element)" class="returnsExpCollBtn">
+                  <i class="material-icons md-elevation-z6" [ngClass]="CollapseListBtn(element)?'mi_arrow_drop_down':'mi_arrow_right'"></i>
+              </button>
+          </td>
+          <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"> </td>.
+      </ng-container>    
+    <ng-container matColumnDef="MailCode">
+      <th mat-header-cell *matHeaderCellDef> Mail Code </th>
+      <td mat-cell *matCellDef="let element"> {{element.MailCode}} </td>
+      <td mat-footer-cell class="dateColumn" *matFooterCellDef>Totals</td>
+    </ng-container>
+    <ng-container matColumnDef="NonDonors">
+      <th mat-header-cell *matHeaderCellDef> Non Donors </th>
+      <td mat-cell *matCellDef="let element"> {{element.NonDonors}} </td>
+      <td mat-footer-cell *matFooterCellDef>{{getTotalValue("NonDonors")}}</td>
+    </ng-container>
+    <ng-container matColumnDef="CashDonors">
+      <th mat-header-cell *matHeaderCellDef> Cash Donors </th>
+      <td mat-cell *matCellDef="let element"> {{element.CashDonors}} </td>
+      <td mat-footer-cell *matFooterCellDef>{{getTotalValue("CashDonors")}}</td>
+    </ng-container>
+    <ng-container matColumnDef="CashGross">
+      <th mat-header-cell *matHeaderCellDef> Cash Gross </th>
+      <td mat-cell *matCellDef="let element"> {{element.CashGross|currency:'USD':'symbol':'1.2-2'}} </td>
+      <td mat-footer-cell *matFooterCellDef>{{getTotalValue("CashGross")|currency:'USD':'symbol':'1.2-2'}}</td>
+    </ng-container>
+    <ng-container matColumnDef="CardDonors">
+      <th mat-header-cell *matHeaderCellDef> Card Donors </th>
+      <td mat-cell *matCellDef="let element"> {{element.CardDonors}} </td>
+      <td mat-footer-cell *matFooterCellDef>{{getTotalValue("CardDonors")}}</td>
+    </ng-container>
+    <ng-container matColumnDef="CardGross">
+      <th mat-header-cell *matHeaderCellDef> Card Gross </th>
+      <td mat-cell *matCellDef="let element"> {{element.CardGross|currency:'USD':'symbol':'1.2-2'}} </td>
+      <td mat-footer-cell *matFooterCellDef>{{getTotalValue("CardGross")|currency:'USD':'symbol':'1.2-2'}}</td>
+    </ng-container>
+    <ng-container matColumnDef="CheckDonors">
+      <th mat-header-cell *matHeaderCellDef> Check Donors </th>
+      <td mat-cell *matCellDef="let element"> {{element.CheckDonors}} </td>
+      <td mat-footer-cell *matFooterCellDef>{{getTotalValue("CheckDonors")}}</td>
+    </ng-container>
+    <ng-container matColumnDef="CheckGross">
+      <th mat-header-cell *matHeaderCellDef> Check Gross </th>
+      <td mat-cell *matCellDef="let element"> {{element.CheckGross|currency:'USD':'symbol':'1.2-2'}} </td>
+      <td mat-footer-cell *matFooterCellDef>{{getTotalValue("CheckGross")|currency:'USD':'symbol':'1.2-2'}}</td>
+    </ng-container>
+    <ng-container matColumnDef="TotalDonors">
+      <th mat-header-cell *matHeaderCellDef> Total Donors </th>
+      <td mat-cell *matCellDef="let element"><span class="totalColumn">{{element.TotalDonors}}</span></td>
+      <td mat-footer-cell *matFooterCellDef>{{getTotalValue("TotalDonors")}}</td>
+    </ng-container>
+    <ng-container matColumnDef="TotalGross">
+      <th mat-header-cell *matHeaderCellDef> Total Gross </th>
+      <td mat-cell *matCellDef="let element"><span class="totalColumn">{{element.TotalGross|currency:'USD':'symbol':'1.2-2'}}</span></td>
+      <td mat-footer-cell *matFooterCellDef>{{getTotalValue("TotalGross")|currency:'USD':'symbol':'1.2-2'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="mailCodeColumns.length">
+        <div class="example-element-detail" [@detailExpand]="element.Expanded?'expanded':'collapsed'"
+        [style.height]="element.Expanded?'unset':'0 !important'">
+          <div style="width:100%">
+              <table id="table1" mat-table [dataSource]="element.dateGrossList">
+                  <ng-container matColumnDef="Date">
+                    <th mat-header-cell class="dateColumn" *matHeaderCellDef> Date </th>
+                    <td mat-cell class="dateColumn" *matCellDef="let element"> {{element.Date|date:'fullDate'}} </td>
+                    <td mat-footer-cell class="dateColumn" *matFooterCellDef>Totals</td>
+                  </ng-container>
+                  <ng-container matColumnDef="NonDonors">
+                    <th mat-header-cell *matHeaderCellDef> Non Donors </th>
+                    <td mat-cell *matCellDef="let element"> {{element.NonDonors}} </td>
+                    <td mat-footer-cell *matFooterCellDef>{{getTotalValueByMailCode(element.dateGrossList, "NonDonors")}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="CashDonors">
+                    <th mat-header-cell *matHeaderCellDef> Cash Donors </th>
+                    <td mat-cell *matCellDef="let element"> {{element.CashDonors}} </td>
+                    <td mat-footer-cell *matFooterCellDef>{{getTotalValueByMailCode(element.dateGrossList, "CashDonors")}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="CashGross">
+                    <th mat-header-cell *matHeaderCellDef> Cash Gross </th>
+                    <td mat-cell *matCellDef="let element"> {{element.CashGross|currency:'USD':'symbol':'1.2-2'}} </td>
+                    <td mat-footer-cell *matFooterCellDef>{{getTotalValueByMailCode(element.dateGrossList, "CashGross")|currency:'USD':'symbol':'1.2-2'}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="CardDonors">
+                    <th mat-header-cell *matHeaderCellDef> Card Donors </th>
+                    <td mat-cell *matCellDef="let element"> {{element.CardDonors}} </td>
+                    <td mat-footer-cell *matFooterCellDef>{{getTotalValueByMailCode(element.dateGrossList, "CardDonors")}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="CardGross">
+                    <th mat-header-cell *matHeaderCellDef> Card Gross </th>
+                    <td mat-cell *matCellDef="let element"> {{element.CardGross|currency:'USD':'symbol':'1.2-2'}} </td>
+                    <td mat-footer-cell *matFooterCellDef>{{getTotalValueByMailCode(element.dateGrossList, "CardGross")|currency:'USD':'symbol':'1.2-2'}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="CheckDonors">
+                    <th mat-header-cell *matHeaderCellDef> Check Donors </th>
+                    <td mat-cell *matCellDef="let element"> {{element.CheckDonors}} </td>
+                    <td mat-footer-cell *matFooterCellDef>{{getTotalValueByMailCode(element.dateGrossList, "CheckDonors")}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="CheckGross">
+                    <th mat-header-cell *matHeaderCellDef> Check Gross </th>
+                    <td mat-cell *matCellDef="let element"> {{element.CheckGross|currency:'USD':'symbol':'1.2-2'}} </td>
+                    <td mat-footer-cell *matFooterCellDef>{{getTotalValueByMailCode(element.dateGrossList, "CheckGross")|currency:'USD':'symbol':'1.2-2'}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="TotalDonors">
+                    <th mat-header-cell *matHeaderCellDef> Total Donors </th>
+                    <td mat-cell *matCellDef="let element"><span class="totalColumn">{{element.TotalDonors}}</span></td>
+                    <td mat-footer-cell *matFooterCellDef>{{getTotalValueByMailCode(element.dateGrossList, "TotalDonors")}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="TotalGross">
+                    <th mat-header-cell *matHeaderCellDef> Total Gross </th>
+                    <td mat-cell *matCellDef="let element"><span class="totalColumn">{{element.TotalGross|currency:'USD':'symbol':'1.2-2'}}</span></td>
+                    <td mat-footer-cell *matFooterCellDef>{{getTotalValueByMailCode(element.dateGrossList, "TotalGross")|currency:'USD':'symbol':'1.2-2'}}</td>
+                  </ng-container>
+              
+                  <tr mat-header-row *matHeaderRowDef="dateColumns"></tr>
+                  <tr mat-row class="example-element-row" *matRowDef="let row; columns: dateColumns;"></tr>
+                  <tr mat-footer-row *matFooterRowDef="dateColumns"></tr>
+                </table>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="mailCodeColumns">
+    </tr>
+    <tr mat-row class="example-element-row" *matRowDef="let row; columns: mailCodeColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    <tr mat-footer-row *matFooterRowDef="mailCodeColumns"></tr>
+  </table>
+
 </div>

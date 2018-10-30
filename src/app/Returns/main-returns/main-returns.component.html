@@ -963,8 +963,8 @@
                                 <span class="sPackageDoubling">Doubling Days ({{phase.DoublingDays}})</span>
                             </div>
                         </div>
-                        <table class="listTable" mat-table [dataSource]="phase.MailList" multiTemplateDataRows
-                            matSort (matSortChange)="SortFunction($event, element)">
+                        <table class="listTable" mat-table [dataSource]="phase.MailList" multiTemplateDataRows matSort
+                            (matSortChange)="SortFunction($event, element)">
                             <ng-container matColumnDef="PseudoExpand">
             <th mat-header-cell *matHeaderCellDef class="pseudoExpand">
             </th>
@@ -988,7 +988,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="mailLevelColumn"> Mail
                 Code
             </th>
-            <td mat-cell *matCellDef="let mailList" class="mailLevelColumn"> {{mailList.MailCode}} 
+            <td mat-cell *matCellDef="let mailList" class="mailLevelColumn"> {{mailList.MailCode}}
             </td>
             <td mat-footer-cell *matFooterCellDef class="mailLevelColumn" [ngClass]="{
                              'listElementDefault': phase.Measure.IsLast == false,
@@ -1134,13 +1134,13 @@
             <td mat-cell *matCellDef="let mailList">
                 <span class="LinkUnderline">
                     <a (click)="NavigateToListGross(campaign.CampaignName, phase.PhaseName, mailList.MailCode)">{{mailList.Measure.Gross|currency:'USD':'symbol':'1.0-0'}}</a>
-            </span>
+                </span>
             </td>
             <td mat-footer-cell *matFooterCellDef [ngClass]="{
                                  'listElementDefault': phase.Measure.IsLast == false,
                                  'elementLast': phase.Measure.IsLast == true
                              }">
-                             <span class="LinkUnderline"><a (click)="NavigateToPhaseGross(campaign.CampaignName, phase.PhaseName)">{{phase.Measure.Gross|currency:'USD':'symbol':'1.0-0'}}</a></span></td>
+                <span class="LinkUnderline"><a (click)="NavigateToPhaseGross(campaign.CampaignName, phase.PhaseName)">{{phase.Measure.Gross|currency:'USD':'symbol':'1.0-0'}}</a></span></td>
         </ng-container>
         <ng-container matColumnDef="Net">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Net
@@ -1316,7 +1316,7 @@
               }">
     <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
     <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
-        
+
         <mat-form-field class="tbElement">
             <input matInput #startDateInput (dateInput)="validateDate()" [matDatepicker]="startDatePicker" [(ngModel)]="startDate"
                 placeholder="start date">
@@ -1332,20 +1332,13 @@
         <!-- Client - CL -->
         <mat-form-field class="tbElement">
             <mat-chip-list #CLchipList>
-                <mat-chip *ngFor="let client of CLList"
-                 [selectable]="selectable" 
-                 [removable]="removable" 
-                 (removed)="CL_Remove(client)">
+                <mat-chip *ngFor="let client of CLList" [selectable]="selectable" [removable]="removable" (removed)="CL_Remove(client)">
                     {{client}}
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
-                <input placeholder="Client..." #CLInput 
-                [formControl]="CLControl" 
-                [matAutocomplete]="CLauto"
-                [matChipInputFor]="CLchipList" 
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                [matChipInputAddOnBlur]="addOnBlur" 
-                (matChipInputTokenEnd)="CL_Add($event)">
+                <input placeholder="Client..." #CLInput [formControl]="CLControl" [matAutocomplete]="CLauto"
+                    [matChipInputFor]="CLchipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="CL_Add($event)">
             </mat-chip-list>
             <mat-autocomplete #CLauto="matAutocomplete" (optionSelected)="CL_Selected($event)">
                 <mat-option class="md-custom-option" *ngFor="let client of CLfilteredOptions | async" [value]="client">{{client}}</mat-option>
@@ -1355,43 +1348,29 @@
         <!-- Mail Type - MT -->
         <mat-form-field class="tbElement">
             <mat-chip-list #MTchipList>
-                <mat-chip *ngFor="let mailtype of MTList"
-                 [selectable]="selectable" 
-                 [removable]="removable" 
-                 (removed)="MT_Remove(mailtype)">
+                <mat-chip *ngFor="let mailtype of MTList" [selectable]="selectable" [removable]="removable" (removed)="MT_Remove(mailtype)">
                     {{mailtype}}
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
-                <input placeholder="Mail Type..." #MTInput 
-                [formControl]="MTControl" 
-                [matAutocomplete]="MTauto"
-                [matChipInputFor]="MTchipList" 
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                [matChipInputAddOnBlur]="addOnBlur" 
-                (matChipInputTokenEnd)="MT_Add($event)">
+                <input placeholder="Mail Type..." #MTInput [formControl]="MTControl" [matAutocomplete]="MTauto"
+                    [matChipInputFor]="MTchipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="MT_Add($event)">
             </mat-chip-list>
             <mat-autocomplete #MTauto="matAutocomplete" (optionSelected)="MT_Selected($event)">
                 <mat-option class="md-custom-option" *ngFor="let mailtype of MTfilteredOptions | async" [value]="mailtype">{{mailtype}}</mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        
+
         <!-- Campaign - CA -->
         <mat-form-field class="tbElement">
             <mat-chip-list #CAchipList>
-                <mat-chip *ngFor="let campaign of CAList"
-                [selectable]="selectable" 
-                [removable]="removable" 
-                (removed)="CA_Remove(campaign)">
+                <mat-chip *ngFor="let campaign of CAList" [selectable]="selectable" [removable]="removable" (removed)="CA_Remove(campaign)">
                     {{campaign}}
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
-                <input placeholder="Campaign..." #CAInput 
-                [formControl]="CAControl" 
-                [matAutocomplete]="CAauto"
-                [matChipInputFor]="CAchipList" 
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                [matChipInputAddOnBlur]="addOnBlur" 
-                (matChipInputTokenEnd)="CA_Add($event)">
+                <input placeholder="Campaign..." #CAInput [formControl]="CAControl" [matAutocomplete]="CAauto"
+                    [matChipInputFor]="CAchipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="CA_Add($event)">
             </mat-chip-list>
             <mat-autocomplete #CAauto="matAutocomplete" (optionSelected)="CA_Selected($event)">
                 <mat-option class="md-custom-option" *ngFor="let campaign of CAfilteredOptions | async" [value]="campaign">{{campaign}}</mat-option>
@@ -1401,27 +1380,20 @@
         <!-- Phase - PH -->
         <mat-form-field class="tbElement">
             <mat-chip-list #PHchipList>
-                <mat-chip *ngFor="let phase of PHList"
-                 [selectable]="selectable" 
-                 [removable]="removable" 
-                 (removed)="PH_Remove(phase)">
+                <mat-chip *ngFor="let phase of PHList" [selectable]="selectable" [removable]="removable" (removed)="PH_Remove(phase)">
                     {{phase}}
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
-                <input placeholder="Phase..." #PHInput 
-                [formControl]="PHControl" 
-                [matAutocomplete]="PHauto"
-                [matChipInputFor]="PHchipList" 
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                [matChipInputAddOnBlur]="addOnBlur" 
-                (matChipInputTokenEnd)="PH_Add($event)">
+                <input placeholder="Phase..." #PHInput [formControl]="PHControl" [matAutocomplete]="PHauto"
+                    [matChipInputFor]="PHchipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="PH_Add($event)">
             </mat-chip-list>
             <mat-autocomplete #PHauto="matAutocomplete" (optionSelected)="PH_Selected($event)">
                 <mat-option class="md-custom-option" *ngFor="let phase of PHfilteredOptions | async" [value]="phase">{{phase}}</mat-option>
             </mat-autocomplete>
         </mat-form-field>
 
-<!-- 
+        <!-- 
         <mat-form-field class="tbElement">
             <mat-chip-list #chipList>
                 <mat-chip *ngFor="let client of clients"

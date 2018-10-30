@@ -17,6 +17,11 @@ export class ListGrossComponent implements OnInit {
   private PackageCode: string;
   private PhaseNumber: string;
   private MailCode: string;
+  private Client:string;
+  private ClientName:string;
+  private PackageName:string;
+  private PhaseTitle:string;
+  private Description:string;
   public ListGrossArr: ListGross[];
 
   displayedColumns: string[] = ['Date', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
@@ -32,9 +37,14 @@ export class ListGrossComponent implements OnInit {
 
       this._authService.getListGross(this.PackageCode, this.PhaseNumber, this.MailCode)
       .subscribe(data => {
-        var temp = this.sortByStartDate(data);
+        var temp = this.sortByStartDate(data.dateGrossList);
         this.ListGrossArr = temp;
-
+        this.Client = data.ClientAcronym;
+        this.ClientName = data.ClientName;  
+        this.MailCode = data.MailCode;
+        this.PackageName = data.PackageName;
+        this.PhaseTitle = data.PackageTitle;
+        this.Description = data.Description;
         this.pageReady = true;
       });    
    });

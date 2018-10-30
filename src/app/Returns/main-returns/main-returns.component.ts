@@ -492,6 +492,7 @@ export class ReturnsComponent {
     this._g.clearCurCache = true;
     var phaseInput = Phase.match(/\d/g);
     var PhaseNumber = phaseInput.join("");
+    this._g.clearCurCache = true;
     this.router.navigate(['listgross' + '/' + PackageCode + '/' + PhaseNumber + '/' + MailCode]);
   }
 
@@ -499,6 +500,7 @@ export class ReturnsComponent {
     this._g.clearCurCache = true;
     var phaseInput = Phase.match(/\d/g);
     var PhaseNumber = phaseInput.join("");
+    this._g.clearCurCache = true;
     this.router.navigate(['phasegross' + '/' + PackageCode + '/' + PhaseNumber]);
   }
 

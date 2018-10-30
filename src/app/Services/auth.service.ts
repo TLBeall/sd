@@ -160,7 +160,7 @@ export class AuthService {
     return this.http.get(ListPerformanceAPI, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 
-  getListGross(PackageCode: string, PhaseNumber: string, MailCode: string):Observable<ListGross[]> {
+  getListGross(PackageCode: string, PhaseNumber: string, MailCode: string):Observable<any> {
     var Token = "";
     var GetListGross = "https://sd360.sunrisedataservices.com/api/getListGross?PackageCode="+ PackageCode + "&PhaseNumber=" + PhaseNumber + "&MailCode=" + MailCode;
 

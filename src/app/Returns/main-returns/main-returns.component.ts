@@ -795,10 +795,10 @@ export class ReturnsComponent {
     var data: any;
     var myType: string = "";
 
-    if (Element.MailTypeList != null) myType = "MailTypeList";
-    if (Element.CampaignList != null) myType = "MailType";
-    if (Element.PhaseList != null) myType = "Campaign";
-    if (Element.MailList != null) myType = "Phase";
+    if (Element.MailTypeList) myType = "MailTypeList";
+    if (Element.CampaignList) myType = "MailType";
+    if (Element.PhaseList) myType = "Campaign";
+    if (Element.MailList) myType = "Phase";
     if (myType == "") myType = "Client";
 
     switch (myType) {

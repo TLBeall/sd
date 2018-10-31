@@ -871,7 +871,7 @@ export class ReturnsComponent {
         case 'Client': return compare(a.Client, b.Client, isAsc);
         case 'MailType': return compare(a.MailType, b.MailType, isAsc);
         case 'CampaignName': return compare(a.CampaignName, b.CampaignName, isAsc);
-        case 'PhaseName': return compare(a.PhaseName, b.PhaseName, isAsc);
+        case 'PhaseName': return compare(a.Measure.Mailed, b.Measure.Mailed, isAsc);
         case 'MailCode': return compare(a.MailCode, b.MailCode, isAsc);
         case 'Mailed': return compare(a.Measure.Mailed, b.Measure.Mailed, isAsc);
         case 'Caged': return compare(a.Measure.Caged, b.Measure.Caged, isAsc);

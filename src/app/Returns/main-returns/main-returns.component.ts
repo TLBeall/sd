@@ -490,16 +490,14 @@ export class ReturnsComponent {
 
   NavigateToListGross(PackageCode: string, Phase: string, MailCode: string) {
     this._g.clearCurCache = true;
-    var phaseInput = Phase.match(/\d/g);
-    var PhaseNumber = phaseInput.join("");
+    var PhaseNumber = Phase.replace(PackageCode,'').replace('ph','');
     this._g.clearCurCache = true;
     this.router.navigate(['listgross' + '/' + PackageCode + '/' + PhaseNumber + '/' + MailCode]);
   }
 
   NavigateToPhaseGross(PackageCode: string, Phase: string){
     this._g.clearCurCache = true;
-    var phaseInput = Phase.match(/\d/g);
-    var PhaseNumber = phaseInput.join("");
+    var PhaseNumber = Phase.replace(PackageCode,'').replace('ph','');
     this._g.clearCurCache = true;
     this.router.navigate(['phasegross' + '/' + PackageCode + '/' + PhaseNumber]);
   }

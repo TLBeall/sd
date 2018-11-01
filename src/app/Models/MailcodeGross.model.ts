@@ -5,6 +5,7 @@ export class MailcodeGross {
     CashGross: number;
     CheckDonors: number;
     CheckGross: number;
+    Description: string;
     MailCode: string; 
     NonDonors: number;
     TotalDonors: number;

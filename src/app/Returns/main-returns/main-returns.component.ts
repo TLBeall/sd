@@ -43,10 +43,14 @@ export class ReturnsComponent {
   private hide: Boolean = false;
   private visibility: string = "hidden";
   private ClientArr: ClientList[];
+  // private ClientStrArr: string[] = new Array<string>();
   private grandTotal: any;
-
+  // private clientControl = new FormControl();
+  // private clients: string[] = [];
+  // private filteredOptions: Observable<string[]>;
   private tempStartDate;
   private tempEndDate;
+  // private customPage: bool = true;
 
   //For chip selection settings
   visible = true;
@@ -66,7 +70,9 @@ export class ReturnsComponent {
   @ViewChild('startDateInput') startDateInput: ElementRef<HTMLInputElement>;
   @ViewChild('endDateInput') endDateInput: ElementRef<HTMLInputElement>;
   @ViewChild('CLInput') CLInput: ElementRef<HTMLInputElement>;
-
+  @ViewChild('MTInput') MTInput: ElementRef<HTMLInputElement>;
+  @ViewChild('CAInput') CAInput: ElementRef<HTMLInputElement>;
+  @ViewChild('PHInput') PHInput: ElementRef<HTMLInputElement>;
 
   private CLStrArr: string[] = new Array<string>();
   private CLControl = new FormControl();
@@ -88,13 +94,13 @@ export class ReturnsComponent {
   private PHList: string[] = [];
   private PHfilteredOptions: Observable<string[]>;
 
-
-
-
   constructor(route: ActivatedRoute, private _authService: AuthService, private _g: GlobalService, private router: Router) {
     this.route = route;
+    // this.filteredOptions = this.clientControl.valueChanges.pipe(
+    //   startWith(null),
+    //   map((client: string | null) => client ? this._filter(client) : this.ClientStrArr.slice())
+    // );
   }
-
 
   //CHIP FILTER START
   private CL_filter(name: string): string[] {
@@ -109,9 +115,6 @@ export class ReturnsComponent {
     const filterValue = name.toLowerCase();
     return this.MTStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
   }
-<<<<<<< HEAD
-
-=======
   private CA_filter(name: string): string[] {
     if (name == null)
       return null;
@@ -124,7 +127,6 @@ export class ReturnsComponent {
     const filterValue = name.toLowerCase();
     return this.PHStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
   }
->>>>>>> a
 
   //CHIP ADD START
   CL_Add(event: MatChipInputEvent): void {
@@ -173,8 +175,8 @@ export class ReturnsComponent {
   }
 
   //CHIP REMOVE START
-  CL_Remove(client: string): void {
-    const index = this.CLList.indexOf(client);
+  CL_Remove(listowner: string): void {
+    const index = this.CLList.indexOf(listowner);
     if (index >= 0) {
       this.CLList.splice(index, 1);
     }
@@ -198,7 +200,6 @@ export class ReturnsComponent {
     }
   }
 
-  //CHIP DROPDOWN SELECTED START
   //CHIP DROPDOWN SELECTED START
   CL_Selected(event: MatAutocompleteSelectedEvent): void {
     if (!this.CLList.includes(this.getAcronym(event.option.viewValue)))
@@ -299,7 +300,6 @@ export class ReturnsComponent {
   //   }
   // }
 
-
   // selected(event: MatAutocompleteSelectedEvent): void {
   //   if (!this.clients.includes(this.getAcronym(event.option.viewValue)))
   //     this.clients.push(this.getAcronym(event.option.viewValue));
@@ -311,8 +311,6 @@ export class ReturnsComponent {
   //   );
   //   this.clientListInput.nativeElement.blur();
   // }
-
-
 
   // private _filter(name: string): string[] {
   //   if (name == null)
@@ -385,7 +383,7 @@ export class ReturnsComponent {
       }
       else
         this.LoadValues(params['client'], params['mailtype'], params['campaign'], params['phase'], params['startdate'], params['enddate']);
-      if (params['client']) {
+
         this._authService.getClientsFilter(this.startDate, this.endDate).subscribe(data => {
           this.CLStrArr = Array.from(new Set(data.map(item => item.gClientName + ' - ' + item.gClientAcronym))).sort();
           this.CLfilteredOptions =  this.CLControl.valueChanges.pipe(
@@ -393,23 +391,16 @@ export class ReturnsComponent {
             map((client: string | null) => client ? this.CL_filter(client) : this.CLStrArr.slice())
           );
         });
-<<<<<<< HEAD
                 
       if (params['client']) {
-=======
-
->>>>>>> a
         this._authService.getMailTypeFilter(params['client'], this.startDate, this.endDate).subscribe(data => {
-          this.CLStrArr = Array.from(new Set(data.map(item => item))).sort();
-          this.CLStrArr.forEach(p => this.CLList.push(p));          
-          this.CLfilteredOptions =  this.CLControl.valueChanges.pipe(
+          this.MTStrArr = Array.from(new Set(data.map(item => item))).sort();
+          this.MTStrArr.forEach(p => this.MTList.push(p));          
+          this.MTfilteredOptions =  this.MTControl.valueChanges.pipe(
             startWith(null),
-            map((client: string | null) => client ? this.CL_filter(client) : this.CLStrArr.slice())
+            map((mailType: string | null) => mailType ? this.MT_filter(mailType) : this.MTStrArr.slice())
           );
         });
-<<<<<<< HEAD
-   
-=======
 
         this._authService.getCampaignFilterByClients(params['client'], this.startDate, this.endDate).subscribe(data => {
           this.CAStrArr = Array.from(new Set(data.map(item => item))).sort();
@@ -428,7 +419,6 @@ export class ReturnsComponent {
             map((phase: string | null) => phase ? this.MT_filter(phase) : this.PHStrArr.slice())
           );
         });         
->>>>>>> a
         
         this._authService.getReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
           if (data) {
@@ -479,7 +469,6 @@ export class ReturnsComponent {
     this.endDate = new Date(Date.parse(endDate.split('.')[0].toString() + '/' + endDate.split('.')[1].toString() + '/' + endDate.split('.')[2].toString()));
   }
 
-
   NavigateToListPerformance(ListOwner: string, ListManager: string, Recency: string, startDate: Date, endDate: Date) {
     this._g.clearCurCache = true;
     if (!ListOwner) ListOwner = '_';
@@ -496,6 +485,7 @@ export class ReturnsComponent {
     this._g.clearCurCache = true;
     var phaseInput = Phase.match(/\d/g);
     var PhaseNumber = phaseInput.join("");
+    this._g.clearCurCache = true;
     this.router.navigate(['listgross' + '/' + PackageCode + '/' + PhaseNumber + '/' + MailCode]);
   }
 
@@ -503,6 +493,7 @@ export class ReturnsComponent {
     this._g.clearCurCache = true;
     var phaseInput = Phase.match(/\d/g);
     var PhaseNumber = phaseInput.join("");
+    this._g.clearCurCache = true;
     this.router.navigate(['phasegross' + '/' + PackageCode + '/' + PhaseNumber]);
   }
 
@@ -512,7 +503,6 @@ export class ReturnsComponent {
     return 'collapse';
   }
 
-
   CollapseListBtn(Element): boolean {
     if (Element.Measure.Expanded == true) {
       return true;
@@ -520,7 +510,6 @@ export class ReturnsComponent {
       return false;
     }
   }
-
 
   ReadyToCollapseAll(list: any[]): boolean {
     var RetValue: boolean = false;
@@ -534,7 +523,6 @@ export class ReturnsComponent {
     })
     return RetValue;
   }
-
 
   NextLevel(Parent: any, ChildList: any[]) {
     var SetToExpand = true;
@@ -592,7 +580,6 @@ export class ReturnsComponent {
       })
     }
   }
-
 
   ToogleChecks(element: any) {
     if (element.Measure.Indeterminate)
@@ -696,7 +683,7 @@ export class ReturnsComponent {
           if (b.Measure["Selected"] == false || b.Measure["Indeterminate"])
             allcampSelected = false;
           if (b.Measure["Selected"] == true || b.Measure["Indeterminate"])
-            allcampUnselected = false;
+           allcampUnselected = false;
         })
         if ((!allcampSelected) && (!allcampUnselected))
           a.Measure["Indeterminate"] = true;
@@ -808,7 +795,7 @@ export class ReturnsComponent {
         if (this.ReadyToCollapseAll(Element))
           this.NextLevel(Element, Element);
         data = Element.slice();
-        break;
+       break;
       }
       case "MailTypeList": {
         if (this.ReadyToCollapseAll(Element.MailTypeList))
@@ -866,7 +853,6 @@ export class ReturnsComponent {
       }
     }
 
-
     var sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
@@ -894,7 +880,6 @@ export class ReturnsComponent {
         default: return 0;
       }
     });
-
 
     switch (myType) {
       case "Client": {
@@ -981,3 +966,5 @@ export class ReturnsComponent {
 function compare(a: string, b: string, isAsc) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
+
+

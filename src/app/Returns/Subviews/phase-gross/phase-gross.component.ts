@@ -5,6 +5,7 @@ import { GlobalService } from 'src/app/Services/global.service';
 import { PhaseGross } from 'src/app/Models/PhaseGross.model';
 import { ListGross } from 'src/app/Models/ListGross.model';
 import { trigger, state, transition, animate, style } from '@angular/animations';
+import { tryParse } from 'selenium-webdriver/http';
 
 @Component({
   selector: 'app-phase-gross',
@@ -25,9 +26,12 @@ export class PhaseGrossComponent implements OnInit {
   private PackageCode: string;
   private PhaseNumber: string;
   private PhaseGross: PhaseGross;
+  private dateTableVis: boolean = true;
+  private mailcodeTableVis: boolean = false;
+  private rowExpanded: boolean = false;
 
   dateColumns: string[] = ['Date', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
-  mailCodeColumns: string[] = ['Expand', 'MailCode', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
+  mailCodeColumns: string[] = ['Expand', 'MailCode', 'Description', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
 
 
   constructor(private _authService: AuthService, route: ActivatedRoute, private _g: GlobalService) {
@@ -90,6 +94,11 @@ export class PhaseGrossComponent implements OnInit {
     return data.sort((a: ListGross, b: ListGross) => {
       return this.getTime(b.Date) - this.getTime(a.Date);
     });
-  }  
+  } 
+  
+  tableVisibility(){
+      this.dateTableVis = !this.dateTableVis;
+      this.mailcodeTableVis = !this.mailcodeTableVis;
+  }
 
 }

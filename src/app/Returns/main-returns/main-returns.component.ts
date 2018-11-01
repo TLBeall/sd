@@ -483,16 +483,14 @@ export class ReturnsComponent {
 
   NavigateToListGross(PackageCode: string, Phase: string, MailCode: string) {
     this._g.clearCurCache = true;
-    var phaseInput = Phase.match(/\d/g);
-    var PhaseNumber = phaseInput.join("");
+    var PhaseNumber = Phase.replace(PackageCode,'').replace('ph','');
     this._g.clearCurCache = true;
     this.router.navigate(['listgross' + '/' + PackageCode + '/' + PhaseNumber + '/' + MailCode]);
   }
 
   NavigateToPhaseGross(PackageCode: string, Phase: string){
     this._g.clearCurCache = true;
-    var phaseInput = Phase.match(/\d/g);
-    var PhaseNumber = phaseInput.join("");
+    var PhaseNumber = Phase.replace(PackageCode,'').replace('ph','');
     this._g.clearCurCache = true;
     this.router.navigate(['phasegross' + '/' + PackageCode + '/' + PhaseNumber]);
   }
@@ -784,10 +782,10 @@ export class ReturnsComponent {
     var data: any;
     var myType: string = "";
 
-    if (Element.MailTypeList != null) myType = "MailTypeList";
-    if (Element.CampaignList != null) myType = "MailType";
-    if (Element.PhaseList != null) myType = "Campaign";
-    if (Element.MailList != null) myType = "Phase";
+    if (Element.MailTypeList) myType = "MailTypeList";
+    if (Element.CampaignList) myType = "MailType";
+    if (Element.PhaseList) myType = "Campaign";
+    if (Element.MailList) myType = "Phase";
     if (myType == "") myType = "Client";
 
     switch (myType) {
@@ -859,7 +857,7 @@ export class ReturnsComponent {
         case 'Client': return compare(a.Client, b.Client, isAsc);
         case 'MailType': return compare(a.MailType, b.MailType, isAsc);
         case 'CampaignName': return compare(a.CampaignName, b.CampaignName, isAsc);
-        case 'PhaseName': return compare(a.PhaseName, b.PhaseName, isAsc);
+        case 'PhaseName': return compare(a.Measure.Mailed, b.Measure.Mailed, isAsc);
         case 'MailCode': return compare(a.MailCode, b.MailCode, isAsc);
         case 'Mailed': return compare(a.Measure.Mailed, b.Measure.Mailed, isAsc);
         case 'Caged': return compare(a.Measure.Caged, b.Measure.Caged, isAsc);

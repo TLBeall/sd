@@ -11,6 +11,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { CagingDailies } from 'src/app/Models/CagingDailies.model';
 
 @Component({
   selector: 'app-main-returns',
@@ -94,14 +95,31 @@ export class ReturnsComponent {
   private PHList: string[] = [];
   private PHfilteredOptions: Observable<string[]>;
 
-
+  // private CagingArr: CagingDailies[] = new Array<CagingDailies>();
+  // private CageRec: CagingDailies;
 
   constructor(route: ActivatedRoute, private _authService: AuthService, private _g: GlobalService, private router: Router) {
     this.route = route;
-    // this.filteredOptions = this.clientControl.valueChanges.pipe(
-    //   startWith(null),
-    //   map((client: string | null) => client ? this._filter(client) : this.ClientStrArr.slice())
-    // );
+   
+    // this.CageRec = new CagingDailies();
+    // this.CageRec.Agency = "HSP";    
+    // this.CageRec.Client = "ACRU";
+    // this.CageRec.DonationDate = new Date();
+    // this.CageRec.MailCodeId = 0;
+    // this.CageRec.MailCode = "WM";
+    // this.CageRec.NonDonors = 25;
+    // this.CageRec.CashDonors = 25;
+    // this.CageRec.CardDonors = 25;
+    // this.CageRec.UnspecifiedDonors = 25;
+    // this.CageRec.CashAmount = 25;
+    // this.CageRec.CardAmount = 25;
+    // this.CageRec.CheckAmount = 25;
+    // this.CageRec.UnspecifiedAmount = 25;
+    // this.CageRec.EnteredDate = new Date();
+    // this.CageRec.ModifiedDate = new Date();
+    // this.CageRec.DateCaged = new Date();
+    // this.CagingArr.push(this.CageRec);
+    // _authService.createCagingDailies(this.CagingArr).subscribe();
   }
 
 

@@ -15,6 +15,7 @@ import { Segment } from '../Models/Segment.model';
 import { PerformanceHierarchy } from '../Models/PerformanceHierarchy.model';
 import { ListGross } from '../Models/ListGross.model';
 import { PhaseGross } from '../Models/PhaseGross.model';
+import { CagingDailies } from '../Models/CagingDailies.model';
 // import { LoaderService } from '../loader/loader.service';
 
 @Injectable()
@@ -174,5 +175,13 @@ export class AuthService {
     var headersForGetListAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
     return this.http.get(GetPhaseGross, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
+
+  createCagingDailies(DailiesRecord: CagingDailies[]):Observable<any> {
+    var Token = "";
+    var createDailiesURL = "http://localhost:63023/api/CreateDailies";
+    var body = JSON.stringify(DailiesRecord); 
+    var headersForGetListAPI = new Headers({'Content-Type': 'Application/Json', 'Authorization' : 'Bearer ' + Token});
+    return this.http.post(createDailiesURL, body, {headers: headersForGetListAPI});
+  }  
 }
 

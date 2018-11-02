@@ -132,6 +132,7 @@ tr.mat-header-row{
 }
 
 .mailcodeButton{
+  float: right;
   width:30px;
   height:30px;
   opacity: 0.6;
@@ -142,6 +143,24 @@ tr.mat-header-row{
   i{
     padding: 0px 0px 10px 0px;
   }
+}
+
+.expandAllMailcodeButton{
+  width:30px;
+  height:30px;
+  opacity: 0.8;
+  &:hover{
+    opacity: 0.8;
+    color: $color-blue-dark;
+  }
+  i{
+    padding: 0px 0px 10px 0px;
+  }
+}
+
+.expBtnTH{
+  padding-left: 0 !important;
+  padding-right: 24px !important;
 }
 
 

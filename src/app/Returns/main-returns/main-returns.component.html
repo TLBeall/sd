@@ -985,12 +985,11 @@
             <td mat-footer-cell *matFooterCellDef [ngClass]="selectionMode? 'sbcShifted':'sbc'"></td>
         </ng-container>
         <ng-container matColumnDef="MailCode">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="mailLevelColumn"> Mail
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="mailLevelColumn mailcodeCell"> Mail
                 Code
             </th>
-            <td mat-cell *matCellDef="let mailList" class="mailLevelColumn"><div class="mailcodeCell"> {{mailList.MailCode}}</div>
-            </td>
-            <td mat-footer-cell *matFooterCellDef class="mailLevelColumn" [ngClass]="{
+            <td mat-cell *matCellDef="let mailList" class="mailLevelColumn mailcodeCell"> {{mailList.MailCode}}</td>
+            <td mat-footer-cell *matFooterCellDef class="mailLevelColumn mailcodeCell" [ngClass]="{
                              'listElementDefault': phase.Measure.IsLast == false,
                              'elementLast': phase.Measure.IsLast == true
                          }">

@@ -95,12 +95,9 @@ export class ReturnsComponent {
   private PHList: string[] = [];
   private PHfilteredOptions: Observable<string[]>;
 
-<<<<<<< HEAD
   // private CagingArr: CagingDailies[] = new Array<CagingDailies>();
   // private CageRec: CagingDailies;
 
-=======
->>>>>>> e65a4fa4a2303e901b7260757890cb449d3c8f40
   constructor(route: ActivatedRoute, private _authService: AuthService, private _g: GlobalService, private router: Router) {
     this.route = route;
    

@@ -137,7 +137,7 @@
                 NLM</th>
             <td mat-cell *matCellDef="let client">
                 <span [ngClass]="{'negative':client.Measure.NLM < 0}" *ngIf="!client.Measure.Expanded">{{client.Measure.NLM|currency}}</span></td>
-            <td mat-footer-cell *matFooterCellDef><span [ngClass]="{'negative':this.rootReturns[0].Measure.NLM < 0}">{{
+           <td mat-footer-cell *matFooterCellDef><span [ngClass]="{'negative':this.rootReturns[0].Measure.NLM < 0}">{{
                     this.grandTotal.NLM|currency}}</span></td>
         </ng-container>
         <ng-container matColumnDef="CLM">
@@ -547,7 +547,7 @@
                 New </th>
             <td mat-cell *matCellDef="let campaign"><span *ngIf="!campaign.Measure.Expanded">{{campaign.Measure.NewDonors|number}}</span></td>
             <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                            'elementCollapsed': ReadyToCollapseAll(mailType.CampaignList) == false,
+                           'elementCollapsed': ReadyToCollapseAll(mailType.CampaignList) == false,
                             'elementExpanded':ReadyToCollapseAll(mailType.CampaignList) == true,
                             'elementLast': mailType.Measure.IsLast == true,
                             'campaignElementDefault': mailType.Measure.IsLast == false
@@ -693,7 +693,7 @@
             <th mat-header-cell *matHeaderCellDef [ngClass]="selectionMode? 'sbcShifted':'sbc'"></th>
             <td mat-cell *matCellDef="let phase" [ngClass]="selectionMode? 'sbcShifted':'sbc'">
                 <mat-checkbox class="md-checkbox" *ngIf="selectionMode == true" [(ngModel)]="phase.Measure.Selected"
-                    [(indeterminate)]="phase.Measure.Indeterminate" (change)="ToogleChecks(phase)"></mat-checkbox>
+                   [(indeterminate)]="phase.Measure.Indeterminate" (change)="ToogleChecks(phase)"></mat-checkbox>
             </td>
             <td mat-footer-cell *matFooterCellDef [ngClass]="selectionMode? 'sbcShifted':'sbc'"></td>
         </ng-container>
@@ -801,7 +801,7 @@
                 New
             </th>
             <td mat-cell *matCellDef="let phase"><span *ngIf="!phase.Measure.Expanded">{{phase.Measure.NewDonors|number}}</span></td>
-            <td mat-footer-cell *matFooterCellDef [ngClass]="{
+           <td mat-footer-cell *matFooterCellDef [ngClass]="{
                                      'elementCollapsed': ReadyToCollapseAll(campaign.PhaseList) == false,
                                      'elementExpanded':ReadyToCollapseAll(campaign.PhaseList) == true,
                                      'elementLast': campaign.Measure.IsLast == true,
@@ -985,12 +985,11 @@
             <td mat-footer-cell *matFooterCellDef [ngClass]="selectionMode? 'sbcShifted':'sbc'"></td>
         </ng-container>
         <ng-container matColumnDef="MailCode">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="mailLevelColumn"> Mail
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="mailLevelColumn mailcodeCell"> Mail
                 Code
             </th>
-            <td mat-cell *matCellDef="let mailList" class="mailLevelColumn"> {{mailList.MailCode}}
-            </td>
-            <td mat-footer-cell *matFooterCellDef class="mailLevelColumn" [ngClass]="{
+            <td mat-cell *matCellDef="let mailList" class="mailLevelColumn mailcodeCell"> {{mailList.MailCode}}</td>
+            <td mat-footer-cell *matFooterCellDef class="mailLevelColumn mailcodeCell" [ngClass]="{
                              'listElementDefault': phase.Measure.IsLast == false,
                              'elementLast': phase.Measure.IsLast == true
                          }">
@@ -1045,7 +1044,7 @@
             <td mat-footer-cell *matFooterCellDef [ngClass]="{
                              'listElementDefault': phase.Measure.IsLast == false,
                              'elementLast': phase.Measure.IsLast == true
-                         }">
+                        }">
                 {{phase.Measure.Mailed|date:'shortDate'}} </td>
         </ng-container>
         <ng-container matColumnDef="Caged">
@@ -1249,7 +1248,7 @@
 </ng-container>
 
 <tr mat-header-row [ngStyle]="{'visibility':mailType.CampaignList[0].Measure.Expanded?'collapse':'visible' }"
-    *matHeaderRowDef="campaignDisplayedColumns" [ngClass]="{
+   *matHeaderRowDef="campaignDisplayedColumns" [ngClass]="{
             'selectionBoxUnchecked': mailType.Measure.Selected == false
         }"></tr>
 <tr mat-row *matRowDef="let campaign; columns: campaignDisplayedColumns;" class="example-element-row" [ngClass]="{
@@ -1346,7 +1345,7 @@
         </mat-form-field>
 
         <!-- Mail Type - MT -->
-        <mat-form-field class="tbElement">
+        <!-- <mat-form-field class="tbElement">
             <mat-chip-list #MTchipList>
                 <mat-chip *ngFor="let mailtype of MTList" [selectable]="selectable" [removable]="removable" (removed)="MT_Remove(mailtype)">
                     {{mailtype}}
@@ -1359,10 +1358,10 @@
             <mat-autocomplete #MTauto="matAutocomplete" (optionSelected)="MT_Selected($event)">
                 <mat-option class="md-custom-option" *ngFor="let mailtype of MTfilteredOptions | async" [value]="mailtype">{{mailtype}}</mat-option>
             </mat-autocomplete>
-        </mat-form-field>
+        </mat-form-field> -->
 
         <!-- Campaign - CA -->
-        <mat-form-field class="tbElement">
+        <!-- <mat-form-field class="tbElement">
             <mat-chip-list #CAchipList>
                 <mat-chip *ngFor="let campaign of CAList" [selectable]="selectable" [removable]="removable" (removed)="CA_Remove(campaign)">
                     {{campaign}}
@@ -1375,10 +1374,10 @@
             <mat-autocomplete #CAauto="matAutocomplete" (optionSelected)="CA_Selected($event)">
                 <mat-option class="md-custom-option" *ngFor="let campaign of CAfilteredOptions | async" [value]="campaign">{{campaign}}</mat-option>
             </mat-autocomplete>
-        </mat-form-field>
+        </mat-form-field> -->
 
         <!-- Phase - PH -->
-        <mat-form-field class="tbElement">
+        <!-- <mat-form-field class="tbElement">
             <mat-chip-list #PHchipList>
                 <mat-chip *ngFor="let phase of PHList" [selectable]="selectable" [removable]="removable" (removed)="PH_Remove(phase)">
                     {{phase}}
@@ -1391,30 +1390,9 @@
             <mat-autocomplete #PHauto="matAutocomplete" (optionSelected)="PH_Selected($event)">
                 <mat-option class="md-custom-option" *ngFor="let phase of PHfilteredOptions | async" [value]="phase">{{phase}}</mat-option>
             </mat-autocomplete>
-        </mat-form-field>
-
-        <!-- 
-        <mat-form-field class="tbElement">
-            <mat-chip-list #chipList>
-                <mat-chip *ngFor="let client of clients"
-                 [selectable]="selectable" 
-                 [removable]="removable" 
-                 (removed)="remove(client)">
-                    {{client}}
-                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                </mat-chip>
-                <input placeholder="Client..." #clientListInput 
-                [formControl]="clientControl" 
-                [matAutocomplete]="auto"
-                [matChipInputFor]="chipList" 
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                [matChipInputAddOnBlur]="addOnBlur" 
-                (matChipInputTokenEnd)="add($event)">
-            </mat-chip-list>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                <mat-option class="md-custom-option" *ngFor="let client of filteredOptions | async" [value]="client">{{client}}</mat-option>
-            </mat-autocomplete>
         </mat-form-field> -->
+
+
         <br>
         <div class="center-align">
             <button mat-raised-button color="accent" [disabled]="clients == '' || !validateDate()" (click)="applyChanges()">
@@ -1467,7 +1445,7 @@
             chicken
             hamburger, tenderloin turkey rump ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger
             venison
-            brisket tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye tail
+           brisket tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye tail
             short
             ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger flank. Doner rump frankfurter
             meatball

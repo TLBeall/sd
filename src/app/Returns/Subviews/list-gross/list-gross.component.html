@@ -7,10 +7,12 @@
   <!-- <ul>
     <li *ngFor="let element of ListGrossArr">{{element.Date}}</li>
   </ul> -->
-
-  <h6> Client: {{this.ClientName}} - {{this.Client}} </h6>
-  <h6> Package: {{this.PackageName}} - {{this.PhaseTitle}} </h6>
-  <h6> Mail: {{this.MailCode}} - {{this.Description}} </h6>
+<div class="tableHeader">
+  <h6> {{this.ClientName}} - {{this.Client}} </h6>
+  <h6> {{this.PackageName}} - {{this.PhaseTitle}} </h6>
+    <br>
+  <h5> Caging history for {{this.MailCode}} | {{this.Description}} </h5>
+</div>
   <br>
   <table id="table1" mat-table [dataSource]="this.ListGrossArr">
     <ng-container matColumnDef="Date">

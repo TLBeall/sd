@@ -17,16 +17,99 @@
     }
 }
 
+#table2{
+  width: 96%;
+  margin: 0 auto;
+  th{
+      font-size: 12px !important;
+  }
+  td{
+      font-size: 11px;
+      &.mat-cell{
+        padding: 0 !important;
+      }
+      &.mat-footer-cell{
+          font-weight: bold;
+          border-bottom:none;
+          border-top: 1px solid $color-gainsboro;
+          
+        }
+  }
+}
+
+#table3{
+  width: 100%;
+  margin: 0 auto !important;
+  th{
+      font-size: 12px !important;
+  }
+  td{
+      font-size: 11px;
+      &.mat-cell{
+        padding-top: 4px !important;
+        padding-bottom: 4px !important;
+      }
+      &.mat-footer-cell{
+          font-weight: bold;
+          border-bottom:none;
+          border-top: 1px solid $color-gainsboro;
+          
+        }
+  }
+}
+
+//Controls child view initial settings
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+//Removes padding from all nested tables
+::ng-deep table > tbody > tr > td.cdk-column-expandedDetail.mat-column-expandedDetail{
+  padding: 0 !important;
+}
+
+
 .totalColumn{
     font-weight: bold;
+}
+
+.expBtnColumn{
+  width: 55px;
+}
+
+.mailcodeColumn{
+  width: 120px;
+  span{
+    word-wrap: break-word;
+  }
+}
+
+.dateColumn{
+  text-align: left;
+}
+
+.descriptionColumn{
+  width: 125px;
+}
+
+.childDateColumn{
+  width: 300px;
+  span{
+    padding-left: 25px;
+  }
+}
+
+.tableHeader{
+  width: 96%;
+  margin: 0 auto;
 }
 
 .mat-row {
     height: auto;
   }
   .mat-cell {
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
     border-bottom:none;
     text-align: center;
   }      
@@ -48,26 +131,83 @@ tr.mat-header-row{
     height:auto; //row height in mat tables is required to be manually controlled by each cell    
 }
 
-
-
-.dateColumn{
-    text-align: left;
+.mailcodeButton{
+  float: right;
+  width:30px;
+  height:30px;
+  opacity: 0.6;
+  &:hover{
+    opacity: 0.8;
+    color: $color-blue-dark;
+  }
+  i{
+    padding: 0px 0px 10px 0px;
+  }
 }
+
+.expandAllMailcodeButton{
+  width:30px;
+  height:30px;
+  opacity: 0.8;
+  &:hover{
+    opacity: 0.8;
+    color: $color-blue-dark;
+  }
+  i{
+    padding: 0px 0px 10px 0px;
+  }
+}
+
+.expBtnTH{
+  padding-left: 0 !important;
+  padding-right: 24px !important;
+}
+
+
 
   //Controls hover and selected for the rows
 tr.example-element-row:not(.example-expanded-row):hover {
     background: #e3eff7;
     td{
-      .returnsExpCollBtn{
+      .mailcodeButton{
         background-color:$color-whitesmoke !important;
       }
     }
   }
+
   tr.example-element-row:not(.example-expanded-row):active {
     background: #e3eff7;
     td{
-      .returnsExpCollBtn{
+      .mailcodeButton{
         background-color:$color-whitesmoke !important;
       }
     }
   }
+
+  .headerCollapsed{
+    border-bottom: none !important;
+    visibility: collapse;
+  }
+  .headerExpanded{
+    border-bottom: 1px solid $color-gainsboro;
+  }
+
+  .rowCollapsed{
+    display: none;
+  }
+
+  .rowExpanded{
+    display: inline;
+  }
+
+  .mcRowCollapsed{
+    font-weight: normal;
+    font-size: 11px;
+  }
+
+  .mcRowExpanded{
+    font-weight: bold;
+    font-size: 13px;
+  }
+
+

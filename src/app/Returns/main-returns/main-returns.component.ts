@@ -95,9 +95,12 @@ export class ReturnsComponent {
   private PHList: string[] = [];
   private PHfilteredOptions: Observable<string[]>;
 
+<<<<<<< HEAD
   // private CagingArr: CagingDailies[] = new Array<CagingDailies>();
   // private CageRec: CagingDailies;
 
+=======
+>>>>>>> e65a4fa4a2303e901b7260757890cb449d3c8f40
   constructor(route: ActivatedRoute, private _authService: AuthService, private _g: GlobalService, private router: Router) {
     this.route = route;
    
@@ -121,7 +124,6 @@ export class ReturnsComponent {
     // this.CagingArr.push(this.CageRec);
     // _authService.createCagingDailies(this.CagingArr).subscribe();
   }
-
 
   //CHIP FILTER START
   private CL_filter(name: string): string[] {
@@ -321,7 +323,6 @@ export class ReturnsComponent {
   //   }
   // }
 
-
   // selected(event: MatAutocompleteSelectedEvent): void {
   //   if (!this.clients.includes(this.getAcronym(event.option.viewValue)))
   //     this.clients.push(this.getAcronym(event.option.viewValue));
@@ -333,8 +334,6 @@ export class ReturnsComponent {
   //   );
   //   this.clientListInput.nativeElement.blur();
   // }
-
-
 
   // private _filter(name: string): string[] {
   //   if (name == null)
@@ -493,7 +492,6 @@ export class ReturnsComponent {
     this.endDate = new Date(Date.parse(endDate.split('.')[0].toString() + '/' + endDate.split('.')[1].toString() + '/' + endDate.split('.')[2].toString()));
   }
 
-
   NavigateToListPerformance(ListOwner: string, ListManager: string, Recency: string, startDate: Date, endDate: Date) {
     this._g.clearCurCache = true;
     if (!ListOwner) ListOwner = '_';
@@ -526,7 +524,6 @@ export class ReturnsComponent {
     return 'collapse';
   }
 
-
   CollapseListBtn(Element): boolean {
     if (Element.Measure.Expanded == true) {
       return true;
@@ -534,7 +531,6 @@ export class ReturnsComponent {
       return false;
     }
   }
-
 
   ReadyToCollapseAll(list: any[]): boolean {
     var RetValue: boolean = false;
@@ -548,7 +544,6 @@ export class ReturnsComponent {
     })
     return RetValue;
   }
-
 
   NextLevel(Parent: any, ChildList: any[]) {
     var SetToExpand = true;
@@ -606,7 +601,6 @@ export class ReturnsComponent {
       })
     }
   }
-
 
   ToogleChecks(element: any) {
     if (element.Measure.Indeterminate)
@@ -710,7 +704,7 @@ export class ReturnsComponent {
           if (b.Measure["Selected"] == false || b.Measure["Indeterminate"])
             allcampSelected = false;
           if (b.Measure["Selected"] == true || b.Measure["Indeterminate"])
-            allcampUnselected = false;
+           allcampUnselected = false;
         })
         if ((!allcampSelected) && (!allcampUnselected))
           a.Measure["Indeterminate"] = true;
@@ -822,7 +816,7 @@ export class ReturnsComponent {
         if (this.ReadyToCollapseAll(Element))
           this.NextLevel(Element, Element);
         data = Element.slice();
-        break;
+       break;
       }
       case "MailTypeList": {
         if (this.ReadyToCollapseAll(Element.MailTypeList))
@@ -880,7 +874,6 @@ export class ReturnsComponent {
       }
     }
 
-
     var sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
@@ -908,7 +901,6 @@ export class ReturnsComponent {
         default: return 0;
       }
     });
-
 
     switch (myType) {
       case "Client": {
@@ -995,3 +987,5 @@ export class ReturnsComponent {
 function compare(a: string, b: string, isAsc) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
+
+

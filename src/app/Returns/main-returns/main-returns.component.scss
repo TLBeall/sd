@@ -122,11 +122,16 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 //controls the client/type/campaign/phase/mailcode column width
 .mailLevelColumn{
-  width:110px !important;
-  min-width: 110px !important; //FF and IE
-  max-width: 110px !important;
+  width:120px !important;
+  min-width: 120px !important; //FF and IE
+  max-width: 120px !important;
   overflow: visible; //so that it does not expand td
   white-space: nowrap; //so that it does not wrap the text
+  &.mailcodeCell{ // so word wrap is applied specifically to the mail code cell (which is bound by a much tighter space)
+      word-break: break-all !important;
+      white-space: normal;
+      padding-right: 4px;
+  }
 }
 
 //web-kit specific (Google Chrome) - bottom borders appear in the header cells that we manually attach classes/sizes to

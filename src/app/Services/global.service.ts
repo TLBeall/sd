@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { ClientList } from '../Models/ClientList.model';
 import { Returns } from '../Models/Returns.model';
 import { ListPerformance } from '../Models/ListPerformance.model';
+import { CagingDailies } from '../Models/CagingDailies.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,8 @@ export class GlobalService {
 
   public clientArr: ClientList[];
   public clearCurCache: boolean = false;
+
+  public whitemailElement: CagingDailies;
 
   constructor() {
   }

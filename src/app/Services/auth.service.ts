@@ -183,5 +183,32 @@ export class AuthService {
     var headersForGetListAPI = new Headers({'Content-Type': 'Application/Json', 'Authorization' : 'Bearer ' + Token});
     return this.http.post(createDailiesURL, body, {headers: headersForGetListAPI});
   }  
+
+  getWhitemailByClient(Agency: string, Client: string){
+    var Token = "";
+    var getwhitemailURL = "https://sd360.sunrisedataservices.com/api/GetDailies?Agency=" + Agency + "&Client=" + Client + "&MailCode=WM&Skip=0&RequestedCount=100";
+
+    var headersForGetWhitemailAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.get(getwhitemailURL, {headers: headersForGetWhitemailAPI}).pipe(map(res => res.json()));
+  }
+
+  deleteWhitemail(wmStrArr: string){
+    var Token = "";
+    var deleteWMURL = "https://sd360.sunrisedataservices.com/api/DeleteDailies?ID=" + wmStrArr;
+
+    var headersFordeleteWhitemailAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.post(deleteWMURL, {headers: headersFordeleteWhitemailAPI}).pipe(map(res => res.json()));
+  }
+
+  editWhitemail(ID: number){
+    var Token = "";
+    var editWhitemailURL = "https://sd360.sunrisedataservices.com/api/EditDailies?ID=" + ID;
+
+    var headersForEditWhitemailAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
+    return this.http.put(editWhitemailURL, {headers: headersForEditWhitemailAPI}).pipe(map(res => res.json()));
+  }
+
+
+  // https://sd360.sunrisedataservices.com/api/EditDailies?ID=139473
 }
 

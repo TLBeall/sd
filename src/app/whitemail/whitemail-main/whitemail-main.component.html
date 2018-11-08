@@ -1,0 +1,101 @@
+<app-toolbar></app-toolbar>
+<br>
+<!-- <button mat-raised-button color="primary" (click)="openJazz()">
+    Open dialog
+  </button> -->
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <mat-form-field class="clientList">
+        <input type="text" placeholder="Client" aria-label="Number" matInput [formControl]="myControl"
+          [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let client of filteredClientList | async" [value]="client" (click)="mainSelectClient(client)">
+            {{client}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <br>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-12" *ngIf="!displayTable">
+      <mat-card class="mat-elevation-z8 emptyTableMessage">
+        <h5>Please Select a client</h5>
+      </mat-card>
+    </div>
+    <div class="col-10">
+      <table mat-table *ngIf="displayTable" class="mat-elevation-z8" [dataSource]="this.rootWhitemail">
+          <ng-container matColumnDef="SelectionBox">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element">
+                <!-- the mousedown event fixes the bug where in google chrome you cant shift click material checkboxes-->
+                  <mat-checkbox 
+                  (click)="checkSelected(element, $event)" 
+                  (mousedown)="$event.shiftKey ? $event.preventDefault() : null"
+                  class="md-checkbox" *ngIf="selectionMode == true"></mat-checkbox>
+                  <!-- (click)="$event.shiftKey ? multipleToggle(row, $event) : null" -->
+
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+        <ng-container matColumnDef="Date">
+          <th mat-header-cell *matHeaderCellDef title="Donation Date"> Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.DonationDate|date:'fullDate'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Non-Donors">
+          <th mat-header-cell *matHeaderCellDef> Non-Donors </th>
+          <td mat-cell *matCellDef="let element"> {{element.NonDonors}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Donors">
+          <th mat-header-cell *matHeaderCellDef title="All donors: cash, card, and credit"> Donors </th>
+          <td mat-cell *matCellDef="let element"> {{element.TotalDonors}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Gross">
+          <th mat-header-cell *matHeaderCellDef title="All donations: cash, card, and credit"> Gross </th>
+          <td mat-cell *matCellDef="let element"> {{element.TotalGross|currency:'USD':'symbol':'1.2-2'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="ButtonControl">
+          <th mat-header-cell *matHeaderCellDef class="ButtonControlCell"> </th>
+          <td mat-cell *matCellDef="let element" class="ButtonControlCell">
+              <button mat-icon-button *ngIf="element.showEditButton" (click)="navigateToEdit(element)"><i class="material-icons">edit</i></button>  
+          </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="selectionBox">
+            <th mat-header-cell *matHeaderCellDef [ngClass]="selectionMode? 'sbcShifted':'sbc'"></th>
+            <td mat-cell *matCellDef="let client" [ngClass]="selectionMode? 'sbcShifted':'sbc'">
+                <mat-checkbox class="md-checkbox" #clientTable [(ngModel)]="client.Measure.Selected" [(indeterminate)]="client.Measure.Indeterminate"
+                    (change)="ToogleChecks(client)" *ngIf="selectionMode == true"></mat-checkbox>
+            </td>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="selectionMode? 'sbcShifted':'sbc'"></td>
+        </ng-container> -->
+
+
+        <tr mat-header-row *matHeaderRowDef="MainDisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: MainDisplayedColumns;" (mouseenter)="hoverRow(row)" (mouseleave) ="hoverLeave(row)"></tr>
+      </table>
+    </div>
+    <div class="col-2" *ngIf="displayTable">
+      <div class="stickyButtons">
+        <div class="row">
+          <mat-card class="mat-elevation-z8">
+            <div>
+              <button mat-icon-button><i class="material-icons">add_circle</i></button>
+            </div>
+            <div>
+              <button mat-icon-button (click)="toggleSelection()" [style.color]="selectionMode? '#1279C0' : 'black'">
+                <i class="material-icons" >list</i>
+              </button>
+            </div>
+            <div>
+              <button mat-icon-button (click)="deleteWM()" *ngIf="selectionMode"><i class="material-icons">delete</i></button>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

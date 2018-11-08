@@ -9,6 +9,9 @@ import { ListPerformanceComponent } from './returns/Subviews/list-performance/li
 import { CustomReuseStrategy } from './Services/CustomReuseStrategy.service';
 import { ListGrossComponent } from './Returns/Subviews/list-gross/list-gross.component';
 import { PhaseGrossComponent } from './Returns/Subviews/phase-gross/phase-gross.component';
+import { WhitemailMainComponent } from './whitemail/whitemail-main/whitemail-main.component';
+import { WhitemailNewComponent } from './whitemail/whitemail-new/whitemail-new.component';
+import { WhitemailEditComponent } from './whitemail/whitemail-edit/whitemail-edit.component';
 // import { ResolvelistperformanceComponent } from './Services/resolve-listperformance/resolve-listperformance.component';
 
 const routes: Routes = [
@@ -19,6 +22,9 @@ const routes: Routes = [
   {path: 'listperformance/:listowner/:listmanager/:recency/:startdate/:enddate', component: ListPerformanceComponent },
   {path: 'listgross/:packagecode/:phasenumber/:mailcode', component: ListGrossComponent },
   {path: 'phasegross/:packagecode/:phasenumber', component: PhaseGrossComponent },
+  {path: 'whitemail', component: WhitemailMainComponent },
+  {path: 'whitemail/new', component: WhitemailNewComponent },
+  {path: 'whitemail/edit/:id', component: WhitemailEditComponent },
 
   // {path: 'listperformance', component: ListPerformanceComponent, resolve: {rowData: ResolvelistperformanceComponent} },
   {path: '**', component: PageNotFoundComponent} //Setup for if URL does not match
@@ -35,7 +41,15 @@ const routes: Routes = [
 })
 
 export class AppRoutingModule { }
-export const routingComponents = [InternalHomePageComponent, ReturnsComponent, 
-  ListPerformanceComponent, ListGrossComponent, PhaseGrossComponent,
-  PageNotFoundComponent];
+export const routingComponents = [
+  InternalHomePageComponent, 
+  ReturnsComponent, 
+  ListPerformanceComponent, 
+  ListGrossComponent, 
+  PhaseGrossComponent, 
+  WhitemailMainComponent,
+  WhitemailNewComponent,
+  WhitemailEditComponent,
+  PageNotFoundComponent
+];
 

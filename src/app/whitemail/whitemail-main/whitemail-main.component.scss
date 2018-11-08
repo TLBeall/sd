@@ -1,0 +1,43 @@
+@import '~src/appTheme.scss'; 
+
+$selectionColumnShift: 32px;
+
+.clientList{
+    width: 350px;
+}
+
+table {
+    width: 100%;
+  }
+
+  .emptyTableMessage{
+      // height: 90vh;
+      background-color: $color-whitesmoke;
+      h5{
+          text-align: center;
+      }
+  }
+
+  .stickyButtons{
+    position: -webkit-sticky; /* Safari */
+    position: sticky !important;
+    top: 100px !important;
+    z-index: 120;
+  }
+
+  //Collectively control the row settings and cell settings (set the row height of all the tables)
+.mat-row {
+    &:hover{
+        background: #e3eff7;
+    }
+  }
+  .mat-cell {
+    border-bottom:none;
+  }
+
+
+  .ButtonControlCell{
+    padding-right: 12px !important;
+    width: 52px !important;
+    min-width: 52px !important;
+  }

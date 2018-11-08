@@ -20,6 +20,7 @@ $color-blue-light: #59a1d3;
 $color-blue-dark: #0a5caa;
 
 $color-very-pale-orange: #ffdfc7;
+$color-success: #5cb85c;
 
 //Changes size of the material design checkbox (default hw is 20x20) to a medium size checkbox
 //Apply "md-checkbox" as a class on the mat-checkbox element
@@ -257,6 +258,10 @@ $shiftStyle: cubic-bezier(0.175, 0.885, 0.32, 1.1);
 
   .mi_group::after{
     content: "group";
+  }
+
+  .mi_add_box::after{
+      content: "add_box";
   }
 
 

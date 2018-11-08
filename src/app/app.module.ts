@@ -18,7 +18,8 @@ import { HomePageInternalToolbarComponent } from './toolbar/home-page-internal-t
 import { MatTableModule } from '@angular/material/table';
 import { MatTreeModule, MatSort, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule, 
         MatSortModule, MatProgressSpinnerModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatInputModule, 
-        MatCheckboxModule, MatProgressBarModule, MatSlideToggleModule, MatAutocompleteModule, MatChipsModule, MatButtonToggleModule  } from '@angular/material';
+        MatCheckboxModule, MatProgressBarModule, MatSlideToggleModule, MatAutocompleteModule, MatChipsModule, MatButtonToggleModule,
+        MatDialogModule, MatGridListModule   } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';        
 import { InternalHomePageComponent } from './internal-home-page/internal-home-page.component';
 import { InternalHomeDashboardComponent } from './internal-home-page/internal-home-dashboard/internal-home-dashboard.component';
@@ -28,6 +29,9 @@ import { CustomReuseStrategy } from './Services/CustomReuseStrategy.service';
 import { ListPerformanceToolbarComponent } from './toolbar/list-performance-toolbar/list-performance-toolbar.component';
 import { ListGrossComponent } from './Returns/Subviews/list-gross/list-gross.component';
 import { PhaseGrossComponent } from './Returns/Subviews/phase-gross/phase-gross.component';
+import { WhitemailMainComponent } from './whitemail/whitemail-main/whitemail-main.component';
+import { WhitemailNewComponent } from './whitemail/whitemail-new/whitemail-new.component';
+import { WhitemailEditComponent } from './whitemail/whitemail-edit/whitemail-edit.component';
 
 
 @NgModule({
@@ -47,7 +51,10 @@ import { PhaseGrossComponent } from './Returns/Subviews/phase-gross/phase-gross.
     InternalHomeDashboardComponent,
     ListPerformanceToolbarComponent,
     ListGrossComponent,
-    PhaseGrossComponent
+    PhaseGrossComponent,
+    WhitemailMainComponent,
+    WhitemailNewComponent,
+    WhitemailEditComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +85,9 @@ import { PhaseGrossComponent } from './Returns/Subviews/phase-gross/phase-gross.
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatChipsModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatDialogModule,
+    MatGridListModule
   ],
   providers: [
     AuthService,

@@ -1,0 +1,44 @@
+@import '~src/appTheme.scss'; 
+
+.totalsBox{
+    background-color: $color-whitesmoke;
+    padding: 20px 0px;
+    input{
+        font-weight: bold;
+    }
+}
+
+.mainInputBox{
+    width: 90%;
+    margin: 0 auto;
+}
+
+.dropdownIcon{
+    position: relative;
+    height: 18px;
+    width: 18px; 
+    opacity: 0.75;
+}
+
+.btnContainer{
+    text-align: center; //Buttons are inline elements, so this is how you center inside a div
+        #cancelBtn{
+            background-color: $color-gallery;
+            margin-right: 10px;
+        }
+        #updateBtn{
+
+            background-color: $color-success;
+            margin-left: 10px;
+        }
+}
+
+//Shifts the $ sign in the input boxes up to line up with the input text
+::ng-deep .mat-form-field-prefix{
+    position: relative !important;
+    top: 50% !important;
+}
+//Reduces the size of the input boxes
+// ::ng-deep .mat-form-field-infix{
+//     padding: 6px 0px 16px 0px !important;
+// }

@@ -1,6 +1,144 @@
-
 <app-toolbar></app-toolbar>
 <br>
-<p>
-  whitemail-new works!
-</p>
+<div class="container">
+  <mat-card class="mat-elevation-z8">
+    <ul>
+      <li *ngFor="let element of whitemailArr">
+        <div class="row">
+          <div class="col-lg-11 objectColumn">
+            <div class="row">
+              <div class="col-lg-6">
+                <mat-form-field appearance="outline" class="mainInputBox">
+                  <mat-label>Client</mat-label>
+                  <input required aria-label="Number" matInput [formControl]="element.Control" [matAutocomplete]="auto"
+                    [(ngModel)]="element.Client">
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let client of filteredClientList | async" [value]="client">
+                      {{client}}
+                    </mat-option>
+                  </mat-autocomplete>
+                  <mat-icon matSuffix class="dropdownIcon">arrow_drop_down</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-4">
+                <!-- Set the "value" (aka the starting value via the ngModel. Using the ngModel because that way it also updates the whitemailElement object-->
+                <mat-form-field appearance="outline" class="mainInputBox">
+                  <mat-label>Donation Date</mat-label>
+                  <input required matInput [matDatepicker]="CageDatePick" (dateInput)="changeDate($event)" [(ngModel)]="element.DonationDate">
+                  <mat-datepicker-toggle matSuffix [for]="CageDatePick"></mat-datepicker-toggle>
+                  <mat-datepicker #CageDatePick>
+                  </mat-datepicker>
+                  <!-- (dateInput)="validateDate($event)" -->
+                </mat-form-field>
+              </div>
+              <div class="col-lg-2">
+                <mat-form-field appearance="outline" class="mainInputBox">
+                  <mat-label>Non-Donors</mat-label>
+                  <input matInput placeholder="Non-donors" [(ngModel)]="element.NonDonors">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="row">
+                  <div class="col-6">
+                    <mat-form-field appearance="outline" class="mainInputBox">
+                      <mat-label>Cash Donors</mat-label>
+                      <input matInput [(ngModel)]="element.CashDonors">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-6">
+                    <mat-form-field appearance="outline" class="mainInputBox">
+                      <mat-label>Cash Amount</mat-label>
+                      <span matPrefix>$</span>
+                      <input matInput [(ngModel)]="element.CashAmount">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="row">
+                  <div class="col-6">
+                    <mat-form-field appearance="outline" class="mainInputBox">
+                      <mat-label>Check Donors</mat-label>
+                      <input matInput [(ngModel)]="element.CheckDonors">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-6">
+                    <mat-form-field appearance="outline" class="mainInputBox">
+                      <mat-label>Check Amount</mat-label>
+                      <span matPrefix>$</span>
+                      <input matInput [(ngModel)]="element.CheckAmount">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="row">
+                  <div class="col-6">
+                    <mat-form-field appearance="outline" class="mainInputBox">
+                      <mat-label>Card Donors</mat-label>
+                      <input matInput [(ngModel)]="element.CardDonors">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-6">
+                    <mat-form-field appearance="outline" class="mainInputBox">
+                      <mat-label>Card Amount</mat-label>
+                      <span matPrefix>$</span>
+                      <input matInput [(ngModel)]="element.CardAmount">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-1 buttonColumn">
+            <div class="row">
+              <div class="col-lg-12">
+                <button mat-icon-button><i class="material-icons" (click)="deleteRow(element)">delete</i></button>
+              </div>
+              <div class="col-lg-12">
+                <button mat-icon-button *ngIf="element.isLast" (click)="addWMRow()"><i class="material-icons">add_box</i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </li>
+    </ul>
+
+    <div class="btnContainer">
+      <button id="submitBtn" mat-raised-button (click)="addWhitemail()">Submit</button>
+    </div>
+  </mat-card>
+</div>
+
+
+
+<div id="modalBackground" *ngIf="showSubmittedModal">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <mat-card class="mat-elevation-z8 deleteModalCard">
+          <div>
+            <div class="row">
+              <div class="col-12 cancelDiv">
+                <button mat-icon-button id="modalCancelBtn" (click)="modalCancel()"><i class="material-icons">cancel</i></button>
+
+              </div>
+              <div class="col-12 bannerDiv">
+                <i class="material-icons bannerIcon">check_circle_outline</i>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 updatedDiv">
+                <span class="updatedMsg">Whitemail Added!</span>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

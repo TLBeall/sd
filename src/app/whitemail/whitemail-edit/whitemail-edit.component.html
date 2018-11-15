@@ -8,8 +8,7 @@
       <div class="col-md-6 offset-md-1">
         <mat-form-field appearance="outline" class="mainInputBox">
           <mat-label>Client</mat-label>
-          <input required aria-label="Number" matInput [formControl]="myControl"
-            [matAutocomplete]="auto" [(ngModel)]="whitemailElement.Client">
+          <input required aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" [(ngModel)]="whitemailElement.Client">
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let client of filteredClientList | async" [value]="client">
               {{client}}
@@ -33,18 +32,18 @@
     <br>
 
     <div class="row">
-        <div class="col-md-4 offset-md-1">
-            <mat-form-field appearance="outline" class="mainInputBox">
-              <mat-label>Non-Donors</mat-label>
-              <input matInput placeholder="Non-donors" [(ngModel)]="whitemailElement.NonDonors" (blur)="updateTotal()">
-            </mat-form-field>
-          </div>
+      <div class="col-md-4 offset-md-1">
+        <mat-form-field appearance="outline" class="mainInputBox">
+          <mat-label>Non-Donors</mat-label>
+          <input matInput placeholder="Non-donors" [(ngModel)]="whitemailElement.NonDonors" (blur)="updateTotal()">
+        </mat-form-field>
+      </div>
     </div>
 
     <div class="row">
       <div class="col-md-4 offset-md-1">
         <mat-form-field appearance="outline" class="mainInputBox">
-            <mat-label>Cash Donors</mat-label>
+          <mat-label>Cash Donors</mat-label>
           <input matInput [(ngModel)]="whitemailElement.CashDonors" (blur)="updateTotal()">
         </mat-form-field>
       </div>
@@ -60,13 +59,13 @@
     <div class="row">
       <div class="col-md-4 offset-md-1">
         <mat-form-field appearance="outline" class="mainInputBox">
-            <mat-label>Card Donors</mat-label>
+          <mat-label>Card Donors</mat-label>
           <input matInput [(ngModel)]="whitemailElement.CardDonors" (blur)="updateTotal()">
         </mat-form-field>
       </div>
       <div class="col-md-4">
         <mat-form-field appearance="outline" class="mainInputBox">
-            <mat-label>Card Amount</mat-label>
+          <mat-label>Card Amount</mat-label>
           <span matPrefix>$</span>
           <input matInput [(ngModel)]="whitemailElement.CardAmount" (blur)="updateTotal()">
         </mat-form-field>
@@ -76,13 +75,13 @@
     <div class="row">
       <div class="col-md-4 offset-md-1">
         <mat-form-field appearance="outline" class="mainInputBox">
-            <mat-label>Check Donors</mat-label>
+          <mat-label>Check Donors</mat-label>
           <input matInput [(ngModel)]="whitemailElement.CheckDonors" (blur)="updateTotal()">
         </mat-form-field>
       </div>
       <div class="col-md-4">
         <mat-form-field appearance="outline" class="mainInputBox">
-            <mat-label>Check Amount</mat-label>
+          <mat-label>Check Amount</mat-label>
           <span matPrefix>$</span>
           <input matInput [(ngModel)]="whitemailElement.CheckAmount" (blur)="updateTotal()">
         </mat-form-field>
@@ -93,13 +92,13 @@
     <div class="row totalsBox">
       <div class="col-md-4 offset-md-1">
         <mat-form-field appearance="outline" class="mainInputBox">
-            <mat-label>Total Donors</mat-label>
+          <mat-label>Total Donors</mat-label>
           <input disabled matInput [value]="this.whitemailElement.TotalDonors">
         </mat-form-field>
       </div>
       <div class="col-md-4">
         <mat-form-field appearance="outline" class="mainInputBox">
-            <mat-label>Total Gross</mat-label>
+          <mat-label>Total Gross</mat-label>
           <input disabled matInput [value]="this.whitemailElement.TotalGross|currency:'USD':'symbol':'1.2-2'">
         </mat-form-field>
       </div>
@@ -108,41 +107,41 @@
     <hr style="width: 90%;">
 
     <div class="row">
-        <div class="col-md-8 offset-md-1">
-            <mat-form-field appearance="outline" class="mainInputBox">
-                <mat-label>Source</mat-label>
-              <input matInput>
-            </mat-form-field>
-          </div>
+      <div class="col-md-8 offset-md-1">
+        <mat-form-field appearance="outline" class="mainInputBox">
+          <mat-label>Source</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
     </div>
     <div class="row">
-        <div class="col-md-4 offset-md-1">
-            <mat-form-field appearance="outline" class="mainInputBox">
-                <mat-label>Entered By</mat-label>
-              <input matInput disabled [value]="whitemailElement.EnteredBy">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-              <mat-form-field appearance="outline" class="mainInputBox">
-                  <mat-label>Entered Date</mat-label>
-                <input matInput disabled [value]="whitemailElement.EnteredDate|date:'shortDate'">
-              </mat-form-field>
-            </div>
+      <div class="col-md-4 offset-md-1">
+        <mat-form-field appearance="outline" class="mainInputBox">
+          <mat-label>Entered By</mat-label>
+          <input matInput disabled [value]="whitemailElement.EnteredBy">
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field appearance="outline" class="mainInputBox">
+          <mat-label>Entered Date</mat-label>
+          <input matInput disabled [value]="whitemailElement.EnteredDate|date:'shortDate'">
+        </mat-form-field>
+      </div>
     </div>
 
     <div class="row">
-        <div class="col-md-4 offset-md-1">
-            <mat-form-field appearance="outline" class="mainInputBox">
-                <mat-label>Modified By</mat-label>
-              <input matInput disabled [value]="whitemailElement.ModifiedBy">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-              <mat-form-field appearance="outline" class="mainInputBox">
-                  <mat-label>Modified Date</mat-label>
-                <input matInput disabled [value]="whitemailElement.ModifiedDate|date:'shortDate'">
-              </mat-form-field>
-            </div>
+      <div class="col-md-4 offset-md-1">
+        <mat-form-field appearance="outline" class="mainInputBox">
+          <mat-label>Modified By</mat-label>
+          <input matInput disabled [value]="whitemailElement.ModifiedBy">
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field appearance="outline" class="mainInputBox">
+          <mat-label>Modified Date</mat-label>
+          <input matInput disabled [value]="whitemailElement.ModifiedDate|date:'shortDate'">
+        </mat-form-field>
+      </div>
     </div>
     <br>
     <br>
@@ -157,6 +156,30 @@
   </mat-card>
 </div>
 
-<div id="pageModal">
-<p>Create page modal and have it show up after submitting, and disappear after like 5 seconds. </p>
+
+<div id="modalBackground" *ngIf="showSubmittedModal">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <mat-card class="mat-elevation-z8 deleteModalCard">
+          <div>
+            <div class="row">
+              <div class="col-12 cancelDiv">
+                <button mat-icon-button id="modalCancelBtn" (click)="modalCancel()"><i class="material-icons">cancel</i></button>
+                
+              </div>
+              <div class="col-12 bannerDiv">
+                <i class="material-icons bannerIcon">check_circle_outline</i>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 updatedDiv">
+                <span class="updatedMsg">Whitemail Updated!</span>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
 </div>

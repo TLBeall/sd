@@ -31,4 +31,14 @@ export class NavigationBarComponent {
     this.router.navigate(['returns']);
   }
 
+  NavigateToWhitemail(){
+    this._g.clearCurCache = true;
+    this.router.navigate(['whitemail']);
+  }
+
+  NavigateToNewWhitemail(){
+    this._g.clearCurCache = true;
+    this.router.navigate(['whitemail/new']);
+  }
+
 }

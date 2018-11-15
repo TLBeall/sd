@@ -21,6 +21,7 @@ export class GlobalService {
   public clearCurCache: boolean = false;
 
   public whitemailElement: CagingDailies;
+  public whitemailClient: string;
 
   constructor() {
   }

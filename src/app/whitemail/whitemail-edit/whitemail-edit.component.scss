@@ -33,11 +33,50 @@
         }
 }
 
+#modalBackground{
+    position: fixed;
+    top: 92px;
+    z-index: 130;
+    width: 100%;
+    height:100%;
+    background-color: rgba(128, 128, 128, 0.5); //gives transparent, cannot use opacity due to inheritance
+}
+
+.deleteModalCard{
+    position: relative;
+    top: 25%;
+    z-index: 140;
+    .bannerDiv{
+        text-align: center;
+        i.bannerIcon{
+            font-size: 1000%;
+            color: $color-success;
+        }
+    }
+    .updatedDiv{
+        text-align: center;
+        span.updatedMsg{
+            font-size: 18pt;
+        }
+    }
+    .cancelDiv{
+        text-align: right;
+        i{
+            opacity: 0.75;
+        }
+    }
+}
+
+
 //Shifts the $ sign in the input boxes up to line up with the input text
 ::ng-deep .mat-form-field-prefix{
     position: relative !important;
     top: 50% !important;
 }
+
+
+
+
 //Reduces the size of the input boxes
 // ::ng-deep .mat-form-field-infix{
 //     padding: 6px 0px 16px 0px !important;

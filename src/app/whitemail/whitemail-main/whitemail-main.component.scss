@@ -41,3 +41,50 @@ table {
     width: 52px !important;
     min-width: 52px !important;
   }
+
+  .dropdownIcon{
+    position: relative;
+    height: 18px;
+    width: 18px; 
+    opacity: 0.75;
+}
+
+#modalBackground{
+    position: fixed;
+    top: 92px;
+    z-index: 130;
+    width: 100%;
+    height:100%;
+    background-color: rgba(128, 128, 128, 0.5); //gives transparent, cannot use opacity due to inheritance
+}
+
+.deleteModalCard{
+    position: relative;
+    top: 25%;
+    z-index: 140;
+    div{
+        text-align: center;
+        i{
+            font-size: 1000%;
+            color: $color-warn;
+        }
+    }
+}
+
+#deleteMessage1{
+    font-size: 22pt;
+}
+
+.btnContainer{
+    text-align: center; //Buttons are inline elements, so this is how you center inside a div
+    margin-top: 15px;
+        #cancelBtn{
+            background-color: $color-gallery;
+            margin-right: 10px;
+        }
+        #deleteBtn{
+            color: white;
+            background-color: $color-warn;
+            margin-left: 10px;
+        }
+}

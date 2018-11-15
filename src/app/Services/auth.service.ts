@@ -176,12 +176,13 @@ export class AuthService {
     return this.http.get(GetPhaseGross, {headers: headersForGetListAPI}).pipe(map(res => res.json()));
   }
 
-  createCagingDailies(DailiesRecord: CagingDailies[]):Observable<any> {
+  //Used for whitemail
+  createDailies(DailiesRecord: CagingDailies[]):Observable<any> {
     var Token = "";
-    var createDailiesURL = "http://localhost:63023/api/CreateDailies";
+    var createDailiesURL = "https://sd360.sunrisedataservices.com/api/CreateDailies";
     var body = JSON.stringify(DailiesRecord); 
-    var headersForGetListAPI = new Headers({'Content-Type': 'Application/Json', 'Authorization' : 'Bearer ' + Token});
-    return this.http.post(createDailiesURL, body, {headers: headersForGetListAPI});
+    var headersForCreateDailiesAPI = new Headers({'Content-Type': 'Application/Json', 'Authorization' : 'Bearer ' + Token});
+    return this.http.post(createDailiesURL, body, {headers: headersForCreateDailiesAPI});
   }  
 
   getWhitemailByClient(Agency: string, Client: string){
@@ -195,20 +196,20 @@ export class AuthService {
   deleteWhitemail(wmStrArr: string){
     var Token = "";
     var deleteWMURL = "https://sd360.sunrisedataservices.com/api/DeleteDailies?ID=" + wmStrArr;
-
-    var headersFordeleteWhitemailAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
-    return this.http.post(deleteWMURL, {headers: headersFordeleteWhitemailAPI}).pipe(map(res => res.json()));
+    return this.http.delete(deleteWMURL);
   }
 
-  editWhitemail(ID: number){
+  editWhitemail(whitemailElement: CagingDailies, id: number){
     var Token = "";
-    var editWhitemailURL = "https://sd360.sunrisedataservices.com/api/EditDailies?ID=" + ID;
+    var editWhitemailURL = "https://sd360.sunrisedataservices.com/api/EditDailies?ID=" + id;
+    var body = JSON.stringify(whitemailElement); 
 
-    var headersForEditWhitemailAPI = new Headers({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + Token});
-    return this.http.put(editWhitemailURL, {headers: headersForEditWhitemailAPI}).pipe(map(res => res.json()));
+    var headersForEditWhitemailAPI = new Headers({'Content-Type': 'Application/Json', 'Authorization' : 'Bearer ' + Token});
+    return this.http.put(editWhitemailURL, body, {headers: headersForEditWhitemailAPI});
   }
 
 
-  // https://sd360.sunrisedataservices.com/api/EditDailies?ID=139473
+
+
 }
 

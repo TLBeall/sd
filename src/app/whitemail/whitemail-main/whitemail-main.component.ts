@@ -38,6 +38,9 @@ export class WhitemailMainComponent implements OnInit {
   private selectionMode: boolean = false;
   private checkedRows: number[] = [];
   private showEditButton: boolean = false;
+  private showDeleteModal: boolean = false;
+  private deleteNotation: string;
+
 
   MainDisplayedColumns: string[] = ['SelectionBox', 'Date', 'Non-Donors', 'Donors', 'Gross', 'ButtonControl'];
 
@@ -70,6 +73,7 @@ export class WhitemailMainComponent implements OnInit {
   }
 
   mainSelectClient(client) {
+    this.Client = client;
     var reg = /(?<= - ).*/;
     var clientAcronym = client.match(reg);
     this._authService.getWhitemailByClient(this.Agency, clientAcronym[0]).subscribe(data => {
@@ -117,11 +121,20 @@ export class WhitemailMainComponent implements OnInit {
     } else {
       this.checkedRows.push(element.ID);
     }
+    if (this.checkedRows.length == 1){
+      this.deleteNotation = "this record";
+    } else {
+      this.deleteNotation = "multiple records"
+    }
   }
 
 
-  deleteWM() {
-    //potential URL notation
+  preDeleteWM(event: any) {
+    if (this.checkedRows.length > 0)
+    this.showDeleteModal = !this.showDeleteModal;
+  }
+
+  deleteWM(){
     var wmStrArr = "";
     this.checkedRows.forEach((element, index) => {
       if (index == 0) {
@@ -130,16 +143,21 @@ export class WhitemailMainComponent implements OnInit {
         wmStrArr = wmStrArr + "." + element;
       }
     });
-    // this._authService.deleteWhitemail(wmStrArr); //the array should get convered to URL notation?
-    // this.checkedRows = [];
-    //Set up reload of table
-    //Set up modal popup saying are you sure?
+    this._authService.deleteWhitemail(wmStrArr).subscribe(); //the array should get convered to URL notation?
+    this.checkedRows = [];
+    this.mainSelectClient(this.Client);
+    this.showDeleteModal = false;
   }
 
   navigateToEdit(element: any){
     this._g.whitemailElement = element;
     this.router.navigate(['whitemail/edit/' + element.ID]);
+    element.showEditButton = false;
+  }
 
+  navigateToNewWM(){
+    this._g.whitemailClient = this.Client;
+    this.router.navigate(['whitemail/new'])
   }
 
   hoverRow(row: any){

@@ -24,6 +24,8 @@ export class WhitemailEditComponent implements OnInit {
   myControl = new FormControl();
   private Client: string;
   private testDate;
+  private showSubmittedModal: boolean = false;
+
 
   constructor(private _authService: AuthService, private route: ActivatedRoute, private _g: GlobalService, private router: Router) {
 
@@ -50,7 +52,7 @@ export class WhitemailEditComponent implements OnInit {
   }
 
   //This sets it up so that on update the format is correct. 
-  changeDate(event: any){
+  changeDate(event: any) {
     var date = event.target.value;
     this.whitemailElement.DonationDate = date.toISOString();
   }
@@ -100,14 +102,26 @@ export class WhitemailEditComponent implements OnInit {
   //   }
   // }
 
-  Cancel() {
 
+  Cancel() {
+    history.back(); //a browser function that calls the back button. The navigate function will not store the scroll position. 
   }
 
   Update() {
-    console.log(this.whitemailElement);
-    // this._authService.editWhitemail(this.id);
-    
+    var date = new Date();
+    this.whitemailElement.ModifiedDate = date;
+    this.whitemailElement.ModifiedBy = "TempUser";
+    this.showSubmittedModal = true;
+    this._authService.editWhitemail(this.whitemailElement, this.id).subscribe();
+    setTimeout(() => {
+      this.showSubmittedModal = false;
+      this.router.navigate(['whitemail']);
+    }, 1500)
+  }
+
+  modalCancel() {
+    this.showSubmittedModal = false;
+    this.router.navigate(['whitemail']);
   }
 
 

@@ -41,4 +41,14 @@ export class NavigationBarComponent {
     this.router.navigate(['whitemail/new']);
   }
 
+  NavigateToLRI(){
+    this._g.clearCurCache = true;
+    this.router.navigate(['lri']);
+  }
+
+  NavigateToNewLRI(){
+    this._g.clearCurCache = true;
+    this.router.navigate(['lri/new']);
+  }
+
 }

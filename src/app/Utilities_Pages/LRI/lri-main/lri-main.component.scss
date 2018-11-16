@@ -2,13 +2,14 @@
 
 $selectionColumnShift: 32px;
 
-.clientList{
-    width: 350px;
-}
-
 table {
     width: 100%;
   }
+
+  .mainInputBox{
+    width: 100%;
+    margin: 0 auto;
+}
 
   .emptyTableMessage{
       // height: 90vh;

@@ -49,7 +49,7 @@ ul{
         }
 }
 
-.deleteModalCard{
+.submitModalCard{
     position: relative;
     top: 25%;
     z-index: 140;
@@ -72,4 +72,12 @@ ul{
             opacity: 0.75;
         }
     }
+    .addMoreDiv{
+        text-align: center;
+        #modalMoreBtn{
+            background-color: $color-success;
+        }
+    }
+    
 }
+

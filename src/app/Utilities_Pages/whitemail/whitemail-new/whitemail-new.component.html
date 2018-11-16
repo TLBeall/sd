@@ -10,7 +10,7 @@
               <div class="col-lg-6">
                 <mat-form-field appearance="outline" class="mainInputBox">
                   <mat-label>Client</mat-label>
-                  <input required aria-label="Number" matInput [formControl]="element.Control" [matAutocomplete]="auto"
+                  <input required aria-label="Number" matInput [formControl]="element.ClientControl" [matAutocomplete]="auto"
                     [(ngModel)]="element.Client">
                   <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let client of filteredClientList | async" [value]="client">
@@ -20,11 +20,26 @@
                   <mat-icon matSuffix class="dropdownIcon">arrow_drop_down</mat-icon>
                 </mat-form-field>
               </div>
+            </div>
+            <div class="row">
               <div class="col-lg-4">
                 <!-- Set the "value" (aka the starting value via the ngModel. Using the ngModel because that way it also updates the whitemailElement object-->
                 <mat-form-field appearance="outline" class="mainInputBox">
                   <mat-label>Donation Date</mat-label>
-                  <input required matInput [matDatepicker]="CageDatePick" (dateInput)="changeDate($event)" [(ngModel)]="element.DonationDate">
+                  <input required matInput [matDatepicker]="DonationDatePick" (dateInput)="changeDate($event)"
+                    [(ngModel)]="element.DonationDate">
+                  <mat-datepicker-toggle matSuffix [for]="DonationDatePick"></mat-datepicker-toggle>
+                  <mat-datepicker #DonationDatePick>
+                  </mat-datepicker>
+                  <!-- (dateInput)="validateDate($event)" -->
+                </mat-form-field>
+              </div>
+              <div class="col-lg-4">
+                <!-- Set the "value" (aka the starting value via the ngModel. Using the ngModel because that way it also updates the whitemailElement object-->
+                <mat-form-field appearance="outline" class="mainInputBox">
+                  <mat-label>Cage Date</mat-label>
+                  <input required matInput [matDatepicker]="CageDatePick" (dateInput)="changeDate($event)"
+                    [(ngModel)]="element.DateCaged">
                   <mat-datepicker-toggle matSuffix [for]="CageDatePick"></mat-datepicker-toggle>
                   <mat-datepicker #CageDatePick>
                   </mat-datepicker>
@@ -34,25 +49,24 @@
               <div class="col-lg-2">
                 <mat-form-field appearance="outline" class="mainInputBox">
                   <mat-label>Non-Donors</mat-label>
-                  <input matInput placeholder="Non-donors" [(ngModel)]="element.NonDonors">
+                  <input required matInput placeholder="Non-donors" [(ngModel)]="element.NonDonors">
                 </mat-form-field>
               </div>
             </div>
-
             <div class="row">
               <div class="col-lg-4">
                 <div class="row">
                   <div class="col-6">
                     <mat-form-field appearance="outline" class="mainInputBox">
                       <mat-label>Cash Donors</mat-label>
-                      <input matInput [(ngModel)]="element.CashDonors">
+                      <input required matInput [(ngModel)]="element.CashDonors">
                     </mat-form-field>
                   </div>
                   <div class="col-6">
                     <mat-form-field appearance="outline" class="mainInputBox">
                       <mat-label>Cash Amount</mat-label>
                       <span matPrefix>$</span>
-                      <input matInput [(ngModel)]="element.CashAmount">
+                      <input required matInput [(ngModel)]="element.CashAmount">
                     </mat-form-field>
                   </div>
                 </div>
@@ -62,14 +76,14 @@
                   <div class="col-6">
                     <mat-form-field appearance="outline" class="mainInputBox">
                       <mat-label>Check Donors</mat-label>
-                      <input matInput [(ngModel)]="element.CheckDonors">
+                      <input required matInput [(ngModel)]="element.CheckDonors">
                     </mat-form-field>
                   </div>
                   <div class="col-6">
                     <mat-form-field appearance="outline" class="mainInputBox">
                       <mat-label>Check Amount</mat-label>
                       <span matPrefix>$</span>
-                      <input matInput [(ngModel)]="element.CheckAmount">
+                      <input required matInput [(ngModel)]="element.CheckAmount">
                     </mat-form-field>
                   </div>
                 </div>
@@ -79,14 +93,14 @@
                   <div class="col-6">
                     <mat-form-field appearance="outline" class="mainInputBox">
                       <mat-label>Card Donors</mat-label>
-                      <input matInput [(ngModel)]="element.CardDonors">
+                      <input required matInput [(ngModel)]="element.CardDonors">
                     </mat-form-field>
                   </div>
                   <div class="col-6">
                     <mat-form-field appearance="outline" class="mainInputBox">
                       <mat-label>Card Amount</mat-label>
                       <span matPrefix>$</span>
-                      <input matInput [(ngModel)]="element.CardAmount">
+                      <input required matInput [(ngModel)]="element.CardAmount">
                     </mat-form-field>
                   </div>
                 </div>
@@ -96,10 +110,12 @@
           <div class="col-lg-1 buttonColumn">
             <div class="row">
               <div class="col-lg-12">
-                <button mat-icon-button><i class="material-icons" (click)="deleteRow(element)">delete</i></button>
+                <button mat-icon-button matTooltip="Delete row" [matTooltipShowDelay]="1000" [matTooltipHideDelay]="200"><i
+                    class="material-icons" (click)="deleteRow(element)">delete</i></button>
               </div>
               <div class="col-lg-12">
-                <button mat-icon-button *ngIf="element.isLast" (click)="addWMRow()"><i class="material-icons">add_box</i></button>
+                <button mat-icon-button matTooltip="Add new row" [matTooltipShowDelay]="1000" [matTooltipHideDelay]="200"
+                  *ngIf="element.isLast" (click)="addWMRow()"><i class="material-icons">add_box</i></button>
               </div>
             </div>
           </div>
@@ -120,7 +136,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <mat-card class="mat-elevation-z8 deleteModalCard">
+        <mat-card class="mat-elevation-z8 submitModalCard">
           <div>
             <div class="row">
               <div class="col-12 cancelDiv">
@@ -133,7 +149,13 @@
             </div>
             <div class="row">
               <div class="col-12 updatedDiv">
-                <span class="updatedMsg">Whitemail Added!</span>
+                <span class="updatedMsg">{{WMMessage}} Added!</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 addMoreDiv">
+                <br>
+                <button mat-raised-button (click)="modalCancel()" id="modalMoreBtn">Add more</button>
               </div>
             </div>
           </div>

@@ -7,7 +7,6 @@ import { ClientList } from 'src/app/Models/ClientList.model';
 import { startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/Services/auth.service';
-import { totalmem } from 'os';
 
 @Component({
   selector: 'app-whitemail-edit',
@@ -16,7 +15,7 @@ import { totalmem } from 'os';
 })
 export class WhitemailEditComponent implements OnInit {
 
-  private id;
+  private id: number;
   private whitemailElement: CagingDailies;
   private clientList: ClientList[];
   private filteredClientList: Observable<string[]>;
@@ -51,6 +50,12 @@ export class WhitemailEditComponent implements OnInit {
       });
   }
 
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.ClientStrArr.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
   //This sets it up so that on update the format is correct. 
   changeDate(event: any) {
     var date = event.target.value;
@@ -77,13 +82,6 @@ export class WhitemailEditComponent implements OnInit {
 
     this.whitemailElement.TotalDonors = Total(DonorArray);
     this.whitemailElement.TotalGross = Total(GrossArray);
-  }
-
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.ClientStrArr.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   // validateDate(): boolean {

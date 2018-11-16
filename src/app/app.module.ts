@@ -19,7 +19,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTreeModule, MatSort, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule, 
         MatSortModule, MatProgressSpinnerModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatInputModule, 
         MatCheckboxModule, MatProgressBarModule, MatSlideToggleModule, MatAutocompleteModule, MatChipsModule, MatButtonToggleModule,
-        MatDialogModule, MatGridListModule   } from '@angular/material';
+        MatDialogModule, MatGridListModule, MatTooltipModule   } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';        
 import { InternalHomePageComponent } from './internal-home-page/internal-home-page.component';
 import { InternalHomeDashboardComponent } from './internal-home-page/internal-home-dashboard/internal-home-dashboard.component';
@@ -29,9 +29,12 @@ import { CustomReuseStrategy } from './Services/CustomReuseStrategy.service';
 import { ListPerformanceToolbarComponent } from './toolbar/list-performance-toolbar/list-performance-toolbar.component';
 import { ListGrossComponent } from './Returns/Subviews/list-gross/list-gross.component';
 import { PhaseGrossComponent } from './Returns/Subviews/phase-gross/phase-gross.component';
-import { WhitemailMainComponent } from './whitemail/whitemail-main/whitemail-main.component';
-import { WhitemailNewComponent } from './whitemail/whitemail-new/whitemail-new.component';
-import { WhitemailEditComponent } from './whitemail/whitemail-edit/whitemail-edit.component';
+import { WhitemailMainComponent } from './Utilities_Pages/whitemail/whitemail-main/whitemail-main.component';
+import { WhitemailNewComponent } from './Utilities_Pages/whitemail/whitemail-new/whitemail-new.component';
+import { WhitemailEditComponent } from './Utilities_Pages/whitemail/whitemail-edit/whitemail-edit.component';
+import { LriMainComponent } from './Utilities_Pages/LRI/lri-main/lri-main.component';
+import { LriEditComponent } from './Utilities_Pages/LRI/lri-edit/lri-edit.component';
+import { LriNewComponent } from './Utilities_Pages/LRI/lri-new/lri-new.component';
 
 
 @NgModule({
@@ -54,7 +57,10 @@ import { WhitemailEditComponent } from './whitemail/whitemail-edit/whitemail-edi
     PhaseGrossComponent,
     WhitemailMainComponent,
     WhitemailNewComponent,
-    WhitemailEditComponent
+    WhitemailEditComponent,
+    LriMainComponent,
+    LriEditComponent,
+    LriNewComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +93,8 @@ import { WhitemailEditComponent } from './whitemail/whitemail-edit/whitemail-edi
     MatChipsModule,
     MatButtonToggleModule,
     MatDialogModule,
-    MatGridListModule
+    MatGridListModule,
+    MatTooltipModule
   ],
   providers: [
     AuthService,

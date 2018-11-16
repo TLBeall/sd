@@ -9,9 +9,12 @@ import { ListPerformanceComponent } from './returns/Subviews/list-performance/li
 import { CustomReuseStrategy } from './Services/CustomReuseStrategy.service';
 import { ListGrossComponent } from './Returns/Subviews/list-gross/list-gross.component';
 import { PhaseGrossComponent } from './Returns/Subviews/phase-gross/phase-gross.component';
-import { WhitemailMainComponent } from './whitemail/whitemail-main/whitemail-main.component';
-import { WhitemailNewComponent } from './whitemail/whitemail-new/whitemail-new.component';
-import { WhitemailEditComponent } from './whitemail/whitemail-edit/whitemail-edit.component';
+import { WhitemailMainComponent } from './Utilities_Pages/whitemail/whitemail-main/whitemail-main.component';
+import { WhitemailNewComponent } from './Utilities_Pages/whitemail/whitemail-new/whitemail-new.component';
+import { WhitemailEditComponent } from './Utilities_Pages/whitemail/whitemail-edit/whitemail-edit.component';
+import { LriMainComponent } from './Utilities_Pages/LRI/lri-main/lri-main.component';
+import { LriNewComponent } from './Utilities_Pages/LRI/lri-new/lri-new.component';
+import { LriEditComponent } from './Utilities_Pages/LRI/lri-edit/lri-edit.component';
 // import { ResolvelistperformanceComponent } from './Services/resolve-listperformance/resolve-listperformance.component';
 
 const routes: Routes = [
@@ -25,8 +28,12 @@ const routes: Routes = [
   {path: 'whitemail', component: WhitemailMainComponent },
   {path: 'whitemail/new', component: WhitemailNewComponent },
   {path: 'whitemail/edit/:id', component: WhitemailEditComponent },
+  {path: 'lri', component: LriMainComponent },
+  {path: 'lri/new', component: LriNewComponent },
+  {path: 'lri/edit/:id', component: LriEditComponent },
 
   // {path: 'listperformance', component: ListPerformanceComponent, resolve: {rowData: ResolvelistperformanceComponent} },
+  //Keep this path last since it is PageNotFound
   {path: '**', component: PageNotFoundComponent} //Setup for if URL does not match
 ];
 
@@ -50,6 +57,9 @@ export const routingComponents = [
   WhitemailMainComponent,
   WhitemailNewComponent,
   WhitemailEditComponent,
+  LriMainComponent,
+  LriNewComponent,
+  LriEditComponent,
   PageNotFoundComponent
 ];
 

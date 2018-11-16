@@ -20,9 +20,11 @@ export class CagingDailies {
     UnspecifiedAmount: number;
     EnteredBy: string
     ModifiedBy: string;
-    Control : FormControl;
-    isLast: boolean;
+    
     //Not in the API call - totals are added up in the component
+    ClientControl : FormControl;
+    isLast: boolean;
+
     TotalGross: number;
     TotalDonors: number;
 }

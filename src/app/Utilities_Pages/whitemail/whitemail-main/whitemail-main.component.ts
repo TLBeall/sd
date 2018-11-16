@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/Services/auth.service';
 import { GlobalService } from 'src/app/Services/global.service';
 import { Router } from '@angular/router';
@@ -6,14 +6,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { ClientList } from 'src/app/Models/ClientList.model';
-import { strictEqual } from 'assert';
 import { CagingDailies } from 'src/app/Models/CagingDailies.model';
-import { MailcodeGross } from 'src/app/Models/MailcodeGross.model';
-import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material';
-import { Template } from '@angular/compiler/src/render3/r3_ast';
-import { element } from 'protractor';
-
-const defaultDialogConfig = new MatDialogConfig();
 
 @Component({
   selector: 'app-whitemail-main',
@@ -29,11 +22,8 @@ export class WhitemailMainComponent implements OnInit {
   private rootWhitemail: CagingDailies[];
   private ClientStrArr: string[] = new Array<string>();
   private filteredClientList: Observable<string[]>;
-  private currentYear;
   private Client: string;
   private Agency: string = "HSP";
-  private TotalGross: number;
-  private TotalDonor: number;
   private displayTable: boolean = false;
   private selectionMode: boolean = false;
   private checkedRows: number[] = [];
@@ -50,10 +40,6 @@ export class WhitemailMainComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentYear = (new Date()).getFullYear();
-    // this._authService.getClientList(this.currentYear).subscribe(data => {
-    //   this.clientList = Array.from(new Set(data.map(item => item.gClientName + ' - ' + item.gClientAcronym))).sort();
-    // })
     this._authService.getClientList("All")
       .subscribe(data => {
         this.clientList = data;
@@ -90,8 +76,6 @@ export class WhitemailMainComponent implements OnInit {
         alert('Client does not have white mail');
       }
     })
-
-    
   }
 
   private getTime(date?: Date) {
@@ -121,6 +105,7 @@ export class WhitemailMainComponent implements OnInit {
     } else {
       this.checkedRows.push(element.ID);
     }
+    
     if (this.checkedRows.length == 1){
       this.deleteNotation = "this record";
     } else {

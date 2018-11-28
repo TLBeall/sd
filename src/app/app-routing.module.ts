@@ -15,6 +15,7 @@ import { WhitemailEditComponent } from './Utilities_Pages/whitemail/whitemail-ed
 import { LriMainComponent } from './Utilities_Pages/LRI/lri-main/lri-main.component';
 import { LriNewComponent } from './Utilities_Pages/LRI/lri-new/lri-new.component';
 import { LriEditComponent } from './Utilities_Pages/LRI/lri-edit/lri-edit.component';
+import { IncidentalsMainComponent } from './Utilities_Pages/Incidentals/incidentals-main/incidentals-main.component';
 // import { ResolvelistperformanceComponent } from './Services/resolve-listperformance/resolve-listperformance.component';
 
 const routes: Routes = [
@@ -31,6 +32,7 @@ const routes: Routes = [
   {path: 'lri', component: LriMainComponent },
   {path: 'lri/new', component: LriNewComponent },
   {path: 'lri/edit/:id', component: LriEditComponent },
+  {path: 'incidentals', component: IncidentalsMainComponent },
 
   // {path: 'listperformance', component: ListPerformanceComponent, resolve: {rowData: ResolvelistperformanceComponent} },
   //Keep this path last since it is PageNotFound
@@ -60,6 +62,7 @@ export const routingComponents = [
   LriMainComponent,
   LriNewComponent,
   LriEditComponent,
-  PageNotFoundComponent
+  PageNotFoundComponent,
+  IncidentalsMainComponent
 ];
 

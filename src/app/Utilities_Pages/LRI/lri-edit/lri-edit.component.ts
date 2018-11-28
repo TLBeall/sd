@@ -65,11 +65,16 @@ export class LriEditComponent implements OnInit {
     this.LRIElement.ModifiedDate = date;
     this.LRIElement.ModifiedBy = "TempUser";
     this.showSubmittedModal = true;
-    // this._authService.editWhitemail(this.LRIElement, this.id).subscribe();
+    this._authService.editLRIRow(this.LRIElement, this.id).subscribe();
     setTimeout(() => {
       this.showSubmittedModal = false;
       this.router.navigate(['lri']);
     }, 1500)
+  }
+
+  modalCancel() {
+    this.showSubmittedModal = false;
+    this.router.navigate(['whitemail']);
   }
 
 }

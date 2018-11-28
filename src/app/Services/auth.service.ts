@@ -188,41 +188,68 @@ export class AuthService {
 
   getWhitemailByClient(Agency: string, Client: string) {
     var Token = "";
-    var getwhitemailURL = "https://sd360.sunrisedataservices.com/api/GetDailies?Agency=" + Agency + "&Client=" + Client + "&MailCode=WM&Skip=0&RequestedCount=100";
+    var getURL = "https://sd360.sunrisedataservices.com/api/GetDailies?Agency=" + Agency + "&Client=" + Client + "&MailCode=WM&Skip=0&RequestedCount=100";
 
-    var headersForGetWhitemailAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
-    return this.http.get(getwhitemailURL, { headers: headersForGetWhitemailAPI }).pipe(map(res => res.json()));
+    var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
+    return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
   }
 
   deleteWhitemail(wmStrArr: string) {
     var Token = "";
-    var deleteWMURL = "https://sd360.sunrisedataservices.com/api/DeleteDailies?ID=" + wmStrArr;
-    return this.http.delete(deleteWMURL);
+    var deleteURL = "https://sd360.sunrisedataservices.com/api/DeleteDailies?ID=" + wmStrArr;
+    return this.http.delete(deleteURL);
   }
 
   editWhitemail(whitemailElement: CagingDailies, id: number) {
     var Token = "";
-    var editWhitemailURL = "https://sd360.sunrisedataservices.com/api/EditDailies?ID=" + id;
+    var editURL = "https://sd360.sunrisedataservices.com/api/EditDailies?ID=" + id;
     var body = JSON.stringify(whitemailElement);
 
-    var headersForEditWhitemailAPI = new Headers({ 'Content-Type': 'Application/Json', 'Authorization': 'Bearer ' + Token });
-    return this.http.put(editWhitemailURL, body, { headers: headersForEditWhitemailAPI });
+    var headersForEditAPI = new Headers({ 'Content-Type': 'Application/Json', 'Authorization': 'Bearer ' + Token });
+    return this.http.put(editURL, body, { headers: headersForEditAPI });
   }
 
   getListRentalbyClient(client: string) {
     var Token = "";
-    var getLRIURL = "https://sd360.sunrisedataservices.com/api/GetLRI?Client=" + client + "&Skip=0&RequestedCount=1000";
+    var getURL = "https://sd360.sunrisedataservices.com/api/GetLRI?Client=" + client + "&Skip=0&RequestedCount=1000";
 
-    var headersForGetLRIAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
-    return this.http.get(getLRIURL, { headers: headersForGetLRIAPI }).pipe(map(res => res.json()));
+    var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
+    return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
   }
 
   createLRI(LRIArray: ListRental[]): Observable<any> {
+    //Prep the array for JSON
+    LRIArray.forEach(element => {
+      element.ClientControl = null;
+      element.isLast = null;
+      var tempclient = element.Client;
+      var reg = /(?<= - ).*/;
+      element.Client = (tempclient.match(reg)).toString();
+      var tempDate = (element.LRIDate).toDateString();
+      element.LRIDate = new Date(tempDate);
+    });
+
+
     var Token = "";
-    var createLRIURL = "https://sd360.sunrisedataservices.com/api/CreateLRI";
+    var createURL = "https://sd360.sunrisedataservices.com/api/CreateLRI";
     var body = JSON.stringify(LRIArray);
-    var headersForCreateLRIAPI = new Headers({ 'Content-Type': 'Application/Json', 'Authorization': 'Bearer ' + Token });
-    return this.http.post(createLRIURL, body, { headers: headersForCreateLRIAPI });
+    var headersForCreateAPI = new Headers({ 'Content-Type': 'Application/Json', 'Authorization': 'Bearer ' + Token });
+    return this.http.post(createURL, body, { headers: headersForCreateAPI });
+  }
+
+  deleteLRI(LRIStrArr: string) {
+    var Token = "";
+    var deleteURL = "https://sd360.sunrisedataservices.com/api/DeleteLRI?ID=" + LRIStrArr;
+    return this.http.delete(deleteURL);
+  }
+
+  editLRIRow(LRIElement: ListRental, id: number) {
+    var Token = "";
+    var editURL = "https://sd360.sunrisedataservices.com/api/EditLRI?ID=" + id;
+    var body = JSON.stringify(LRIElement);
+
+    var headersForEditAPI = new Headers({ 'Content-Type': 'Application/Json', 'Authorization': 'Bearer ' + Token });
+    return this.http.put(editURL, body, { headers: headersForEditAPI });
   }
 
 

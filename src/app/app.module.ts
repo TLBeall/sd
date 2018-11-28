@@ -35,6 +35,7 @@ import { WhitemailEditComponent } from './Utilities_Pages/whitemail/whitemail-ed
 import { LriMainComponent } from './Utilities_Pages/LRI/lri-main/lri-main.component';
 import { LriEditComponent } from './Utilities_Pages/LRI/lri-edit/lri-edit.component';
 import { LriNewComponent } from './Utilities_Pages/LRI/lri-new/lri-new.component';
+import { IncidentalsMainComponent } from './Utilities_Pages/Incidentals/incidentals-main/incidentals-main.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { LriNewComponent } from './Utilities_Pages/LRI/lri-new/lri-new.component
     WhitemailEditComponent,
     LriMainComponent,
     LriEditComponent,
-    LriNewComponent
+    LriNewComponent,
+    IncidentalsMainComponent
   ],
   imports: [
     BrowserModule,

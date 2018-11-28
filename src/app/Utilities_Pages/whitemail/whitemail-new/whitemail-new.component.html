@@ -11,7 +11,7 @@
                 <mat-form-field appearance="outline" class="mainInputBox">
                   <mat-label>Client</mat-label>
                   <input required aria-label="Number" matInput [formControl]="element.ClientControl" [matAutocomplete]="auto"
-                    [(ngModel)]="element.Client">
+                    [(ngModel)]="element.Client" #client>
                   <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let client of filteredClientList | async" [value]="client">
                       {{client}}

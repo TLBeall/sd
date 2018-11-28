@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalService } from 'src/app/Services/global.service';
 import { ClientList } from 'src/app/Models/ClientList.model';
 import { Observable } from 'rxjs';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { FormControl, Validators, FormGroup, NgForm } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { CagingDailies } from 'src/app/Models/CagingDailies.model';
 
@@ -117,10 +117,21 @@ export class WhitemailNewComponent implements OnInit {
         element.isLast = false;
       }
     });
+
+    if (this.whitemailArr.length == 1){
+      this.WMMessage = "Whitemail";
+    } else {
+      this.WMMessage = (this.whitemailArr.length).toString() + " Whitemail rows"; 
+    }
   }
 
   private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+    var filterValue;
+    if (value != null){
+    filterValue = value.toLowerCase();
+  } else{
+    filterValue = "";
+  }
     return this.ClientStrArr.filter(option => option.toLowerCase().includes(filterValue));
   }
 

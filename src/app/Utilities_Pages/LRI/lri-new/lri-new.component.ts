@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from 'src/app/Services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalService } from 'src/app/Services/global.service';
@@ -7,7 +7,9 @@ import { Observable } from 'rxjs';
 import { ListRental } from 'src/app/Models/ListRental.model';
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
+import * as XLSX from 'xlsx';
 
+type AOA = ListRental[];
 
 @Component({
   selector: 'app-lri-new',
@@ -23,9 +25,24 @@ export class LriNewComponent implements OnInit {
   private LRIElement: ListRental;
   private LRIArray: ListRental[];
   private showSubmittedModal: boolean;
-  private LRINumMessage: string;  
+  private LRINumMessage: string;
 
-  constructor(private _authService: AuthService, private route: ActivatedRoute, private _g: GlobalService, private router: Router) { }
+  private LRIUploadArray: ListRental[];
+  public data: any[];
+
+  private fileUrl: string = "";
+  private exampleLRI = false;
+
+  @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
+
+
+  constructor(
+    private _authService: AuthService,
+    private route: ActivatedRoute,
+    private _g: GlobalService,
+    private router: Router,
+    private ref: ChangeDetectorRef) {
+  }
 
   ngOnInit() {
     this.LRIArray = [];
@@ -41,7 +58,7 @@ export class LriNewComponent implements OnInit {
               startWith(''),
               map(value => this._filter(value))
             );
-          });
+        });
       });
   }
 
@@ -54,9 +71,9 @@ export class LriNewComponent implements OnInit {
       CreatedBy: "TempUser",
       CreatedDate: currentDate,
       Description: "",
-      ID: null,
+      ID: 0,
       LRIDate: currentDate,
-      ListID: null,
+      ListID: 0,
       ModifiedBy: "TempUser",
       ModifiedDate: currentDate,
       ClientControl: new FormControl(),
@@ -65,19 +82,13 @@ export class LriNewComponent implements OnInit {
 
     this.LRIArray.push(element);
 
-    if (this.LRIArray.length == 1){
+    if (this.LRIArray.length == 1) {
       this.LRINumMessage = "LRI";
     } else {
-      this.LRINumMessage = (this.LRIArray.length).toString() + " LRI rows"; 
+      this.LRINumMessage = (this.LRIArray.length).toString() + " LRI rows";
     }
 
-    this.LRIArray.forEach((element, index) => {
-      if (index == (this.LRIArray.length - 1)) {
-        element.isLast = true;
-      } else {
-        element.isLast = false;
-      }
-    });
+    this.determineLast();
 
     this.LRIArray.forEach(element => {
       this.filteredClientList = element.ClientControl.valueChanges
@@ -85,12 +96,26 @@ export class LriNewComponent implements OnInit {
           startWith(''),
           map(value => this._filter(value))
         );
-      });
+    });
+  }
+
+  determineLast() {
+    this.LRIArray.forEach((element, index) => {
+      if (index == (this.LRIArray.length - 1)) {
+        element.isLast = true;
+      } else {
+        element.isLast = false;
+      }
+    });
   }
 
   private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
+    var filterValue;
+    if (value != null) {
+      filterValue = value.toLowerCase();
+    } else {
+      filterValue = "";
+    }
     return this.ClientStrArr.filter(option => option.toLowerCase().includes(filterValue));
   }
 
@@ -100,13 +125,13 @@ export class LriNewComponent implements OnInit {
       this.LRIArray.splice(index, 1);
     }
 
-    this.LRIArray.forEach((element, index) => {
-      if (index == (this.LRIArray.length - 1)) {
-        element.isLast = true;
-      } else {
-        element.isLast = false;
-      }
-    });
+    this.determineLast();
+
+    if (this.LRIArray.length == 1) {
+      this.LRINumMessage = "LRI";
+    } else {
+      this.LRINumMessage = (this.LRIArray.length).toString() + " LRI rows";
+    }
   }
 
   //adds to front end
@@ -114,23 +139,17 @@ export class LriNewComponent implements OnInit {
     this.loadDefaultValues();
   }
 
-//Adds to database
+  //Adds to database
   addLRI() {
     if (this.validationFunction()) {
       this.showSubmittedModal = true;
-      this.LRIArray.forEach(element => {
-        element.ClientControl = null;
-        element.isLast = null;
-        var tempclient = element.Client;
-        var reg = /(?<= - ).*/;
-        element.Client = (tempclient.match(reg)).toString();
-      });
       this._authService.createLRI(this.LRIArray).subscribe();
       setTimeout(() => {
+        this.router.navigate(['lri/new']);
         this.showSubmittedModal = false;
+        this.resetFile();
         this.LRIArray = [];
         this.loadDefaultValues();
-        this.router.navigate(['lri/new']);
       }, 2500)
     } else {
       alert('Please fill all fields');
@@ -141,7 +160,7 @@ export class LriNewComponent implements OnInit {
     var tempValue: boolean;
     this.LRIArray.forEach(element => {
       if (element.Client == null || element.Client == "" ||
-        element.Amount == null || (element.Amount).toString() == "" ||
+        element.Amount == null || (element.Amount).toString() == "" || element.Amount == 0 ||
         element.LRIDate == null || (element.LRIDate).toString() == ""
       ) {
         tempValue = false;
@@ -159,8 +178,99 @@ export class LriNewComponent implements OnInit {
   modalCancel() {
     this.showSubmittedModal = false;
     this.LRIArray = [];
+    this.resetFile();
     this.loadDefaultValues();
     this.router.navigate(['lri/new']);
+  }
+
+
+  /* File Input element for browser */
+  onFileChange(evt: any) {
+    this.fileUrl = evt.target.files[0].name;
+    // console.log(this.fileInput);
+
+    /* wire up file reader */
+    const target: DataTransfer = <DataTransfer>(evt.target);
+    if (target.files.length !== 1) throw new Error('Cannot use multiple files');
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      const bstr: string = e.target.result;
+      this.read(bstr);
+    };
+    reader.readAsBinaryString(target.files[0]);
+  };
+
+
+  read(bstr: string) {
+    //Determine whether to start array from scratch or build on top of previous array
+    if (this.validationFunction()) {
+      this.LRIArray = this.LRIArray;
+    } else {
+      this.LRIArray = [];
+    }
+
+
+    /* read workbook */
+    const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+
+    /* grab first sheet */
+    const wsname: string = wb.SheetNames[0];
+    const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+    /* save data */
+    this.data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+
+    //Convert data to be passed to database
+    var tempData = this.data.splice(3); //omitting header of excel file
+    var currentDate = new Date();
+    tempData.forEach(a => {
+      if (a[0] != null) {
+        let LRIElement = new ListRental();
+        LRIElement.Amount = a[3];
+        LRIElement.Client = this.convertClient(a[1]);
+        LRIElement.CreatedBy = "TempUser";
+        LRIElement.CreatedDate = currentDate;
+        LRIElement.Description = "";
+        LRIElement.ID = 0;
+        LRIElement.LRIDate = this.convertDate(a[0]);
+        LRIElement.ListID = 0;
+        LRIElement.ModifiedBy = "TempUser";
+        LRIElement.ModifiedDate = currentDate;
+        LRIElement.ClientControl = new FormControl();
+        LRIElement.isLast = null;
+        this.LRIArray.push(LRIElement);
+        // console.log(this.LRIArray);
+      }
+    });
+
+    this.determineLast();
+    // this.ref.detectChanges(); //"reloads" the page after the new rows are added from file
+  }
+
+  resetFile(){
+    this.fileUrl = "";
+    this.fileInput.nativeElement.value = null;
+  }
+
+  determineReset(event:any){
+    if (event.target.value == ""){
+      this.resetFile();
+    }
+  }
+
+  convertClient(client: string): string {
+    let clientAcronym = (client.match(/[A-Z]*/)).toString();
+    let clientString = (client.match(/(?<=--).*/)).toString();
+    let updatedClient = clientString + " - " + clientAcronym;
+    return updatedClient;
+  }
+
+  convertDate(date: number): any {
+    return new Date((date - 25568) * 86400 * 1000);
+  }
+
+  showExampleLRI(){
+    this.exampleLRI = !this.exampleLRI;
   }
 
 }

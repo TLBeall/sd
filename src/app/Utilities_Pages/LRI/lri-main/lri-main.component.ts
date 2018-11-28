@@ -23,7 +23,9 @@ export class LriMainComponent implements OnInit {
   private rootLRI: ListRental[];
   private displayTable: boolean = false;
   private selectionMode: boolean = false;
-
+  private checkedRows: number[] = [];
+  private deleteNotation: string;
+  private showDeleteModal: boolean = false;
 
   MainDisplayedColumns: string[] = ['SelectionBox', 'Date', 'Description', 'Amount', 'ButtonControl'];
 
@@ -81,6 +83,47 @@ export class LriMainComponent implements OnInit {
 
   toggleSelection() {
     this.selectionMode = !this.selectionMode;
+  }
+
+  checkSelected(element: any, event: any) {
+    //Setup for multiple selection
+    // if (event.shiftKey){
+    //   console.log(element.ID);
+    // }
+    //Multiple selection end
+
+    if (this.checkedRows.includes(element.ID)) {
+      const index = this.checkedRows.indexOf(element.ID);
+      this.checkedRows.splice(index, 1);
+    } else {
+      this.checkedRows.push(element.ID);
+    }
+    
+    if (this.checkedRows.length == 1){
+      this.deleteNotation = "this record";
+    } else {
+      this.deleteNotation = "multiple records"
+    }
+  }
+
+  preDeleteWM(event: any) {
+    if (this.checkedRows.length > 0)
+    this.showDeleteModal = !this.showDeleteModal;
+  }
+
+  deleteWM(){
+    var LRIStrArr = "";
+    this.checkedRows.forEach((element, index) => {
+      if (index == 0) {
+        LRIStrArr = element.toString();
+      } else {
+        LRIStrArr = LRIStrArr + "." + element;
+      }
+    });
+    this._authService.deleteLRI(LRIStrArr).subscribe(); //the array should get convered to URL notation?
+    this.checkedRows = [];
+    this.mainSelectClient(this.Client);
+    this.showDeleteModal = false;
   }
 
   navigateToEdit(element: any){

@@ -1,7 +1,30 @@
 <app-toolbar></app-toolbar>
 <br>
+<br>
+
 <div class="container">
   <mat-card class="mat-elevation-z8">
+    <!-- File URL start-->
+    <div>
+      <button mat-stroked-button (click)="fileInput.click()" matTooltip="Upload from file" [matTooltipShowDelay]="800"
+        [matTooltipHideDelay]="200">
+        <span>Browse</span>
+      </button>
+      <input #fileInput type="file" (change)="onFileChange($event)"  multiple="false" style="display:none;" />
+      <mat-form-field class="fileUrl">
+        <input type="text" matInput placeholder="File" [value]="fileUrl" (keyup)="determineReset($event)">
+        <button mat-button *ngIf="fileUrl != ''" matSuffix mat-icon-button (click)="resetFile()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <span (click)="showExampleLRI()" id="exampleFormat">Example Format</span>
+    <div >
+    <img *ngIf="exampleLRI" src="../../../../assets/exampleLRI.PNG" id="exampleImg"> 
+  </div>
+    <!-- File URL end-->
+    <br>
+    <br>
     <ul>
       <li *ngFor="let element of LRIArray">
         <div class="row">
@@ -53,11 +76,11 @@
           <div class="col-lg-1 buttonColumn">
             <div class="row">
               <div class="col-lg-12">
-                <button mat-icon-button matTooltip="Delete row" [matTooltipShowDelay]="1000" [matTooltipHideDelay]="200"><i
+                <button mat-icon-button matTooltip="Delete row" [matTooltipShowDelay]="800" [matTooltipHideDelay]="200"><i
                     class="material-icons" (click)="deleteRow(element)">delete</i></button>
               </div>
               <div class="col-lg-12">
-                <button mat-icon-button matTooltip="Add new row" [matTooltipShowDelay]="1000" [matTooltipHideDelay]="200"
+                <button mat-icon-button matTooltip="Add new row" [matTooltipShowDelay]="800" [matTooltipHideDelay]="200"
                   *ngIf="element.isLast" (click)="addLRIRow()"><i class="material-icons">add_box</i></button>
               </div>
             </div>

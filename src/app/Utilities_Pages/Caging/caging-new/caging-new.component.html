@@ -2,8 +2,29 @@
 <br>
 <div class="container">
   <mat-card class="mat-elevation-z8">
+    <!-- File URL start-->
+    <div>
+        <button mat-stroked-button (click)="fileInput.click()" matTooltip="Upload from file" [matTooltipShowDelay]="800"
+          [matTooltipHideDelay]="200">
+          <span>Browse</span>
+        </button>
+        <input #fileInput type="file" (change)="onFileChange($event)"  multiple="false" style="display:none;" />
+        <mat-form-field class="fileUrl">
+          <input type="text" matInput placeholder="File" [value]="fileUrl" (keyup)="determineReset($event)">
+          <button mat-button *ngIf="fileUrl != ''" matSuffix mat-icon-button (click)="resetFile()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <span (click)="showExample()" id="exampleFormat">Example Format</span>
+      <div >
+      <img *ngIf="showEx" src="../../../../assets/exampleLRI.PNG" id="exampleImg"> 
+    </div>
+      <!-- File URL end-->
+      <br>
+      <br>
     <ul>
-      <li *ngFor="let element of whitemailArr">
+      <li *ngFor="let element of cagingArr">
         <div class="row">
           <div class="col-lg-11 objectColumn">
             <div class="row">
@@ -32,6 +53,12 @@
                   <mat-datepicker #CageDatePick>
                   </mat-datepicker>
                   <!-- (dateInput)="validateDate($event)" -->
+                </mat-form-field>
+              </div>
+              <div class="col-lg-4">
+                <mat-form-field appearance="outline" class="mainInputBox">
+                  <mat-label>Mailcode</mat-label>
+                  <input required matInput placeholder="Mailcode" [(ngModel)]="element.MailCode">
                 </mat-form-field>
               </div>
               <div class="col-lg-2">
@@ -103,7 +130,7 @@
               </div>
               <div class="col-lg-12">
                 <button mat-icon-button matTooltip="Add new row" [matTooltipShowDelay]="1000" [matTooltipHideDelay]="200"
-                  *ngIf="element.isLast" (click)="addWMRow()"><i class="material-icons">add_box</i></button>
+                  *ngIf="element.isLast" (click)="addRow()"><i class="material-icons">add_box</i></button>
               </div>
             </div>
           </div>
@@ -113,7 +140,7 @@
     </ul>
 
     <div class="btnContainer">
-      <button id="submitBtn" mat-raised-button (click)="addWhitemail()">Submit</button>
+      <button id="submitBtn" mat-raised-button (click)="submitPage()">Submit</button>
     </div>
   </mat-card>
 </div>
@@ -137,7 +164,7 @@
             </div>
             <div class="row">
               <div class="col-12 updatedDiv">
-                <span class="updatedMsg">{{WMMessage}} Added!</span>
+                <span class="updatedMsg">{{cagingMessage}} Added!</span>
               </div>
             </div>
             <div class="row">

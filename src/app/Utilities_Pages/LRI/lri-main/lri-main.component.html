@@ -74,7 +74,7 @@
               </button>
             </div>
             <div>
-              <button mat-icon-button (click)="preDeleteWM($event)" *ngIf="selectionMode"><i class="material-icons">delete</i></button>
+              <button mat-icon-button (click)="preDelete($event)" *ngIf="selectionMode"><i class="material-icons">delete</i></button>
             </div>
           </mat-card>
         </div>
@@ -106,8 +106,8 @@
           </div>
           <div class="row">
             <div class="col-12 btnContainer">
-              <button mat-raised-button class="mat-elevation-z2" id="cancelBtn" (click)="preDeleteWM($event)">Cancel</button>
-              <button mat-raised-button class="mat-elevation-z4" id="deleteBtn" (click)="deleteWM()">Delete</button>
+              <button mat-raised-button class="mat-elevation-z2" id="cancelBtn" (click)="preDelete($event)">Cancel</button>
+              <button mat-raised-button class="mat-elevation-z4" id="deleteBtn" (click)="delete()">Delete</button>
             </div>
           </div>
         </div>

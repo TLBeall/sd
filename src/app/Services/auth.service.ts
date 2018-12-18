@@ -17,6 +17,8 @@ import { ListGross } from '../Models/ListGross.model';
 import { PhaseGross } from '../Models/PhaseGross.model';
 import { CagingDailies } from '../Models/CagingDailies.model';
 import { ListRental } from '../Models/ListRental.model';
+import { FormControl } from '@angular/forms';
+import { Incidental } from '../Models/Incidentals.model';
 // import { LoaderService } from '../loader/loader.service';
 
 @Injectable()
@@ -179,9 +181,22 @@ export class AuthService {
 
   //Used for whitemail
   createDailies(DailiesRecord: CagingDailies[]): Observable<any> {
+    //Prep the array for JSON -- need to make the FormControl null to stringify
+    DailiesRecord.forEach(element => {
+      element.ClientControl = null;
+      element.isLast = null;
+      element.beenModified = null;
+      var tempclient = element.Client;
+      var reg = /(?<= - ).*/;
+      element.Client = (tempclient.match(reg)).toString();
+    });
     var Token = "";
     var createDailiesURL = "https://sd360.sunrisedataservices.com/api/CreateDailies";
     var body = JSON.stringify(DailiesRecord);
+    //Resets the client control - the observable would otherwise throw an error back on the subscription in the parent component because a FormControl cannot be null/not have a name
+    DailiesRecord.forEach(element => {
+      element.ClientControl = new FormControl();
+    });
     var headersForCreateDailiesAPI = new Headers({ 'Content-Type': 'Application/Json', 'Authorization': 'Bearer ' + Token });
     return this.http.post(createDailiesURL, body, { headers: headersForCreateDailiesAPI });
   }
@@ -222,6 +237,7 @@ export class AuthService {
     LRIArray.forEach(element => {
       element.ClientControl = null;
       element.isLast = null;
+      element.beenModified = null;
       var tempclient = element.Client;
       var reg = /(?<= - ).*/;
       element.Client = (tempclient.match(reg)).toString();
@@ -233,6 +249,10 @@ export class AuthService {
     var Token = "";
     var createURL = "https://sd360.sunrisedataservices.com/api/CreateLRI";
     var body = JSON.stringify(LRIArray);
+    //Resets the client control - the observable would otherwise throw an error back on the subscription in the parent component because a FormControl cannot be null/not have a name
+    LRIArray.forEach(element => {
+      element.ClientControl = new FormControl();
+    })
     var headersForCreateAPI = new Headers({ 'Content-Type': 'Application/Json', 'Authorization': 'Bearer ' + Token });
     return this.http.post(createURL, body, { headers: headersForCreateAPI });
   }
@@ -250,6 +270,54 @@ export class AuthService {
 
     var headersForEditAPI = new Headers({ 'Content-Type': 'Application/Json', 'Authorization': 'Bearer ' + Token });
     return this.http.put(editURL, body, { headers: headersForEditAPI });
+  }
+
+  getIncidentalsByClient(Client: string) {
+    var Token = "";
+    var getURL = "https://sd360.sunrisedataservices.com/api/GetIncidentals?Client=" + Client + "&Skip=0&RequestedCount=100";
+
+    var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
+    return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
+  }
+
+  deleteIncidentals(tempStrArr: string) {
+    var Token = "";
+    var deleteURL = "https://sd360.sunrisedataservices.com/api/DeleteIncidentals?ID=" + tempStrArr;
+    return this.http.delete(deleteURL);
+  }
+
+  editIncidentalRow(IncidentalsElement: Incidental, id: number) {
+    var Token = "";
+    var editURL = "https://sd360.sunrisedataservices.com/api/EditIncidental?ID=" + id;
+    var body = JSON.stringify(IncidentalsElement);
+
+    var headersForEditAPI = new Headers({ 'Content-Type': 'Application/Json', 'Authorization': 'Bearer ' + Token });
+    return this.http.put(editURL, body, { headers: headersForEditAPI });
+  }
+
+  createIncidentals(IncidentalArray: Incidental[]): Observable<any> {
+    //Prep the array for JSON
+    IncidentalArray.forEach(element => {
+      element.ClientControl = null;
+      element.isLast = null;
+      element.beenModified = null;
+      var tempclient = element.Client;
+      var reg = /(?<= - ).*/;
+      element.Client = (tempclient.match(reg)).toString();
+      var tempDate = (element.IncidenceDate).toDateString();
+      element.IncidenceDate = new Date(tempDate);
+    });
+
+
+    var Token = "";
+    var createURL = "https://sd360.sunrisedataservices.com/api/CreateIncidentals";
+    var body = JSON.stringify(IncidentalArray);
+    //Resets the client control - the observable would otherwise throw an error back on the subscription in the parent component because a FormControl cannot be null/not have a name
+    IncidentalArray.forEach(element => {
+      element.ClientControl = new FormControl();
+    })
+    var headersForCreateAPI = new Headers({ 'Content-Type': 'Application/Json', 'Authorization': 'Bearer ' + Token });
+    return this.http.post(createURL, body, { headers: headersForCreateAPI });
   }
 
 

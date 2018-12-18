@@ -16,11 +16,13 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { MainReturnsToolbarComponent } from './toolbar/main-returns-toolbar/main-returns-toolbar.component';
 import { HomePageInternalToolbarComponent } from './toolbar/home-page-internal-toolbar/home-page-internal-toolbar.component';
 import { MatTableModule } from '@angular/material/table';
-import { MatTreeModule, MatSort, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule, 
-        MatSortModule, MatProgressSpinnerModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatInputModule, 
-        MatCheckboxModule, MatProgressBarModule, MatSlideToggleModule, MatAutocompleteModule, MatChipsModule, MatButtonToggleModule,
-        MatDialogModule, MatGridListModule, MatTooltipModule   } from '@angular/material';
-import { ReactiveFormsModule } from '@angular/forms';        
+import {
+  MatTreeModule, MatSort, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule,
+  MatSortModule, MatProgressSpinnerModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatInputModule,
+  MatCheckboxModule, MatProgressBarModule, MatSlideToggleModule, MatAutocompleteModule, MatChipsModule, MatButtonToggleModule,
+  MatDialogModule, MatGridListModule, MatTooltipModule, MatRadioModule
+} from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
 import { InternalHomePageComponent } from './internal-home-page/internal-home-page.component';
 import { InternalHomeDashboardComponent } from './internal-home-page/internal-home-dashboard/internal-home-dashboard.component';
 import { GlobalService } from './Services/global.service';
@@ -36,6 +38,9 @@ import { LriMainComponent } from './Utilities_Pages/LRI/lri-main/lri-main.compon
 import { LriEditComponent } from './Utilities_Pages/LRI/lri-edit/lri-edit.component';
 import { LriNewComponent } from './Utilities_Pages/LRI/lri-new/lri-new.component';
 import { IncidentalsMainComponent } from './Utilities_Pages/Incidentals/incidentals-main/incidentals-main.component';
+import { IncidentalsEditComponent } from './Utilities_Pages/Incidentals/incidentals-edit/incidentals-edit.component';
+import { IncidentalsNewComponent } from './Utilities_Pages/Incidentals/incidentals-new/incidentals-new.component';
+import { CagingCalendarComponent } from './Utilities_Pages/Caging/caging-calendar/caging-calendar.component';
 
 
 @NgModule({
@@ -62,7 +67,10 @@ import { IncidentalsMainComponent } from './Utilities_Pages/Incidentals/incident
     LriMainComponent,
     LriEditComponent,
     LriNewComponent,
-    IncidentalsMainComponent
+    IncidentalsMainComponent,
+    IncidentalsEditComponent,
+    IncidentalsNewComponent,
+    CagingCalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -96,7 +104,8 @@ import { IncidentalsMainComponent } from './Utilities_Pages/Incidentals/incident
     MatButtonToggleModule,
     MatDialogModule,
     MatGridListModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatRadioModule
   ],
   providers: [
     AuthService,

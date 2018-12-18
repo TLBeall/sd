@@ -16,6 +16,10 @@ import { LriMainComponent } from './Utilities_Pages/LRI/lri-main/lri-main.compon
 import { LriNewComponent } from './Utilities_Pages/LRI/lri-new/lri-new.component';
 import { LriEditComponent } from './Utilities_Pages/LRI/lri-edit/lri-edit.component';
 import { IncidentalsMainComponent } from './Utilities_Pages/Incidentals/incidentals-main/incidentals-main.component';
+import { IncidentalsNewComponent } from './Utilities_Pages/Incidentals/incidentals-new/incidentals-new.component';
+import { IncidentalsEditComponent } from './Utilities_Pages/Incidentals/incidentals-edit/incidentals-edit.component';
+import { CagingNewComponent } from './Utilities_Pages/Caging/caging-new/caging-new.component';
+import { CagingCalendarComponent } from './Utilities_Pages/Caging/caging-calendar/caging-calendar.component';
 // import { ResolvelistperformanceComponent } from './Services/resolve-listperformance/resolve-listperformance.component';
 
 const routes: Routes = [
@@ -28,16 +32,21 @@ const routes: Routes = [
   {path: 'phasegross/:packagecode/:phasenumber', component: PhaseGrossComponent },
   {path: 'whitemail', component: WhitemailMainComponent },
   {path: 'whitemail/new', component: WhitemailNewComponent },
-  {path: 'whitemail/edit/:id', component: WhitemailEditComponent },
+  {path: 'whitemail/edit/:id', component: WhitemailEditComponent, runGuardsAndResolvers: 'always' },
   {path: 'lri', component: LriMainComponent },
   {path: 'lri/new', component: LriNewComponent },
-  {path: 'lri/edit/:id', component: LriEditComponent },
+  {path: 'lri/edit/:id', component: LriEditComponent, runGuardsAndResolvers: 'always' },
   {path: 'incidentals', component: IncidentalsMainComponent },
+  {path: 'incidentals/new', component: IncidentalsNewComponent },
+  {path: 'incidentals/edit/:id', component: IncidentalsEditComponent, runGuardsAndResolvers: 'always' },
+  {path: 'caging/new', component: CagingNewComponent },
+  {path: 'caging/calendar', component: CagingCalendarComponent },
 
   // {path: 'listperformance', component: ListPerformanceComponent, resolve: {rowData: ResolvelistperformanceComponent} },
   //Keep this path last since it is PageNotFound
   {path: '**', component: PageNotFoundComponent} //Setup for if URL does not match
 ];
+//runGuardsAndResolvers allows for reinitializing the component/page every time you navigate to it, instead of reusing it
 
 @NgModule({
   imports: [
@@ -63,6 +72,10 @@ export const routingComponents = [
   LriNewComponent,
   LriEditComponent,
   PageNotFoundComponent,
-  IncidentalsMainComponent
+  IncidentalsMainComponent,
+  IncidentalsNewComponent,
+  IncidentalsEditComponent,
+  CagingNewComponent,
+  CagingCalendarComponent
 ];
 

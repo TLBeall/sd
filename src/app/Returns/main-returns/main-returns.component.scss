@@ -41,7 +41,7 @@ table {
 
 //Controls hover and selected for the rows
 tr.example-element-row:not(.example-expanded-row):hover {
-  background: #e3eff7;
+  background: $color-blue-highlight;
   td{
     .returnsExpCollBtn{
       background-color:$color-whitesmoke !important;
@@ -49,7 +49,7 @@ tr.example-element-row:not(.example-expanded-row):hover {
   }
 }
 tr.example-element-row:not(.example-expanded-row):active {
-  background: #e3eff7;
+  background: $color-blue-highlight;
   td{
     .returnsExpCollBtn{
       background-color:$color-whitesmoke !important;

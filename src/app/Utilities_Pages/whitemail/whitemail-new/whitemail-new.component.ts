@@ -57,10 +57,8 @@ export class WhitemailNewComponent implements OnInit {
       Agency: "HSP",
       Client: null,
       MailCodeId: null,
-      DonationDate: currentDate,
       DateCaged: currentDate,
       EnteredDate: currentDate,
-      ModifiedDate: currentDate,
       MailCode: "WM",
       NonDonors: 0,
       CashDonors: 0,
@@ -69,14 +67,14 @@ export class WhitemailNewComponent implements OnInit {
       CashAmount: 0,
       CardAmount: 0,
       CheckAmount: 0,
-      UnspecifiedAmount: 0,
-      UnspecifiedDonors: 0,
       EnteredBy: "TempUser",
-      ModifiedBy: "TempUser",
+      ModifiedBy: null,
+      ModifiedDate: null,
       TotalDonors: null,
       TotalGross: null,
       ClientControl: new FormControl(),
-      isLast: null
+      isLast: null,
+      beenModified: null
     };
 
     this.whitemailArr.push(element);
@@ -102,6 +100,21 @@ export class WhitemailNewComponent implements OnInit {
           map(value => this._filter(value))
         );
       });
+  }
+
+  updateElement(e: any, type: string, element: CagingDailies){
+    //UPDATES VALUE OF INPUT TO PIPE CURRENCY FORMAT
+    var value = (Number(e.target.value.replace(/[^0-9.-]+/g,""))).toFixed(2);
+    switch(type){
+      case "cash":
+      element.CashAmount = parseFloat(value);
+      break;
+      case "card":
+      element.CardAmount = parseFloat(value);
+      break;
+      case "check":
+      element.CheckAmount = parseFloat(value);
+    }
   }
 
   deleteRow(element: any) {
@@ -137,7 +150,7 @@ export class WhitemailNewComponent implements OnInit {
 
   changeDate(event: any) {
     // var date = event.target.value;
-    // this.whitemailElement.DonationDate = date.toISOString();
+    // this.whitemailElement.DateCaged = date.toISOString();
   }
 
   addWMRow() {
@@ -148,27 +161,20 @@ export class WhitemailNewComponent implements OnInit {
   addWhitemail() {
     if (this.validationFunction()) {
       this.showSubmittedModal = true;
-      this.whitemailArr.forEach(element => {
-        element.ClientControl = null;
-        element.isLast = null;
-        var tempclient = element.Client;
-        var reg = /(?<= - ).*/;
-        element.Client = (tempclient.match(reg)).toString();
-      });
       this._authService.createDailies(this.whitemailArr).subscribe();
       setTimeout(() => {
         this.showSubmittedModal = false;
         this.whitemailArr = [];
         this.loadDefaultValues();
         this.router.navigate(['whitemail/new']);
-      }, 2500)
+      }, 1500)
     } else {
-      alert('Please fill all fields');
+      alert('Please fill all required fields');
     }
   }
 
   validationFunction(): boolean {
-    var tempValue: boolean;
+    var formValid: boolean;
     this.whitemailArr.forEach(element => {
       if (element.NonDonors == null || (element.NonDonors).toString() == "" ||
         element.CardAmount == null || (element.CardAmount).toString() == "" ||
@@ -178,19 +184,14 @@ export class WhitemailNewComponent implements OnInit {
         element.CashAmount == null || (element.CashAmount).toString() == "" ||
         element.CashDonors == null || (element.CashDonors).toString() == "" ||
         element.Client == null || element.Client == "" ||
-        element.DonationDate == null || (element.DonationDate).toString() == "" ||
         element.DateCaged == null || (element.DateCaged).toString() == ""
       ) {
-        tempValue = false;
+        formValid = false;
       } else {
-        tempValue = true;
+        formValid = true;
       }
     });
-    if (tempValue == false) {
-      return false;
-    } else {
-      return true;
-    }
+    return formValid;
   }
 
   modalCancel() {

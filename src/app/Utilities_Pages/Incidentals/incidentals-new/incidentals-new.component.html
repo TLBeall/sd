@@ -5,7 +5,7 @@
 <div class="container">
   <mat-card class="mat-elevation-z8">
     <!-- File URL start-->
-    <div>
+    <!-- <div>
       <button mat-stroked-button (click)="fileInput.click()" matTooltip="Upload from file" [matTooltipShowDelay]="800"
         [matTooltipHideDelay]="200">
         <span>Browse</span>
@@ -21,12 +21,12 @@
     <span (click)="showExampleLRI()" id="exampleFormat">Example Format</span>
     <div >
     <img *ngIf="exampleLRI" src="../../../../assets/exampleLRI.PNG" id="exampleImg"> 
-  </div>
+  </div> -->
     <!-- File URL end-->
-    <br>
-    <br>
+    <!-- <br>
+    <br> -->
     <ul>
-      <li *ngFor="let element of LRIArray">
+      <li *ngFor="let element of IncidentalArray">
         <div class="row">
           <div class="col-lg-11 objectColumn">
             <div class="row">
@@ -47,9 +47,9 @@
                 <!-- Set the "value" (aka the starting value via the ngModel. Using the ngModel because that way it also updates the whitemailElement object-->
                 <mat-form-field appearance="outline" class="mainInputBox">
                   <mat-label>Date</mat-label>
-                  <input required matInput [matDatepicker]="LRIDatePick" (dateInput)="changeDate($event)" [(ngModel)]="element.LRIDate">
-                  <mat-datepicker-toggle matSuffix [for]="LRIDatePick"></mat-datepicker-toggle>
-                  <mat-datepicker #LRIDatePick>
+                  <input required matInput [matDatepicker]="IncidentalDatePick" (dateInput)="changeDate($event)" [(ngModel)]="element.IncidenceDate">
+                  <mat-datepicker-toggle matSuffix [for]="IncidentalDatePick"></mat-datepicker-toggle>
+                  <mat-datepicker #IncidentalDatePick>
                   </mat-datepicker>
                   <!-- (dateInput)="validateDate($event)" -->
                 </mat-form-field>
@@ -67,7 +67,7 @@
                 <mat-form-field appearance="outline" class="mainInputBox">
                   <mat-label>Amount</mat-label>
                   <span matPrefix>$</span>
-                  <input required matInput [ngModel]="element.Amount|number:'1.2-2'" (blur)="updateElement($event, element)">
+                  <input required matInput [(ngModel)]="element.Amount">
                 </mat-form-field>
               </div>
             </div>
@@ -81,7 +81,7 @@
               </div>
               <div class="col-lg-12">
                 <button mat-icon-button matTooltip="Add new row" [matTooltipShowDelay]="800" [matTooltipHideDelay]="200"
-                  *ngIf="element.isLast" (click)="addLRIRow()"><i class="material-icons">add_box</i></button>
+                  *ngIf="element.isLast" (click)="addRow()"><i class="material-icons">add_box</i></button>
               </div>
             </div>
           </div>
@@ -91,7 +91,7 @@
     </ul>
 
     <div class="btnContainer">
-      <button id="submitBtn" mat-raised-button (click)="addLRI()">Submit</button>
+      <button id="submitBtn" mat-raised-button (click)="addIncidentals()">Submit</button>
     </div>
   </mat-card>
 </div>
@@ -115,7 +115,7 @@
             </div>
             <div class="row">
               <div class="col-12 updatedDiv">
-                <span class="updatedMsg">{{LRINumMessage}} Added!</span>
+                <span class="updatedMsg">{{IncidentalNumMessage}} Added!</span>
               </div>
             </div>
             <div class="row">

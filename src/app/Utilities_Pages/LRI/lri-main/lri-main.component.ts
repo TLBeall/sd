@@ -56,15 +56,13 @@ export class LriMainComponent implements OnInit {
     var clientAcronym = client.match(reg);
     this._authService.getListRentalbyClient(clientAcronym[0]).subscribe(data => {
       if (data)
-      var temp = this.sortByStartDate(data)
+        var temp = this.sortByStartDate(data)
       this.rootLRI = temp;
-      // this.rootLRI.forEach(element => {
-      //   element.TotalDonors = element.CardDonors + element.CheckDonors + element.CashDonors + element.UnspecifiedDonors;
-      //   element.TotalGross = element.CardAmount + element.CheckAmount + element.CashAmount + element.UnspecifiedAmount;
-      //   this.displayTable = true;
-      // })
+      this.rootLRI.forEach(element => {
+        element.Client = client;
+      })
       this.displayTable = true;
-      if (data.length == 0){
+      if (data.length == 0) {
         this.displayTable = false;
         alert('Client does not have LRI');
       }
@@ -98,20 +96,20 @@ export class LriMainComponent implements OnInit {
     } else {
       this.checkedRows.push(element.ID);
     }
-    
-    if (this.checkedRows.length == 1){
+
+    if (this.checkedRows.length == 1) {
       this.deleteNotation = "this record";
     } else {
       this.deleteNotation = "multiple records"
     }
   }
 
-  preDeleteWM(event: any) {
+  preDelete(event: any) {
     if (this.checkedRows.length > 0)
-    this.showDeleteModal = !this.showDeleteModal;
+      this.showDeleteModal = !this.showDeleteModal;
   }
 
-  deleteWM(){
+  delete() {
     var LRIStrArr = "";
     this.checkedRows.forEach((element, index) => {
       if (index == 0) {
@@ -121,26 +119,28 @@ export class LriMainComponent implements OnInit {
       }
     });
     this._authService.deleteLRI(LRIStrArr).subscribe(); //the array should get convered to URL notation?
-    this.checkedRows = [];
-    this.mainSelectClient(this.Client);
-    this.showDeleteModal = false;
+    setTimeout(() => {
+      this.checkedRows = [];
+      this.mainSelectClient(this.Client);
+      this.showDeleteModal = false;
+    }, 1000)
   }
 
-  navigateToEdit(element: any){
+  navigateToEdit(element: any) {
     this._g.LRIElement = element;
     this.router.navigate(['lri/edit/' + element.ID]);
     element.showEditButton = false;
   }
 
-  navigateToNew(){
+  navigateToNew() {
     this.router.navigate(['lri/new'])
   }
 
-  hoverRow(row: any){
+  hoverRow(row: any) {
     row.showEditButton = true;
   }
 
-  hoverLeave(row: any){
+  hoverLeave(row: any) {
     row.showEditButton = false;
   }
 

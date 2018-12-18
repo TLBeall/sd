@@ -1,0 +1,205 @@
+<app-toolbar></app-toolbar>
+<br>
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-3 box">
+      <p>Quarter</p>
+    </div>
+    <div class="col-3 box">
+      <p>Month 1</p>
+    </div>
+    <div class="col-3 box">
+      <p>Month 2</p>
+    </div>
+    <div class="col-3 box">
+      <p>Month 3</p>
+    </div>
+    <div class="col-3 box quarterBox">
+      <p>Q1</p>
+      <p>Donors: .......</p>
+      <p>Non-Donors: .......</p>
+      <p>Donation Amount: .......</p>
+      <p>Piece Count: .......</p>
+    </div>
+    <div class="col-3 box">
+      <p>Jan</p>
+      <p>Donors: .......</p>
+      <p>Non-Donors: .......</p>
+      <p>Donation Amount: .......</p>
+      <p>Piece Count: .......</p>
+    </div>
+    <div class="col-3 box">
+      <p>Feb</p>
+      <p>Donors: .......</p>
+      <p>Non-Donors: .......</p>
+      <p>Donation Amount: .......</p>
+      <p>Piece Count: .......</p>
+    </div>
+    <div class="col-3 box">
+      <p>Mar</p>
+      <p>Donors: .......</p>
+      <p>Non-Donors: .......</p>
+      <p>Donation Amount: .......</p>
+      <p>Piece Count: .......</p>
+    </div>
+    <div class="col-3 box quarterBox">
+      <p>Q2</p>
+      <p>Donors: .......</p>
+      <p>Non-Donors: .......</p>
+      <p>Donation Amount: .......</p>
+      <p>Piece Count: .......</p>
+    </div>
+    <div class="col-3 box">
+      <p>Apr</p>
+      <p>Donors: .......</p>
+      <p>Non-Donors: .......</p>
+      <p>Donation Amount: .......</p>
+      <p>Piece Count: .......</p>
+    </div>
+    <div class="col-3 box">
+      <p>May</p>
+      <p>Donors: .......</p>
+      <p>Non-Donors: .......</p>
+      <p>Donation Amount: .......</p>
+      <p>Piece Count: .......</p>
+    </div>
+    <div class="col-3 box">
+      <p>Jun</p>
+      <p>Donors: .......</p>
+      <p>Non-Donors: .......</p>
+      <p>Donation Amount: .......</p>
+      <p>Piece Count: .......</p>
+    </div>
+    <div class="col-3 box quarterBox">
+      <p>Q3</p>
+      <p>Donors: .......</p>
+      <p>Non-Donors: .......</p>
+      <p>Donation Amount: .......</p>
+      <p>Piece Count: .......</p>
+    </div>
+    <div class="col-3 box">
+      <p>Jul</p>
+      <p>Donors: .......</p>
+      <p>Non-Donors: .......</p>
+      <p>Donation Amount: .......</p>
+      <p>Piece Count: .......</p>
+    </div>
+    <div class="col-3 box">
+      <p>Aug</p>
+      <p>Donors: .......</p>
+      <p>Non-Donors: .......</p>
+      <p>Donation Amount: .......</p>
+      <p>Piece Count: .......</p>
+    </div>
+    <div class="col-3 box">
+      <p>Sep</p>
+      <p>Donors: .......</p>
+      <p>Non-Donors: .......</p>
+      <p>Donation Amount: .......</p>
+      <p>Piece Count: .......</p>
+    </div>
+    <div class="col-3 box quarterBox">
+      <p>Q4</p>
+      <p>Donors: .......</p>
+      <p>Non-Donors: .......</p>
+      <p>Donation Amount: .......</p>
+      <p>Piece Count: .......</p>
+    </div>
+    <div class="col-3 box">
+      <p>Oct</p>
+      <p>Donors: .......</p>
+      <p>Non-Donors: .......</p>
+      <p>Donation Amount: .......</p>
+      <p>Piece Count: .......</p>
+    </div>
+    <div class="col-3 box">
+      <p>Nov</p>
+      <p>Donors: .......</p>
+      <p>Non-Donors: .......</p>
+      <p>Donation Amount: .......</p>
+      <p>Piece Count: .......</p>
+    </div>
+    <div class="col-3 box">
+      <p>Dec</p>
+      <p>Donors: .......</p>
+      <p>Non-Donors: .......</p>
+      <p>Donation Amount: .......</p>
+      <p>Piece Count: .......</p>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="container mat-elevation-z8 calendarContainer">
+  <div class="row headerBox">
+    <div class="col-3">Quarter</div>
+    <div class="col-3">Month 1</div>
+    <div class="col-3">Month 2</div>
+    <div class="col-3">Month 3</div>
+  </div>
+  <div class="row calendarBox">
+    <div class="col-3 quarterRow">
+      <div class="row">
+        <div *ngFor="let element of quarterArr" class="col-12 quarterBox Box" (click)="selectQuarterElement(element)" [ngClass]="element.selected? 'qElementSelected': 'qElementDefault'">
+          <div class="row">
+            <div class="col-12">{{element.Quarter}}</div>
+          </div>
+          <div class="row">
+            <div class="col-6">Donors:</div>
+            <div class="col-6 text-right">{{element.Donors}}</div>
+          </div>
+          <div class="row">
+            <div class="col-6">Non-Donors:</div>
+            <div class="col-6 text-right">{{element.NonDonors}}</div>
+          </div>
+          <div class="row">
+            <div class="col-6">Piece Count:</div>
+            <div class="col-6 text-right">{{element.PieceCount}}</div>
+          </div>
+          <div class="row">
+            <div class="col-6">Gross:</div>
+            <div class="col-6 text-right">{{element.DonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-9 monthRow">
+      <div class="row">
+        <div *ngFor="let element of monthArr" class="col-4 monthBox Box" (click)="selectMonthElement(element)" [ngClass]="element.selected? 'elementSelected': 'elementDefault'">
+          <div class="row">
+            <div class="col-12">{{element.Month}}</div>
+          </div>
+          <div class="row">
+            <div class="col-6">Donors:</div>
+            <div class="col-6 text-right">{{element.Donors}}</div>
+          </div>
+          <div class="row">
+            <div class="col-6">Non-Donors:</div>
+            <div class="col-6 text-right">{{element.NonDonors}}</div>
+          </div>
+          <div class="row">
+            <div class="col-6">Piece Count:</div>
+            <div class="col-6 text-right">{{element.PieceCount}}</div>
+          </div>
+          <div class="row">
+            <div class="col-6">Gross:</div>
+            <div class="col-6 text-right">{{element.DonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <p>Total Donors: {{totalDonors}}</p>
+      <p>Total Non-Donors: {{totalNonDonors}}</p>
+      <p>Total Piece Count: {{totalPieceCount}}</p>
+      <p>Total Gross: {{totalGross|currency:'USD':'symbol':'1.2-2'}}</p>
+    </div>
+  </div>
+</div>

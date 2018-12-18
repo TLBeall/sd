@@ -5,7 +5,7 @@
   <app-toolbar></app-toolbar>
   <table mat-table [dataSource]="ListPerformanceArr" matSort (matSortChange)="SortFunction($event, ListPerformanceArr)"
     multiTemplateDataRows>
-    <ng-container matColumnDef="Expand" >
+    <ng-container matColumnDef="Expand">
       <th mat-header-cell *matHeaderCellDef class="expandBtnColumn"></th>
       <td mat-cell *matCellDef="let element" class="expandBtnColumn">
         <button mat-icon-button (click)="ToggleExpansion(element)" class="returnsExpCollBtn">
@@ -17,8 +17,8 @@
     <ng-container matColumnDef="selectionBox">
       <th mat-header-cell *matHeaderCellDef [ngClass]="selectionMode? 'sbcShifted':'sbc'"></th>
       <td mat-cell *matCellDef="let element" [ngClass]="selectionMode? 'sbcShifted':'sbc'">
-          <mat-checkbox class="md-checkbox" #listTable [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate"
-              (change)="ToogleChecks(element)" *ngIf="selectionMode == true"></mat-checkbox>              
+        <mat-checkbox class="md-checkbox" #listTable [(ngModel)]="element.Measure.Selected" [(indeterminate)]="element.Measure.Indeterminate"
+          (change)="ToogleChecks(element)" *ngIf="selectionMode == true"></mat-checkbox>
       </td>
       <td mat-footer-cell *matFooterCellDef> </td>
     </ng-container>
@@ -53,7 +53,7 @@
       <td mat-cell *matCellDef="let element"> {{element.MailCode}} </td>
       <td mat-footer-cell *matFooterCellDef> </td>
     </ng-container>
-    <ng-container matColumnDef="ExchangeFlag" >
+    <ng-container matColumnDef="ExchangeFlag">
       <th mat-header-cell *matHeaderCellDef title="Type of List Order (Rental, Exchange, or House" class="exchangeFlagColumn">T</th>
       <td mat-cell *matCellDef="let element" class="exchangeFlagColumn"> {{element.ExchangeFlag}} </td>
       <td mat-footer-cell *matFooterCellDef> </td>
@@ -86,7 +86,7 @@
     <ng-container matColumnDef="NewDonors">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> New </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.NewDonors | number}} </td>
-      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.NewDonors  | number}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.NewDonors | number}} </td>
     </ng-container>
     <ng-container matColumnDef="RSP">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Response Rate"> Rsp </th>
@@ -98,42 +98,42 @@
       <td mat-cell *matCellDef="let element"> {{element.Measure.AVG | currency : 'USD' : 'symbol' : '1.2-2'}} </td>
       <td mat-footer-cell *matFooterCellDef> {{ this.Summary.AVG | currency : 'USD' : 'symbol' : '1.2-2'}} </td>
     </ng-container>
-    <ng-container matColumnDef="CPD">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef title="Cost per donor"> CPD </th>
-      <td mat-cell *matCellDef="let element"> {{element.Measure.CPD | currency : 'USD' : 'symbol' : '1.2-2'}} </td>
-      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.CPD | currency : 'USD' : 'symbol' : '1.2-2' }} </td>
-    </ng-container>
     <ng-container matColumnDef="Gross">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Gross </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.Gross | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
       <td mat-footer-cell *matFooterCellDef> {{ this.Summary.Gross | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
-    </ng-container>
-    <ng-container matColumnDef="Net">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef> Net </th>
-      <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.Net < 0">
-        {{element.Measure.Net | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{ this.Summary.Net | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
-      </ng-container>
-    <ng-container matColumnDef="Cost">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef> Cost </th>
-      <td mat-cell *matCellDef="let element"> {{element.Measure.Cost | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
-      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.Cost | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
     </ng-container>
     <ng-container matColumnDef="GPP" title="Amount grossed per Letter Mailed">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Amount grossed per Letter Mailed"> GLM </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.GPP | currency}} </td>
       <td mat-footer-cell *matFooterCellDef> {{ this.Summary.GPP | currency}} </td>
     </ng-container>
-    <ng-container matColumnDef="NLM">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef title="Amount net per letter mailed"> N$LM </th>
-      <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.NLM < 0">
-        {{element.Measure.NLM | currency}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{ this.Summary.NLM | currency}} </td>
-      </ng-container>
+    <ng-container matColumnDef="Cost">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> Cost </th>
+      <td mat-cell *matCellDef="let element"> {{element.Measure.Cost | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.Cost | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+    </ng-container>
     <ng-container matColumnDef="CLM">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Cost per letter Mailed"> CLM </th>
       <td mat-cell *matCellDef="let element"> {{element.Measure.CLM | currency}} </td>
       <td mat-footer-cell *matFooterCellDef> {{ this.Summary.CLM | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Net">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> Net </th>
+      <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.Net < 0">
+        {{element.Measure.Net | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.Net | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="NLM">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef title="Amount net per letter mailed"> N$LM </th>
+      <td mat-cell *matCellDef="let element" [class.negative]="element.Measure.NLM < 0">
+        {{element.Measure.NLM | currency}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.NLM | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="CPD">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef title="Cost per donor"> CPD </th>
+      <td mat-cell *matCellDef="let element"> {{element.Measure.CPD | currency : 'USD' : 'symbol' : '1.2-2'}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ this.Summary.CPD | currency : 'USD' : 'symbol' : '1.2-2' }} </td>
     </ng-container>
     <ng-container matColumnDef="IO">
       <th mat-header-cell mat-sort-header *matHeaderCellDef title="Gross/Cost"> IO </th>
@@ -153,9 +153,11 @@
     <ng-container matColumnDef="None">
       <td mat-cell *matCellDef="let element"> </td>
     </ng-container>
-       <ng-container matColumnDef="PackageHeader">
-        <td mat-cell *matCellDef="let element" colspan="8"><div class="dPackageInfoHeader"> Package Information </div></td>
-      </ng-container>
+    <ng-container matColumnDef="PackageHeader">
+      <td mat-cell *matCellDef="let element" colspan="8">
+        <div class="dPackageInfoHeader"> Package Information </div>
+      </td>
+    </ng-container>
     <!-- <ng-container matColumnDef="PackageTitle">
         <td mat-cell *matCellDef="let element" colspan="8"> {{element.PackageTitle}} </td>
       </ng-container> -->
@@ -214,11 +216,15 @@
 
 
     <ng-container matColumnDef="detailsColumn">
-        <td mat-cell *matCellDef="let element" colspan="8"><div class="dPackageInfo">  {{element.PackageFormat}} </div></td>
-      </ng-container>
-      <ng-container matColumnDef="detailsColumn2">
-        <td mat-cell *matCellDef="let element" colspan="8"><div class="dPackageInfo"> {{element.PackageTitle}} </div></td>
-      </ng-container>
+      <td mat-cell *matCellDef="let element" colspan="8">
+        <div class="dPackageInfo"> {{element.PackageFormat}} </div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="detailsColumn2">
+      <td mat-cell *matCellDef="let element" colspan="8">
+        <div class="dPackageInfo"> {{element.PackageTitle}} </div>
+      </td>
+    </ng-container>
     <!-- <ng-container matColumnDef="RSPPerformance">
       <td mat-cell *matCellDef="let element"> <i class="material-icons" [ngStyle]="{'color':element.PackageRSP > element.Measure.RSP ? 'red' : 'green' }"
           [ngClass]="element.PackageRSP > element.Measure.RSP ? 'mi_expand_more' : 'mi_expand_less'"></i></td>
@@ -233,7 +239,8 @@
     </ng-container> -->
 
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row" [ngStyle]="{'background-color':element.Measure.Expanded ? '#e6e6e6' : 'white' }" [ngClass]="{
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row" [ngStyle]="{'background-color':element.Measure.Expanded ? '#e6e6e6' : 'white' }"
+      [ngClass]="{
       'selectionBoxUnchecked': element.Measure.Selected == false
   }">
     </tr>
@@ -241,122 +248,94 @@
       style="background-color:#F8F8F8"></tr>
     <tr mat-row *matRowDef="let element; columns: detailsColumns;" [ngStyle]="{'visibility':element.Measure.Expanded ? 'visible' : 'collapse' }"
       style="background-color:#F8F8F8"></tr>
-      <tr mat-row *matRowDef="let element; columns: detailsColumns2;" [ngStyle]="{'visibility':element.Measure.Expanded ? 'visible' : 'collapse' }"
+    <tr mat-row *matRowDef="let element; columns: detailsColumns2;" [ngStyle]="{'visibility':element.Measure.Expanded ? 'visible' : 'collapse' }"
       style="background-color:#F8F8F8"></tr>
-      <tr mat-footer-row *matFooterRowDef="columnsToDisplay"></tr>    
+    <tr mat-footer-row *matFooterRowDef="columnsToDisplay"></tr>
   </table>
 
 
 
 
-<!-- <><><><><><> TOOLBOX SETTINGS START <><><><><> -->
-<!-- <><><><><><><><><><><<><><><>><><><><><> -->
-<!-- <div (clickOutside)="closeToolbox()"> -->
+  <!-- <><><><><><> TOOLBOX SETTINGS START <><><><><> -->
+  <!-- <><><><><><><><><><><<><><><>><><><><><> -->
+  <!-- <div (clickOutside)="closeToolbox()"> -->
 
-<!--<><><> Main Toolbox <><><>-->
-<button title="Tools" (click)="toggle(1)" id="toolboxBtn" class="btn toolboxButtonCollection" [ngClass]="{
+  <!--<><><> Main Toolbox <><><>-->
+  <button title="Tools" (click)="toggle(1)" id="toolboxBtn" class="btn toolboxButtonCollection" [ngClass]="{
   'btnShifted': toolsOpened,
   'hidden': hide
 }">
-  <i class="material-icons" [ngClass]="toolsOpened ? 'mi_arrow_forward_ios' : 'mi_settings'"></i>
-</button>
-<div class="toolbox" [ngClass]="{
+    <i class="material-icons" [ngClass]="toolsOpened ? 'mi_arrow_forward_ios' : 'mi_settings'"></i>
+  </button>
+  <div class="toolbox" [ngClass]="{
   'shifted': toolsOpened
 }">
-  <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
-  <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
+    <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
+    <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
 
-    <!-- LIST OWNER - LO -->
-        <mat-form-field class="tbElement">
-            <mat-chip-list #LOchipList>
-                <mat-chip *ngFor="let listowner of LOList" 
-                [selectable]="selectable" 
-                [removable]="removable" 
-                (removed)="LO_Remove(listowner)">
-                    {{listowner}}
-                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                </mat-chip>
-                <input placeholder="List(s)" #LOInput 
-                [formControl]="LOControl" 
-                [matAutocomplete]="LOauto"
-                [matChipInputFor]="LOchipList" 
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                [matChipInputAddOnBlur]="addOnBlur" 
-                (matChipInputTokenEnd)="LO_Add($event)">
-            </mat-chip-list>
-            <mat-autocomplete #LOauto="matAutocomplete" (optionSelected)="LO_Selected($event)">
-                <mat-option class="md-custom-option" *ngFor="let listowner of LOfilteredOptions | async" [value]="listowner">{{listowner}}</mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
+      <!-- LIST OWNER - LO -->
+      <mat-form-field class="tbElement">
+        <mat-chip-list #LOchipList>
+          <mat-chip *ngFor="let listowner of LOList" [selectable]="selectable" [removable]="removable" (removed)="LO_Remove(listowner)">
+            {{listowner}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="List(s)" #LOInput [formControl]="LOControl" [matAutocomplete]="LOauto" [matChipInputFor]="LOchipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="LO_Add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #LOauto="matAutocomplete" (optionSelected)="LO_Selected($event)">
+          <mat-option class="md-custom-option" *ngFor="let listowner of LOfilteredOptions | async" [value]="listowner">{{listowner}}</mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
 
-    <!-- LIST MANAGER - LM -->
-    <mat-form-field class="tbElement">
+      <!-- LIST MANAGER - LM -->
+      <mat-form-field class="tbElement">
         <mat-chip-list #LMchipList>
-            <mat-chip *ngFor="let listmanager of LMList" 
-            [selectable]="selectable" 
-            [removable]="removable" 
-            (removed)="LM_Remove(listmanager)">
-                {{listmanager}}
-                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-            </mat-chip>
-            <input placeholder="List Manager(s)" #LMInput 
-            [formControl]="LMControl" 
-            [matAutocomplete]="LMauto"
-            [matChipInputFor]="LMchipList" 
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            [matChipInputAddOnBlur]="addOnBlur" 
+          <mat-chip *ngFor="let listmanager of LMList" [selectable]="selectable" [removable]="removable" (removed)="LM_Remove(listmanager)">
+            {{listmanager}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="List Manager(s)" #LMInput [formControl]="LMControl" [matAutocomplete]="LMauto"
+            [matChipInputFor]="LMchipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
             (matChipInputTokenEnd)="LM_Add($event)">
         </mat-chip-list>
         <mat-autocomplete #LMauto="matAutocomplete" (optionSelected)="LM_Selected($event)">
-            <mat-option class="md-custom-option" *ngFor="let listmanager of LMfilteredOptions | async" [value]="listmanager">{{listmanager}}</mat-option>
+          <mat-option class="md-custom-option" *ngFor="let listmanager of LMfilteredOptions | async" [value]="listmanager">{{listmanager}}</mat-option>
         </mat-autocomplete>
-    </mat-form-field>
+      </mat-form-field>
 
-    <!-- List Recency - Rec -->
-    <mat-form-field class="tbElement">
+      <!-- List Recency - Rec -->
+      <mat-form-field class="tbElement">
         <mat-chip-list #RecchipList>
-            <mat-chip *ngFor="let recency of RecList" 
-            [selectable]="selectable"
-            [removable]="removable" 
-            (removed)="Rec_Remove(recency)">
-                {{recency}}
-                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-            </mat-chip>
-            <input placeholder="Recency" #RecInput 
-            [formControl]="RecControl" 
-            [matAutocomplete]="Recauto"
-            [matChipInputFor]="RecchipList" 
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            [matChipInputAddOnBlur]="addOnBlur" 
-            (matChipInputTokenEnd)="Rec_Add($event)">
+          <mat-chip *ngFor="let recency of RecList" [selectable]="selectable" [removable]="removable" (removed)="Rec_Remove(recency)">
+            {{recency}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Recency" #RecInput [formControl]="RecControl" [matAutocomplete]="Recauto"
+            [matChipInputFor]="RecchipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="Rec_Add($event)">
         </mat-chip-list>
         <mat-autocomplete #Recauto="matAutocomplete" (optionSelected)="Rec_Selected($event)">
-            <mat-option class="md-custom-option" *ngFor="let recency of RecfilteredOptions | async" [value]="recency">{{recency}}</mat-option>
+          <mat-option class="md-custom-option" *ngFor="let recency of RecfilteredOptions | async" [value]="recency">{{recency}}</mat-option>
         </mat-autocomplete>
-    </mat-form-field>
+      </mat-form-field>
 
-    <!-- Client Input - Cl -->
-    <mat-form-field class="tbElement">
+      <!-- Client Input - Cl -->
+      <mat-form-field class="tbElement">
         <mat-chip-list #ClchipList>
-            <mat-chip *ngFor="let client of ClList" 
-            [selectable]="selectable" 
-            [removable]="removable" 
-            (removed)="Cl_Remove(client)">
-                {{client}}
-                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-            </mat-chip>
-            <input placeholder="Client(s)" #ClInput 
-            [formControl]="ClControl" 
-            [matAutocomplete]="Clauto"
-            [matChipInputFor]="ClchipList" 
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            [matChipInputAddOnBlur]="addOnBlur" 
+          <mat-chip *ngFor="let client of ClList" [selectable]="selectable" [removable]="removable" (removed)="Cl_Remove(client)">
+            {{client}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Client(s)" #ClInput [formControl]="ClControl" [matAutocomplete]="Clauto"
+            [matChipInputFor]="ClchipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
             (matChipInputTokenEnd)="Cl_Add($event)">
         </mat-chip-list>
         <mat-autocomplete #Clauto="matAutocomplete" (optionSelected)="Cl_Selected($event)">
-            <mat-option class="md-custom-option" *ngFor="let client of ClfilteredOptions | async" [value]="client">{{client}}</mat-option>
+          <mat-option class="md-custom-option" *ngFor="let client of ClfilteredOptions | async" [value]="client">{{client}}</mat-option>
         </mat-autocomplete>
-    </mat-form-field>
+      </mat-form-field>
       <mat-form-field class="tbElement">
         <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="fromDate" placeholder="start date">
         <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
@@ -369,60 +348,60 @@
       </mat-form-field>
       <br>
       <div class="center-align">
-      <button mat-raised-button color="accent" (click)="applyChanges()"> Search </button>
-    </div>
+        <button mat-raised-button color="accent" (click)="applyChanges()"> Search </button>
+      </div>
       <br>
       <hr>
       <br>
       <mat-slide-toggle [(ngModel)]="selectionMode">
         Omit Data
-    </mat-slide-toggle>
-    <!-- Scroll-fix (when height of screen is smaller) -->
-    <div style="height: 150px; width:100%;"></div> 
+      </mat-slide-toggle>
+      <!-- Scroll-fix (when height of screen is smaller) -->
+      <div style="height: 150px; width:100%;"></div>
+    </div>
   </div>
-</div>
 
-<!--<><><> L2 Toolbox <><><>-->
-<button title="Donor Demographics" (click)="toggle(2)" id="demoToolboxBtn" class="btn toolboxButtonCollection"
-  [ngClass]="{
+  <!--<><><> L2 Toolbox <><><>-->
+  <button title="Donor Demographics" (click)="toggle(2)" id="demoToolboxBtn" class="btn toolboxButtonCollection"
+    [ngClass]="{
 'btnShifted': demoOpened,
 'hidden': hide
 }">
-  <i class="material-icons" [ngClass]="toolsOpened ? 'mi_arrow_forward_ios' : 'mi_group'"></i>
-</button>
-<div class="toolbox" [ngClass]="{
+    <i class="material-icons" [ngClass]="toolsOpened ? 'mi_arrow_forward_ios' : 'mi_group'"></i>
+  </button>
+  <div class="toolbox" [ngClass]="{
 'shifted': demoOpened
 }">
-  <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
-  <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
-    <h5 id="L2Header">Donor Information</h5>
-    <hr>
-    <p>
-      Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball tip turducken.
-      Pork
-      belly meatball
-      t-bone bresaola tail filet mignon kevin turkey ribeye shank flank doner cow kielbasa shankle. Pig swine
-      chicken
-      hamburger, tenderloin turkey rump ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger
-      venison
-      brisket tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye tail
-      short
-      ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger flank. Doner rump frankfurter
-      meatball
-      meatloaf, cow kevin pork pork loin venison fatback spare ribs salami beef ribs.
-    </p>
-    <p>
-      Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas filet mignon
-      brisket beef
-      kevin tenderloin
-      porchetta. Capicola fatback venison shank kielbasa, drumstick ribeye landjaeger beef kevin tail meatball
-      pastrami
-      prosciutto pancetta. Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip
-      leberkas
-      flank sausage ham hock filet mignon beef ribs pancetta turkey.
-    </p>
-    <div style="height: 100px; width:100%;"></div>
-    <!-- <mat-tab-group color="accent" id="mainReturnsL2box">
+    <!--In order to not have two scrollbars you need to put the inner elements to scroll and the parent to not scroll-->
+    <div class="toolboxScrollContainer" [ngStyle]="{'visibility': visibility}">
+      <h5 id="L2Header">Donor Information</h5>
+      <hr>
+      <p>
+        Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball tip turducken.
+        Pork
+        belly meatball
+        t-bone bresaola tail filet mignon kevin turkey ribeye shank flank doner cow kielbasa shankle. Pig swine
+        chicken
+        hamburger, tenderloin turkey rump ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger
+        venison
+        brisket tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye tail
+        short
+        ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger flank. Doner rump frankfurter
+        meatball
+        meatloaf, cow kevin pork pork loin venison fatback spare ribs salami beef ribs.
+      </p>
+      <p>
+        Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas filet mignon
+        brisket beef
+        kevin tenderloin
+        porchetta. Capicola fatback venison shank kielbasa, drumstick ribeye landjaeger beef kevin tail meatball
+        pastrami
+        prosciutto pancetta. Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip
+        leberkas
+        flank sausage ham hock filet mignon beef ribs pancetta turkey.
+      </p>
+      <div style="height: 100px; width:100%;"></div>
+      <!-- <mat-tab-group color="accent" id="mainReturnsL2box">
     <mat-tab class="test2" label="Mailed">
       <p>
         Donizzle doggy auctor maurizzle. Bling bling a tellivizzle izzle nibh pretizzle bizzle. Maecenizzle fo yippiyo. Bizzle fo
@@ -449,7 +428,7 @@
       </p>
     </mat-tab>
   </mat-tab-group> -->
+    </div>
   </div>
-</div>
-<!-- </div> -->
+  <!-- </div> -->
 </div>

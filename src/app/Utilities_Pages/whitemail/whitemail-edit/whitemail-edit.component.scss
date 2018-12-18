@@ -1,10 +1,10 @@
 @import '~src/appTheme.scss'; 
 
-.totalsBox{
-    background-color: $color-whitesmoke;
-    padding: 20px 0px;
-    input{
-        font-weight: bold;
+//Sets up the gray label box for the read-only input
+::ng-deep .readOnlyBox{
+    .mat-form-field-outline{
+        background-color: $color-gallery;
+        border-radius: 4px;
     }
 }
 

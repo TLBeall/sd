@@ -56,4 +56,20 @@ export class NavigationBarComponent {
     this.router.navigate(['incidentals']);
   }
 
+  NavigateToNewIncidentals(){
+    this._g.clearCurCache = true;
+    this.router.navigate(['incidentals/new']);
+  }
+
+  NavigateToNewCaging(){
+    this._g.clearCurCache = true;
+    this.router.navigate(['caging/new']);
+  }
+
+  NavigateToCagingCalendar(){
+    this._g.clearCurCache = true;
+    this.router.navigate(['caging/calendar']);
+  }
+
+
 }

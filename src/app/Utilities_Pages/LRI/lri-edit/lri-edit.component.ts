@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/Services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { GlobalService } from 'src/app/Services/global.service';
 import { ListRental } from 'src/app/Models/ListRental.model';
 import { ClientList } from 'src/app/Models/ClientList.model';
@@ -24,13 +24,24 @@ export class LriEditComponent implements OnInit {
   private showSubmittedModal: boolean = false;
 
 
-  constructor(private _authService: AuthService, private route: ActivatedRoute, private _g: GlobalService, private router: Router) { }
+  constructor(private _authService: AuthService, private route: ActivatedRoute, private _g: GlobalService, private router: Router) {
+    router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.ngOnInit();
+      }
+    });
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = +params['id'];
     });
     this.LRIElement = this._g.LRIElement;
+    if (this.LRIElement.ModifiedDate == null && this.LRIElement.ModifiedBy == null) {
+      this.LRIElement.beenModified = false;
+    } else {
+      this.LRIElement.beenModified = true;
+    }
 
     this._authService.getClientList("All")
       .subscribe(data => {
@@ -60,21 +71,45 @@ export class LriEditComponent implements OnInit {
     history.back(); //a browser function that calls the back button. The navigate function will not store the scroll position. 
   }
 
+  validationFunction(): boolean {
+    var formValid: boolean;
+    if (
+      this.LRIElement.Client == null || this.LRIElement.Client == "" ||
+      this.LRIElement.LRIDate == null || (this.LRIElement.LRIDate).toString() == "" ||
+      this.LRIElement.Amount == null || (this.LRIElement.Amount).toString() == ""
+    ) {
+      formValid = false;
+    } else {
+      formValid = true;
+    }
+    return formValid;
+  }
+
   Update() {
-    var date = new Date();
-    this.LRIElement.ModifiedDate = date;
-    this.LRIElement.ModifiedBy = "TempUser";
-    this.showSubmittedModal = true;
-    this._authService.editLRIRow(this.LRIElement, this.id).subscribe();
-    setTimeout(() => {
-      this.showSubmittedModal = false;
-      this.router.navigate(['lri']);
-    }, 1500)
+    if (this.validationFunction()) {
+      var date = new Date();
+      this.LRIElement.ModifiedDate = date;
+      this.LRIElement.ModifiedBy = "TempUser";
+      this.showSubmittedModal = true;
+      this._authService.editLRIRow(this.LRIElement, this.id).subscribe();
+      setTimeout(() => {
+        this.showSubmittedModal = false;
+        this.router.navigate(['lri']);
+      }, 1500)
+    } else {
+      alert('Please fill all required fields');
+    }
   }
 
   modalCancel() {
     this.showSubmittedModal = false;
     this.router.navigate(['whitemail']);
+  }
+
+
+  updateValue(e: any){
+    var value = (Number(e.target.value.replace(/[^0-9.-]+/g,""))).toFixed(2);
+    this.LRIElement.Amount = parseFloat(value);
   }
 
 }

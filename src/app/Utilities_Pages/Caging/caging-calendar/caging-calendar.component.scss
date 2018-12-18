@@ -1,0 +1,134 @@
+@import '~src/appTheme.scss'; 
+
+.Box{
+    border: 1px solid $color-silver;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.monthBox{
+    .col-12{
+        text-align: right;
+        font-weight: bold;
+        padding-bottom: 20px;
+    }
+}
+
+.quarterBox{
+    .col-12{
+        text-align: center;
+        font-weight: bold;
+        padding-bottom: 20px;
+    }
+}
+
+.headerBox{
+    border: 1px solid $color-silver;
+    border-radius: 4px 4px 0px 0px;
+    border-bottom: none;
+    div{
+        font-weight: bold;
+        text-align: center;
+        background-color: $color-gallery;
+    }
+}
+
+.calendarBox{
+    border: 1px solid $color-silver;
+    border-radius: 0px 0px 4px 4px;
+}
+
+.calendarContainer{
+    border-radius: 4px;
+}
+
+.qElementSelected{
+    background-color: $color-blue-light; 
+}
+
+.qElementDefault{
+    background-color: $color-whitesmoke;
+}
+
+.elementSelected{
+    background-color: $color-blue-highlight;
+}
+
+.elementDefault{
+    background-color: $color-white;
+}
+
+
+
+
+//Sets up font styling resize on year calendar boxes
+@media only screen and (max-width: $size-xs){
+    .quarterBox, .monthBox{
+        div{
+            div.col-6{
+                font-size: 6pt;
+            }
+            div.col-12{
+                font-size: 7pt;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: $size-xs){
+    .quarterBox, .monthBox{
+        div{
+            div.col-6{
+                font-size: 6pt;
+            }
+            div.col-12{
+                font-size: 7pt;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: $size-sm){
+    .quarterBox, .monthBox{
+        div{
+            div.col-6{
+                font-size: 8pt;
+            }
+            div.col-12{
+                font-size: 9pt;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: $size-md){
+    .quarterBox, .monthBox{
+        div{
+            div.col-6{
+                font-size: 10pt;
+            }
+            div.col-12{
+                font-size: 11pt;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: $size-lg){
+    .quarterBox, .monthBox{
+        div{
+            div.col-6{
+                font-size: 12pt;
+            }
+            div.col-12{
+                font-size: 13pt;
+            }
+        }
+    }
+}
+
+
+

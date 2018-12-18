@@ -8,7 +8,7 @@
       <div class="col-lg-6">
         <mat-form-field appearance="outline" class="mainInputBox">
           <mat-label>Client</mat-label>
-          <input required aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" [(ngModel)]="LRIElement.Client">
+          <input required matInput [formControl]="myControl" [matAutocomplete]="auto" [(ngModel)]="LRIElement.Client">
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let client of filteredClientList | async" [value]="client">
               {{client}}
@@ -39,7 +39,7 @@
         <mat-form-field appearance="outline" class="mainInputBox">
           <mat-label>LRI Amount</mat-label>
           <span matPrefix>$</span>
-          <input matInput [(ngModel)]="LRIElement.Amount">
+          <input required matInput [ngModel]="LRIElement.Amount|number:'1.2-2'" (blur)="updateValue($event)">
         </mat-form-field>
       </div>
     </div>
@@ -48,31 +48,31 @@
     <hr style="width: 90%;">
 
     <div class="row">
-      <div class="col-lg-7">
+      <div class="col-lg-7 readOnlyBox">
         <mat-form-field appearance="outline" class="mainInputBox">
           <mat-label>Entered By</mat-label>
-          <input matInput disabled [value]="LRIElement.CreatedBy">
+          <input matInput readonly="true" [value]="LRIElement.CreatedBy">
         </mat-form-field>
       </div>
-      <div class="col-lg-4">
+      <div class="col-lg-4 readOnlyBox">
         <mat-form-field appearance="outline" class="mainInputBox">
           <mat-label>Entered Date</mat-label>
-          <input matInput disabled [value]="LRIElement.CreatedDate|date:'shortDate'">
+          <input matInput readonly="true" [value]="LRIElement.CreatedDate|date:'shortDate'">
         </mat-form-field>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-lg-7">
+    <div class="row" *ngIf="LRIElement.beenModified">
+      <div class="col-lg-7 readOnlyBox">
         <mat-form-field appearance="outline" class="mainInputBox">
           <mat-label>Modified By</mat-label>
-          <input matInput disabled [value]="LRIElement.ModifiedBy">
+          <input matInput readonly="true" [value]="LRIElement.ModifiedBy">
         </mat-form-field>
       </div>
-      <div class="col-lg-4">
+      <div class="col-lg-4 readOnlyBox">
         <mat-form-field appearance="outline" class="mainInputBox">
           <mat-label>Modified Date</mat-label>
-          <input matInput disabled [value]="LRIElement.ModifiedDate|date:'shortDate'">
+          <input matInput readonly="true" [value]="LRIElement.ModifiedDate|date:'shortDate'">
         </mat-form-field>
       </div>
     </div>

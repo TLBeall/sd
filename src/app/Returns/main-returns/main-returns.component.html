@@ -100,17 +100,29 @@
             <td mat-cell *matCellDef="let client"><span *ngIf="!client.Measure.Expanded">{{client.Measure.AVG|currency:'USD':'symbol':'1.2-2'}}</span></td>
             <td mat-footer-cell *matFooterCellDef><span>{{ this.grandTotal.AVG|currency:'USD':'symbol':'1.2-2'}}</span></td>
         </ng-container>
-        <ng-container matColumnDef="CPD">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per donor" [ngClass]="this.rootReturns[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
-                CPD </th>
-            <td mat-cell *matCellDef="let client"><span *ngIf="!client.Measure.Expanded">{{client.Measure.CPD|currency}}</span></td>
-            <td mat-footer-cell *matFooterCellDef><span>{{ this.grandTotal.CPD|currency}}</span></td>
-        </ng-container>
         <ng-container matColumnDef="Gross">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="this.rootReturns[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
                 Gross </th>
             <td mat-cell *matCellDef="let client"><span *ngIf="!client.Measure.Expanded">{{client.Measure.Gross|currency:'USD':'symbol':'1.0-0'}}</span></td>
             <td mat-footer-cell *matFooterCellDef><span>{{ this.grandTotal.Gross|currency:'USD':'symbol':'1.0-0'}}</span></td>
+        </ng-container>
+        <ng-container matColumnDef="GPP">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount grossed per Letter Mailed" [ngClass]="this.rootReturns[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
+                GLM </th>
+            <td mat-cell *matCellDef="let client"><span *ngIf="!client.Measure.Expanded">{{client.Measure.GPP|currency}}</span></td>
+            <td mat-footer-cell *matFooterCellDef><span>{{ this.grandTotal.GPP|currency}}</span></td>
+        </ng-container>
+        <ng-container matColumnDef="Cost">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="this.rootReturns[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
+                Cost </th>
+            <td mat-cell *matCellDef="let client"><span *ngIf="!client.Measure.Expanded">{{client.Measure.Cost|currency:'USD':'symbol':'1.0-0'}}</span></td>
+            <td mat-footer-cell *matFooterCellDef><span>{{ this.grandTotal.Cost|currency:'USD':'symbol':'1.0-0'}}</span></td>
+        </ng-container>
+        <ng-container matColumnDef="CLM">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per Letter Mailed" [ngClass]="this.rootReturns[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
+                CLM </th>
+            <td mat-cell *matCellDef="let client"><span *ngIf="!client.Measure.Expanded">{{client.Measure.CLM|currency}}</span></td>
+            <td mat-footer-cell *matFooterCellDef><span>{{ this.grandTotal.CLM|currency}}</span></td>
         </ng-container>
         <ng-container matColumnDef="Net">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="this.rootReturns[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
@@ -120,18 +132,6 @@
             <td mat-footer-cell *matFooterCellDef><span [ngClass]="{'negative':this.rootReturns[0].Measure.Net < 0}">{{
                     this.grandTotal.Net|currency:'USD':'symbol':'1.0-0'}}</span></td>
         </ng-container>
-        <ng-container matColumnDef="Cost">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="this.rootReturns[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
-                Cost </th>
-            <td mat-cell *matCellDef="let client"><span *ngIf="!client.Measure.Expanded">{{client.Measure.Cost|currency:'USD':'symbol':'1.0-0'}}</span></td>
-            <td mat-footer-cell *matFooterCellDef><span>{{ this.grandTotal.Cost|currency:'USD':'symbol':'1.0-0'}}</span></td>
-        </ng-container>
-        <ng-container matColumnDef="GPP">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount grossed per Letter Mailed" [ngClass]="this.rootReturns[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
-                GLM </th>
-            <td mat-cell *matCellDef="let client"><span *ngIf="!client.Measure.Expanded">{{client.Measure.GPP|currency}}</span></td>
-            <td mat-footer-cell *matFooterCellDef><span>{{ this.grandTotal.GPP|currency}}</span></td>
-        </ng-container>
         <ng-container matColumnDef="NLM">
             <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount net per letter mailed" [ngClass]="this.rootReturns[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
                 NLM</th>
@@ -140,11 +140,11 @@
            <td mat-footer-cell *matFooterCellDef><span [ngClass]="{'negative':this.rootReturns[0].Measure.NLM < 0}">{{
                     this.grandTotal.NLM|currency}}</span></td>
         </ng-container>
-        <ng-container matColumnDef="CLM">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per Letter Mailed" [ngClass]="this.rootReturns[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
-                CLM </th>
-            <td mat-cell *matCellDef="let client"><span *ngIf="!client.Measure.Expanded">{{client.Measure.CLM|currency}}</span></td>
-            <td mat-footer-cell *matFooterCellDef><span>{{ this.grandTotal.CLM|currency}}</span></td>
+        <ng-container matColumnDef="CPD">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per donor" [ngClass]="this.rootReturns[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
+                CPD </th>
+            <td mat-cell *matCellDef="let client"><span *ngIf="!client.Measure.Expanded">{{client.Measure.CPD|currency}}</span></td>
+            <td mat-footer-cell *matFooterCellDef><span>{{ this.grandTotal.CPD|currency}}</span></td>
         </ng-container>
         <ng-container matColumnDef="IO">
             <th mat-header-cell *matHeaderCellDef mat-sort-header title="Gross/Cost" [ngClass]="this.rootReturns[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
@@ -317,17 +317,6 @@
                     'mailTypeElementDefault': client.Measure.IsLast == false
                 }"><span>{{client.Measure.AVG|currency:'USD':'symbol':'1.2-2'}}</span></td>
         </ng-container>
-        <ng-container matColumnDef="CPD">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per donor" [ngClass]="client.MailTypeList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
-                CPD </th>
-            <td mat-cell *matCellDef="let mailType"><span *ngIf="!mailType.Measure.Expanded">{{mailType.Measure.CPD|currency}}</span></td>
-            <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                    'elementCollapsed': ReadyToCollapseAll(client.MailTypeList) == false,
-                    'elementExpanded':ReadyToCollapseAll(client.MailTypeList) == true,
-                    'elementLast': client.Measure.IsLast == true,
-                    'mailTypeElementDefault': client.Measure.IsLast == false
-                }"><span>{{client.Measure.CPD|currency}}</span></td>
-        </ng-container>
         <ng-container matColumnDef="Gross">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="client.MailTypeList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
                 Gross </th>
@@ -338,6 +327,39 @@
                     'elementLast': client.Measure.IsLast == true,
                     'mailTypeElementDefault': client.Measure.IsLast == false
                 }"><span>{{client.Measure.Gross|currency:'USD':'symbol':'1.0-0'}}</span></td>
+        </ng-container>
+        <ng-container matColumnDef="GPP">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount grossed per Letter Mailed" [ngClass]="client.MailTypeList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
+                GLM </th>
+            <td mat-cell *matCellDef="let mailType"><span *ngIf="!mailType.Measure.Expanded">{{mailType.Measure.GPP|currency}}</span></td>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="{
+                    'elementCollapsed': ReadyToCollapseAll(client.MailTypeList) == false,
+                    'elementExpanded':ReadyToCollapseAll(client.MailTypeList) == true,
+                    'elementLast': client.Measure.IsLast == true,
+                    'mailTypeElementDefault': client.Measure.IsLast == false
+                }"><span>{{client.Measure.GPP|currency}}</span></td>
+        </ng-container>
+        <ng-container matColumnDef="Cost">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="client.MailTypeList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
+                Cost </th>
+            <td mat-cell *matCellDef="let mailType"><span *ngIf="!mailType.Measure.Expanded">{{mailType.Measure.Cost|currency:'USD':'symbol':'1.0-0'}}</span></td>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="{
+                    'elementCollapsed': ReadyToCollapseAll(client.MailTypeList) == false,
+                    'elementExpanded':ReadyToCollapseAll(client.MailTypeList) == true,
+                    'elementLast': client.Measure.IsLast == true,
+                    'mailTypeElementDefault': client.Measure.IsLast == false
+                }"><span>{{client.Measure.Cost|currency:'USD':'symbol':'1.0-0'}}</span></td>
+        </ng-container>
+        <ng-container matColumnDef="CLM">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per Letter Mailed" [ngClass]="client.MailTypeList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
+                CLM </th>
+            <td mat-cell *matCellDef="let mailType"><span *ngIf="!mailType.Measure.Expanded">{{mailType.Measure.CLM|currency}}</span></td>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="{
+                    'elementCollapsed': ReadyToCollapseAll(client.MailTypeList) == false,
+                    'elementExpanded':ReadyToCollapseAll(client.MailTypeList) == true,
+                    'elementLast': client.Measure.IsLast == true,
+                    'mailTypeElementDefault': client.Measure.IsLast == false
+                }"><span>{{client.Measure.CLM|currency}}</span></td>
         </ng-container>
         <ng-container matColumnDef="Net">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="client.MailTypeList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
@@ -352,28 +374,6 @@
                 }"><span
                     [ngClass]="{'negative':client.Measure.Net < 0}">{{client.Measure.Net|currency:'USD':'symbol':'1.0-0'}}</span></td>
         </ng-container>
-        <ng-container matColumnDef="Cost">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="client.MailTypeList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
-                Cost </th>
-            <td mat-cell *matCellDef="let mailType"><span *ngIf="!mailType.Measure.Expanded">{{mailType.Measure.Cost|currency:'USD':'symbol':'1.0-0'}}</span></td>
-            <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                    'elementCollapsed': ReadyToCollapseAll(client.MailTypeList) == false,
-                    'elementExpanded':ReadyToCollapseAll(client.MailTypeList) == true,
-                    'elementLast': client.Measure.IsLast == true,
-                    'mailTypeElementDefault': client.Measure.IsLast == false
-                }"><span>{{client.Measure.Cost|currency:'USD':'symbol':'1.0-0'}}</span></td>
-        </ng-container>
-        <ng-container matColumnDef="GPP">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount grossed per Letter Mailed" [ngClass]="client.MailTypeList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
-                GLM </th>
-            <td mat-cell *matCellDef="let mailType"><span *ngIf="!mailType.Measure.Expanded">{{mailType.Measure.GPP|currency}}</span></td>
-            <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                    'elementCollapsed': ReadyToCollapseAll(client.MailTypeList) == false,
-                    'elementExpanded':ReadyToCollapseAll(client.MailTypeList) == true,
-                    'elementLast': client.Measure.IsLast == true,
-                    'mailTypeElementDefault': client.Measure.IsLast == false
-                }"><span>{{client.Measure.GPP|currency}}</span></td>
-        </ng-container>
         <ng-container matColumnDef="NLM">
             <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount net per letter mailed" [ngClass]="client.MailTypeList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
                 NLM </th>
@@ -387,16 +387,16 @@
                 }"><span
                     [ngClass]="{'negative':client.Measure.NLM < 0}">{{client.Measure.NLM|currency}}</span></td>
         </ng-container>
-        <ng-container matColumnDef="CLM">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per Letter Mailed" [ngClass]="client.MailTypeList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
-                CLM </th>
-            <td mat-cell *matCellDef="let mailType"><span *ngIf="!mailType.Measure.Expanded">{{mailType.Measure.CLM|currency}}</span></td>
+        <ng-container matColumnDef="CPD">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per donor" [ngClass]="client.MailTypeList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
+                CPD </th>
+            <td mat-cell *matCellDef="let mailType"><span *ngIf="!mailType.Measure.Expanded">{{mailType.Measure.CPD|currency}}</span></td>
             <td mat-footer-cell *matFooterCellDef [ngClass]="{
                     'elementCollapsed': ReadyToCollapseAll(client.MailTypeList) == false,
                     'elementExpanded':ReadyToCollapseAll(client.MailTypeList) == true,
                     'elementLast': client.Measure.IsLast == true,
                     'mailTypeElementDefault': client.Measure.IsLast == false
-                }"><span>{{client.Measure.CLM|currency}}</span></td>
+                }"><span>{{client.Measure.CPD|currency}}</span></td>
         </ng-container>
         <ng-container matColumnDef="IO">
             <th mat-header-cell *matHeaderCellDef mat-sort-header title="Gross/Cost" [ngClass]="client.MailTypeList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
@@ -575,17 +575,6 @@
                             'campaignElementDefault': mailType.Measure.IsLast == false
                         }"><span>{{mailType.Measure.AVG|currency:'USD':'symbol':'1.2-2'}}</span></td>
         </ng-container>
-        <ng-container matColumnDef="CPD">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per donor" [ngClass]="mailType.CampaignList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
-                CPD </th>
-            <td mat-cell *matCellDef="let campaign"><span *ngIf="!campaign.Measure.Expanded">{{campaign.Measure.CPD|currency}}</span></td>
-            <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                            'elementCollapsed': ReadyToCollapseAll(mailType.CampaignList) == false,
-                            'elementExpanded':ReadyToCollapseAll(mailType.CampaignList) == true,
-                            'elementLast': mailType.Measure.IsLast == true,
-                            'campaignElementDefault': mailType.Measure.IsLast == false
-                        }"><span>{{mailType.Measure.CPD|currency}}</span></td>
-        </ng-container>
         <ng-container matColumnDef="Gross">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="mailType.CampaignList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
                 Gross </th>
@@ -596,6 +585,39 @@
                                 'elementLast': mailType.Measure.IsLast == true,
                                 'campaignElementDefault': mailType.Measure.IsLast == false
                             }"><span>{{mailType.Measure.Gross|currency:'USD':'symbol':'1.0-0'}}</span></td>
+        </ng-container>
+        <ng-container matColumnDef="GPP">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount grossed per Letter Mailed" [ngClass]="mailType.CampaignList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
+                GLM </th>
+            <td mat-cell *matCellDef="let campaign"><span *ngIf="!campaign.Measure.Expanded">{{campaign.Measure.GPP|currency}}</span></td>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="{
+                            'elementCollapsed': ReadyToCollapseAll(mailType.CampaignList) == false,
+                            'elementExpanded':ReadyToCollapseAll(mailType.CampaignList) == true,
+                            'elementLast': mailType.Measure.IsLast == true,
+                            'campaignElementDefault': mailType.Measure.IsLast == false
+                        }"><span>{{mailType.Measure.GPP|currency}}</span></td>
+        </ng-container>
+        <ng-container matColumnDef="Cost">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="mailType.CampaignList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
+                Cost </th>
+            <td mat-cell *matCellDef="let campaign"><span *ngIf="!campaign.Measure.Expanded">{{campaign.Measure.Cost|currency:'USD':'symbol':'1.0-0'}}</span></td>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="{
+                            'elementCollapsed': ReadyToCollapseAll(mailType.CampaignList) == false,
+                            'elementExpanded':ReadyToCollapseAll(mailType.CampaignList) == true,
+                            'elementLast': mailType.Measure.IsLast == true,
+                            'campaignElementDefault': mailType.Measure.IsLast == false
+                        }"><span>{{mailType.Measure.Cost|currency:'USD':'symbol':'1.0-0'}}</span></td>
+        </ng-container>
+        <ng-container matColumnDef="CLM">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per Letter Mailed" [ngClass]="mailType.CampaignList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
+                CLM </th>
+            <td mat-cell *matCellDef="let campaign"><span *ngIf="!campaign.Measure.Expanded">{{campaign.Measure.CLM|currency}}</span></td>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="{
+                                'elementCollapsed': ReadyToCollapseAll(mailType.CampaignList) == false,
+                                'elementExpanded':ReadyToCollapseAll(mailType.CampaignList) == true,
+                                'elementLast': mailType.Measure.IsLast == true,
+                                'campaignElementDefault': mailType.Measure.IsLast == false
+                            }"><span>{{mailType.Measure.CLM|currency}}</span></td>
         </ng-container>
         <ng-container matColumnDef="Net">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="mailType.CampaignList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
@@ -610,28 +632,6 @@
                             }"><span
                     [ngClass]="{'negative':mailType.Measure.Net < 0}">{{mailType.Measure.Net|currency:'USD':'symbol':'1.0-0'}}</span></td>
         </ng-container>
-        <ng-container matColumnDef="Cost">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="mailType.CampaignList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
-                Cost </th>
-            <td mat-cell *matCellDef="let campaign"><span *ngIf="!campaign.Measure.Expanded">{{campaign.Measure.Cost|currency:'USD':'symbol':'1.0-0'}}</span></td>
-            <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                            'elementCollapsed': ReadyToCollapseAll(mailType.CampaignList) == false,
-                            'elementExpanded':ReadyToCollapseAll(mailType.CampaignList) == true,
-                            'elementLast': mailType.Measure.IsLast == true,
-                            'campaignElementDefault': mailType.Measure.IsLast == false
-                        }"><span>{{mailType.Measure.Cost|currency:'USD':'symbol':'1.0-0'}}</span></td>
-        </ng-container>
-        <ng-container matColumnDef="GPP">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount grossed per Letter Mailed" [ngClass]="mailType.CampaignList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
-                GLM </th>
-            <td mat-cell *matCellDef="let campaign"><span *ngIf="!campaign.Measure.Expanded">{{campaign.Measure.GPP|currency}}</span></td>
-            <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                            'elementCollapsed': ReadyToCollapseAll(mailType.CampaignList) == false,
-                            'elementExpanded':ReadyToCollapseAll(mailType.CampaignList) == true,
-                            'elementLast': mailType.Measure.IsLast == true,
-                            'campaignElementDefault': mailType.Measure.IsLast == false
-                        }"><span>{{mailType.Measure.GPP|currency}}</span></td>
-        </ng-container>
         <ng-container matColumnDef="NLM">
             <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount net per letter mailed" [ngClass]="mailType.CampaignList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
                 NLM </th>
@@ -645,16 +645,16 @@
                             }"><span
                     [ngClass]="{'negative':mailType.Measure.NLM < 0}">{{mailType.Measure.NLM|currency}}</span></td>
         </ng-container>
-        <ng-container matColumnDef="CLM">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per Letter Mailed" [ngClass]="mailType.CampaignList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
-                CLM </th>
-            <td mat-cell *matCellDef="let campaign"><span *ngIf="!campaign.Measure.Expanded">{{campaign.Measure.CLM|currency}}</span></td>
+        <ng-container matColumnDef="CPD">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per donor" [ngClass]="mailType.CampaignList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
+                CPD </th>
+            <td mat-cell *matCellDef="let campaign"><span *ngIf="!campaign.Measure.Expanded">{{campaign.Measure.CPD|currency}}</span></td>
             <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                                'elementCollapsed': ReadyToCollapseAll(mailType.CampaignList) == false,
-                                'elementExpanded':ReadyToCollapseAll(mailType.CampaignList) == true,
-                                'elementLast': mailType.Measure.IsLast == true,
-                                'campaignElementDefault': mailType.Measure.IsLast == false
-                            }"><span>{{mailType.Measure.CLM|currency}}</span></td>
+                            'elementCollapsed': ReadyToCollapseAll(mailType.CampaignList) == false,
+                            'elementExpanded':ReadyToCollapseAll(mailType.CampaignList) == true,
+                            'elementLast': mailType.Measure.IsLast == true,
+                            'campaignElementDefault': mailType.Measure.IsLast == false
+                        }"><span>{{mailType.Measure.CPD|currency}}</span></td>
         </ng-container>
         <ng-container matColumnDef="IO">
             <th mat-header-cell *matHeaderCellDef mat-sort-header title="Gross/Cost" [ngClass]="mailType.CampaignList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
@@ -832,18 +832,6 @@
                                      'phaseElementDefault': campaign.Measure.IsLast == false
                                  }"><span>{{campaign.Measure.AVG|currency:'USD':'symbol':'1.2-2'}}</span></td>
         </ng-container>
-        <ng-container matColumnDef="CPD">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per donor" [ngClass]="campaign.PhaseList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
-                CPD
-            </th>
-            <td mat-cell *matCellDef="let phase"><span *ngIf="!phase.Measure.Expanded">{{phase.Measure.CPD|currency}}</span></td>
-            <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                                     'elementCollapsed': ReadyToCollapseAll(campaign.PhaseList) == false,
-                                     'elementExpanded':ReadyToCollapseAll(campaign.PhaseList) == true,
-                                     'elementLast': campaign.Measure.IsLast == true,
-                                     'phaseElementDefault': campaign.Measure.IsLast == false
-                                 }"><span>{{campaign.Measure.CPD|currency}}</span></td>
-        </ng-container>
         <ng-container matColumnDef="Gross">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="campaign.PhaseList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
                 Gross
@@ -855,6 +843,42 @@
                                          'elementLast': campaign.Measure.IsLast == true,
                                          'phaseElementDefault': campaign.Measure.IsLast == false
                                      }"><span>{{campaign.Measure.Gross|currency:'USD':'symbol':'1.0-0'}}</span></td>
+        </ng-container>
+        <ng-container matColumnDef="GPP">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount grossed per Letter Mailed" [ngClass]="campaign.PhaseList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
+                GLM
+            </th>
+            <td mat-cell *matCellDef="let phase"><span *ngIf="!phase.Measure.Expanded">{{phase.Measure.GPP|currency}}</span></td>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="{
+                                     'elementCollapsed': ReadyToCollapseAll(campaign.PhaseList) == false,
+                                     'elementExpanded':ReadyToCollapseAll(campaign.PhaseList) == true,
+                                     'elementLast': campaign.Measure.IsLast == true,
+                                     'phaseElementDefault': campaign.Measure.IsLast == false
+                                 }"><span>{{campaign.Measure.GPP|currency}}</span></td>
+        </ng-container>
+        <ng-container matColumnDef="Cost">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="campaign.PhaseList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
+                Cost
+            </th>
+            <td mat-cell *matCellDef="let phase"><span *ngIf="!phase.Measure.Expanded">{{phase.Measure.Cost|currency:'USD':'symbol':'1.0-0'}}</span></td>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="{
+                                     'elementCollapsed': ReadyToCollapseAll(campaign.PhaseList) == false,
+                                     'elementExpanded':ReadyToCollapseAll(campaign.PhaseList) == true,
+                                     'elementLast': campaign.Measure.IsLast == true,
+                                     'phaseElementDefault': campaign.Measure.IsLast == false
+                                 }"><span>{{campaign.Measure.Cost|currency:'USD':'symbol':'1.0-0'}}</span></td>
+        </ng-container>
+        <ng-container matColumnDef="CLM">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per Letter Mailed" [ngClass]="campaign.PhaseList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
+                CLM
+            </th>
+            <td mat-cell *matCellDef="let phase"><span *ngIf="!phase.Measure.Expanded">{{phase.Measure.CLM|currency}}</span></td>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="{
+                                         'elementCollapsed': ReadyToCollapseAll(campaign.PhaseList) == false,
+                                         'elementExpanded':ReadyToCollapseAll(campaign.PhaseList) == true,
+                                         'elementLast': campaign.Measure.IsLast == true,
+                                         'phaseElementDefault': campaign.Measure.IsLast == false
+                                     }"><span>{{campaign.Measure.CLM|currency}}</span></td>
         </ng-container>
         <ng-container matColumnDef="Net">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="campaign.PhaseList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
@@ -870,30 +894,6 @@
                                          }"><span
                     [ngClass]="{'negative':campaign.Measure.Net < 0}">{{campaign.Measure.Net|currency:'USD':'symbol':'1.0-0'}}</span></td>
         </ng-container>
-        <ng-container matColumnDef="Cost">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="campaign.PhaseList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
-                Cost
-            </th>
-            <td mat-cell *matCellDef="let phase"><span *ngIf="!phase.Measure.Expanded">{{phase.Measure.Cost|currency:'USD':'symbol':'1.0-0'}}</span></td>
-            <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                                     'elementCollapsed': ReadyToCollapseAll(campaign.PhaseList) == false,
-                                     'elementExpanded':ReadyToCollapseAll(campaign.PhaseList) == true,
-                                     'elementLast': campaign.Measure.IsLast == true,
-                                     'phaseElementDefault': campaign.Measure.IsLast == false
-                                 }"><span>{{campaign.Measure.Cost|currency:'USD':'symbol':'1.0-0'}}</span></td>
-        </ng-container>
-        <ng-container matColumnDef="GPP">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount grossed per Letter Mailed" [ngClass]="campaign.PhaseList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
-                GLM
-            </th>
-            <td mat-cell *matCellDef="let phase"><span *ngIf="!phase.Measure.Expanded">{{phase.Measure.GPP|currency}}</span></td>
-            <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                                     'elementCollapsed': ReadyToCollapseAll(campaign.PhaseList) == false,
-                                     'elementExpanded':ReadyToCollapseAll(campaign.PhaseList) == true,
-                                     'elementLast': campaign.Measure.IsLast == true,
-                                     'phaseElementDefault': campaign.Measure.IsLast == false
-                                 }"><span>{{campaign.Measure.GPP|currency}}</span></td>
-        </ng-container>
         <ng-container matColumnDef="NLM">
             <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount net per letter mailed" [ngClass]="campaign.PhaseList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
                 NLM
@@ -908,17 +908,17 @@
                                              }"><span
                     [ngClass]="{'negative':campaign.Measure.NLM < 0}">{{campaign.Measure.NLM|currency}}</span></td>
         </ng-container>
-        <ng-container matColumnDef="CLM">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per Letter Mailed" [ngClass]="campaign.PhaseList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
-                CLM
+        <ng-container matColumnDef="CPD">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per donor" [ngClass]="campaign.PhaseList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
+                CPD
             </th>
-            <td mat-cell *matCellDef="let phase"><span *ngIf="!phase.Measure.Expanded">{{phase.Measure.CLM|currency}}</span></td>
+            <td mat-cell *matCellDef="let phase"><span *ngIf="!phase.Measure.Expanded">{{phase.Measure.CPD|currency}}</span></td>
             <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                                         'elementCollapsed': ReadyToCollapseAll(campaign.PhaseList) == false,
-                                         'elementExpanded':ReadyToCollapseAll(campaign.PhaseList) == true,
-                                         'elementLast': campaign.Measure.IsLast == true,
-                                         'phaseElementDefault': campaign.Measure.IsLast == false
-                                     }"><span>{{campaign.Measure.CLM|currency}}</span></td>
+                                     'elementCollapsed': ReadyToCollapseAll(campaign.PhaseList) == false,
+                                     'elementExpanded':ReadyToCollapseAll(campaign.PhaseList) == true,
+                                     'elementLast': campaign.Measure.IsLast == true,
+                                     'phaseElementDefault': campaign.Measure.IsLast == false
+                                 }"><span>{{campaign.Measure.CPD|currency}}</span></td>
         </ng-container>
         <ng-container matColumnDef="IO">
             <th mat-header-cell *matHeaderCellDef mat-sort-header title="Gross/Cost" [ngClass]="campaign.PhaseList[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
@@ -1117,16 +1117,6 @@
                          }">
                 {{phase.Measure.AVG|currency:'USD':'symbol':'1.2-2'}} </td>
         </ng-container>
-        <ng-container matColumnDef="CPD">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per donor"> CPD
-            </th>
-            <td mat-cell *matCellDef="let mailList"> {{mailList.Measure.CPD|currency}} </td>
-            <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                             'listElementDefault': phase.Measure.IsLast == false,
-                             'elementLast': phase.Measure.IsLast == true
-                         }">
-                {{phase.Measure.CPD|currency}} </td>
-        </ng-container>
         <ng-container matColumnDef="Gross">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Gross
             </th>
@@ -1141,17 +1131,15 @@
                              }">
                 <span class="LinkUnderline"><a (click)="NavigateToPhaseGross(campaign.CampaignName, phase.PhaseName)">{{phase.Measure.Gross|currency:'USD':'symbol':'1.0-0'}}</a></span></td>
         </ng-container>
-        <ng-container matColumnDef="Net">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Net
+        <ng-container matColumnDef="GPP">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount grossed per Letter Mailed"> GLM
             </th>
-            <td mat-cell *matCellDef="let mailList" [ngClass]="{'negative':mailList.Measure.Net < 0}">
-                {{mailList.Measure.Net|currency:'USD':'symbol':'1.0-0'}} </td>
+            <td mat-cell *matCellDef="let mailList"> {{mailList.Measure.GPP|currency}} </td>
             <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                                     'listElementDefault': phase.Measure.IsLast == false,
-                                     'elementLast': phase.Measure.IsLast == true,
-                                     'negative': phase.Measure.Net < 0
-                                 }">
-                {{phase.Measure.Net|currency:'USD':'symbol':'1.0-0'}} </td>
+                             'listElementDefault': phase.Measure.IsLast == false,
+                             'elementLast': phase.Measure.IsLast == true
+                         }">
+                {{phase.Measure.GPP|currency}} </td>
         </ng-container>
         <ng-container matColumnDef="Cost">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Cost
@@ -1163,15 +1151,27 @@
                          }">
                 {{phase.Measure.Cost|currency:'USD':'symbol':'1.0-0'}} </td>
         </ng-container>
-        <ng-container matColumnDef="GPP">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount grossed per Letter Mailed"> GLM
+        <ng-container matColumnDef="CLM">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per Letter Mailed"> CLM
             </th>
-            <td mat-cell *matCellDef="let mailList"> {{mailList.Measure.GPP|currency}} </td>
+            <td mat-cell *matCellDef="let mailList"> {{mailList.Measure.CLM|currency}} </td>
             <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                             'listElementDefault': phase.Measure.IsLast == false,
-                             'elementLast': phase.Measure.IsLast == true
-                         }">
-                {{phase.Measure.GPP|currency}} </td>
+                                 'listElementDefault': phase.Measure.IsLast == false,
+                                 'elementLast': phase.Measure.IsLast == true
+                             }">
+                {{phase.Measure.CLM|currency}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Net">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Net
+            </th>
+            <td mat-cell *matCellDef="let mailList" [ngClass]="{'negative':mailList.Measure.Net < 0}">
+                {{mailList.Measure.Net|currency:'USD':'symbol':'1.0-0'}} </td>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="{
+                                     'listElementDefault': phase.Measure.IsLast == false,
+                                     'elementLast': phase.Measure.IsLast == true,
+                                     'negative': phase.Measure.Net < 0
+                                 }">
+                {{phase.Measure.Net|currency:'USD':'symbol':'1.0-0'}} </td>
         </ng-container>
         <ng-container matColumnDef="NLM">
             <th mat-header-cell *matHeaderCellDef mat-sort-header title="Amount net per letter mailed">
@@ -1186,15 +1186,15 @@
                                      }">
                 {{phase.Measure.NLM|currency}} </td>
         </ng-container>
-        <ng-container matColumnDef="CLM">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per Letter Mailed"> CLM
+        <ng-container matColumnDef="CPD">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header title="Cost per donor"> CPD
             </th>
-            <td mat-cell *matCellDef="let mailList"> {{mailList.Measure.CLM|currency}} </td>
+            <td mat-cell *matCellDef="let mailList"> {{mailList.Measure.CPD|currency}} </td>
             <td mat-footer-cell *matFooterCellDef [ngClass]="{
-                                 'listElementDefault': phase.Measure.IsLast == false,
-                                 'elementLast': phase.Measure.IsLast == true
-                             }">
-                {{phase.Measure.CLM|currency}} </td>
+                             'listElementDefault': phase.Measure.IsLast == false,
+                             'elementLast': phase.Measure.IsLast == true
+                         }">
+                {{phase.Measure.CPD|currency}} </td>
         </ng-container>
         <ng-container matColumnDef="IO">
             <th mat-header-cell *matHeaderCellDef mat-sort-header title="Gross/Cost"> IO

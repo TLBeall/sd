@@ -1,7 +1,7 @@
 export class CagingCalendarElement {
     Month: string;
-    // Quarter: number;
-    // Year: number;
+    Quarter: number;
+    Year: number;
     Donors: number;
     NonDonors: number;
     DonationAmount: number;

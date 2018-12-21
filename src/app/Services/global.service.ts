@@ -6,6 +6,7 @@ import { Returns } from '../Models/Returns.model';
 import { ListPerformance } from '../Models/ListPerformance.model';
 import { CagingDailies } from '../Models/CagingDailies.model';
 import { ListRental } from '../Models/ListRental.model';
+import { Incidental } from '../Models/Incidentals.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class GlobalService {
   public whitemailElement: CagingDailies;
   public whitemailClient: string;
   public LRIElement: ListRental;
+  public IncidentalsElement: Incidental;
 
   constructor() {
   }

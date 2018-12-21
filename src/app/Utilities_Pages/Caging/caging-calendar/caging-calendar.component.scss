@@ -1,0 +1,303 @@
+@import '~src/appTheme.scss'; 
+
+
+.defaultButton{
+    background-color: $color-blue-default;
+    color: $color-white !important;
+    i{
+        font-size: 20pt;
+    }
+    &#timeResetBtn{
+        margin-left: 20px;
+    }
+
+}
+
+#timeHeader{
+    text-align: center;
+}
+
+//Controls styling for the year/month/day button toggle group
+.timeSelectionGroup{
+    .mat-button-toggle {
+        background-color: $color-blue-default;
+        color: $color-white;
+    }
+
+    .mat-button-toggle-checked {
+        background-color: $color-blue-dark;
+        color: $color-white;
+    }
+}
+::ng-deep button.mat-button-toggle-button{
+    padding: 2px;
+    div{
+        line-height: 2.25 !important;
+        font-size: 14px;
+        font-weight: 500;
+    }
+}
+//////////////////////////////////
+
+
+//Controls styling for left and right time travel buttons
+::ng-deep #leftTravelBtn{
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    padding-left: 2px !important;
+    padding-right: 6px !important;
+    width: 35px !important;
+    min-width: 35px;
+}
+::ng-deep #rightTravelBtn{
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    padding-left: 6px !important;
+    padding-right: 2px !important;
+    width: 35px !important;
+    min-width: 35px;
+}
+//////////////////////////////////////////
+
+
+::ng-deep #yearBtn{
+    border-bottom-right-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+::ng-deep #monthBtn{
+    border-radius: 0 !important;
+}
+
+::ng-deep #dayBtn{
+    border-bottom-left-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+}
+
+.btnRow{
+    margin-bottom: 2px;
+}
+
+.boxOnYearCal{
+    border: 1px solid $color-silver;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.dayBox{
+    .col-12{
+        text-align: right;
+        font-weight: bold;
+        padding-bottom: 14px;
+    }
+}
+
+.weekBox{
+    .col-12{
+        text-align: center;
+        font-weight: bold;
+        padding-bottom: 14px;
+    }
+}
+
+.monthBox{
+    .col-12{
+        text-align: right;
+        font-weight: bold;
+        padding-bottom: 20px;
+    }
+}
+
+.quarterBox{
+    .col-12{
+        text-align: center;
+        font-weight: bold;
+        padding-bottom: 20px;
+    }
+}
+
+.headerBox{
+    // border: 1px solid $color-silver;
+    border-radius: 4px 4px 0px 0px;
+    border-bottom: none;
+    div{
+        font-weight: bold;
+        text-align: center;
+        background-color: $color-gallery;
+    }
+}
+
+.calendarBox{
+    border: 1px solid $color-silver;
+    border-radius: 0px 0px 4px 4px;
+}
+
+.calendarContainer{
+    border-radius: 4px;
+}
+
+.groupElementSelected{
+    background-color: $color-blue-light; 
+}
+
+.groupElementDefault{
+    background-color: $color-whitesmoke;
+}
+
+.elementSelected{
+    background-color: $color-blue-highlight;
+}
+
+.elementDefault{
+    background-color: $color-white;
+}
+
+
+.boxOnMonthCal{
+    border: 1px solid $color-silver;
+    padding-top: 8px;
+    padding-bottom: 10px;
+    &:hover{
+        cursor: pointer;
+    }
+    div{
+        div{
+            padding-left: 6px !important;
+            padding-right: 6px !important;
+        }
+    }
+}
+
+.inactive{
+    background-color: rgba(255,223,199,0.25);    
+    opacity: 0.75;
+}
+
+
+
+
+//Sets up font styling resize on year calendar boxes
+@media only screen and (max-width: $size-xs){
+    .quarterBox, .monthBox{
+        div{
+            div.col-md-6{
+                font-size: 6pt;
+            }
+            div.col-12{
+                font-size: 7pt;
+            }
+        }
+    }
+    .boxOnMonthCal{
+        div{
+            div.col-md-6{
+                font-size: 6pt;
+            }
+            div.col-12{
+                font-size: 7pt;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: $size-xs){
+    .quarterBox, .monthBox{
+        div{
+            div.col-6{
+                font-size: 6pt;
+            }
+            div.col-12{
+                font-size: 7pt;
+            }
+        }
+    }
+    .boxOnMonthCal{
+        div{
+            div.col-md-6{
+                font-size: 6pt;
+            }
+            div.col-12{
+                font-size: 7pt;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: $size-sm){
+    .quarterBox, .monthBox{
+        div{
+            div.col-6{
+                font-size: 7pt;
+            }
+            div.col-12{
+                font-size: 8pt;
+            }
+        }
+    }
+    .boxOnMonthCal{
+        div{
+            div.col-md-6{
+                font-size: 7pt;
+            }
+            div.col-12{
+                font-size: 8pt;
+            }
+        }
+    }
+}
+
+//Goes horizontal 
+@media only screen and (min-width: $size-md){
+    .quarterBox, .monthBox{
+        div{
+            div.col-6{
+                font-size: 9pt;
+            }
+            div.col-12{
+                font-size: 10pt;
+            }
+        }
+    }
+    .boxOnMonthCal{
+        div{
+            div.col-md-6{
+                font-size: 7pt;
+            }
+            div.col-12{
+                font-size: 8pt;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: $size-lg){
+    .quarterBox, .monthBox{
+        div{
+            div.col-6{
+                font-size: 11pt;
+            }
+            div.col-12{
+                font-size: 12pt;
+            }
+        }
+    }
+    .boxOnMonthCal{
+        div{
+            div.col-md-6{
+                font-size: 8pt;
+            }
+            div.col-12{
+                font-size: 9pt;
+            }
+        }
+    }
+}
+
+ 
+
+
+
+

@@ -1,0 +1,182 @@
+<app-toolbar></app-toolbar>
+<br>
+
+<div class="container">
+  <mat-card class="mat-elevation-z8">
+    <br>
+    <div class="row">
+      <div class="col-lg-6">
+        <mat-form-field appearance="outline" class="mainInputBox">
+          <mat-label>Client</mat-label>
+          <input required aria-label="Number" matInput [formControl]="clientControl" [matAutocomplete]="auto"
+            [(ngModel)]="IncidentalsElement.Client">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let client of filteredClientList | async" [value]="client">
+              {{client}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-icon matSuffix class="dropdownIcon">arrow_drop_down</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4">
+        <!-- Set the "value" (aka the starting value via the ngModel. Using the ngModel because that way it also updates the whitemailElement object-->
+        <mat-form-field appearance="outline" class="mainInputBox">
+          <mat-label>Incidental Date</mat-label>
+          <input required matInput [matDatepicker]="IncidentalDatePick" (dateInput)="changeDate($event)" [(ngModel)]="IncidentalsElement.IncidenceDate">
+          <mat-datepicker-toggle matSuffix [for]="IncidentalDatePick"></mat-datepicker-toggle>
+          <mat-datepicker #IncidentalDatePick>
+          </mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-4 offset-lg-2">
+        <mat-form-field appearance="outline" class="mainInputBox">
+          <mat-label>Total Incidental Amount</mat-label>
+          <span matPrefix>$</span>
+          <input required matInput [(ngModel)]="IncidentalsElement.Amount">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <mat-form-field appearance="outline" class="mainInputBox">
+          <mat-label>Notes for Report</mat-label>
+          <input matInput [(ngModel)]="IncidentalsElement.Description">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4">
+        <mat-label style="margin-left:6px;">Audited?</mat-label>
+        <mat-radio-group (change)="radioChange($event)">
+          <mat-radio-button #trueRadio [value]=true [checked]="IncidentalsElement.Audited">Yes</mat-radio-button>
+          <mat-radio-button #falseRadio [value]=false [checked]="!IncidentalsElement.Audited">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <br>
+
+    <div class="row" *ngIf="IncidentalsElement.Audited">
+      <div class="col-lg-4 readOnlyBox">
+        <mat-form-field appearance="outline" class="mainInputBox test">
+          <mat-label>Audited Date</mat-label>
+          <input matInput readonly="true" [value]="IncidentalsElement.AuditDate|date:'shortDate'">
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 readOnlyBox">
+        <mat-form-field appearance="outline" class="mainInputBox test">
+          <mat-label>Audited By</mat-label>
+          <input matInput readonly="true" [value]="IncidentalsElement.AuditedBy">
+        </mat-form-field>
+      </div>
+    </div>
+    <br>
+    <hr>
+    <br>
+
+    <div class="row">
+      <div class="col-lg-4 readOnlyBox">
+        <mat-form-field appearance="outline" class="mainInputBox test">
+          <mat-label>Created Date</mat-label>
+          <input matInput readonly="true" [value]="IncidentalsElement.CreatedDate|date:'shortDate'">
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 readOnlyBox">
+        <mat-form-field appearance="outline" class="mainInputBox test">
+          <mat-label>Created By</mat-label>
+          <input matInput readonly="true" [value]="IncidentalsElement.CreatedBy">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="IncidentalsElement.beenModified">
+      <div class="col-lg-4 readOnlyBox">
+        <mat-form-field appearance="outline" class="mainInputBox test">
+          <mat-label>Modified Date</mat-label>
+          <input matInput readonly="true" [value]="IncidentalsElement.ModifiedDate|date:'shortDate'">
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 readOnlyBox">
+        <mat-form-field appearance="outline" class="mainInputBox test">
+          <mat-label>Modified By</mat-label>
+          <input matInput readonly="true" [value]="IncidentalsElement.ModifiedBy">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 btnContainer">
+        <button mat-raised-button class="mat-elevation-z2" id="cancelBtn" (click)="Cancel()">Cancel</button>
+        <button mat-raised-button class="mat-elevation-z4" id="updateBtn" (click)="Update()">Update</button>
+      </div>
+    </div>
+    <br>
+  </mat-card>
+</div>
+
+
+<!-- Update Modal -->
+<div id="modalBackground" *ngIf="showSubmittedModal">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <mat-card class="mat-elevation-z8 ModalCard">
+          <div>
+            <div class="row">
+              <div class="col-12 cancelDiv">
+                <button mat-icon-button id="modalCancelBtn" (click)="modalCancel()"><i class="material-icons">cancel</i></button>
+              </div>
+              <div class="col-12 bannerDiv">
+                <i class="material-icons bannerIcon">check_circle_outline</i>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 updatedDiv">
+                <span class="updatedMsg">Whitemail Updated!</span>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Audit reset modal -->
+<div id="modalBackground" *ngIf="showAuditUndoModal">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <mat-card class="mat-elevation-z8 ModalCard">
+          <div>
+            <div class="row">
+              <div class="col-6 offset-3 warningDiv">
+                <i class="material-icons">error_outline</i>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-10 offset-1">
+                <span id="headerMessage">Are you sure?</span>
+              </div>
+              <div class="col-10 offset-1">
+                <span>Do you really want to undo the audit? This process will reset your audit date.</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 btnContainer">
+                <button mat-raised-button class="mat-elevation-z2" id="cancelBtn" (click)="cancelModal()">Cancel</button>
+                <button mat-raised-button class="mat-elevation-z4" id="deleteBtn" (click)="confirmUndoAudit()">Undo
+                  Audit</button>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

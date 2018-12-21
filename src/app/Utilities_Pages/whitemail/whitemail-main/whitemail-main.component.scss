@@ -29,7 +29,7 @@ table {
   //Collectively control the row settings and cell settings (set the row height of all the tables)
 .mat-row {
     &:hover{
-        background: #e3eff7;
+        background: $color-blue-highlight;
     }
   }
   .mat-cell {

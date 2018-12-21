@@ -1,3 +1,121 @@
-<p>
-  incidentals-main works!
-</p>
+<app-toolbar></app-toolbar>
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+      <mat-form-field appearance="outline" class="mainInputBox">
+        <mat-label>Client</mat-label>
+        <input type="text" aria-label="Number" matInput [formControl]="clientControl" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let client of filteredClientList | async" [value]="client" (click)="mainSelectClient(client)">
+            {{client}}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-icon matSuffix class="dropdownIcon">arrow_drop_down</mat-icon>
+      </mat-form-field>
+      <br>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12" *ngIf="!displayTable">
+      <mat-card class="mat-elevation-z8 emptyTableMessage">
+        <h5>Please Select a client</h5>
+      </mat-card>
+    </div>
+    <div class="col-11">
+      <table mat-table *ngIf="displayTable" class="mat-elevation-z8" [dataSource]="this.rootIncidentals">
+        <ng-container matColumnDef="SelectionBox">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <!-- the mousedown event fixes the bug where in google chrome you cant shift click material checkboxes-->
+            <mat-checkbox (click)="checkSelected(element, $event)" (mousedown)="$event.shiftKey ? $event.preventDefault() : null"
+              class="md-checkbox" *ngIf="selectionMode == true"></mat-checkbox>
+            <!-- (click)="$event.shiftKey ? multipleToggle(row, $event) : null" -->
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="Date">
+          <th mat-header-cell *matHeaderCellDef title="Incidental Date"> Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.IncidenceDate|date:'fullDate'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Description">
+          <th mat-header-cell *matHeaderCellDef> Description for Report </th>
+          <td mat-cell *matCellDef="let element"> {{element.Description}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Amount">
+          <th mat-header-cell *matHeaderCellDef title="Total Amount of Incidental"> Amount </th>
+          <td mat-cell *matCellDef="let element"> {{element.Amount|currency:'USD':'symbol':'1.2-2'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Audit">
+          <th mat-header-cell *matHeaderCellDef title="Has this incidental been audited"> Audited? </th>
+          <td mat-cell *matCellDef="let element"> Update </td>
+        </ng-container>
+        <ng-container matColumnDef="ButtonControl">
+          <th mat-header-cell *matHeaderCellDef class="ButtonControlCell"> </th>
+          <td mat-cell *matCellDef="let element" class="ButtonControlCell">
+            <button mat-icon-button *ngIf="element.showEditButton" (click)="navigateToEdit(element)"><i class="material-icons">edit</i></button>
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="MainDisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: MainDisplayedColumns;" (mouseenter)="hoverRow(row)" (mouseleave)="hoverLeave(row)"></tr>
+      </table>
+    </div>
+
+    <div class="col-1" *ngIf="displayTable">
+      <div class="stickyButtons">
+        <div class="row">
+          <mat-card class="mat-elevation-z8">
+            <div>
+              <button mat-icon-button (click)="navigateToNewIncidental()"><i class="material-icons">add_circle</i></button>
+            </div>
+            <div>
+              <button mat-icon-button (click)="toggleSelection()" [style.color]="selectionMode? '#1279C0' : 'black'">
+                <i class="material-icons">list</i>
+              </button>
+            </div>
+            <div>
+              <button mat-icon-button (click)="preDelete($event)" *ngIf="selectionMode"><i class="material-icons">delete</i></button>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="modalBackground" *ngIf="showDeleteModal">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <mat-card class="mat-elevation-z8 deleteModalCard">
+          <div>
+            <div class="row">
+              <div class="col-6 offset-3">
+                <i class="material-icons">error_outline</i>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-10 offset-1">
+                <span id="deleteMessage1">Are you sure?</span>
+              </div>
+              <div class="col-10 offset-1">
+                <span>Do you really want to delete {{deleteNotation}}? This process cannot be undone.</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 btnContainer">
+                <button mat-raised-button class="mat-elevation-z2" id="cancelBtn" (click)="preDeleteWM($event)">Cancel</button>
+                <button mat-raised-button class="mat-elevation-z4" id="deleteBtn" (click)="deleteWM()">Delete</button>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

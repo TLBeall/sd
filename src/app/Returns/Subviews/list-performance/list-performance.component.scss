@@ -101,7 +101,7 @@ td.mat-footer-cell{
 
 //Controls hover and selected for the rows
 tr.example-element-row:hover {
-  background: #e3eff7 !important;
+  background: $color-blue-highlight !important;
   td{
     .returnsExpCollBtn{
       background-color:$color-whitesmoke !important;

@@ -64,14 +64,15 @@ export class WhitemailMainComponent implements OnInit {
     var clientAcronym = client.match(reg);
     this._authService.getWhitemailByClient(this.Agency, clientAcronym[0]).subscribe(data => {
       if (data)
-      var temp = this.sortByStartDate(data)
+        var temp = this.sortByStartDate(data)
       this.rootWhitemail = temp;
       this.rootWhitemail.forEach(element => {
-        element.TotalDonors = element.CardDonors + element.CheckDonors + element.CashDonors + element.UnspecifiedDonors;
-        element.TotalGross = element.CardAmount + element.CheckAmount + element.CashAmount + element.UnspecifiedAmount;
-        this.displayTable = true;
+        element.TotalDonors = element.CardDonors + element.CheckDonors + element.CashDonors;
+        element.TotalGross = element.CardAmount + element.CheckAmount + element.CashAmount;
+        element.Client = client;
       })
-      if (data.length == 0){
+      this.displayTable = true;
+      if (data.length == 0) {
         this.displayTable = false;
         alert('Client does not have white mail');
       }
@@ -84,7 +85,7 @@ export class WhitemailMainComponent implements OnInit {
 
   public sortByStartDate(data: CagingDailies[]): CagingDailies[] {
     return data.sort((a: CagingDailies, b: CagingDailies) => {
-      return this.getTime(b.DonationDate) - this.getTime(a.DonationDate);
+      return this.getTime(b.DateCaged) - this.getTime(a.DateCaged);
     });
   }
 
@@ -105,8 +106,8 @@ export class WhitemailMainComponent implements OnInit {
     } else {
       this.checkedRows.push(element.ID);
     }
-    
-    if (this.checkedRows.length == 1){
+
+    if (this.checkedRows.length == 1) {
       this.deleteNotation = "this record";
     } else {
       this.deleteNotation = "multiple records"
@@ -116,10 +117,10 @@ export class WhitemailMainComponent implements OnInit {
 
   preDeleteWM(event: any) {
     if (this.checkedRows.length > 0)
-    this.showDeleteModal = !this.showDeleteModal;
+      this.showDeleteModal = !this.showDeleteModal;
   }
 
-  deleteWM(){
+  deleteWM() {
     var wmStrArr = "";
     this.checkedRows.forEach((element, index) => {
       if (index == 0) {
@@ -128,28 +129,31 @@ export class WhitemailMainComponent implements OnInit {
         wmStrArr = wmStrArr + "." + element;
       }
     });
-    this._authService.deleteWhitemail(wmStrArr).subscribe(); //the array should get convered to URL notation?
-    this.checkedRows = [];
-    this.mainSelectClient(this.Client);
-    this.showDeleteModal = false;
+    this._authService.deleteWhitemail(wmStrArr).subscribe();
+    setTimeout(() => {
+      this.checkedRows = [];
+      this.mainSelectClient(this.Client);
+      this.showDeleteModal = false;
+    }, 1000)
+
   }
 
-  navigateToEdit(element: any){
+  navigateToEdit(element: any) {
     this._g.whitemailElement = element;
     this.router.navigate(['whitemail/edit/' + element.ID]);
     element.showEditButton = false;
   }
 
-  navigateToNewWM(){
+  navigateToNewWM() {
     this._g.whitemailClient = this.Client;
     this.router.navigate(['whitemail/new'])
   }
 
-  hoverRow(row: any){
+  hoverRow(row: any) {
     row.showEditButton = true;
   }
 
-  hoverLeave(row: any){
+  hoverLeave(row: any) {
     row.showEditButton = false;
   }
 

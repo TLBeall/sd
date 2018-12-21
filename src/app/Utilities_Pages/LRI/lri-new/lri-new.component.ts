@@ -27,12 +27,9 @@ export class LriNewComponent implements OnInit {
   private showSubmittedModal: boolean;
   private LRINumMessage: string;
 
-  private LRIUploadArray: ListRental[];
-  public data: any[];
-
+  public ExcelData: any[];
   private fileUrl: string = "";
   private exampleLRI = false;
-
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
 
 
@@ -74,10 +71,11 @@ export class LriNewComponent implements OnInit {
       ID: 0,
       LRIDate: currentDate,
       ListID: 0,
-      ModifiedBy: "TempUser",
-      ModifiedDate: currentDate,
+      ModifiedBy: null,
+      ModifiedDate: null,
       ClientControl: new FormControl(),
-      isLast: null
+      isLast: null,
+      beenModified: false
     };
 
     this.LRIArray.push(element);
@@ -97,6 +95,12 @@ export class LriNewComponent implements OnInit {
           map(value => this._filter(value))
         );
     });
+  }
+
+  updateElement(e: any, element: ListRental){
+    //UPDATES VALUE OF INPUT TO PIPE CURRENCY FORMAT
+    var value = (Number(e.target.value.replace(/[^0-9.-]+/g,""))).toFixed(2);
+      element.Amount = parseFloat(value);
   }
 
   determineLast() {
@@ -150,29 +154,25 @@ export class LriNewComponent implements OnInit {
         this.resetFile();
         this.LRIArray = [];
         this.loadDefaultValues();
-      }, 2500)
+      }, 1500)
     } else {
       alert('Please fill all fields');
     }
   }
 
   validationFunction(): boolean {
-    var tempValue: boolean;
+    var formValid: boolean;
     this.LRIArray.forEach(element => {
       if (element.Client == null || element.Client == "" ||
         element.Amount == null || (element.Amount).toString() == "" || element.Amount == 0 ||
         element.LRIDate == null || (element.LRIDate).toString() == ""
       ) {
-        tempValue = false;
+        formValid = false;
       } else {
-        tempValue = true;
+        formValid = true;
       }
     });
-    if (tempValue == false) {
-      return false;
-    } else {
-      return true;
-    }
+    return formValid;
   }
 
   modalCancel() {
@@ -218,10 +218,10 @@ export class LriNewComponent implements OnInit {
     const ws: XLSX.WorkSheet = wb.Sheets[wsname];
 
     /* save data */
-    this.data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+    this.ExcelData = XLSX.utils.sheet_to_json(ws, { header: 1 });
 
     //Convert data to be passed to database
-    var tempData = this.data.splice(3); //omitting header of excel file
+    var tempData = this.ExcelData.splice(3); //omitting header of excel file
     var currentDate = new Date();
     tempData.forEach(a => {
       if (a[0] != null) {
@@ -234,8 +234,8 @@ export class LriNewComponent implements OnInit {
         LRIElement.ID = 0;
         LRIElement.LRIDate = this.convertDate(a[0]);
         LRIElement.ListID = 0;
-        LRIElement.ModifiedBy = "TempUser";
-        LRIElement.ModifiedDate = currentDate;
+        LRIElement.ModifiedBy = null;
+        LRIElement.ModifiedDate = null;
         LRIElement.ClientControl = new FormControl();
         LRIElement.isLast = null;
         this.LRIArray.push(LRIElement);

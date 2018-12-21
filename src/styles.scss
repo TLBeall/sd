@@ -16,6 +16,13 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubun
     box-shadow:none;
 }
 
+//REMOVES THE BROWNSER DEFINED NUMBER TOGGLE INSIDE OF INPUTS WITH TYPE=NUMBER
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 
 
 //Creates the light grey background-color --- ALSO need to change in the toolbar.component.scss file (clearfix)

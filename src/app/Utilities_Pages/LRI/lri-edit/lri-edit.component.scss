@@ -1,5 +1,11 @@
 @import '~src/appTheme.scss'; 
 
+::ng-deep .readOnlyBox{
+    .mat-form-field-outline{
+        background-color: $color-gallery;
+        border-radius: 4px;
+    }
+}
 
 .mainInputBox{
     width: 100%;

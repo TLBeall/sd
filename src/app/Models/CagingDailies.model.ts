@@ -4,7 +4,6 @@ export class CagingDailies {
     Agency: string;
     Client: string;
     MailCodeId: number;
-    DonationDate: Date;
     DateCaged: Date;
     EnteredDate: Date;
     ModifiedDate: Date;
@@ -13,17 +12,17 @@ export class CagingDailies {
     CashDonors: number;
     CardDonors: number;
     CheckDonors: number;
-    UnspecifiedDonors: number;
     CashAmount: number;
     CardAmount: number;
     CheckAmount: number;
-    UnspecifiedAmount: number;
     EnteredBy: string
     ModifiedBy: string;
+    // Source: string;
     
     //Not in the API call - totals are added up in the component
     ClientControl : FormControl;
     isLast: boolean;
+    beenModified: boolean;
 
     TotalGross: number;
     TotalDonors: number;

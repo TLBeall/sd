@@ -1,5 +1,8 @@
 @import '~src/appTheme.scss'; 
 
+.clientDropdown{
+    width: 100%;
+}
 
 .defaultButton{
     background-color: $color-blue-default;
@@ -176,7 +179,9 @@
     opacity: 0.75;
 }
 
-
+.inactiveRow{
+    display: none !important;
+}
 
 
 //Sets up font styling resize on year calendar boxes

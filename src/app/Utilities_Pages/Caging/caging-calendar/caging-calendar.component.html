@@ -1,139 +1,27 @@
 <app-toolbar></app-toolbar>
 <br>
-<!-- <div class="container">
-  <div class="row">
-    <div class="col-3 box">
-      <p>Quarter</p>
-    </div>
-    <div class="col-3 box">
-      <p>Month 1</p>
-    </div>
-    <div class="col-3 box">
-      <p>Month 2</p>
-    </div>
-    <div class="col-3 box">
-      <p>Month 3</p>
-    </div>
-    <div class="col-3 box quarterBox">
-      <p>Q1</p>
-      <p>Donors: .......</p>
-      <p>Non-Donors: .......</p>
-      <p>Donation Amount: .......</p>
-      <p>Piece Count: .......</p>
-    </div>
-    <div class="col-3 box">
-      <p>Jan</p>
-      <p>Donors: .......</p>
-      <p>Non-Donors: .......</p>
-      <p>Donation Amount: .......</p>
-      <p>Piece Count: .......</p>
-    </div>
-    <div class="col-3 box">
-      <p>Feb</p>
-      <p>Donors: .......</p>
-      <p>Non-Donors: .......</p>
-      <p>Donation Amount: .......</p>
-      <p>Piece Count: .......</p>
-    </div>
-    <div class="col-3 box">
-      <p>Mar</p>
-      <p>Donors: .......</p>
-      <p>Non-Donors: .......</p>
-      <p>Donation Amount: .......</p>
-      <p>Piece Count: .......</p>
-    </div>
-    <div class="col-3 box quarterBox">
-      <p>Q2</p>
-      <p>Donors: .......</p>
-      <p>Non-Donors: .......</p>
-      <p>Donation Amount: .......</p>
-      <p>Piece Count: .......</p>
-    </div>
-    <div class="col-3 box">
-      <p>Apr</p>
-      <p>Donors: .......</p>
-      <p>Non-Donors: .......</p>
-      <p>Donation Amount: .......</p>
-      <p>Piece Count: .......</p>
-    </div>
-    <div class="col-3 box">
-      <p>May</p>
-      <p>Donors: .......</p>
-      <p>Non-Donors: .......</p>
-      <p>Donation Amount: .......</p>
-      <p>Piece Count: .......</p>
-    </div>
-    <div class="col-3 box">
-      <p>Jun</p>
-      <p>Donors: .......</p>
-      <p>Non-Donors: .......</p>
-      <p>Donation Amount: .......</p>
-      <p>Piece Count: .......</p>
-    </div>
-    <div class="col-3 box quarterBox">
-      <p>Q3</p>
-      <p>Donors: .......</p>
-      <p>Non-Donors: .......</p>
-      <p>Donation Amount: .......</p>
-      <p>Piece Count: .......</p>
-    </div>
-    <div class="col-3 box">
-      <p>Jul</p>
-      <p>Donors: .......</p>
-      <p>Non-Donors: .......</p>
-      <p>Donation Amount: .......</p>
-      <p>Piece Count: .......</p>
-    </div>
-    <div class="col-3 box">
-      <p>Aug</p>
-      <p>Donors: .......</p>
-      <p>Non-Donors: .......</p>
-      <p>Donation Amount: .......</p>
-      <p>Piece Count: .......</p>
-    </div>
-    <div class="col-3 box">
-      <p>Sep</p>
-      <p>Donors: .......</p>
-      <p>Non-Donors: .......</p>
-      <p>Donation Amount: .......</p>
-      <p>Piece Count: .......</p>
-    </div>
-    <div class="col-3 box quarterBox">
-      <p>Q4</p>
-      <p>Donors: .......</p>
-      <p>Non-Donors: .......</p>
-      <p>Donation Amount: .......</p>
-      <p>Piece Count: .......</p>
-    </div>
-    <div class="col-3 box">
-      <p>Oct</p>
-      <p>Donors: .......</p>
-      <p>Non-Donors: .......</p>
-      <p>Donation Amount: .......</p>
-      <p>Piece Count: .......</p>
-    </div>
-    <div class="col-3 box">
-      <p>Nov</p>
-      <p>Donors: .......</p>
-      <p>Non-Donors: .......</p>
-      <p>Donation Amount: .......</p>
-      <p>Piece Count: .......</p>
-    </div>
-    <div class="col-3 box">
-      <p>Dec</p>
-      <p>Donors: .......</p>
-      <p>Non-Donors: .......</p>
-      <p>Donation Amount: .......</p>
-      <p>Piece Count: .......</p>
-    </div>
-  </div>
-</div> -->
 
 
 <div class="container mat-elevation-z8 calendarContainer">
+  <br>
   <div class="row">
-    <div class="col-12">
+    <div class="col-xs-12 col-sm-10 col-md-7 col-lg-5">
       <!-- PUT CLIENT DROPDOWN HERE-->
+      <mat-form-field appearance="outline" class="clientDropdown">
+        <mat-chip-list #CLchipList>
+          <mat-chip *ngFor="let client of CLList" [selectable]="selectable" [removable]="removable" (removed)="CL_Remove(client)">
+            {{client}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input [placeholder]="clientPlaceholder" #CLInput [formControl]="CLControl" [matAutocomplete]="CLauto"
+            [matChipInputFor]="CLchipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="CL_Add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #CLauto="matAutocomplete" (optionSelected)="CL_Selected($event)">
+          <mat-option class="md-custom-option" *ngFor="let client of CLfilteredOptions | async" [value]="client">{{client}}</mat-option>
+        </mat-autocomplete>
+        <mat-icon matSuffix class="dropdownIcon">arrow_drop_down</mat-icon>
+      </mat-form-field>
     </div>
   </div>
   <br>
@@ -148,14 +36,14 @@
       <!-- <button mat-flat-button class="defaultButton" id="timeResetBtn">2018</button> -->
     </div>
     <div class="col-md-4" id="timeHeader">
-      <h3 *ngIf="timeSelection == 'Year'">{{currentYear}}</h3>
+      <h3 *ngIf="timeSelection == 'Year'">{{yearId}}</h3>
       <h3 *ngIf="timeSelection == 'Month'">{{currentMonth}}, {{currentYear}}</h3>
     </div>
     <div class="col-md-4">
       <div style="float:right;">
         <mat-button-toggle-group class="timeSelectionGroup" [(ngModel)]="timeSelection">
-          <mat-button-toggle value="Year">Year</mat-button-toggle>
-          <mat-button-toggle value="Month">Month</mat-button-toggle>
+          <mat-button-toggle value="Year" (click)="switchToYear()">Year</mat-button-toggle>
+          <mat-button-toggle value="Month" (click)="switchToMonth()">Month</mat-button-toggle>
           <mat-button-toggle value="Day">Day</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
@@ -250,25 +138,30 @@
           <div class="col">Week</div>
         </div>
         <div class="row">
-          <div *ngFor="let element of weekList" class="col-12 boxOnMonthCal weekBox groupElementDefault">
+          <div *ngFor="let element of weekList" class="col-12 boxOnMonthCal weekBox" (click)="selectWeekElement(element)"
+            [ngClass]="{
+              'groupElementSelected': element.selected == true,
+              'groupElementDefault': element.selected == false,
+              'inactiveRow': !checkActiveWeeks(element)
+            }">
             <div class="row">
-              <div class="col-12">Week#</div>
+              <div class="col-12">Week {{element.weekNum}}</div>
             </div>
             <div class="row">
               <div class="col-md-6">Donors:</div>
-              <div class="col-md-6 text-right">700</div>
+              <div class="col-md-6 text-right">{{element.Donors}}</div>
             </div>
             <div class="row">
               <div class="col-md-6" title="Non-Donors">Non:</div>
-              <div class="col-md-6 text-right">350</div>
+              <div class="col-md-6 text-right">{{element.NonDonors}}</div>
             </div>
             <div class="row">
               <div class="col-md-6" title="Piece Count">PC:</div>
-              <div class="col-md-6 text-right">1050</div>
+              <div class="col-md-6 text-right">{{element.PieceCount}}</div>
             </div>
             <div class="row">
               <div class="col-md-6">Gross:</div>
-              <div class="col-md-6 text-right">{{70000|currency:'USD':'symbol':'1.2-2'}}</div>
+              <div class="col-md-6 text-right">{{element.DonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
             </div>
           </div>
         </div>
@@ -284,143 +177,185 @@
           <div class="col">{{daysName[6]}}</div>
         </div>
         <div class="row" *ngIf="days">
-          <div *ngFor="let day of week1" class="col boxOnMonthCal dayBox" [class.inactive]="day.isActive == false">
+          <div *ngFor="let unit of week1.days" class="col boxOnMonthCal dayBox" (click)="selectDayElement(unit, week1)"
+            [ngClass]="{
+            'elementSelected': unit.selected == true, 
+            'elementDefault': unit.selected == false,
+            'inactive': unit.isActive == false
+          }">
             <div class="row">
-              <div class="col-12">{{day.day}}</div>
+              <div class="col-12">{{unit.Day}}</div>
             </div>
             <div class="row">
-              <div class="col-md-6" *ngIf="day.isActive == true">Donors:</div>
-              <div class="col-md-6 text-right" *ngIf="day.isActive == true">100</div>
+              <div class="col-md-6" *ngIf="unit.isActive == true">Donors:</div>
+              <div class="col-md-6 text-right" *ngIf="unit.isActive == true">{{unit.Donors}}</div>
             </div>
             <div class="row">
-              <div class="col-md-6" *ngIf="day.isActive == true" title="Non-Donors">Non:</div>
-              <div class="col-md-6 text-right" *ngIf="day.isActive == true">50</div>
+              <div class="col-md-6" *ngIf="unit.isActive == true" title="Non-Donors">Non:</div>
+              <div class="col-md-6 text-right" *ngIf="unit.isActive == true">{{unit.NonDonors}}</div>
             </div>
             <div class="row">
-              <div class="col-md-6" *ngIf="day.isActive == true" title="Piece Count">PC:</div>
-              <div class="col-md-6 text-right" *ngIf="day.isActive == true">150</div>
+              <div class="col-md-6" *ngIf="unit.isActive == true" title="Piece Count">PC:</div>
+              <div class="col-md-6 text-right" *ngIf="unit.isActive == true">{{unit.PieceCount}}</div>
             </div>
             <div class="row">
-              <div class="col-md-6" *ngIf="day.isActive == true">Gross:</div>
-              <div class="col-md-6 text-right" *ngIf="day.isActive == true">{{10000|currency:'USD':'symbol':'1.2-2'}}</div>
-            </div>
-          </div>
-        </div>
-        <div class="row" *ngIf="days">
-          <div *ngFor="let day of week2" class="col boxOnMonthCal dayBox" [class.inactive]="day.isActive == false">
-            <div class="row">
-              <div class="col-12">{{day.day}}</div>
-            </div>
-            <div class="row">
-              <div class="col-md-6" *ngIf="day.isActive == true">Donors:</div>
-              <div class="col-md-6 text-right" *ngIf="day.isActive == true">100</div>
-            </div>
-            <div class="row">
-              <div class="col-md-6" *ngIf="day.isActive == true" title="Non-Donors">Non:</div>
-              <div class="col-md-6 text-right" *ngIf="day.isActive == true">50</div>
-            </div>
-            <div class="row">
-              <div class="col-md-6" *ngIf="day.isActive == true" title="Piece Count">PC:</div>
-              <div class="col-md-6 text-right" *ngIf="day.isActive == true">150</div>
-            </div>
-            <div class="row">
-              <div class="col-md-6" *ngIf="day.isActive == true">Gross:</div>
-              <div class="col-md-6 text-right" *ngIf="day.isActive == true">{{10000|currency:'USD':'symbol':'1.2-2'}}</div>
+              <div class="col-md-6" *ngIf="unit.isActive == true">Gross:</div>
+              <div class="col-md-6 text-right" *ngIf="unit.isActive == true">{{unit.DonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
             </div>
           </div>
         </div>
         <div class="row" *ngIf="days">
-          <div *ngFor="let day of week3" class="col boxOnMonthCal dayBox" [class.inactive]="day.isActive == false">
+          <div *ngFor="let unit of week2.days" class="col boxOnMonthCal dayBox" (click)="selectDayElement(unit, week2)"
+            [ngClass]="{
+            'elementSelected': unit.selected == true, 
+            'elementDefault': unit.selected == false,
+            'inactive': unit.isActive == false
+          }">
             <div class="row">
-              <div class="col-12" *ngIf="day.isActive == true">{{day.day}}</div>
+              <div class="col-12">{{unit.Day}}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6" *ngIf="unit.isActive == true">Donors:</div>
+              <div class="col-md-6 text-right" *ngIf="unit.isActive == true">{{unit.Donors}}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6" *ngIf="unit.isActive == true" title="Non-Donors">Non:</div>
+              <div class="col-md-6 text-right" *ngIf="unit.isActive == true">{{unit.NonDonors}}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6" *ngIf="unit.isActive == true" title="Piece Count">PC:</div>
+              <div class="col-md-6 text-right" *ngIf="unit.isActive == true">{{unit.PieceCount}}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6" *ngIf="unit.isActive == true">Gross:</div>
+              <div class="col-md-6 text-right" *ngIf="unit.isActive == true">{{unit.DonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="days">
+          <div *ngFor="let unit of week3.days" class="col boxOnMonthCal dayBox" (click)="selectDayElement(unit, week3)"
+            [ngClass]="{
+            'elementSelected': unit.selected == true, 
+            'elementDefault': unit.selected == false,
+            'inactive': unit.isActive == false
+          }">
+            <div class="row">
+              <div class="col-12" *ngIf="unit.isActive == true">{{unit.Day}}</div>
             </div>
             <div class="row">
               <div class="col-md-6">Donors:</div>
-              <div class="col-md-6 text-right">100</div>
+              <div class="col-md-6 text-right">{{unit.Donors}}</div>
             </div>
             <div class="row">
               <div class="col-md-6" title="Non-Donors">Non:</div>
-              <div class="col-md-6 text-right">50</div>
+              <div class="col-md-6 text-right">{{unit.NonDonors}}</div>
             </div>
             <div class="row">
               <div class="col-md-6" title="Piece Count">PC:</div>
-              <div class="col-md-6 text-right">150</div>
+              <div class="col-md-6 text-right">{{unit.PieceCount}}</div>
             </div>
             <div class="row">
               <div class="col-md-6">Gross:</div>
-              <div class="col-md-6 text-right">{{10000|currency:'USD':'symbol':'1.2-2'}}</div>
+              <div class="col-md-6 text-right">{{unit.DonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
             </div>
           </div>
         </div>
         <div class="row" *ngIf="days">
-          <div *ngFor="let day of week4" class="col boxOnMonthCal dayBox" [class.inactive]="day.isActive == false">
+          <div *ngFor="let unit of week4.days" class="col boxOnMonthCal dayBox" (click)="selectDayElement(unit, week4)"
+            [ngClass]="{
+            'elementSelected': unit.selected == true, 
+            'elementDefault': unit.selected == false,
+            'inactive': unit.isActive == false
+          }">
             <div class="row">
-              <div class="col-12" *ngIf="day.isActive == true">{{day.day}}</div>
+              <div class="col-12" *ngIf="unit.isActive == true">{{unit.Day}}</div>
             </div>
             <div class="row">
               <div class="col-md-6">Donors:</div>
-              <div class="col-md-6 text-right">100</div>
+              <div class="col-md-6 text-right">{{unit.Donors}}</div>
             </div>
             <div class="row">
               <div class="col-md-6" title="Non-Donors">Non:</div>
-              <div class="col-md-6 text-right">50</div>
+              <div class="col-md-6 text-right">{{unit.NonDonors}}</div>
             </div>
             <div class="row">
               <div class="col-md-6" title="Piece Count">PC:</div>
-              <div class="col-md-6 text-right">150</div>
+              <div class="col-md-6 text-right">{{unit.PieceCount}}</div>
             </div>
             <div class="row">
               <div class="col-md-6">Gross:</div>
-              <div class="col-md-6 text-right">{{10000|currency:'USD':'symbol':'1.2-2'}}</div>
+              <div class="col-md-6 text-right">{{unit.DonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
             </div>
           </div>
         </div>
         <div class="row" *ngIf="days">
-          <div *ngFor="let day of week5" class="col boxOnMonthCal dayBox" [class.inactive]="day.isActive == false">
+          <div *ngFor="let unit of week5.days" class="col boxOnMonthCal dayBox" (click)="selectDayElement(unit, week5)"
+            [ngClass]="{
+            'elementSelected': unit.selected == true, 
+            'elementDefault': unit.selected == false,
+            'inactive': unit.isActive == false
+          }">
             <div class="row">
-              <div class="col-12">{{day.day}}</div>
+              <div class="col-12">{{unit.Day}}</div>
             </div>
             <div class="row">
-              <div class="col-md-6" *ngIf="day.isActive == true">Donors:</div>
-              <div class="col-md-6 text-right" *ngIf="day.isActive == true">100</div>
+              <div class="col-md-6" *ngIf="unit.isActive == true">Donors:</div>
+              <div class="col-md-6 text-right" *ngIf="unit.isActive == true">{{unit.Donors}}</div>
             </div>
             <div class="row">
-              <div class="col-md-6" *ngIf="day.isActive == true" title="Non-Donors">Non:</div>
-              <div class="col-md-6 text-right" *ngIf="day.isActive == true">50</div>
+              <div class="col-md-6" *ngIf="unit.isActive == true" title="Non-Donors">Non:</div>
+              <div class="col-md-6 text-right" *ngIf="unit.isActive == true">{{unit.NonDonors}}</div>
             </div>
             <div class="row">
-              <div class="col-md-6" *ngIf="day.isActive == true" title="Piece Count">PC:</div>
-              <div class="col-md-6 text-right" *ngIf="day.isActive == true">150</div>
+              <div class="col-md-6" *ngIf="unit.isActive == true" title="Piece Count">PC:</div>
+              <div class="col-md-6 text-right" *ngIf="unit.isActive == true">{{unit.PieceCount}}</div>
             </div>
             <div class="row">
-              <div class="col-md-6" *ngIf="day.isActive == true">Gross:</div>
-              <div class="col-md-6 text-right" *ngIf="day.isActive == true">{{10000|currency:'USD':'symbol':'1.2-2'}}</div>
+              <div class="col-md-6" *ngIf="unit.isActive == true">Gross:</div>
+              <div class="col-md-6 text-right" *ngIf="unit.isActive == true">{{unit.DonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
             </div>
           </div>
         </div>
         <div class="row" *ngIf="days">
-          <div *ngFor="let day of week6" class="col boxOnMonthCal dayBox" [class.inactive]="day.isActive == false">
+          <div *ngFor="let unit of week6.days" class="col boxOnMonthCal dayBox" (click)="selectDayElement(unit, week6)"
+            [ngClass]="{
+            'elementSelected': unit.selected == true, 
+            'elementDefault': unit.selected == false,
+            'inactive': unit.isActive == false,
+            'inactiveRow': !checkActiveWeeks(week6)
+          }">
             <div class="row">
-              <div class="col-12">{{day.day}}</div>
+              <div class="col-12">{{unit.Day}}</div>
             </div>
             <div class="row">
-              <div class="col-md-6" *ngIf="day.isActive == true">Donors:</div>
-              <div class="col-md-6 text-right" *ngIf="day.isActive == true">100</div>
+              <div class="col-md-6" *ngIf="unit.isActive == true">Donors:</div>
+              <div class="col-md-6 text-right" *ngIf="unit.isActive == true">{{unit.Donors}}</div>
             </div>
             <div class="row">
-              <div class="col-md-6" *ngIf="day.isActive == true" title="Non-Donors">Non:</div>
-              <div class="col-md-6 text-right" *ngIf="day.isActive == true">50</div>
+              <div class="col-md-6" *ngIf="unit.isActive == true" title="Non-Donors">Non:</div>
+              <div class="col-md-6 text-right" *ngIf="unit.isActive == true">{{unit.NonDonors}}</div>
             </div>
             <div class="row">
-              <div class="col-md-6" *ngIf="day.isActive == true" title="Piece Count">PC:</div>
-              <div class="col-md-6 text-right" *ngIf="day.isActive == true">150</div>
+              <div class="col-md-6" *ngIf="unit.isActive == true" title="Piece Count">PC:</div>
+              <div class="col-md-6 text-right" *ngIf="unit.isActive == true">{{unit.PieceCount}}</div>
             </div>
             <div class="row">
-              <div class="col-md-6" *ngIf="day.isActive == true">Gross:</div>
-              <div class="col-md-6 text-right" *ngIf="day.isActive == true">{{10000|currency:'USD':'symbol':'1.2-2'}}</div>
+              <div class="col-md-6" *ngIf="unit.isActive == true">Gross:</div>
+              <div class="col-md-6 text-right" *ngIf="unit.isActive == true">{{unit.DonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-6">
+        <p>Total Donors: {{totalDonors}}</p>
+        <p>Total Non-Donors: {{totalNonDonors}}</p>
+        <p>Total Piece Count: {{totalPieceCount}}</p>
+        <p>Total Gross: {{totalGross|currency:'USD':'symbol':'1.2-2'}}</p>
       </div>
     </div>
   </ng-container>

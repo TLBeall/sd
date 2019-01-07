@@ -11,6 +11,9 @@ export class CagingYearElement {
     CashCount: number;
     CheckAmount: number;
     CheckCount: number;
-    PieceCount: number;
+    // PieceCount: number;
     selected: boolean;
+
+    TotalDonationAmount: number;
+    TotalDonorCount: number;
 }

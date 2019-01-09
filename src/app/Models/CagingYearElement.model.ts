@@ -2,7 +2,6 @@ export class CagingYearElement {
     Month: number;
     Quarter: number;
     Year: number;
-    Donors: number;
     NonDonors: number;
     DonationAmount: number;
     CardAmount: number;
@@ -13,6 +12,7 @@ export class CagingYearElement {
     CheckCount: number;
     // PieceCount: number;
     selected: boolean;
+    selectable: boolean;
 
     TotalDonationAmount: number;
     TotalDonorCount: number;

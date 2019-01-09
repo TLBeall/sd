@@ -1,5 +1,16 @@
 @import '~src/appTheme.scss'; 
 
+.example-month-picker .mat-calendar-period-button {
+    pointer-events: none;
+  }
+  
+  .example-month-picker .mat-calendar-arrow {
+    display: none;
+  }
+
+
+
+
 .totalsBox{
     p{
         font-weight: bold;
@@ -167,11 +178,18 @@
 }
 
 .elementSelected{
-    background-color: rgba(92,184,92, 0.2);
+    background-color: rgba(92,184,92, 0.3);
 }
 
 .elementDefault{
     background-color: $color-white;
+}
+
+.elementEmpty{
+    background-color: rgba(255,193,7, 0.2);
+    div.row.elemValue{
+        opacity: 0.3;
+    }
 }
 
 
@@ -191,12 +209,20 @@
 }
 
 .inactive{
-    background-color: rgba(255,223,199,0.25);    
+    background-color: rgba(255,223,199,0.9);    
     opacity: 0.75;
 }
 
 .inactiveRow{
     display: none !important;
+}
+
+.selectable {
+    cursor: pointer !important;
+}
+
+.unselectable {
+    cursor: text !important;
 }
 
 

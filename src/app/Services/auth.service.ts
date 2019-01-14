@@ -320,12 +320,20 @@ export class AuthService {
     return this.http.post(createURL, body, { headers: headersForCreateAPI });
   }
 
-  getCagingCalendarData(ClientList: string, Year: number, Month: number) {
+  getCagingCalendarData(ClientList: string, Year: number, Month: number, Day: number) {
     var Token = "";
-    if (Month == null) {
+    if (Day == null && Month == null) {
       var getURL = "https://sd360.sunrisedataservices.com/api/CagingCalendar?ClientList=" + ClientList + "&Year=" + Year;
-    } else {
+    } else if (Day == null) {
       var getURL = "https://sd360.sunrisedataservices.com/api/CagingCalendar?ClientList=" + ClientList + "&Year=" + Year + "&Month=" + Month;
+    } else {
+      let CL;
+      if (ClientList == "") {
+        CL = "ALL";
+      } else {
+        CL = ClientList;
+      }
+      var getURL = "https://sd360.sunrisedataservices.com/api/CagingCalendar?ClientList=" + CL + "&Date=" + Month + "/" + Day + "/" + Year;
     }
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });

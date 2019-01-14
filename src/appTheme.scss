@@ -5,17 +5,17 @@
 // <><><> Variables across website start <><><>
 // ***To implement, add to the top of CSS files: @import '~src/appTheme.scss';
 // <><><><><><><><><><><><><><><><><><><><><>
-$color-white: #FFF;
-$color-whitesmoke: #F8F8F8; //body background
-$color-gallery: #F0F0F0; //some buttons native background
-$color-gainsboro: #D3D3D3; //introduced as the gray color for material element text
-$color-silver: 	#C0C0C0;
-$color-gray: #808080; //used on scroll buttons of toolbar
+$color-white: #FFF; //255,255,255
+$color-whitesmoke: #F8F8F8; //rgb(248,248,248)  body background
+$color-gallery: #F0F0F0; //rgb(240,240,240)  some buttons native background
+$color-gainsboro: #D3D3D3; //rgb(211,211,211)  introduced as the gray color for material element text
+$color-silver: 	#C0C0C0; //rgb(192,192,192)
+$color-gray: #808080; //rgb(128,128,128)  used on scroll buttons of toolbar
 $color-dovegray: #686868; //box shadows
 
 $color-shark: #212529; //boostrap/native black for text
 $color-mineshaft: #333; //navigation bar
-$color-blue-default: #1279C0;
+$color-blue-default: #1279C0; //rgb(18,121,192)
 $color-blue-highlight: #e3eff7;
 $color-blue-light: #59a1d3;
 $color-blue-dark: #0a5caa;

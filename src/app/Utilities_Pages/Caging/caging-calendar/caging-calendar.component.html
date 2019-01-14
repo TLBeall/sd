@@ -47,11 +47,12 @@
         <mat-button-toggle-group class="timeSelectionGroup" [(ngModel)]="timeSelection">
           <mat-button-toggle value="Year" (click)="switchToYear()">Year</mat-button-toggle>
           <mat-button-toggle value="Month" (click)="switchToMonth()">Month</mat-button-toggle>
-          <mat-button-toggle value="Day">Day</mat-button-toggle>
+          <mat-button-toggle value="Day" (click)="switchToDay()">Day</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
     </div>
   </div>
+  <!-- background-color: rgba(18,121,192, 0.25); -->
 
   <div style="width:100%; height: 4px;">
     <mat-progress-bar color="accent" mode="indeterminate" *ngIf="loading == true"></mat-progress-bar>
@@ -87,10 +88,6 @@
                 <div class="col-6 text-right">{{element.NonDonors|number}}</div>
               </div>
               <div class="row">
-                <div class="col-6">Piece Count:</div>
-                <div class="col-6 text-right">{{element.PieceCount|number}}</div>
-              </div>
-              <div class="row">
                 <div class="col-6">Gross:</div>
                 <div class="col-6 text-right">{{element.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
               </div>
@@ -107,7 +104,7 @@
                 'selectable': element.selectable == true,
                 'unselectable': element.selectable == false
               }">
-              <div class="row">
+              <div class="row selectableHeader">
                 <div class="col-12">{{convertMonthName(element.Month)}}</div>
               </div>
               <div class="row elemValue">
@@ -119,12 +116,8 @@
                 <div class="col-6 text-right">{{element.NonDonors|number}}</div>
               </div>
               <div class="row elemValue">
-                <div class="col-6">Piece Count:</div>
-                <div class="col-6 text-right">{{element.PieceCount|number}}</div>
-              </div>
-              <div class="row elemValue">
                 <div class="col-6">Gross:</div>
-                <div class="col-6 text-right">{{element.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
+                <div class="col-6 text-right"><span class="grossTravel" (click)="travelToMonth(element)">{{element.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</span></div>
               </div>
             </div>
           </div>
@@ -189,7 +182,7 @@
             'selectable': day.selectable == true,
             'unselectable': day.selectable == false
           }">
-              <div class="row">
+              <div class="row selectableHeader">
                 <div class="col-12">{{day.Day}}</div>
               </div>
               <div class="row elemValue">
@@ -202,7 +195,7 @@
               </div>
               <div class="row elemValue">
                 <div class="col-md-6" *ngIf="day.isActive == true">Gross:</div>
-                <div class="col-md-6 text-right" *ngIf="day.isActive == true">{{day.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
+                <div class="col-md-6 text-right" *ngIf="day.isActive == true"><span class="grossTravel" (click)="travelToDay(day)">{{day.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</span></div>
               </div>
             </div>
           </div>
@@ -216,7 +209,7 @@
             'selectable': day.selectable == true,
             'unselectable': day.selectable == false
           }">
-              <div class="row">
+              <div class="row selectableHeader">
                 <div class="col-12">{{day.Day}}</div>
               </div>
               <div class="row elemValue">
@@ -229,7 +222,7 @@
               </div>
               <div class="row elemValue">
                 <div class="col-md-6" *ngIf="day.isActive == true">Gross:</div>
-                <div class="col-md-6 text-right" *ngIf="day.isActive == true">{{day.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
+                <div class="col-md-6 text-right" *ngIf="day.isActive == true"><span class="grossTravel" (click)="travelToDay(day)">{{day.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</span></div>
               </div>
             </div>
           </div>
@@ -243,7 +236,7 @@
             'selectable': day.selectable == true,
             'unselectable': day.selectable == false
           }">
-              <div class="row">
+              <div class="row selectableHeader">
                 <div class="col-12" *ngIf="day.isActive == true">{{day.Day}}</div>
               </div>
               <div class="row elemValue">
@@ -256,7 +249,7 @@
               </div>
               <div class="row elemValue">
                 <div class="col-md-6">Gross:</div>
-                <div class="col-md-6 text-right">{{day.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
+                <div class="col-md-6 text-right"><span class="grossTravel" (click)="travelToDay(day)">{{day.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</span></div>
               </div>
             </div>
           </div>
@@ -270,7 +263,7 @@
             'selectable': day.selectable == true,
             'unselectable': day.selectable == false
           }">
-              <div class="row">
+              <div class="row selectableHeader">
                 <div class="col-12" *ngIf="day.isActive == true">{{day.Day}}</div>
               </div>
               <div class="row elemValue">
@@ -283,7 +276,7 @@
               </div>
               <div class="row elemValue">
                 <div class="col-md-6">Gross:</div>
-                <div class="col-md-6 text-right">{{day.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
+                <div class="col-md-6 text-right"><span class="grossTravel" (click)="travelToDay(day)">{{day.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</span></div>
               </div>
             </div>
           </div>
@@ -297,7 +290,7 @@
             'selectable': day.selectable == true,
             'unselectable': day.selectable == false
           }">
-              <div class="row">
+              <div class="row selectableHeader">
                 <div class="col-12">{{day.Day}}</div>
               </div>
               <div class="row elemValue">
@@ -310,7 +303,7 @@
               </div>
               <div class="row elemValue">
                 <div class="col-md-6" *ngIf="day.isActive == true">Gross:</div>
-                <div class="col-md-6 text-right" *ngIf="day.isActive == true">{{day.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
+                <div class="col-md-6 text-right" *ngIf="day.isActive == true"><span class="grossTravel" (click)="travelToDay(day)">{{day.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</span></div>
               </div>
             </div>
           </div>
@@ -325,7 +318,7 @@
             'selectable': day.selectable == true,
             'unselectable': day.selectable == false
           }">
-              <div class="row">
+              <div class="row selectableHeader">
                 <div class="col-12">{{day.Day}}</div>
               </div>
               <div class="row elemValue">
@@ -338,23 +331,13 @@
               </div>
               <div class="row elemValue">
                 <div class="col-md-6" *ngIf="day.isActive == true">Gross:</div>
-                <div class="col-md-6 text-right" *ngIf="day.isActive == true">{{day.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</div>
+                <div class="col-md-6 text-right" *ngIf="day.isActive == true"><span class="grossTravel" (click)="travelToDay(day)">{{day.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</span></div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </ng-container>
-
-
-
-
-    <!--START DAY CALENDAR-->
-    <ng-container *ngIf="timeSelection == 'Day'">
-      <div>Day material here</div>
-    </ng-container>
-
-
 
 
     <!-- TOTALS SECTION AT BOTTOM OF YEAR AND MONTH CALENDAR-->
@@ -424,5 +407,187 @@
       </div>
     </div>
     <br>
+
+
+    <!--START DAY CALENDAR-->
+    <!-- <div *ngIf="timeSelection == 'Day'"> -->
+      <div [ngClass]="{
+        'rowCollapsed': timeSelection != 'Day',
+        'rowExpanded': timeSelection == 'Day'
+      }">
+      <!-- ****************************** -->
+      <!-- Caging by mailcode Table Start -->
+      <!-- ****************************** -->
+      <table id="table2" mat-table [dataSource]="this.dayClientArr" multiTemplateDataRows>
+        <ng-container matColumnDef="ExpandParent">
+          <th mat-header-cell *matHeaderCellDef="let client" class="expBtnColumn expBtnTH"></th>
+          <td mat-cell *matCellDef="let client" class="expBtnColumn">
+            <button mat-icon-button (click)="ToggleExpansion(client)" class="clientButton">
+              <i class="material-icons md-elevation-z6" [ngClass]="client.Expanded?'mi_arrow_drop_down':'mi_arrow_right'"></i>
+            </button>
+          </td>
+          <td mat-footer-cell *matFooterCellDef class="expBtnColumn"> </td>.
+        </ng-container>
+        <ng-container matColumnDef="Client">
+          <th mat-header-cell *matHeaderCellDef class="clientColumn">Client</th>
+          <td mat-cell *matCellDef="let client" class="clientColumn"><span>
+              <!-- [ngClass]="element.Expanded? 'mcRowExpanded':'mcRowCollapsed'" -->
+              {{client.Client}} </span></td>
+          <td mat-footer-cell *matFooterCellDef class="clientColumn">Totals</td>
+        </ng-container>
+        <ng-container matColumnDef="Empty">
+          <th mat-header-cell *matHeaderCellDef class="emptyColumn"></th>
+          <td mat-cell *matCellDef="let client" class="emptyColumn"></td>
+          <td mat-footer-cell *matFooterCellDef class="emptyColumn"></td>
+        </ng-container>
+        <ng-container matColumnDef="NonDonors">
+          <th mat-header-cell *matHeaderCellDef>Non-Donors</th>
+          <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.NonDonors|number}}</span></td>
+          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.NonDonors|number}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CashDonors">
+          <th mat-header-cell *matHeaderCellDef>Cash Donations</th>
+          <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.CashCount|number}}</span></td>
+          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.CashCount|number}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CashGross">
+          <th mat-header-cell *matHeaderCellDef>Cash Gross</th>
+          <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.CashAmount|currency:'USD':'symbol':'1.2-2'}}</span></td>
+          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.CashAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CardDonors">
+          <th mat-header-cell *matHeaderCellDef>Card Donations</th>
+          <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.CardCount|number}}</span></td>
+          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.CardCount|number}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CardGross">
+          <th mat-header-cell *matHeaderCellDef>Card Gross</th>
+          <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.CardAmount|currency:'USD':'symbol':'1.2-2'}}</span></td>
+          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.CardAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CheckDonors">
+          <th mat-header-cell *matHeaderCellDef>Check Donations</th>
+          <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.CheckCount|number}}</span></td>
+          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.CheckCount|number}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CheckGross">
+          <th mat-header-cell *matHeaderCellDef>Check Gross</th>
+          <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</span></td>
+          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="TotalDonors">
+          <th mat-header-cell *matHeaderCellDef>Total Donations</th>
+          <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.TotalDonorCount|number}}</span></td>
+          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.TotalDonorCount|number}}</td>
+        </ng-container>
+        <ng-container matColumnDef="TotalGross">
+          <th mat-header-cell *matHeaderCellDef>Total Gross</th>
+          <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</span></td>
+          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+        </ng-container>
+
+
+
+        <!-- *********************************** -->
+        <!-- Mailcode date breakdown Table Start -->
+        <!-- *********************************** -->
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let client" [attr.colspan]="MailcodeColumns.length">
+            <div class="example-element-detail" [@detailExpand]="client.Expanded?'expanded':'collapsed'"
+              [style.height]="client.Expanded?'unset':'0 !important'">
+              <div style="width:100%">
+                <br>
+                <table id="table3" mat-table [dataSource]="client.MailCodeList">
+                  <!-- <div>{{element.MailCodeList.MailCode}}</div> -->
+                  <!-- <ng-container matColumnDef="Date">
+          <th mat-header-cell *matHeaderCellDef class="childDateColumn"> Mailcode </th>
+          <td mat-cell *matCellDef="let element" class="childDateColumn"> {{element.Date|date:'fullDate'}} </td>
+          <td mat-footer-cell *matFooterCellDef class="childDateColumn"><span>Totals</span></td>
+        </ng-container> -->
+                  <ng-container matColumnDef="ExpandChild">
+          <th mat-header-cell *matHeaderCellDef class="expandChild"></th>
+          <td mat-cell *matCellDef="let cageElement" class="expandChild">Expand</td>
+          <td mat-footer-cell *matFooterCellDef class="expandChild">Expand</td>
+        </ng-container>
+        <ng-container matColumnDef="Mailcode">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let cageElement">{{cageElement.MailCode}}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="Source">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let cageElement">{{cageElement.CagingID}}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="NonDonors">
+            <th mat-header-cell *matHeaderCellDef>Non-Donors</th>
+            <td mat-cell *matCellDef="let cageElement">{{cageElement.NonDonors|number}}</td>
+            <td mat-footer-cell *matFooterCellDef>{{client.NonDonors|number}}</td>
+          </ng-container>
+          <ng-container matColumnDef="CashDonors">
+            <th mat-header-cell *matHeaderCellDef>Cash Donations</th>
+            <td mat-cell *matCellDef="let cageElement">{{cageElement.CashCount|number}}</td>
+            <td mat-footer-cell *matFooterCellDef>{{client.CashCount|number}}</td>
+          </ng-container>
+          <ng-container matColumnDef="CashGross">
+            <th mat-header-cell *matHeaderCellDef>Cash Gross</th>
+            <td mat-cell *matCellDef="let cageElement">{{cageElement.CashAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+            <td mat-footer-cell *matFooterCellDef>{{client.CashAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+          </ng-container>
+          <ng-container matColumnDef="CardDonors">
+            <th mat-header-cell *matHeaderCellDef>Card Donations</th>
+            <td mat-cell *matCellDef="let cageElement">{{cageElement.CardCount|number}}</td>
+            <td mat-footer-cell *matFooterCellDef>{{client.CardCount|number}}</td>
+          </ng-container>
+          <ng-container matColumnDef="CardGross">
+            <th mat-header-cell *matHeaderCellDef>Card Gross</th>
+            <td mat-cell *matCellDef="let cageElement">{{cageElement.CardAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+            <td mat-footer-cell *matFooterCellDef>{{client.CardAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+          </ng-container>
+          <ng-container matColumnDef="CheckDonors">
+            <th mat-header-cell *matHeaderCellDef>Check Donations</th>
+            <td mat-cell *matCellDef="let cageElement">{{cageElement.CheckCount|number}}</td>
+            <td mat-footer-cell *matFooterCellDef>{{client.CheckCount|number}}</td>
+          </ng-container>
+          <ng-container matColumnDef="CheckGross">
+            <th mat-header-cell *matHeaderCellDef>Check Gross</th>
+            <td mat-cell *matCellDef="let cageElement">{{cageElement.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+            <td mat-footer-cell *matFooterCellDef>{{client.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+          </ng-container>
+          <ng-container matColumnDef="TotalDonors">
+            <th mat-header-cell *matHeaderCellDef>Total Donations</th>
+            <td mat-cell *matCellDef="let cageElement">{{cageElement.CheckCount|number}}</td>
+            <td mat-footer-cell *matFooterCellDef>{{client.CheckCount|number}}</td>
+          </ng-container>
+          <ng-container matColumnDef="TotalGross">
+            <th mat-header-cell *matHeaderCellDef>Total Gross</th>
+            <td mat-cell *matCellDef="let cageElement">{{cageElement.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+            <td mat-footer-cell *matFooterCellDef>{{client.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+          </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="MailcodeColumns"></tr>
+        <tr mat-row class="example-element-row" *matRowDef="let row; columns: MailcodeColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="MailcodeColumns"></tr>
+      </table>
+      <br>
+      <br>
+    </div>
   </div>
+  </td>
+  </ng-container>
+
+
+
+  <tr mat-header-row *matHeaderRowDef="ClientColumns">
+  </tr>
+  <tr mat-row class="example-element-row" *matRowDef="let row; columns: ClientColumns;"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  <tr mat-footer-row *matFooterRowDef="ClientColumns"></tr>
+  </table>
+  <br>
+  <br>
+</div>
+
+</div>
 </div>

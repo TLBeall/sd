@@ -37,10 +37,22 @@
       <button mat-flat-button class="defaultButton" id="timeResetBtn" *ngIf="timeSelection == 'Year'" (click)="returnDefault()">{{lockedYear}}</button>
       <button mat-flat-button class="defaultButton" id="timeResetBtn" *ngIf="timeSelection == 'Month'" (click)="returnDefault()">{{convertMonthName(lockedMonth)}},
         {{lockedYear}}</button>
+      <!-- <button mat-flat-button class="defaultButton" id="timeResetBtn" *ngIf="timeSelection == 'Day'">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </button> -->
+      <ng-container *ngIf="timeSelection == 'Day'">
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <button mat-raised-button (click)="picker.open()">Open</button>
+      </ng-container>
     </div>
     <div class="col-md-4" id="timeHeader">
       <h3 *ngIf="timeSelection == 'Year'">{{yearId}}</h3>
-      <h3 *ngIf="timeSelection == 'Month'">{{currentMonth}}, {{currentYear}}</h3>
+      <h3 *ngIf="timeSelection == 'Month'">{{currentMonth}} {{currentYear}}</h3>
+      <h3 *ngIf="timeSelection == 'Day'">{{currentMonthD}} {{currentDayD}}, {{currentYearD}}</h3>
     </div>
     <div class="col-md-4">
       <div style="float:right;">
@@ -410,11 +422,11 @@
 
 
     <!--START DAY CALENDAR-->
-    <!-- <div *ngIf="timeSelection == 'Day'"> -->
-      <div [ngClass]="{
+    <div *ngIf="timeSelection == 'Day'">
+      <!-- <div [ngClass]="{
         'rowCollapsed': timeSelection != 'Day',
         'rowExpanded': timeSelection == 'Day'
-      }">
+      }"> -->
       <!-- ****************************** -->
       <!-- Caging by mailcode Table Start -->
       <!-- ****************************** -->
@@ -443,47 +455,47 @@
         <ng-container matColumnDef="NonDonors">
           <th mat-header-cell *matHeaderCellDef>Non-Donors</th>
           <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.NonDonors|number}}</span></td>
-          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.NonDonors|number}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{RawCagingData.NonDonors|number}}</td>
         </ng-container>
         <ng-container matColumnDef="CashDonors">
           <th mat-header-cell *matHeaderCellDef>Cash Donations</th>
           <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.CashCount|number}}</span></td>
-          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.CashCount|number}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{RawCagingData.CashCount|number}}</td>
         </ng-container>
         <ng-container matColumnDef="CashGross">
           <th mat-header-cell *matHeaderCellDef>Cash Gross</th>
           <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.CashAmount|currency:'USD':'symbol':'1.2-2'}}</span></td>
-          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.CashAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{RawCagingData.CashAmount|currency:'USD':'symbol':'1.2-2'}}</td>
         </ng-container>
         <ng-container matColumnDef="CardDonors">
           <th mat-header-cell *matHeaderCellDef>Card Donations</th>
           <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.CardCount|number}}</span></td>
-          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.CardCount|number}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{RawCagingData.CardCount|number}}</td>
         </ng-container>
         <ng-container matColumnDef="CardGross">
           <th mat-header-cell *matHeaderCellDef>Card Gross</th>
           <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.CardAmount|currency:'USD':'symbol':'1.2-2'}}</span></td>
-          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.CardAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{RawCagingData.CardAmount|currency:'USD':'symbol':'1.2-2'}}</td>
         </ng-container>
         <ng-container matColumnDef="CheckDonors">
           <th mat-header-cell *matHeaderCellDef>Check Donations</th>
           <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.CheckCount|number}}</span></td>
-          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.CheckCount|number}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{RawCagingData.CheckCount|number}}</td>
         </ng-container>
         <ng-container matColumnDef="CheckGross">
           <th mat-header-cell *matHeaderCellDef>Check Gross</th>
           <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</span></td>
-          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{RawCagingData.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</td>
         </ng-container>
         <ng-container matColumnDef="TotalDonors">
           <th mat-header-cell *matHeaderCellDef>Total Donations</th>
           <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.TotalDonorCount|number}}</span></td>
-          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.TotalDonorCount|number}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{RawCagingData.TotalDonorCount|number}}</td>
         </ng-container>
         <ng-container matColumnDef="TotalGross">
           <th mat-header-cell *matHeaderCellDef>Total Gross</th>
           <td mat-cell *matCellDef="let client"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'">{{client.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</span></td>
-          <td mat-footer-cell *matFooterCellDef>{{GrandTotal.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{RawCagingData.TotalDonationAmount|currency:'USD':'symbol':'1.2-2'}}</td>
         </ng-container>
 
 
@@ -493,8 +505,7 @@
         <!-- *********************************** -->
         <ng-container matColumnDef="expandedDetail">
           <td mat-cell *matCellDef="let client" [attr.colspan]="MailcodeColumns.length">
-            <div class="example-element-detail" [@detailExpand]="client.Expanded?'expanded':'collapsed'"
-              [style.height]="client.Expanded?'unset':'0 !important'">
+            <div class="example-element-detail" [@detailExpand]="client.Expanded?'expanded':'collapsed'" [style.height]="client.Expanded?'unset':'0 !important'">
               <div style="width:100%">
                 <br>
                 <table id="table3" mat-table [dataSource]="client.MailCodeList">
@@ -520,50 +531,50 @@
           <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
         <ng-container matColumnDef="NonDonors">
-            <th mat-header-cell *matHeaderCellDef>Non-Donors</th>
-            <td mat-cell *matCellDef="let cageElement">{{cageElement.NonDonors|number}}</td>
-            <td mat-footer-cell *matFooterCellDef>{{client.NonDonors|number}}</td>
-          </ng-container>
-          <ng-container matColumnDef="CashDonors">
-            <th mat-header-cell *matHeaderCellDef>Cash Donations</th>
-            <td mat-cell *matCellDef="let cageElement">{{cageElement.CashCount|number}}</td>
-            <td mat-footer-cell *matFooterCellDef>{{client.CashCount|number}}</td>
-          </ng-container>
-          <ng-container matColumnDef="CashGross">
-            <th mat-header-cell *matHeaderCellDef>Cash Gross</th>
-            <td mat-cell *matCellDef="let cageElement">{{cageElement.CashAmount|currency:'USD':'symbol':'1.2-2'}}</td>
-            <td mat-footer-cell *matFooterCellDef>{{client.CashAmount|currency:'USD':'symbol':'1.2-2'}}</td>
-          </ng-container>
-          <ng-container matColumnDef="CardDonors">
-            <th mat-header-cell *matHeaderCellDef>Card Donations</th>
-            <td mat-cell *matCellDef="let cageElement">{{cageElement.CardCount|number}}</td>
-            <td mat-footer-cell *matFooterCellDef>{{client.CardCount|number}}</td>
-          </ng-container>
-          <ng-container matColumnDef="CardGross">
-            <th mat-header-cell *matHeaderCellDef>Card Gross</th>
-            <td mat-cell *matCellDef="let cageElement">{{cageElement.CardAmount|currency:'USD':'symbol':'1.2-2'}}</td>
-            <td mat-footer-cell *matFooterCellDef>{{client.CardAmount|currency:'USD':'symbol':'1.2-2'}}</td>
-          </ng-container>
-          <ng-container matColumnDef="CheckDonors">
-            <th mat-header-cell *matHeaderCellDef>Check Donations</th>
-            <td mat-cell *matCellDef="let cageElement">{{cageElement.CheckCount|number}}</td>
-            <td mat-footer-cell *matFooterCellDef>{{client.CheckCount|number}}</td>
-          </ng-container>
-          <ng-container matColumnDef="CheckGross">
-            <th mat-header-cell *matHeaderCellDef>Check Gross</th>
-            <td mat-cell *matCellDef="let cageElement">{{cageElement.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</td>
-            <td mat-footer-cell *matFooterCellDef>{{client.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</td>
-          </ng-container>
-          <ng-container matColumnDef="TotalDonors">
-            <th mat-header-cell *matHeaderCellDef>Total Donations</th>
-            <td mat-cell *matCellDef="let cageElement">{{cageElement.CheckCount|number}}</td>
-            <td mat-footer-cell *matFooterCellDef>{{client.CheckCount|number}}</td>
-          </ng-container>
-          <ng-container matColumnDef="TotalGross">
-            <th mat-header-cell *matHeaderCellDef>Total Gross</th>
-            <td mat-cell *matCellDef="let cageElement">{{cageElement.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</td>
-            <td mat-footer-cell *matFooterCellDef>{{client.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</td>
-          </ng-container>
+          <th mat-header-cell *matHeaderCellDef>Non-Donors</th>
+          <td mat-cell *matCellDef="let cageElement">{{cageElement.NonDonors|number}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{client.NonDonors|number}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CashDonors">
+          <th mat-header-cell *matHeaderCellDef>Cash Donations</th>
+          <td mat-cell *matCellDef="let cageElement">{{cageElement.CashCount|number}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{client.CashCount|number}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CashGross">
+          <th mat-header-cell *matHeaderCellDef>Cash Gross</th>
+          <td mat-cell *matCellDef="let cageElement">{{cageElement.CashAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{client.CashAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CardDonors">
+          <th mat-header-cell *matHeaderCellDef>Card Donations</th>
+          <td mat-cell *matCellDef="let cageElement">{{cageElement.CardCount|number}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{client.CardCount|number}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CardGross">
+          <th mat-header-cell *matHeaderCellDef>Card Gross</th>
+          <td mat-cell *matCellDef="let cageElement">{{cageElement.CardAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{client.CardAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CheckDonors">
+          <th mat-header-cell *matHeaderCellDef>Check Donations</th>
+          <td mat-cell *matCellDef="let cageElement">{{cageElement.CheckCount|number}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{client.CheckCount|number}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CheckGross">
+          <th mat-header-cell *matHeaderCellDef>Check Gross</th>
+          <td mat-cell *matCellDef="let cageElement">{{cageElement.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{client.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="TotalDonors">
+          <th mat-header-cell *matHeaderCellDef>Total Donations</th>
+          <td mat-cell *matCellDef="let cageElement">{{cageElement.CheckCount|number}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{client.CheckCount|number}}</td>
+        </ng-container>
+        <ng-container matColumnDef="TotalGross">
+          <th mat-header-cell *matHeaderCellDef>Total Gross</th>
+          <td mat-cell *matCellDef="let cageElement">{{cageElement.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{client.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</td>
+        </ng-container>
 
 
         <tr mat-header-row *matHeaderRowDef="MailcodeColumns"></tr>

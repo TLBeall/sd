@@ -14,7 +14,6 @@ import { CagingDayElement } from 'src/app/Models/CagingDayElement.model';
 import { CagingElement } from 'src/app/Models/CagingElement.model';
 
 
-
 export class Week {
   selected: boolean;
   selectable: boolean;
@@ -85,6 +84,7 @@ export class CagingCalendarComponent implements OnInit {
   private daysName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   private days: CagingMonthElement[] = [];
   private monthAdjust: number = 0;
+  // private dayAdjust: number = 0;
   private yearId: number = 0;
   private setDate: any;
   private currentMonth: string;
@@ -120,7 +120,12 @@ export class CagingCalendarComponent implements OnInit {
   //chip selection settings end
   // 
 
+  private firstLoad: boolean = true;
+  private RawCagingData: CagingElement;
   private GrandTotal: CagingElement;
+  private currentDayD: number;
+  private currentMonthD: string;
+  private currentYearD: number;
   // ClientColumns: string[] = ['Expand', 'Client', 'Empty', 'Empty', 'Empty', 'Empty', 'Empty', 'Empty', 'Empty', 'Empty', 'Empty', 'Empty', 'Empty'];
   ClientColumns: string[] = ['ExpandParent', 'Client', 'Empty', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
 
@@ -138,6 +143,8 @@ export class CagingCalendarComponent implements OnInit {
     let dateStart = new Date("1/1/2000");
     let dateEnd = new Date("12/31/" + (new Date()).getFullYear().toString());
     this.yearId = new Date().getFullYear();
+
+
     this._authService.getClientsFilter(dateStart, dateEnd).subscribe(data => {
       this.CLStrArr = Array.from(new Set(data.map(item => item.gClientName + ' - ' + item.gClientAcronym))).sort();
       this.CLfilteredOptions = this.CLControl.valueChanges.pipe(
@@ -145,51 +152,104 @@ export class CagingCalendarComponent implements OnInit {
         map((client: string | null) => client ? this.CL_filter(client) : this.CLStrArr.slice())
       );
     });
-    this.getYearData("", this.yearId);
-    this.getMonthData("", this.yearId, this.lockedMonth)
-    this.getDayData("", this.yearId, this.lockedMonth, this.lockedDay);
+    this.getYearData(this.convertCLList(), this.yearId);
+    this.getMonthData(this.convertCLList(), this.yearId, this.lockedMonth);
+    // this.getDayData(this.convertCLList(), this.yearId, this.lockedMonth, this.lockedDay);
+
+
+
+    // async function dayInit() {
+    //   await this.fireYear();
+    //   await this.fireMonth();
+    //   await this.fireDay();
+    // }
+
+    // dayInit();
+
+    // (async () => {
+    //   const promise = new Promise(resolve => {
+    //     this.getMonthData("", this.yearId, this.lockedMonth);
+    //     resolve();
+    //   });
+    //   await promise;
+    //   this.getDayData("", this.yearId, this.lockedMonth, null);
+
+    // })
+
+    // (async () => {
+    //   const promise = this.getMonthData("", this.yearId, this.lockedMonth)
+    //   await promise;
+    //   this.getDayData("", this.yearId, this.lockedMonth, null);
+
+    // })
+
+    // var promise1 = new Promise()
+
   }
+
+  // fireYear(){
+  //   return new Promise(resolve => {
+  //     this.getYearData("", this.yearId);
+  //     resolve();
+  //   })
+  // }
+
+  // fireMonth(){
+  //   return new Promise(resolve => {
+  //     this.getMonthData("", this.yearId, this.lockedMonth);
+  //     resolve();
+  //   })
+  // }
+
+  // fireDay(){
+  //   return new Promise(resolve => {
+  //     this.getDayData("", this.yearId, this.lockedMonth, null);
+  //     resolve();
+  //   })
+  // }
 
 
 
   /////////////////////////////////// GET DATA FOR DAY /////////////////////////////////////////
   getDayData(CL: string, year: number, month: number, day: number) {
-    this.GrandTotal = new CagingElement;
-    this.GrandTotal.CardAmount = 0;
-    this.GrandTotal.CardCount = 0;
-    this.GrandTotal.CashAmount = 0;
-    this.GrandTotal.CashCount = 0;
-    this.GrandTotal.CheckAmount = 0;
-    this.GrandTotal.CheckCount = 0;
-    this.GrandTotal.NonDonors = 0;
-    this.GrandTotal.TotalDonationAmount = 0;
-    this.GrandTotal.TotalDonorCount = 0;
+    // this.GrandTotal.CardAmount = 0;
+    // this.GrandTotal.CardCount = 0;
+    // this.GrandTotal.CashAmount = 0;
+    // this.GrandTotal.CashCount = 0;
+    // this.GrandTotal.CheckAmount = 0;
+    // this.GrandTotal.CheckCount = 0;
+    // this.GrandTotal.NonDonors = 0;
+    // this.GrandTotal.TotalDonationAmount = 0;
+    // this.GrandTotal.TotalDonorCount = 0;
 
     this._authService.getCagingCalendarData(CL, year, month, day).subscribe(data => {
       this.dayClientArr = data.ClientCalendarList;
+      this.RawCagingData = data;
+      this.RawCagingData.TotalDonationAmount = this.RawCagingData.CashAmount + this.RawCagingData.CardAmount + this.RawCagingData.CheckAmount;
+      this.RawCagingData.TotalDonorCount = this.RawCagingData.CashCount + this.RawCagingData.CardCount + this.RawCagingData.CheckCount;
       this.dayClientArr.forEach(e => {
         e.TotalDonationAmount = e.CardAmount + e.CashAmount + e.CheckAmount;
         e.TotalDonorCount = e.CardCount + e.CashCount + e.CheckCount;
-        this.GrandTotal.CardAmount += e.CardAmount;
-        this.GrandTotal.CardCount += e.CardCount;
-        this.GrandTotal.CashAmount += e.CashAmount;
-        this.GrandTotal.CashCount += e.CashCount;
-        this.GrandTotal.CheckAmount += e.CheckAmount;
-        this.GrandTotal.CheckCount += e.CheckCount;
-        this.GrandTotal.NonDonors += e.NonDonors;
-        this.GrandTotal.TotalDonationAmount += e.TotalDonationAmount;
-        this.GrandTotal.TotalDonorCount += e.TotalDonorCount;
+        // this.GrandTotal.CardAmount += e.CardAmount;
+        // this.GrandTotal.CardCount += e.CardCount;
+        // this.GrandTotal.CashAmount += e.CashAmount;
+        // this.GrandTotal.CashCount += e.CashCount;
+        // this.GrandTotal.CheckAmount += e.CheckAmount;
+        // this.GrandTotal.CheckCount += e.CheckCount;
+        // this.GrandTotal.NonDonors += e.NonDonors;
+        // this.GrandTotal.TotalDonationAmount += e.TotalDonationAmount;
+        // this.GrandTotal.TotalDonorCount += e.TotalDonorCount;
       });
-      console.log(this.dayClientArr);
       this.loading = false;
     })
-    
   }
 
 
 
   //////////////////////////////// GET DATA AND INITIATE SETUP FOR MONTH CALENDAR ///////////////////////////////
   getMonthData(CL: string, year: number, month: number) {
+    // return new Promise(resolve => {
+    // resolve(
     this._authService.getCagingCalendarData(CL, year, month, null).subscribe(data => {
       this.monthData = data;
 
@@ -214,6 +274,9 @@ export class CagingCalendarComponent implements OnInit {
       this.calculateDefaultAllSummary();
       this.loading = false;
     })
+    // )
+    // })
+
   }
 
   /////////////////////////// SETTING UP THE MONTH CALENDAR //////////////////////
@@ -310,6 +373,13 @@ export class CagingCalendarComponent implements OnInit {
           break;
       }
     }
+
+    // This sets up the day view but only on the first load
+    // if (this.firstLoad == true) {
+    //   this.getMostRecentDay();
+    //   this.getDayData(this.convertCLList(), this.yearId, this.lockedMonth, this.currentDay);
+    //   this.firstLoad = false;
+    // }
   }
 
 
@@ -582,6 +652,13 @@ export class CagingCalendarComponent implements OnInit {
     } else if (this.timeSelection == "Year") {
       this.yearId += 1;
       this.getYearData(this.convertCLList(), this.yearId);
+    } else if (this.timeSelection == "Day") {
+      this.setDate = this.pad(this.getMonthInt(this.currentMonthD)) + "-" + this.currentDayD + "-" + this.currentYearD.toString();
+      this.currentDayD = parseInt(moment(this.setDate, "MM-DD-YYYY").add(1, 'day').format('D'));
+      this.currentMonthD = moment(this.setDate, "MM-DD-YYYY").add(1, 'day').format('MMMM');
+      this.currentYearD = parseInt(moment(this.setDate, "MM-DD-YYYY").add(1, 'day').format('YYYY'));
+      this.loading = true;
+      this.getDayData(this.convertCLList(), this.currentYearD, this.getMonthInt(this.currentMonthD), this.currentDayD);
     }
   }
   previousBtn() {
@@ -601,6 +678,13 @@ export class CagingCalendarComponent implements OnInit {
     } else if (this.timeSelection == "Year") {
       this.yearId -= 1;
       this.getYearData(this.convertCLList(), this.yearId);
+    } else if (this.timeSelection == "Day") {
+      this.setDate = this.pad(this.getMonthInt(this.currentMonthD)) + "-" + this.currentDayD + "-" + this.currentYearD.toString();
+      this.currentDayD = parseInt(moment(this.setDate, "MM-DD-YYYY").add(-1, 'day').format('D'));
+      this.currentMonthD = moment(this.setDate, "MM-DD-YYYY").add(-1, 'day').format('MMMM');
+      this.currentYearD = parseInt(moment(this.setDate, "MM-DD-YYYY").add(-1, 'day').format('YYYY'));
+      this.loading = true;
+      this.getDayData(this.convertCLList(), this.currentYearD, this.getMonthInt(this.currentMonthD), this.currentDayD);
     }
   }
 
@@ -625,7 +709,14 @@ export class CagingCalendarComponent implements OnInit {
   }
 
   switchToDay() {
-
+    if (this.firstLoad == true){
+    this.loading = true;
+    this.getMostRecentDay();
+    this.currentYearD = this.lockedYear;
+    this.currentMonthD = this.convertMonthName(this.lockedMonth);
+    this.getDayData(this.convertCLList(), this.lockedYear, this.lockedMonth, this.currentDayD);
+    this.firstLoad = false;
+    }
   }
 
   travelToMonth(m: CagingYearElement) {
@@ -648,10 +739,13 @@ export class CagingCalendarComponent implements OnInit {
   }
 
   travelToDay(element: any) {
-    element.selected = false;
-    this.timeSelection = "Day";
     this.loading = true;
-    this.getDayData(this.convertCLList(), this.currentYear, this.getMonthInt(this.currentMonth), element.Day);
+    element.selected = false;
+    this.currentDayD = element.Day;
+    this.currentMonthD = this.currentMonth;
+    this.currentYearD = this.currentYear;
+    this.timeSelection = "Day";
+    this.getDayData(this.convertCLList(), this.currentYearD, this.getMonthInt(this.currentMonthD), this.currentDayD);
   }
 
 
@@ -753,14 +847,18 @@ export class CagingCalendarComponent implements OnInit {
   }
 
   convertCLList() {
-    let str = ""
-    this.CLList.forEach((element, index) => {
-      if (index == 0) {
-        str = element;
-      } else {
-        str = str + "." + element;
-      }
-    });
+    let str = "";
+    if (this.CLList.length == 0) {
+      str = "ALL";
+    } else {
+      this.CLList.forEach((element, index) => {
+        if (index == 0) {
+          str = element;
+        } else {
+          str = str + "." + element;
+        }
+      });
+    }
     return str;
   }
 
@@ -785,6 +883,19 @@ export class CagingCalendarComponent implements OnInit {
     } else {
       return n.toString();
     }
+  }
+
+  getMostRecentDay() {
+    this.currentDayD = 0;
+    this.weekList.forEach(a => {
+      a.days.forEach(b => {
+        if (b.selectable == true) {
+          this.currentDayD = b.Day;
+        }
+      });
+    });
+    if (this.currentDayD == 0)
+      this.currentDayD = this.lockedDay;
   }
 
 

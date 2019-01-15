@@ -5,24 +5,26 @@
 // <><><> Variables across website start <><><>
 // ***To implement, add to the top of CSS files: @import '~src/appTheme.scss';
 // <><><><><><><><><><><><><><><><><><><><><>
-$color-white: #FFF;
-$color-whitesmoke: #F8F8F8; //body background
-$color-gallery: #F0F0F0; //some buttons native background
-$color-gainsboro: #D3D3D3; //introduced as the gray color for material element text
-$color-silver: 	#C0C0C0;
-$color-gray: #808080; //used on scroll buttons of toolbar
+$color-white: #FFF; //255,255,255
+$color-whitesmoke: #F8F8F8; //rgb(248,248,248)  body background
+$color-gallery: #F0F0F0; //rgb(240,240,240)  some buttons native background
+$color-gainsboro: #D3D3D3; //rgb(211,211,211)  introduced as the gray color for material element text
+$color-silver: 	#C0C0C0; //rgb(192,192,192)
+$color-gray: #808080; //rgb(128,128,128)  used on scroll buttons of toolbar
 $color-dovegray: #686868; //box shadows
 
 $color-shark: #212529; //boostrap/native black for text
 $color-mineshaft: #333; //navigation bar
-$color-blue-default: #1279C0;
+$color-blue-default: #1279C0; //rgb(18,121,192)
 $color-blue-highlight: #e3eff7;
 $color-blue-light: #59a1d3;
 $color-blue-dark: #0a5caa;
 
-$color-warn: #ea4040;
+$color-warn: #ea4040; //rgb(255,223,199)
 $color-very-pale-orange: #ffdfc7;
-$color-success: #5cb85c;
+$color-bootstrap-yellow: #ffc107; //rgb(255,193,7)
+$color-orange: #f0ad4e; //rgb(240,173,78)
+$color-success: #5cb85c; //rgb(92,184,92)
 
 //Changes size of the material design checkbox (default hw is 20x20) to a medium size checkbox
 //Apply "md-checkbox" as a class on the mat-checkbox element

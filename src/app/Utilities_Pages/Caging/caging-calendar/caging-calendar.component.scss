@@ -1,5 +1,35 @@
 @import '~src/appTheme.scss'; 
 
+.example-month-picker .mat-calendar-period-button {
+    pointer-events: none;
+  }
+  
+  .example-month-picker .mat-calendar-arrow {
+    display: none;
+  }
+
+
+
+
+.totalsBox{
+    p{
+        font-weight: bold;
+    }
+}
+
+.loading{
+    opacity: 0.4;
+    pointer-events:none;
+}
+
+.loaded{
+    opacity: 1.0;
+    pointer-events: all;
+}
+
+.clientDropdown{
+    width: 100%;
+}
 
 .defaultButton{
     background-color: $color-blue-default;
@@ -126,12 +156,12 @@
     div{
         font-weight: bold;
         text-align: center;
-        background-color: $color-gallery;
+        background-color: $color-gainsboro;
     }
 }
 
 .calendarBox{
-    border: 1px solid $color-silver;
+    border: 1px solid $color-gainsboro;
     border-radius: 0px 0px 4px 4px;
 }
 
@@ -140,19 +170,32 @@
 }
 
 .groupElementSelected{
-    background-color: $color-blue-light; 
+    // background-color: rgba(92,184,92, 0.4);
+    background-color: rgba(18,121,192, 0.5);
 }
 
 .groupElementDefault{
-    background-color: $color-whitesmoke;
+    background-color: $color-gallery;
 }
 
 .elementSelected{
-    background-color: $color-blue-highlight;
+    // background-color: rgba(92,184,92, 0.3);
+    background-color: rgba(18,121,192, 0.25);
 }
 
 .elementDefault{
     background-color: $color-white;
+}
+
+.elementEmpty{
+    // background-color: rgba(255,193,7, 0.2);
+    background-color: $color-white;
+    div.row.selectableHeader{
+        opacity: 0.75;
+    }
+    div.row.elemValue{
+        opacity: 0.25;
+    }
 }
 
 
@@ -172,9 +215,132 @@
 }
 
 .inactive{
-    background-color: rgba(255,223,199,0.25);    
-    opacity: 0.75;
+    // background-color: rgba(255,223,199,0.9);    
+    // opacity: 0.60;
+    background-color: $color-whitesmoke;
+    div{
+        opacity: 0.5;
+    }
 }
+
+.inactiveRow{
+    display: none !important;
+}
+
+.selectable {
+    cursor: pointer !important;
+    .selectableHeader{
+        color: $color-blue-dark;
+    }
+}
+
+.unselectable {
+    cursor: text !important;
+}
+
+.grossTravel{
+    color: $color-blue-dark;
+    &:hover{
+        text-decoration: underline;
+        text-decoration-color: $color-blue-dark;
+    }
+}
+
+
+
+/////////// STYLING FOR TABLE ////////
+#table2{
+    width: 96%;
+    margin: 0 auto;
+    th{
+        font-size: 12px !important;
+    }
+    td{
+        font-size: 11px;
+        &.mat-cell{
+          padding: 0 !important;
+        }
+        &.mat-footer-cell{
+            font-weight: bold;
+            border-bottom:none;
+            border-top: 1px solid $color-gainsboro;
+            
+          }
+    }
+  }
+  
+  #table3{
+    width: 100%;
+    margin: 0 auto !important;
+    th{
+        font-size: 12px !important;
+    }
+    td{
+        font-size: 11px;
+        &.mat-cell{
+          padding-top: 4px !important;
+          padding-bottom: 4px !important;
+        }
+        &.mat-footer-cell{
+            font-weight: bold;
+            border-bottom:none;
+            border-top: 1px solid $color-gainsboro;
+            
+          }
+    }
+  }
+  
+  //Controls child view initial settings
+  .example-element-detail {
+    overflow: hidden;
+    display: flex;
+  }
+  //Removes padding from all nested tables
+  ::ng-deep table > tbody > tr > td.cdk-column-expandedDetail.mat-column-expandedDetail{
+    padding: 0 !important;
+  }
+
+  .mat-row {
+    height: auto;
+  }
+  .mat-cell {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    border-bottom:none;
+    text-align: center;
+  }      
+.mat-header-cell{
+    text-align: center;
+}
+
+.mat-footer-cell{
+    text-align: center;
+    padding-top: 6px;
+}
+tr.mat-header-row{
+    height:auto;
+  }
+  th.mat-header-cell{
+    padding:0;
+  }
+  tr.mat-footer-row{
+    height:auto; //row height in mat tables is required to be manually controlled by each cell    
+}
+
+.rowCollapsed{
+    display: none;
+  }
+
+  .rowExpanded{
+    display: inline;
+  }
+
+
+
+
+
+
+
 
 
 

@@ -41,7 +41,6 @@ import { IncidentalsMainComponent } from './Utilities_Pages/Incidentals/incident
 import { IncidentalsEditComponent } from './Utilities_Pages/Incidentals/incidentals-edit/incidentals-edit.component';
 import { IncidentalsNewComponent } from './Utilities_Pages/Incidentals/incidentals-new/incidentals-new.component';
 import { CagingCalendarComponent } from './Utilities_Pages/Caging/caging-calendar/caging-calendar.component';
-import { MonthViewComponent } from './Utilities_Pages/Caging/month-view/month-view.component';
 
 
 @NgModule({
@@ -71,8 +70,7 @@ import { MonthViewComponent } from './Utilities_Pages/Caging/month-view/month-vi
     IncidentalsMainComponent,
     IncidentalsEditComponent,
     IncidentalsNewComponent,
-    CagingCalendarComponent,
-    MonthViewComponent
+    CagingCalendarComponent
   ],
   imports: [
     BrowserModule,

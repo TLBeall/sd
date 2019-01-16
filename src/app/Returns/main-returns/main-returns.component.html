@@ -957,7 +957,7 @@
                         <div class="row phaseInfoHeader">
                             <div class="col-lg-8"></div>
                             <div class="col-lg-2">
-                                <a class="aPackagePDF" href="https://sd360.sunrisedataservices.com/api/LoadPDF?PhaseName={{phase.PhaseName}}" target="_blank">Package PDF</a>
+                                <a [ngStyle]="{'visibility':phase.PDFExists?'visible':'collapse'}" class="aPackagePDF" href="https://sd360.sunrisedataservices.com/api/LoadPDF?PhaseID={{phase.ID}}" target="_blank">Package PDF</a>
                             </div>
                             <div class="col-lg-2">
                                 <span class="sPackageDoubling">Doubling Days ({{phase.DoublingDays}})</span>

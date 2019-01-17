@@ -2,6 +2,9 @@ import { Returns } from "./Returns.model";
 import { MailReturns } from "./MailReturns.model";
 
 export class PhaseReturns {
+    ID: number;
+    LegacyID: number;
+    PDFExists: boolean;
     PhaseName: string;
     Title: string;
     Format: string;

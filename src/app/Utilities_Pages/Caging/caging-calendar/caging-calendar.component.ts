@@ -87,6 +87,7 @@ export class CagingCalendarComponent implements OnInit {
   // private dayAdjust: number = 0;
   private yearId: number = 0;
   private setDate: any;
+  private setDateDayView: any;
   private currentMonth: string;
   private currentYear: number;
   private startOfWeek: number;
@@ -126,15 +127,18 @@ export class CagingCalendarComponent implements OnInit {
   private currentDayD: number;
   private currentMonthD: string;
   private currentYearD: number;
-  // ClientColumns: string[] = ['Expand', 'Client', 'Empty', 'Empty', 'Empty', 'Empty', 'Empty', 'Empty', 'Empty', 'Empty', 'Empty', 'Empty', 'Empty'];
-  ClientColumns: string[] = ['ExpandParent', 'Client', 'Empty', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
-
-  MailcodeColumns: string[] = ['ExpandChild', 'Mailcode', 'Source', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
-
+  private tableLoading: boolean;
+  // ClientColumns: string[] = ['ExpandParent', 'Client', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
+  // MailcodeColumns: string[] = ['ExpandChild', 'Mailcode', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
+  public ClientColumns: string[];
+  public MailcodeColumns: string[];
 
   constructor(private route: ActivatedRoute, private router: Router, private _authService: AuthService) { }
 
   ngOnInit() {
+    this.ClientColumns = ['ExpandParent', 'Client', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
+    this.MailcodeColumns = ['ExpandChild', 'Mailcode', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
+
     this.lockedYear = new Date().getFullYear();
     this.lockedMonth = parseInt(moment().format('M'));
     this.lockedDay = parseInt(moment().format('D'))
@@ -154,73 +158,13 @@ export class CagingCalendarComponent implements OnInit {
     });
     this.getYearData(this.convertCLList(), this.yearId);
     this.getMonthData(this.convertCLList(), this.yearId, this.lockedMonth);
-    // this.getDayData(this.convertCLList(), this.yearId, this.lockedMonth, this.lockedDay);
-
-
-
-    // async function dayInit() {
-    //   await this.fireYear();
-    //   await this.fireMonth();
-    //   await this.fireDay();
-    // }
-
-    // dayInit();
-
-    // (async () => {
-    //   const promise = new Promise(resolve => {
-    //     this.getMonthData("", this.yearId, this.lockedMonth);
-    //     resolve();
-    //   });
-    //   await promise;
-    //   this.getDayData("", this.yearId, this.lockedMonth, null);
-
-    // })
-
-    // (async () => {
-    //   const promise = this.getMonthData("", this.yearId, this.lockedMonth)
-    //   await promise;
-    //   this.getDayData("", this.yearId, this.lockedMonth, null);
-
-    // })
-
-    // var promise1 = new Promise()
-
   }
-
-  // fireYear(){
-  //   return new Promise(resolve => {
-  //     this.getYearData("", this.yearId);
-  //     resolve();
-  //   })
-  // }
-
-  // fireMonth(){
-  //   return new Promise(resolve => {
-  //     this.getMonthData("", this.yearId, this.lockedMonth);
-  //     resolve();
-  //   })
-  // }
-
-  // fireDay(){
-  //   return new Promise(resolve => {
-  //     this.getDayData("", this.yearId, this.lockedMonth, null);
-  //     resolve();
-  //   })
-  // }
 
 
 
   /////////////////////////////////// GET DATA FOR DAY /////////////////////////////////////////
   getDayData(CL: string, year: number, month: number, day: number) {
-    // this.GrandTotal.CardAmount = 0;
-    // this.GrandTotal.CardCount = 0;
-    // this.GrandTotal.CashAmount = 0;
-    // this.GrandTotal.CashCount = 0;
-    // this.GrandTotal.CheckAmount = 0;
-    // this.GrandTotal.CheckCount = 0;
-    // this.GrandTotal.NonDonors = 0;
-    // this.GrandTotal.TotalDonationAmount = 0;
-    // this.GrandTotal.TotalDonorCount = 0;
+    this.tableLoading = true;
 
     this._authService.getCagingCalendarData(CL, year, month, day).subscribe(data => {
       this.dayClientArr = data.ClientCalendarList;
@@ -230,16 +174,8 @@ export class CagingCalendarComponent implements OnInit {
       this.dayClientArr.forEach(e => {
         e.TotalDonationAmount = e.CardAmount + e.CashAmount + e.CheckAmount;
         e.TotalDonorCount = e.CardCount + e.CashCount + e.CheckCount;
-        // this.GrandTotal.CardAmount += e.CardAmount;
-        // this.GrandTotal.CardCount += e.CardCount;
-        // this.GrandTotal.CashAmount += e.CashAmount;
-        // this.GrandTotal.CashCount += e.CashCount;
-        // this.GrandTotal.CheckAmount += e.CheckAmount;
-        // this.GrandTotal.CheckCount += e.CheckCount;
-        // this.GrandTotal.NonDonors += e.NonDonors;
-        // this.GrandTotal.TotalDonationAmount += e.TotalDonationAmount;
-        // this.GrandTotal.TotalDonorCount += e.TotalDonorCount;
       });
+      this.tableLoading = false;
       this.loading = false;
     })
   }
@@ -248,8 +184,6 @@ export class CagingCalendarComponent implements OnInit {
 
   //////////////////////////////// GET DATA AND INITIATE SETUP FOR MONTH CALENDAR ///////////////////////////////
   getMonthData(CL: string, year: number, month: number) {
-    // return new Promise(resolve => {
-    // resolve(
     this._authService.getCagingCalendarData(CL, year, month, null).subscribe(data => {
       this.monthData = data;
 
@@ -266,7 +200,6 @@ export class CagingCalendarComponent implements OnInit {
       });
 
       //MONTH VIEW - SETUP CALENDAR
-      // this.monthAdjust -= 0;
       this.days = [];
       this.generateMonthCalendar();
       this.divideIntoWeek();
@@ -274,9 +207,6 @@ export class CagingCalendarComponent implements OnInit {
       this.calculateDefaultAllSummary();
       this.loading = false;
     })
-    // )
-    // })
-
   }
 
   /////////////////////////// SETTING UP THE MONTH CALENDAR //////////////////////
@@ -373,13 +303,6 @@ export class CagingCalendarComponent implements OnInit {
           break;
       }
     }
-
-    // This sets up the day view but only on the first load
-    // if (this.firstLoad == true) {
-    //   this.getMostRecentDay();
-    //   this.getDayData(this.convertCLList(), this.yearId, this.lockedMonth, this.currentDay);
-    //   this.firstLoad = false;
-    // }
   }
 
 
@@ -653,10 +576,10 @@ export class CagingCalendarComponent implements OnInit {
       this.yearId += 1;
       this.getYearData(this.convertCLList(), this.yearId);
     } else if (this.timeSelection == "Day") {
-      this.setDate = this.pad(this.getMonthInt(this.currentMonthD)) + "-" + this.currentDayD + "-" + this.currentYearD.toString();
-      this.currentDayD = parseInt(moment(this.setDate, "MM-DD-YYYY").add(1, 'day').format('D'));
-      this.currentMonthD = moment(this.setDate, "MM-DD-YYYY").add(1, 'day').format('MMMM');
-      this.currentYearD = parseInt(moment(this.setDate, "MM-DD-YYYY").add(1, 'day').format('YYYY'));
+      this.setDateDayView = this.pad(this.getMonthInt(this.currentMonthD)) + "-" + this.pad(this.currentDayD) + "-" + this.currentYearD.toString();
+      this.currentDayD = parseInt(moment(this.setDateDayView, "MM-DD-YYYY").add(1, 'day').format('D'));
+      this.currentMonthD = moment(this.setDateDayView, "MM-DD-YYYY").add(1, 'day').format('MMMM');
+      this.currentYearD = parseInt(moment(this.setDateDayView, "MM-DD-YYYY").add(1, 'day').format('YYYY'));
       this.loading = true;
       this.getDayData(this.convertCLList(), this.currentYearD, this.getMonthInt(this.currentMonthD), this.currentDayD);
     }
@@ -679,10 +602,10 @@ export class CagingCalendarComponent implements OnInit {
       this.yearId -= 1;
       this.getYearData(this.convertCLList(), this.yearId);
     } else if (this.timeSelection == "Day") {
-      this.setDate = this.pad(this.getMonthInt(this.currentMonthD)) + "-" + this.currentDayD + "-" + this.currentYearD.toString();
-      this.currentDayD = parseInt(moment(this.setDate, "MM-DD-YYYY").add(-1, 'day').format('D'));
-      this.currentMonthD = moment(this.setDate, "MM-DD-YYYY").add(-1, 'day').format('MMMM');
-      this.currentYearD = parseInt(moment(this.setDate, "MM-DD-YYYY").add(-1, 'day').format('YYYY'));
+      this.setDateDayView = this.pad(this.getMonthInt(this.currentMonthD)) + "-" + this.pad(this.currentDayD) + "-" + this.currentYearD.toString();
+      this.currentDayD = parseInt(moment(this.setDateDayView, "MM-DD-YYYY").add(-1, 'day').format('D'));
+      this.currentMonthD = moment(this.setDateDayView, "MM-DD-YYYY").add(-1, 'day').format('MMMM');
+      this.currentYearD = parseInt(moment(this.setDateDayView, "MM-DD-YYYY").add(-1, 'day').format('YYYY'));
       this.loading = true;
       this.getDayData(this.convertCLList(), this.currentYearD, this.getMonthInt(this.currentMonthD), this.currentDayD);
     }
@@ -700,6 +623,16 @@ export class CagingCalendarComponent implements OnInit {
     }
   }
 
+  changeDate(elem) {
+    this.loading = true;
+    var rawDate = elem.value;
+    rawDate.replace("/", "-");
+    this.currentDayD = parseInt(moment(rawDate, "MM-DD-YYYY").format('D'));
+    this.currentMonthD = moment(rawDate, "MM-DD-YYYY").format('MMMM');
+    this.currentYearD = parseInt(moment(rawDate, "MM-DD-YYYY").format('YYYY'));
+    this.getDayData(this.convertCLList(), this.currentYearD, this.getMonthInt(this.currentMonthD), this.currentDayD);
+  }
+
   switchToMonth() {
     this.determineCalculationType();
   }
@@ -709,13 +642,13 @@ export class CagingCalendarComponent implements OnInit {
   }
 
   switchToDay() {
-    if (this.firstLoad == true){
-    this.loading = true;
-    this.getMostRecentDay();
-    this.currentYearD = this.lockedYear;
-    this.currentMonthD = this.convertMonthName(this.lockedMonth);
-    this.getDayData(this.convertCLList(), this.lockedYear, this.lockedMonth, this.currentDayD);
-    this.firstLoad = false;
+    if (this.firstLoad == true) {
+      this.loading = true;
+      this.getMostRecentDay();
+      this.currentYearD = this.lockedYear;
+      this.currentMonthD = this.convertMonthName(this.lockedMonth);
+      this.getDayData(this.convertCLList(), this.lockedYear, this.lockedMonth, this.currentDayD);
+      this.firstLoad = false;
     }
   }
 
@@ -782,6 +715,7 @@ export class CagingCalendarComponent implements OnInit {
 
     this.getYearData(this.convertCLList(), this.yearId);
     this.getMonthData(this.convertCLList(), this.currentYear, this.getMonthInt(this.currentMonth));
+    this.getDayData(this.convertCLList(), this.currentYearD, this.getMonthInt(this.currentMonthD), this.currentDayD);
 
     if (this.CLList.length > 0) {
       this.clientPlaceholder = "Add another client"
@@ -807,6 +741,7 @@ export class CagingCalendarComponent implements OnInit {
 
     this.getYearData(this.convertCLList(), this.yearId);
     this.getMonthData(this.convertCLList(), this.currentYear, this.getMonthInt(this.currentMonth));
+    this.getDayData(this.convertCLList(), this.currentYearD, this.getMonthInt(this.currentMonthD), this.currentDayD);
 
     if (this.CLList.length > 0) {
       this.clientPlaceholder = "Add another client"
@@ -818,13 +753,23 @@ export class CagingCalendarComponent implements OnInit {
 
 
   //////////////////// DAY VIEW FUNCTIONS //////////////////////////
-  ToggleExpansion(element) {
-    element.Expanded = !element.Expanded;
-  }
+  
 
 
 
   ///////////////////// MISCELANEOUS HELPER/SUPPORT FUNCTIONS /////////////
+  ToggleExpansion(element) {
+    if (element.Expanded == true){
+      element.Expanded = false;
+      this.ClientColumns = ['ExpandParent', 'Client', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
+      this.MailcodeColumns = ['ExpandChild', 'Mailcode', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
+    } else {
+      element.Expanded = true;
+      this.ClientColumns = ['ExpandParent', 'Client', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross', 'ControlParent'];
+      this.MailcodeColumns = ['ExpandChild', 'Mailcode', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross', 'ControlChild'];
+    }
+  }
+
   // Used in HTML to set whether a week row has no active days (i.e. it should not render)
   checkActiveWeeks(e: any): boolean {
     let activeDays = 0;

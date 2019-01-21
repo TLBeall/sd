@@ -354,7 +354,11 @@ tr.mat-header-row{
     display: inline;
   }
 
-
+  .mat-row.childRow {
+    &:hover{
+        background: $color-blue-highlight;
+    }
+  }
 
 
 

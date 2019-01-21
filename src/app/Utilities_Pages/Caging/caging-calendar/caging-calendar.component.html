@@ -568,13 +568,17 @@
         </ng-container>
         <ng-container matColumnDef="ControlChild">
           <th mat-header-cell *matHeaderCellDef>Control</th>
-          <td mat-cell *matCellDef="let cageElement">Control</td>
+          <td mat-cell *matCellDef="let cageElement">
+            <button mat-icon-button *ngIf="cageElement.showControl" (click)="navigateToEdit(element)">
+              <i class="material-icons">edit</i>
+            </button>
+          </td>
           <td mat-footer-cell *matFooterCellDef>Control</td>
         </ng-container>
 
 
         <tr mat-header-row *matHeaderRowDef="MailcodeColumns"></tr>
-        <tr mat-row class="example-element-row" *matRowDef="let row; columns: MailcodeColumns;"></tr>
+        <tr mat-row class="example-element-row childRow" *matRowDef="let row; columns: MailcodeColumns;" (mouseenter)="hoverRow(row)" (mouseleave)="hoverRow(row)"></tr>
         <tr mat-footer-row *matFooterRowDef="MailcodeColumns"></tr>
       </table>
       <br>

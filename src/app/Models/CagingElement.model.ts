@@ -12,5 +12,5 @@ export class CagingElement {
     Expanded: boolean;
     TotalDonationAmount: number;
     TotalDonorCount: number;
-
+    showControl: boolean;
 }

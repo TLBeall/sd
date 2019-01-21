@@ -370,14 +370,14 @@ export class CagingCalendarComponent implements OnInit {
     if (e.selectable == true) {
       if (e.selected == true) {
         e.days.forEach(element => {
-          if (element.isActive) {
+          if (element.selectable) {
             element.selected = false;
           }
         });
         e.selected = false;
       } else {
         e.days.forEach(element => {
-          if (element.isActive) {
+          if (element.selectable) {
             element.selected = true;
           }
         });
@@ -841,6 +841,10 @@ export class CagingCalendarComponent implements OnInit {
     });
     if (this.currentDayD == 0)
       this.currentDayD = this.lockedDay;
+  }
+
+  hoverRow(row: CagingElement){
+    row.showControl = !row.showControl;
   }
 
 

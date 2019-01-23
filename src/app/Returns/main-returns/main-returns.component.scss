@@ -24,19 +24,6 @@ table {
   }
 }
 
-//Controls material expand/collapse buttons at all levels
-.returnsExpCollBtn{
-  margin-left:10px;
-  width:30px;
-  height:30px;
-  // box-shadow: $material-box-shadow-default;
-  // background-color:$color-whitesmoke !important;
-  // opacity: 0.4;
-  i{
-    padding: 0px 0px 10px 0px;
-  }
-}
-
 
 //Controls hover and selected for the rows
 tr.example-element-row:not(.example-expanded-row):hover {

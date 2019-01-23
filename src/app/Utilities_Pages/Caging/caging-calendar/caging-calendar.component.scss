@@ -11,10 +11,44 @@
   .expBtnColumn{
     width: 55px;
     min-width: 55px;
+    height: 40px !important;
     padding: 0 !important;
     border-bottom:none !important;
     border-top:none !important;
   }
+
+  .controlColumn{
+    width:70px;
+    min-width:70px;
+    border-bottom:none !important;
+    border-top:none !important;  
+  }
+
+  //Controls material expand/collapse buttons at all levels
+.controlCollBtn{
+    width:20px;
+    height:20px;
+    margin-right: 8px;
+    &:hover{
+      color: $color-blue-dark;
+    }
+    i{
+      padding: 0px 0px 10px 0px;
+    }
+  }
+
+.elementInput{
+    width:75%;
+    display:flex;
+    margin: 0 auto;
+    background-color: $color-gallery;
+    input{
+        text-align:center;
+    }
+    span{
+        padding-bottom:2px;
+    }
+}
 
 
 .totalsBox{
@@ -252,6 +286,13 @@
     }
 }
 
+.stickyButtons{
+    position: -webkit-sticky; /* Safari */
+    position: sticky !important;
+    top: 100px !important;
+    z-index: 120;
+  }
+
 
 
 /////////// STYLING FOR TABLE ////////
@@ -322,9 +363,10 @@
   .mat-row {
     height: auto;
   }
+
   .mat-cell {
-    padding-top: 4px !important;
-    padding-bottom: 4px !important;
+    // padding-top: 4px !important;
+    // padding-bottom: 4px !important;
     border-bottom:none;
     text-align: center;
   }      
@@ -360,7 +402,45 @@ tr.mat-header-row{
     }
   }
 
+  #modalBackground{
+    position: fixed;
+    top: 92px;
+    z-index: 130;
+    width: 100%;
+    height:100%;
+    background-color: rgba(128, 128, 128, 0.5); //gives transparent, cannot use opacity due to inheritance
+}
 
+.deleteModalCard{
+    position: relative;
+    top: 25%;
+    z-index: 140;
+    div{
+        text-align: center;
+        i{
+            font-size: 1000%;
+            color: $color-warn;
+        }
+    }
+}
+
+#deleteMessage1{
+    font-size: 22pt;
+}
+
+.btnContainer{
+    text-align: center; //Buttons are inline elements, so this is how you center inside a div
+    margin-top: 15px;
+        #cancelBtn{
+            background-color: $color-gallery;
+            margin-right: 10px;
+        }
+        #deleteBtn{
+            color: white;
+            background-color: $color-warn;
+            margin-left: 10px;
+        }
+}
 
 
 

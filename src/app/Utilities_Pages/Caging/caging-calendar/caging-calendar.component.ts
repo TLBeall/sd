@@ -53,7 +53,7 @@ export class Week {
 })
 export class CagingCalendarComponent implements OnInit {
 
-  private timeSelection = "Year";
+  private timeSelection = "Month";
   private selectedCount: number;
   public loading: boolean = false;
   private lockedYear: number;
@@ -123,21 +123,25 @@ export class CagingCalendarComponent implements OnInit {
 
   private firstLoad: boolean = true;
   private RawCagingData: CagingElement;
+  private noDayCaging: boolean = false;
   private GrandTotal: CagingElement;
   private currentDayD: number;
   private currentMonthD: string;
   private currentYearD: number;
+  private allClientsExpanded: boolean = false;
+  private selectionMode: boolean = false;
+  private checkedRows: number[];
   private tableLoading: boolean;
-  // ClientColumns: string[] = ['ExpandParent', 'Client', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
-  // MailcodeColumns: string[] = ['ExpandChild', 'Mailcode', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
+  private deleteNotation: string;
+  private showDeleteModal: boolean = false;
   public ClientColumns: string[];
   public MailcodeColumns: string[];
 
   constructor(private route: ActivatedRoute, private router: Router, private _authService: AuthService) { }
 
   ngOnInit() {
-    this.ClientColumns = ['ExpandParent', 'Client', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
-    this.MailcodeColumns = ['ExpandChild', 'Mailcode', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
+    this.ClientColumns = ['ExpandParent', 'PsuedoSelection', 'Client', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
+    this.MailcodeColumns = ['ExpandChild', 'SelectionBox', 'Mailcode', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
 
     this.lockedYear = new Date().getFullYear();
     this.lockedMonth = parseInt(moment().format('M'));
@@ -160,20 +164,30 @@ export class CagingCalendarComponent implements OnInit {
     this.getMonthData(this.convertCLList(), this.yearId, this.lockedMonth);
   }
 
-
+  public onValChange(val: string) {
+    this.timeSelection = val;
+  }
 
   /////////////////////////////////// GET DATA FOR DAY /////////////////////////////////////////
   getDayData(CL: string, year: number, month: number, day: number) {
     this.tableLoading = true;
+    this.checkedRows = [];
 
     this._authService.getCagingCalendarData(CL, year, month, day).subscribe(data => {
       this.dayClientArr = data.ClientCalendarList;
       this.RawCagingData = data;
       this.RawCagingData.TotalDonationAmount = this.RawCagingData.CashAmount + this.RawCagingData.CardAmount + this.RawCagingData.CheckAmount;
       this.RawCagingData.TotalDonorCount = this.RawCagingData.CashCount + this.RawCagingData.CardCount + this.RawCagingData.CheckCount;
-      this.dayClientArr.forEach(e => {
-        e.TotalDonationAmount = e.CardAmount + e.CashAmount + e.CheckAmount;
-        e.TotalDonorCount = e.CardCount + e.CashCount + e.CheckCount;
+      this.dayClientArr.forEach(a => {
+        a.TotalDonationAmount = a.CardAmount + a.CashAmount + a.CheckAmount;
+        a.TotalDonorCount = a.CardCount + a.CashCount + a.CheckCount;
+        a.MailCodeList.forEach(b => {
+          b.TotalDonationAmount = b.CardAmount + b.CashAmount + b.CheckAmount;
+          b.TotalDonorCount = b.CardCount + b.CashCount + b.CheckCount;
+          b.selected = false;
+          b.editing = false;
+          b.showControl = false;
+        });
       });
       this.tableLoading = false;
       this.loading = false;
@@ -309,9 +323,8 @@ export class CagingCalendarComponent implements OnInit {
 
   ///////////////////////////// GETTING AND SETTING UP DATA FOR YEAR CALENDAR //////////////////
   getYearData(CL: string, year: number) {
-    var yearData;
     this._authService.getCagingCalendarData(CL, year, null, null).subscribe(data => {
-      yearData = data;
+      this.yearData = data;
 
       //YEAR VIEW - CREATE QUARTERS
       this.quarterArr = [];
@@ -327,7 +340,7 @@ export class CagingCalendarComponent implements OnInit {
 
       //YEAR VIEW - CREATE MONTHS AND ASSOCIATE VALUES WITH QUARTERS
       this.monthArr = [];
-      yearData.forEach((e, index) => {
+      this.yearData.forEach((e, index) => {
         let monthElem = new CagingYearElement;
         monthElem = e;
         let i = monthElem.Quarter - 1;
@@ -350,7 +363,6 @@ export class CagingCalendarComponent implements OnInit {
         }
         this.monthArr.push(monthElem);
       });
-      this.calculateDefaultAllSummary();
       this.loading = false;
     })
   }
@@ -634,6 +646,7 @@ export class CagingCalendarComponent implements OnInit {
   }
 
   switchToMonth() {
+    this.calculateWeek();
     this.determineCalculationType();
   }
 
@@ -753,23 +766,150 @@ export class CagingCalendarComponent implements OnInit {
 
 
   //////////////////// DAY VIEW FUNCTIONS //////////////////////////
-  
+  ToggleEdit(e: CagingElement) {
+    e.editing = !e.editing;
+  }
+
+  editCaging(e: CagingElement) {
+    e.ModifiedDate = new Date;
+    this._authService.editCaging(e, e.CagingID).subscribe();
+    e.editing = false;
+    //Need to add function to update all of the ngModels and totals in the table
+    //Need to add functions to reload all calendars
+    this.getDayData(this.convertCLList(), this.currentYearD, this.getMonthInt(this.currentMonthD), this.currentDayD);
+    this.getYearData(this.convertCLList(), this.yearId);
+    this.getMonthData(this.convertCLList(), this.currentYear, this.getMonthInt(this.currentMonth));
+  }
+
+  cancelEdit(e: CagingElement) {
+    e.editing = false;
+  }
+
+  hoverRow(row: CagingElement) {
+    row.showControl = !row.showControl;
+  }
+
+  ToggleExpansion(element) {
+    if (element.Expanded == true) {
+      element.Expanded = false;
+      this.ClientColumns = ['ExpandParent', 'PsuedoSelection', 'Client', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
+      this.MailcodeColumns = ['ExpandChild', 'SelectionBox', 'Mailcode', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
+      this.checkClientExpansion();
+    } else {
+      element.Expanded = true;
+      this.ClientColumns = ['ExpandParent', 'PsuedoSelection', 'Client', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross', 'ControlParent'];
+      this.MailcodeColumns = ['ExpandChild', 'SelectionBox', 'Mailcode', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross', 'ControlChild'];
+      this.checkClientExpansion();
+    }
+  }
+
+  checkClientExpansion() {
+    var numberExpanded = 0;
+    this.dayClientArr.forEach(element => {
+      if (element.Expanded) {
+        numberExpanded++;
+      }
+    });
+    if (numberExpanded > 0) {
+      this.allClientsExpanded = true;
+    } else {
+      this.allClientsExpanded = false;
+    }
+  }
+
+  expandAllClients() {
+    if (this.allClientsExpanded == false) {
+      this.allClientsExpanded = true;
+      this.ClientColumns = ['ExpandParent', 'PsuedoSelection', 'Client', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross', 'ControlParent'];
+      this.MailcodeColumns = ['ExpandChild', 'SelectionBox', 'Mailcode', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross', 'ControlChild'];
+      this.dayClientArr.forEach(element => {
+        element.Expanded = true;
+      });
+    } else {
+      this.allClientsExpanded = false;
+      this.ClientColumns = ['ExpandParent', 'PsuedoSelection', 'Client', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
+      this.MailcodeColumns = ['ExpandChild', 'SelectionBox', 'Mailcode', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
+      this.dayClientArr.forEach(element => {
+        element.Expanded = false;
+      });
+    }
+  }
+
+  toggleSelection() {
+    if (this.selectionMode == true) {
+      this.selectionMode = false;
+      this.dayClientArr.forEach(a => {
+        a.MailCodeList.forEach(b => {
+          b.selected = false;
+        });
+      });
+      this.checkedRows = null;
+    } else {
+      this.selectionMode = true;
+    }
+  }
+
+  updateValue(elem: CagingElement, e: any, type: string) {
+    var value = (Number(e.target.value.replace(/[^0-9.-]+/g, ""))).toFixed(2);
+    if (type == "Cash") {
+      elem.CashAmount = Number(value);
+    } else if (type == "Card") {
+      elem.CardAmount = Number(value);
+    } else if (type == "Check") {
+      elem.CheckAmount = Number(value);
+    }
+  }
+
+  checkSelected(element: CagingElement, event: any) {
+    //Setup for multiple selection
+    // if (event.shiftKey){
+    //   console.log(element.ID);
+    // }
+    //Multiple selection end
+
+    if (this.checkedRows.includes(element.CagingID)) {
+      const index = this.checkedRows.indexOf(element.CagingID);
+      this.checkedRows.splice(index, 1);
+    } else {
+      this.checkedRows.push(element.CagingID);
+    }
+
+    if (this.checkedRows.length == 1) {
+      this.deleteNotation = "this record";
+    } else {
+      this.deleteNotation = "multiple records"
+    }
+  }
+
+  preDelete(event: any) {
+    if (this.checkedRows.length > 0)
+      this.showDeleteModal = !this.showDeleteModal;
+  }
+
+  delete() {
+    var checkedArr = "";
+    this.checkedRows.forEach((element, index) => {
+      if (index == 0) {
+        checkedArr = element.toString();
+      } else {
+        checkedArr = checkedArr + "." + element;
+      }
+    });
+    this._authService.deleteCaging(checkedArr).subscribe(); //the array should get convered to URL notation?
+    setTimeout(() => {
+      this.checkedRows = [];
+      this.getDayData(this.convertCLList(), this.currentYearD, this.getMonthInt(this.currentMonthD), this.currentDayD);
+      this.showDeleteModal = false;
+    }, 1000)
+  }
+
+  navigateToNew() {
+    this.router.navigate(['caging/new'])
+  }
 
 
 
   ///////////////////// MISCELANEOUS HELPER/SUPPORT FUNCTIONS /////////////
-  ToggleExpansion(element) {
-    if (element.Expanded == true){
-      element.Expanded = false;
-      this.ClientColumns = ['ExpandParent', 'Client', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
-      this.MailcodeColumns = ['ExpandChild', 'Mailcode', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
-    } else {
-      element.Expanded = true;
-      this.ClientColumns = ['ExpandParent', 'Client', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross', 'ControlParent'];
-      this.MailcodeColumns = ['ExpandChild', 'Mailcode', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross', 'ControlChild'];
-    }
-  }
-
   // Used in HTML to set whether a week row has no active days (i.e. it should not render)
   checkActiveWeeks(e: any): boolean {
     let activeDays = 0;
@@ -843,9 +983,7 @@ export class CagingCalendarComponent implements OnInit {
       this.currentDayD = this.lockedDay;
   }
 
-  hoverRow(row: CagingElement){
-    row.showControl = !row.showControl;
-  }
+
 
 
 

@@ -73,11 +73,7 @@ import { ExceptionsMainComponent } from './Utilities_Pages/Caging/exceptions-mai
     IncidentalsEditComponent,
     IncidentalsNewComponent,
     CagingCalendarComponent,
-<<<<<<< HEAD
     UploadPDFComponent
-=======
-    ExceptionsMainComponent
->>>>>>> 93d8983aefbdb2d0374ea08258cd30d53bb387c2
   ],
   imports: [
     BrowserModule,

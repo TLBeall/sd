@@ -129,7 +129,7 @@ export class WhitemailMainComponent implements OnInit {
         wmStrArr = wmStrArr + "." + element;
       }
     });
-    this._authService.deleteWhitemail(wmStrArr).subscribe();
+    this._authService.deleteCaging(wmStrArr).subscribe();
     setTimeout(() => {
       this.checkedRows = [];
       this.mainSelectClient(this.Client);

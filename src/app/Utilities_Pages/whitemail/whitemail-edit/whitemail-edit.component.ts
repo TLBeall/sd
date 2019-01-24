@@ -142,7 +142,7 @@ export class WhitemailEditComponent implements OnInit {
     this.whitemailElement.ModifiedDate = date;
     this.whitemailElement.ModifiedBy = "TempUser";
     this.showSubmittedModal = true;
-    this._authService.editWhitemail(this.whitemailElement, this.id).subscribe();
+    this._authService.editCaging(this.whitemailElement, this.id).subscribe();
     setTimeout(() => {
       this.showSubmittedModal = false;
       this.router.navigate(['whitemail']);

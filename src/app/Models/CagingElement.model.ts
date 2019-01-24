@@ -8,9 +8,13 @@ export class CagingElement {
     CheckCount: number;
     MailCode: string;
     CagingID: number;
+    ModifiedDate: Date;
+    MailcodeID: number;
 
     Expanded: boolean;
     TotalDonationAmount: number;
     TotalDonorCount: number;
-
+    showControl: boolean;
+    editing: boolean;
+    selected: boolean;
 }

@@ -209,16 +209,16 @@ export class AuthService {
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
   }
 
-  deleteWhitemail(wmStrArr: string) {
+  deleteCaging(wmStrArr: string) {
     var Token = "";
     var deleteURL = "https://sd360.sunrisedataservices.com/api/DeleteDailies?ID=" + wmStrArr;
     return this.http.delete(deleteURL);
   }
 
-  editWhitemail(whitemailElement: CagingDailies, id: number) {
+  editCaging(object: any, id: number) {
     var Token = "";
     var editURL = "https://sd360.sunrisedataservices.com/api/EditDailies?ID=" + id;
-    var body = JSON.stringify(whitemailElement);
+    var body = JSON.stringify(object);
 
     var headersForEditAPI = new Headers({ 'Content-Type': 'Application/Json', 'Authorization': 'Bearer ' + Token });
     return this.http.put(editURL, body, { headers: headersForEditAPI });

@@ -20,6 +20,7 @@ import { IncidentalsNewComponent } from './Utilities_Pages/Incidentals/incidenta
 import { IncidentalsEditComponent } from './Utilities_Pages/Incidentals/incidentals-edit/incidentals-edit.component';
 import { CagingNewComponent } from './Utilities_Pages/Caging/caging-new/caging-new.component';
 import { CagingCalendarComponent } from './Utilities_Pages/Caging/caging-calendar/caging-calendar.component';
+import { UploadPDFComponent } from './Utilities_Pages/upload-pdf/upload-pdf.component';
 // import { ResolvelistperformanceComponent } from './Services/resolve-listperformance/resolve-listperformance.component';
 
 const routes: Routes = [
@@ -41,6 +42,7 @@ const routes: Routes = [
   {path: 'incidentals/edit/:id', component: IncidentalsEditComponent, runGuardsAndResolvers: 'always' },
   {path: 'caging/new', component: CagingNewComponent },
   {path: 'caging/calendar', component: CagingCalendarComponent },
+  {path: 'uploadpdf', component: UploadPDFComponent},
 
   // {path: 'listperformance', component: ListPerformanceComponent, resolve: {rowData: ResolvelistperformanceComponent} },
   //Keep this path last since it is PageNotFound
@@ -76,6 +78,7 @@ export const routingComponents = [
   IncidentalsNewComponent,
   IncidentalsEditComponent,
   CagingNewComponent,
+  UploadPDFComponent,
   CagingCalendarComponent
 ];
 

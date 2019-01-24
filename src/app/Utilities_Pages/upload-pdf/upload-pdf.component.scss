@@ -1,0 +1,98 @@
+@import '~src/appTheme.scss'; 
+
+.mainInputBox{
+    width:100%;
+}
+
+hr{
+    border-top: 2px solid rgba(0,0,0,0.1); //default hr color, just thicker
+}
+
+ul{
+    list-style: none;
+    padding: 0;
+}
+
+.objectColumn{
+    border-left: 4px solid $color-blue-default;
+
+}
+
+.buttonColumn{
+    min-width: 75px !important;
+    button{
+        float:right;
+    }
+}
+
+//Shifts the $ sign in the input boxes up to line up with the input text
+::ng-deep .mat-form-field-prefix{
+    position: relative !important;
+    top: 50% !important;
+}
+
+
+
+#modalBackground{
+    position: fixed;
+    top: 92px;
+    z-index: 130;
+    width: 100%;
+    height:100%;
+    background-color: rgba(128, 128, 128, 0.5); //gives transparent, cannot use opacity due to inheritance
+}
+
+.btnContainer{
+    text-align: center; //Buttons are inline elements, so this is how you center inside a div
+        #submitBtn{
+            background-color: $color-success;
+        }
+}
+
+.submitModalCard{
+    position: relative;
+    top: 25%;
+    z-index: 140;
+    .bannerDiv{
+        text-align: center;
+        i.bannerIcon{
+            font-size: 1000%;
+            color: $color-success;
+        }
+    }
+    .updatedDiv{
+        text-align: center;
+        span.updatedMsg{
+            font-size: 18pt;
+        }
+    }
+    .cancelDiv{
+        text-align: right;
+        i{
+            opacity: 0.75;
+        }
+    }
+    .addMoreDiv{
+        text-align: center;
+        #modalMoreBtn{
+            background-color: $color-success;
+        }
+    }
+}
+
+
+.fileUrl{
+    margin-left: 10px;
+    width: 300px;
+}
+
+#exampleFormat{
+    text-decoration: underline;
+    font-size: 8pt;
+}
+
+@media screen and (max-width:$size-md){
+    #exampleImg{
+      width: 100%;
+    }
+  }

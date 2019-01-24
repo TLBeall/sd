@@ -37,6 +37,7 @@ import { WhitemailEditComponent } from './Utilities_Pages/whitemail/whitemail-ed
 import { LriMainComponent } from './Utilities_Pages/LRI/lri-main/lri-main.component';
 import { LriEditComponent } from './Utilities_Pages/LRI/lri-edit/lri-edit.component';
 import { LriNewComponent } from './Utilities_Pages/LRI/lri-new/lri-new.component';
+import { UploadPDFComponent } from './Utilities_Pages/upload-pdf/upload-pdf.component';
 import { IncidentalsMainComponent } from './Utilities_Pages/Incidentals/incidentals-main/incidentals-main.component';
 import { IncidentalsEditComponent } from './Utilities_Pages/Incidentals/incidentals-edit/incidentals-edit.component';
 import { IncidentalsNewComponent } from './Utilities_Pages/Incidentals/incidentals-new/incidentals-new.component';
@@ -70,7 +71,8 @@ import { CagingCalendarComponent } from './Utilities_Pages/Caging/caging-calenda
     IncidentalsMainComponent,
     IncidentalsEditComponent,
     IncidentalsNewComponent,
-    CagingCalendarComponent
+    CagingCalendarComponent,
+    UploadPDFComponent
   ],
   imports: [
     BrowserModule,

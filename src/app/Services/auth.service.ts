@@ -340,6 +340,14 @@ export class AuthService {
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
   }
 
+ 
+  getPhasebyClient(client: string): Observable<any>  {
+    var Token = "";
+    var getURL = " https://sd360.sunrisedataservices.com/api/PhaseListByClient?Client=" + client;
+
+    var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
+    return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
+  }
 
 }
 

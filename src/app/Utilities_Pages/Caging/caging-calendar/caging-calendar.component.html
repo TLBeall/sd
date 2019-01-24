@@ -33,7 +33,7 @@
           </div>
         </div>
         <br>
-        <div class="row btnRow">
+        <div class="row calendarToolsRow">
           <div class="col-md-4">
             <button mat-flat-button class="defaultButton" id="leftTravelBtn" (click)="previousBtn()">
               <i class="material-icons">chevron_left</i>
@@ -46,21 +46,20 @@
               {{lockedYear}}</button>
             <ng-container *ngIf="timeSelection == 'Day'">
               <mat-form-field>
-                <input matInput id="dayBtn" [matDatepicker]="picker" placeholder="" #pickerDate (dateChange)="changeDate(pickerDate)">
+                <input matInput id="dayBtn" [matDatepicker]="picker" placeholder="" #pickerDate (dateChange)="selectAnyDate(pickerDate)">
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
               <button mat-flat-button class="defaultButton" id="timeResetBtn" (click)="picker.open()">Pick Date</button>
             </ng-container>
           </div>
           <div class="col-md-4" id="timeHeader">
-            <h3 *ngIf="timeSelection == 'Year'">{{yearId}}</h3>
-            <h3 *ngIf="timeSelection == 'Month'">{{currentMonth}} {{currentYear}}</h3>
-            <h3 *ngIf="timeSelection == 'Day'">{{currentMonthD}} {{currentDayD}}, {{currentYearD}}</h3>
+            <h3 *ngIf="timeSelection == 'Year'">{{yvYear}}</h3>
+            <h3 *ngIf="timeSelection == 'Month'">{{mvMonth}} {{mvYear}}</h3>
+            <h3 *ngIf="timeSelection == 'Day'">{{dvMonth}} {{dvDay}}, {{dvYear}}</h3>
           </div>
           <div class="col-md-4">
             <div style="float:right;">
-              <!-- #group="matButtonToggleGroup" (change)="onValChange(group.value)" [value]="timeSelection" -->
-              <mat-button-toggle-group class="timeSelectionGroup" #group="matButtonToggleGroup" (change)="onValChange(group.value)"
+              <mat-button-toggle-group class="timeSelectionGroup" #group="matButtonToggleGroup" (change)="onTabChange(group.value)"
                 [value]="timeSelection">
                 <mat-button-toggle value="Year" (click)="switchToYear()">Year</mat-button-toggle>
                 <mat-button-toggle value="Month" (click)="switchToMonth()">Month</mat-button-toggle>
@@ -87,7 +86,7 @@
                 <div class="col-3">Month 2</div>
                 <div class="col-3">Month 3</div>
               </div>
-              <div class="row calendarBox">
+              <div class="row yvCalendarBox">
                 <div class="col-3 quarterRow">
                   <div class="row">
                     <div *ngFor="let element of quarterArr" class="col-12 quarterBox boxOnYearCal" (click)="selectQuarterElement(element)"
@@ -441,15 +440,15 @@
               <!-- ****************************** -->
               <!-- Caging by mailcode Table Start -->
               <!-- ****************************** -->
-              <table id="table2" mat-table [dataSource]="this.dayClientArr" multiTemplateDataRows *ngIf="tableLoading == false">
+              <table id="clientParentTable" mat-table [dataSource]="this.dayClientArr" multiTemplateDataRows *ngIf="tableLoading == false">
                 <ng-container matColumnDef="ExpandParent">
-                  <th mat-header-cell *matHeaderCellDef="let client" class="expBtnColumn expBtnTH"></th>
-                  <td mat-cell *matCellDef="let client" class="expBtnColumn">
+                  <th mat-header-cell *matHeaderCellDef="let client" class="expandBtnColumn expBtnTH"></th>
+                  <td mat-cell *matCellDef="let client" class="expandBtnColumn">
                     <button mat-icon-button (click)="ToggleExpansion(client)" class="clientButton">
                       <i class="material-icons md-elevation-z6" [ngClass]="client.Expanded?'mi_arrow_drop_down':'mi_arrow_right'"></i>
                     </button>
                   </td>
-                  <td mat-footer-cell *matFooterCellDef class="expBtnColumn"> </td>.
+                  <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"> </td>.
                 </ng-container>
                 <ng-container matColumnDef="PsuedoSelection">
                   <th mat-header-cell *matHeaderCellDef></th>
@@ -525,11 +524,11 @@
                       [style.height]="client.Expanded?'unset':'0 !important'">
                       <div style="width:100%">
                         <br>
-                        <table id="table3" mat-table [dataSource]="client.MailCodeList">
+                        <table id="mailcodeChildTable" mat-table [dataSource]="client.MailCodeList">
                           <ng-container matColumnDef="ExpandChild">
-                  <th mat-header-cell *matHeaderCellDef class="expBtnColumn"></th>
-                  <td mat-cell *matCellDef="let cageElement" class="expBtnColumn"></td>
-                  <td mat-footer-cell *matFooterCellDef class="expBtnColumn"></td>
+                  <th mat-header-cell *matHeaderCellDef class="expandBtnColumn"></th>
+                  <td mat-cell *matCellDef="let cageElement" class="expandBtnColumn"></td>
+                  <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"></td>
                 </ng-container>
                 <ng-container matColumnDef="SelectionBox">
                   <th mat-header-cell *matHeaderCellDef></th>
@@ -630,14 +629,14 @@
                 <ng-container matColumnDef="ControlChild">
                   <th mat-header-cell *matHeaderCellDef class="controlColumn"></th>
                   <td mat-cell *matCellDef="let cageElement" class="controlColumn">
-                    <button mat-icon-button class="controlCollBtn" *ngIf="cageElement.showControl == true && cageElement.editing == false"
+                    <button mat-icon-button class="controlColumnBtn" *ngIf="cageElement.showControl == true && cageElement.editing == false"
                       (click)="ToggleEdit(cageElement)">
                       <i class="material-icons">edit</i>
                     </button>
-                    <button mat-icon-button class="controlCollBtn" *ngIf="cageElement.editing == true" (click)="editCaging(cageElement)">
+                    <button mat-icon-button class="controlColumnBtn" *ngIf="cageElement.editing == true" (click)="editCaging(cageElement)">
                       <i class="material-icons">check</i>
                     </button>
-                    <button mat-icon-button class="controlCollBtn" *ngIf="cageElement.editing == true" (click)="cancelEdit(cageElement)">
+                    <button mat-icon-button class="controlColumnBtn" *ngIf="cageElement.editing == true" (click)="cancelEdit(cageElement)">
                       <i class="material-icons">close</i>
                     </button>
                   </td>

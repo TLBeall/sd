@@ -64,11 +64,6 @@ export class UploadPDFComponent implements OnInit {
     if (value != null) {
       filterValue = value.toLowerCase();
       var clientAcronym = (filterValue.match(/[A-Z]*/)).toString();
-      this._authService.getPhasebyClient('ACRU')
-      .subscribe(data => {
-        this.phaseList = data;
-        this.phaseList.forEach(p => { this.PhaseStrArr.push(p.PhaseName) });
-      });
     } else {
       filterValue = "";
     }

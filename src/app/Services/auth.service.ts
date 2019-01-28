@@ -366,5 +366,13 @@ export class AuthService {
     return this.http.put(editURL, { headers: headersForEditAPI });
   }
 
+  getPDFList(CLList: string, startdate: string, enddate: string){
+    var Token = "";
+    var getURL = "https://sd360.sunrisedataservices.com/api/BrowsePDF?ClientList=" + CLList + "&From=" + startdate + "&To=" + enddate;
+
+    var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
+    return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
+  }
+
 }
 

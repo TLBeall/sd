@@ -71,9 +71,9 @@ export class NavigationBarComponent {
     this.router.navigate(['caging/calendar']);
   }
 
-  NavigateToUploadPDF() {
+  NavigateToPDFUpload(){
     this._g.clearCurCache = true;
-    this.router.navigate(['uploadpdf']);
+    this.router.navigate(['pdf/upload']);
   }
 
   NavigateToExceptions(){

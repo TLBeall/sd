@@ -198,14 +198,14 @@ export class PdfUploadComponent implements OnInit {
   }
 
   SortFunction(sort: Sort, tData: PDFElement[]) {
-    var data = tData;
+    var data = tData.slice();
 
     var sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'PackageName': return this.compare(a.PhaseName, b.PhaseName, isAsc);
         case 'Client': return this.compare(a.gClientAcronym, b.gClientAcronym, isAsc);
-        // case 'Date': return this.compare(a.MailDate, b.MailDate, isAsc);
+        case 'Date': return this.compare(a.MailDate, b.MailDate, isAsc);
         default: return 0;
       }
     })
@@ -213,7 +213,7 @@ export class PdfUploadComponent implements OnInit {
     this.tableData = sortedData;
   }
 
-  compare(a: string, b: string, isAsc) {
+  compare(a: any, b: any, isAsc) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 

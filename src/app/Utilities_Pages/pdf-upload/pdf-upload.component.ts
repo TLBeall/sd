@@ -56,7 +56,7 @@ export class PdfUploadComponent implements OnInit {
     let yearEnd = new Date("12-31-" + (new Date()).getFullYear().toString());
     let current = new Date();
     // let tempEndDate = moment(yearEnd, "MM-DD-YYYY").format("MM-DD-YYYY");
-    let tempStartDate = moment(current, "MM-DD-YYYY").subtract(15, 'd').format("MM-DD-YYYY"); //91
+    let tempStartDate = moment(current, "MM-DD-YYYY").subtract(30, 'd').format("MM-DD-YYYY"); //91
     this.endDate = new Date();
     // this.endDate = new Date("12/31/" + (new Date()).getFullYear().toString());
     this.startDate = new Date(tempStartDate);

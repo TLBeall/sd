@@ -5,4 +5,6 @@ export class PDFElement {
     PhaseID: number;
     PhaseName: string;
     PhaseTitle: string;
+    Hidden: boolean;
+    ShowControl: boolean;
 }

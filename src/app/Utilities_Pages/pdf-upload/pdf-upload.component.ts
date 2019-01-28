@@ -36,12 +36,18 @@ export class PdfUploadComponent implements OnInit {
   @ViewChild('startDateInput') startDateInput: ElementRef<HTMLInputElement>;
   @ViewChild('endDateInput') endDateInput: ElementRef<HTMLInputElement>;
 
+  private pdfPresence = new FormControl();
 
   public loading: boolean = true;
   private startDate: any;
   private endDate: any;
   private tableData: PDFElement[];
   private dataSource;
+  private pdfType: string;
+  private fileUrl: string;
+
+  @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
+
 
   MainDisplayedColumns: string[] = ['PackageName', 'Client', 'Date', 'Description', 'Link', 'ButtonControl'];
   // @ViewChild(MatSort) sort: MatSort;
@@ -72,23 +78,23 @@ export class PdfUploadComponent implements OnInit {
       );
     });
 
-    this._authService.getPDFList(this.convertCLList(), this.convertDate(this.startDate), this.convertDate(this.endDate)).subscribe(data => {
-      this.tableData = data;
-      // this.dataSource = new MatTableDataSource(this.tableData);
-      // this.tableData = new MatTableDataSource(data);
-      // this.dataSource.sort = this.sort;
-      // var collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
-      // this.tableData = this.tableData.sort((a, b) => {
-      //   collator.compare(a.PhaseName, b.PhaseName)
-      //   var a1 = typeof a, b1 = typeof b;
-      //   return a1 < b1 ? -1 : a1 > b1 ? 1 : a < b ? -1 : a > b ? 1 : 0;
-      // })
-      this.loading = false;
-    });
+    this.loadPDFData(this.convertCLList(), this.convertDate(this.startDate), this.convertDate(this.endDate));
   }
 
 
-
+  loadPDFData(clients: string, start: string, end: string) {
+    this.loading = true;
+    this.pdfType = "Both";
+    this._authService.getPDFList(clients, start, end).subscribe(data => {
+      this.tableData = data;
+      this.tableData.forEach(element => {
+        element.Hidden = false;
+        element.ShowControl = false;
+      });
+      this.defaultSortTable();
+      this.loading = false;
+    });
+  }
 
 
   ///////////////////// CLIENT SELECTION / CHIP SETTINGS ///////////////////////////
@@ -121,7 +127,7 @@ export class PdfUploadComponent implements OnInit {
       this.CLList.splice(index, 1);
     }
 
-    // Action performed here 
+    this.loadPDFData(this.convertCLList(), this.convertDate(this.startDate), this.convertDate(this.endDate))
 
 
     if (this.CLList.length > 0) {
@@ -146,7 +152,7 @@ export class PdfUploadComponent implements OnInit {
     );
     this.CLInput.nativeElement.blur();
 
-    // Action performed here 
+    this.loadPDFData(this.convertCLList(), this.convertDate(this.startDate), this.convertDate(this.endDate))
 
     if (this.CLList.length > 0) {
       this.clientPlaceholder = "Add another client"
@@ -162,6 +168,14 @@ export class PdfUploadComponent implements OnInit {
     var retString: string;
     retString = Name.substring(Name.lastIndexOf('-') + 1, Name.length).trim();
     return retString;
+  }
+
+  changeDate(){
+    if(this.validateDate() == true){
+      this.loadPDFData(this.convertCLList(), this.convertDate(this.startDate), this.convertDate(this.endDate))
+    } else {
+      this.loadPDFData(this.convertCLList(), this.convertDate(this.startDate), this.convertDate(this.endDate))
+    }
   }
 
   validateDate(): boolean {
@@ -197,6 +211,13 @@ export class PdfUploadComponent implements OnInit {
     return moment(date).format("MM/DD/YYYY");
   }
 
+  defaultSortTable() {
+    this.tableData = this.tableData.sort((a, b) => {
+      const isAsc = 'asc';
+      return this.compare(a.PhaseName, b.PhaseName, isAsc);
+    })
+  }
+
   SortFunction(sort: Sort, tData: PDFElement[]) {
     var data = tData.slice();
 
@@ -216,5 +237,51 @@ export class PdfUploadComponent implements OnInit {
   compare(a: any, b: any, isAsc) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
+
+  changePDFType(event: any) {
+    this.pdfType = event.target.value;
+
+    if (this.pdfType == "PDF") {
+      this.tableData.forEach(element => {
+        if (element.HasPDF == false) {
+          element.Hidden = true;
+        } else {
+          element.Hidden = false;
+        }
+      });
+    } else if (this.pdfType == "None") {
+      this.tableData.forEach(element => {
+        if (element.HasPDF == true) {
+          element.Hidden = true;
+        } else {
+          element.Hidden = false;
+        }
+      });
+    } else if (this.pdfType == "Both") {
+      this.tableData.forEach(element => {
+        element.Hidden = false;
+      });
+    }
+  }
+
+  hoverRow(row: PDFElement) {
+    if (row.Hidden == false && row.ShowControl == false) {
+      row.ShowControl = true;
+    } else if (row.Hidden == false && row.ShowControl == true) {
+      row.ShowControl = false;
+    }
+  }
+
+
+  /* File Input element for browser */
+  onFileChange(evt: any) {
+    this.fileUrl = evt.target.files[0].name;
+    var test = 0;
+  }
+
+  // resetFile(){
+  //   this.fileUrl = "";
+  //   this.fileInput.nativeElement.value = null;
+  // }
 
 }

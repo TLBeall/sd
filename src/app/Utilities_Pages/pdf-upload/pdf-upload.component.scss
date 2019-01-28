@@ -20,8 +20,40 @@ table {
   }
 
 
-  .ButtonControlCell{
-    // padding-right: 12px !important;
-    width: 52px !important;
-    min-width: 52px !important;
+//   .ButtonControlCell{
+//     // padding-right: 12px !important;
+//     width: 82px !important;
+//     min-width: 82px !important;
+//   }
+
+  .collapseRow{
+    visibility: collapse;
+  } 
+
+  .defaultRow{
+//KEEP SO THAT VISIBILITY COLLAPSE WORKS
   }
+
+  .controlColumn{
+    width:80px;
+    min-width:80px;
+    border-bottom:none !important;
+    border-top:none !important;  
+}
+
+  //Controls edit/cancel/submit
+.controlColumnBtn{
+    width:18px;
+    height:18px;
+    &#uploadBtn{
+        margin-right:16px;
+    }
+    &:hover{
+      color: $color-blue-dark;
+    }
+    i{
+      padding: 0px 0px 18px 0px;
+    }
+
+
+}

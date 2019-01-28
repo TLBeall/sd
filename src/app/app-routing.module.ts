@@ -21,6 +21,8 @@ import { IncidentalsEditComponent } from './Utilities_Pages/Incidentals/incident
 import { CagingNewComponent } from './Utilities_Pages/Caging/caging-new/caging-new.component';
 import { CagingCalendarComponent } from './Utilities_Pages/Caging/caging-calendar/caging-calendar.component';
 import { UploadPDFComponent } from './Utilities_Pages/upload-pdf/upload-pdf.component';
+import { ExceptionsMainComponent } from './Utilities_Pages/Caging/exceptions-main/exceptions-main.component';
+import { ExceptionsEditComponent } from './Utilities_Pages/Caging/exceptions-edit/exceptions-edit.component';
 // import { ResolvelistperformanceComponent } from './Services/resolve-listperformance/resolve-listperformance.component';
 
 const routes: Routes = [
@@ -43,6 +45,8 @@ const routes: Routes = [
   {path: 'caging/new', component: CagingNewComponent },
   {path: 'caging/calendar', component: CagingCalendarComponent },
   {path: 'uploadpdf', component: UploadPDFComponent},
+  {path: 'exceptions', component: ExceptionsMainComponent},
+  {path: 'exceptions/edit/:id', component: ExceptionsEditComponent},
 
   // {path: 'listperformance', component: ListPerformanceComponent, resolve: {rowData: ResolvelistperformanceComponent} },
   //Keep this path last since it is PageNotFound
@@ -79,6 +83,8 @@ export const routingComponents = [
   IncidentalsEditComponent,
   CagingNewComponent,
   UploadPDFComponent,
-  CagingCalendarComponent
+  CagingCalendarComponent,
+  ExceptionsMainComponent,
+  ExceptionsEditComponent
 ];
 

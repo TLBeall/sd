@@ -209,9 +209,9 @@ export class AuthService {
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
   }
 
-  deleteCaging(wmStrArr: string) {
+  deleteCaging(idString: string) {
     var Token = "";
-    var deleteURL = "https://sd360.sunrisedataservices.com/api/DeleteDailies?ID=" + wmStrArr;
+    var deleteURL = "https://sd360.sunrisedataservices.com/api/DeleteDailies?ID=" + idString;
     return this.http.delete(deleteURL);
   }
 
@@ -347,6 +347,23 @@ export class AuthService {
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
+  }
+
+  getDailiesExceptions() {
+    var Token = "";
+    var getURL = "https://sd360.sunrisedataservices.com/api/GetDailiesExceptionsX"; //The X is linked to the BB table. Remove X when migration is complete
+
+    var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
+    return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
+  }
+
+  editDailiesExceptions(NewMailCode: string, idString: string) {
+    var Token = "";
+    var editURL = "https://sd360.sunrisedataservices.com/api/UpdateDailiesExceptions?NewMailCode=" + NewMailCode + "&ID=" + idString + "&UserName=SHERIF";
+    // var body = JSON.stringify(object);
+
+    var headersForEditAPI = new Headers({ 'Content-Type': 'Application/Json', 'Authorization': 'Bearer ' + Token });
+    return this.http.put(editURL, { headers: headersForEditAPI });
   }
 
 }

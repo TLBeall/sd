@@ -103,7 +103,7 @@ export class LriEditComponent implements OnInit {
 
   modalCancel() {
     this.showSubmittedModal = false;
-    this.router.navigate(['whitemail']);
+    this.router.navigate(['lri']);
   }
 
 

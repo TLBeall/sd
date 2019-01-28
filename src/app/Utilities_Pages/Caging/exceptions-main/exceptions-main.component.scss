@@ -1,1 +1,149 @@
 @import '~src/appTheme.scss'; 
+
+
+///////////////////////// STYLING FOR TABLES ///////////////////////////////
+#InstanceParentTable{
+    width: 100%;
+    margin: 0 auto;
+    th{
+        font-size: 12px !important;
+    }
+    td{
+        font-size: 11px;
+        &.mat-cell{
+          padding: 0 !important;
+        }
+        &.mat-footer-cell{
+            font-weight: bold;
+            border-bottom:none;
+            border-top: 1px solid $color-gainsboro;
+            
+          }
+    }
+}
+  
+#mailcodeChildTable{
+    width: 100%;
+    margin: 0 auto !important;
+    th{
+        font-size: 12px !important;
+    }
+    td{
+        font-size: 11px;
+        &.mat-cell{
+          padding-top: 4px !important;
+          padding-bottom: 4px !important;
+        }
+        &.mat-footer-cell{
+            font-weight: bold;
+            border-bottom:none;
+            border-top: 1px solid $color-gainsboro;
+            
+          }
+    }
+}
+
+.expandBtnColumn{
+    width: 55px;
+    min-width: 55px;
+    height: 40px !important;
+    padding: 0 !important;
+    border-bottom:none !important;
+    border-top:none !important;
+}
+
+.controlColumn{
+    width:70px;
+    min-width:70px;
+    border-bottom:none !important;
+    border-top:none !important;  
+}
+
+.dateColumn{
+    width:80px;
+    min-width:80px;
+}
+
+//Controls edit button
+.controlColumnBtn{
+    width:20px;
+    height:20px;
+    &:hover{
+      color: $color-blue-dark;
+    }
+}
+
+.instanceEditBtn{
+    &:hover{
+        i{
+            border: 1px solid $color-blue-dark;
+          }
+    }
+}
+
+.instanceEditIcon{
+    border-radius: 4px;
+    border: 1px solid black;
+}
+
+//Controls child view initial settings
+.example-element-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+//Removes padding from all nested tables
+::ng-deep table > tbody > tr > td.cdk-column-expandedDetail.mat-column-expandedDetail{
+    padding: 0 !important;
+}
+
+.mat-row {
+    height: auto;
+}
+
+.mat-cell {
+    border-bottom:none;
+    text-align: center;
+}  
+
+.mat-header-cell{
+    text-align: center;
+}
+
+.mat-footer-cell{
+    text-align: center;
+    padding-top: 6px;
+}
+
+tr.mat-header-row{
+    height:auto;
+}
+
+th.mat-header-cell{
+    padding:0;
+}
+
+tr.mat-footer-row{
+    height:auto; //row height in mat tables is required to be manually controlled by each cell    
+}
+
+.rowCollapsed{
+    display: none;
+}
+
+.rowExpanded{
+    display: inline;
+}
+
+.mat-row.childRow {
+    &:hover{
+        background: $color-blue-highlight;
+    }
+}
+
+.stickyButtons{
+    position: -webkit-sticky; /* Safari */
+    position: sticky !important;
+    top: 100px !important;
+    z-index: 120;
+}

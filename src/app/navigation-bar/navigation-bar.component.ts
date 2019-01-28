@@ -75,4 +75,9 @@ export class NavigationBarComponent {
     this._g.clearCurCache = true;
     this.router.navigate(['uploadpdf']);
   }
+
+  NavigateToExceptions(){
+    this._g.clearCurCache = true;
+    this.router.navigate(['exceptions']);
+  }
 }

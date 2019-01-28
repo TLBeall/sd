@@ -547,7 +547,7 @@
                   <th mat-header-cell *matHeaderCellDef>Non-Donors</th>
                   <td mat-cell *matCellDef="let cageElement">
                     <div *ngIf="cageElement.editing == true" class="elementInput">
-                      <input required matInput [(ngModel)]="cageElement.NonDonors">
+                      <input required type="number" matInput [(ngModel)]="cageElement.NonDonors">
                     </div>
                     <span *ngIf="cageElement.editing == false">{{cageElement.NonDonors|number}}</span>
                   </td>
@@ -557,7 +557,7 @@
                   <th mat-header-cell *matHeaderCellDef>Cash Donations</th>
                   <td mat-cell *matCellDef="let cageElement">
                     <div *ngIf="cageElement.editing == true" class="elementInput">
-                      <input required matInput [(ngModel)]="cageElement.CashCount">
+                      <input required type="number" matInput [(ngModel)]="cageElement.CashCount">
                     </div>
                     <span *ngIf="cageElement.editing == false">{{cageElement.CashCount|number}}</span>
                   </td>
@@ -568,7 +568,7 @@
                   <td mat-cell *matCellDef="let cageElement">
                     <div *ngIf="cageElement.editing == true" class="elementInput">
                       <span>$</span>
-                      <input required matInput [ngModel]="cageElement.CashAmount|number:'1.2-2'" (blur)="updateValue(cageElement, $event, 'Cash')">
+                      <input required type="number" matInput [ngModel]="cageElement.CashAmount|number:'1.2-2'" (blur)="updateValue(cageElement, $event, 'Cash')">
                     </div>
                     <span *ngIf="cageElement.editing == false">{{cageElement.CashAmount|currency:'USD':'symbol':'1.2-2'}}</span>
                   </td>
@@ -578,7 +578,7 @@
                   <th mat-header-cell *matHeaderCellDef>Card Donations</th>
                   <td mat-cell *matCellDef="let cageElement">
                     <div *ngIf="cageElement.editing == true" class="elementInput">
-                      <input required matInput [(ngModel)]="cageElement.CardCount">
+                      <input required type="number" matInput [(ngModel)]="cageElement.CardCount">
                     </div>
                     <span *ngIf="cageElement.editing == false">{{cageElement.CardCount|number}}</span>
                   </td>
@@ -589,7 +589,7 @@
                   <td mat-cell *matCellDef="let cageElement">
                     <div *ngIf="cageElement.editing == true" class="elementInput">
                       <span>$</span>
-                      <input required matInput [ngModel]="cageElement.CardAmount" (blur)="updateValue(cageElement, $event, 'Card')">
+                      <input required type="number" matInput [ngModel]="cageElement.CardAmount" (blur)="updateValue(cageElement, $event, 'Card')">
                     </div>
                     <span *ngIf="cageElement.editing == false">{{cageElement.CardAmount|currency:'USD':'symbol':'1.2-2'}}</span>
                   </td>
@@ -599,7 +599,7 @@
                   <th mat-header-cell *matHeaderCellDef>Check Donations</th>
                   <td mat-cell *matCellDef="let cageElement">
                     <div *ngIf="cageElement.editing == true" class="elementInput">
-                      <input required matInput [(ngModel)]="cageElement.CheckCount">
+                      <input required type="number" matInput [(ngModel)]="cageElement.CheckCount">
                     </div>
                     <span *ngIf="cageElement.editing == false">{{cageElement.CheckCount|number}}</span>
                   </td>
@@ -610,7 +610,7 @@
                   <td mat-cell *matCellDef="let cageElement">
                     <div *ngIf="cageElement.editing == true" class="elementInput">
                       <span>$</span>
-                      <input required matInput [ngModel]="cageElement.CheckAmount|number:'1.2-2'" (blur)="updateValue(cageElement, $event, 'Check')">
+                      <input required type="number" matInput [ngModel]="cageElement.CheckAmount|number:'1.2-2'" (blur)="updateValue(cageElement, $event, 'Check')">
                     </div>
                     <span *ngIf="cageElement.editing == false">{{cageElement.CheckAmount|currency:'USD':'symbol':'1.2-2'}}</span>
                   </td>

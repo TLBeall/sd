@@ -7,6 +7,9 @@ import { ListPerformance } from '../Models/ListPerformance.model';
 import { CagingDailies } from '../Models/CagingDailies.model';
 import { ListRental } from '../Models/ListRental.model';
 import { Incidental } from '../Models/Incidentals.model';
+import { ExceptionAggregate } from 'src/app/Models/ExceptionAggregate.model';
+import { ExceptionElement } from 'src/app/Models/ExceptionElement.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +29,8 @@ export class GlobalService {
   public whitemailClient: string;
   public LRIElement: ListRental;
   public IncidentalsElement: Incidental;
+  public exceptionInstanceElem: ExceptionAggregate;
+  public exceptionElem: ExceptionElement;
 
   constructor() {
   }

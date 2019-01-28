@@ -43,6 +43,7 @@ import { IncidentalsEditComponent } from './Utilities_Pages/Incidentals/incident
 import { IncidentalsNewComponent } from './Utilities_Pages/Incidentals/incidentals-new/incidentals-new.component';
 import { CagingCalendarComponent } from './Utilities_Pages/Caging/caging-calendar/caging-calendar.component';
 import { ExceptionsMainComponent } from './Utilities_Pages/Caging/exceptions-main/exceptions-main.component';
+import { ExceptionsEditComponent } from './Utilities_Pages/Caging/exceptions-edit/exceptions-edit.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { ExceptionsMainComponent } from './Utilities_Pages/Caging/exceptions-mai
     IncidentalsEditComponent,
     IncidentalsNewComponent,
     CagingCalendarComponent,
-    UploadPDFComponent
+    UploadPDFComponent,
+    ExceptionsEditComponent
   ],
   imports: [
     BrowserModule,

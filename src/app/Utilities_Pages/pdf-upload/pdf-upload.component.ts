@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatChipInputEvent, MatAutocompleteSelectedEvent, MatSort, MatTableDataSource, Sort } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { ENTER, COMMA, P } from '@angular/cdk/keycodes';
 import { startWith, map } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/Services/auth.service';
@@ -36,14 +36,14 @@ export class PdfUploadComponent implements OnInit {
   @ViewChild('startDateInput') startDateInput: ElementRef<HTMLInputElement>;
   @ViewChild('endDateInput') endDateInput: ElementRef<HTMLInputElement>;
 
-  private pdfPresence = new FormControl();
 
+  private packageCount = 0;
   public loading: boolean = true;
   private startDate: any;
   private endDate: any;
   private tableData: PDFElement[];
   private dataSource;
-  private pdfType: string;
+  private pdfType: string[];
   private fileUrl: string;
 
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
@@ -61,14 +61,9 @@ export class PdfUploadComponent implements OnInit {
     //FOR TIME PARAMETER SELECTION
     let yearEnd = new Date("12-31-" + (new Date()).getFullYear().toString());
     let current = new Date();
-    // let tempEndDate = moment(yearEnd, "MM-DD-YYYY").format("MM-DD-YYYY");
-    let tempStartDate = moment(current, "MM-DD-YYYY").subtract(30, 'd').format("MM-DD-YYYY"); //91
+    let tempStartDate = moment(current, "MM-DD-YYYY").subtract(91, 'd').format("MM-DD-YYYY");
     this.endDate = new Date();
-    // this.endDate = new Date("12/31/" + (new Date()).getFullYear().toString());
     this.startDate = new Date(tempStartDate);
-    // var currentDate = new Date();
-    // this.startDate = new Date(currentDate).setDate(currentDate.getDate() - 365);
-
 
     this._authService.getClientsFilter(dateStart, dateEnd).subscribe(data => {
       this.CLStrArr = Array.from(new Set(data.map(item => item.gClientName + ' - ' + item.gClientAcronym))).sort();
@@ -82,9 +77,10 @@ export class PdfUploadComponent implements OnInit {
   }
 
 
+
   loadPDFData(clients: string, start: string, end: string) {
     this.loading = true;
-    this.pdfType = "Both";
+    this.pdfType = ["PDF", "None"];
     this._authService.getPDFList(clients, start, end).subscribe(data => {
       this.tableData = data;
       this.tableData.forEach(element => {
@@ -93,6 +89,7 @@ export class PdfUploadComponent implements OnInit {
       });
       this.defaultSortTable();
       this.loading = false;
+      this.countPackages();
     });
   }
 
@@ -170,8 +167,8 @@ export class PdfUploadComponent implements OnInit {
     return retString;
   }
 
-  changeDate(){
-    if(this.validateDate() == true){
+  changeDate() {
+    if (this.validateDate() == true) {
       this.loadPDFData(this.convertCLList(), this.convertDate(this.startDate), this.convertDate(this.endDate))
     } else {
       this.loadPDFData(this.convertCLList(), this.convertDate(this.startDate), this.convertDate(this.endDate))
@@ -238,30 +235,41 @@ export class PdfUploadComponent implements OnInit {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
-  changePDFType(event: any) {
-    this.pdfType = event.target.value;
+  changePDFType(value: string) {
+    if (this.pdfType.includes(value)) {
+      let index = this.pdfType.indexOf(value);
+      this.pdfType.splice(index, 1);
+    } else {
+      this.pdfType.push(value);
+    }
 
-    if (this.pdfType == "PDF") {
-      this.tableData.forEach(element => {
-        if (element.HasPDF == false) {
-          element.Hidden = true;
-        } else {
-          element.Hidden = false;
-        }
-      });
-    } else if (this.pdfType == "None") {
-      this.tableData.forEach(element => {
-        if (element.HasPDF == true) {
-          element.Hidden = true;
-        } else {
-          element.Hidden = false;
-        }
-      });
-    } else if (this.pdfType == "Both") {
+    if (this.pdfType.includes("PDF") && this.pdfType.includes("None")) {
       this.tableData.forEach(element => {
         element.Hidden = false;
       });
+    } else if (this.pdfType.includes("PDF")) {
+      this.tableData.forEach(element => {
+        if (element.HasPDF == true) {
+          element.Hidden = false;
+        } else {
+          element.Hidden = true;
+        }
+      });
+    } else if (this.pdfType.includes("None")) {
+      this.tableData.forEach(element => {
+        if (element.HasPDF == false) {
+          element.Hidden = false;
+        } else {
+          element.Hidden = true;
+        }
+      });
+    } else {
+      this.tableData.forEach(element => {
+        element.Hidden = true;
+      });
     }
+
+    this.countPackages();
   }
 
   hoverRow(row: PDFElement) {
@@ -270,6 +278,31 @@ export class PdfUploadComponent implements OnInit {
     } else if (row.Hidden == false && row.ShowControl == true) {
       row.ShowControl = false;
     }
+  }
+
+  countPackages(){
+    this.packageCount = 0;
+
+    if (this.pdfType.includes("PDF") && this.pdfType.includes("None")) {
+      this.tableData.forEach(element => {
+        this.packageCount++;
+      });
+    } else if (this.pdfType.includes("PDF")) {
+      this.tableData.forEach(element => {
+        if (element.HasPDF == true) {
+          this.packageCount++;
+        }
+      });
+    } else if (this.pdfType.includes("None")) {
+      this.tableData.forEach(element => {
+        if (element.HasPDF == false) {
+          this.packageCount++
+        }
+      });
+    } else {
+      this.packageCount = 0;
+    }
+
   }
 
 

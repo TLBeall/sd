@@ -1,17 +1,19 @@
 @import '~src/appTheme.scss'; 
 
+//Sets width of mat-form-fields to 100% of the boostrap div that it resides in
 .selectionElement{
     width:100%;
 }
 
 
 
+//////////////////////// MAT TABLE SETTINGS //////////////////////
 table {
-    width: 96%;
+    width: 100%;
     margin: 0 auto;
   }
 
-  //Collectively control the row settings and cell settings (set the row height of all the tables)
+//Collectively control the row settings and cell settings (set the row height of all the tables)
 .mat-row {
     &:hover{
         background: $color-blue-highlight;
@@ -36,7 +38,7 @@ table {
     border-top:none !important;  
 }
 
-  //Controls edit/cancel/submit
+//Controls edit
 .controlColumnBtn{
     width:18px;
     height:18px;
@@ -49,6 +51,73 @@ table {
     i{
       padding: 0px 0px 18px 0px;
     }
+}
 
 
+
+///////////////////////// SETTINGS FOR MODALS ////////////////////////
+#modalBackground{
+  position: fixed;
+  top: 92px;
+  z-index: 130;
+  width: 100%;
+  height:100%;
+  background-color: rgba(128, 128, 128, 0.5); //gives transparent, cannot use opacity due to inheritance
+}
+
+.modalCard{
+  position: relative;
+  top: 25%;
+  z-index: 140;
+  .bannerDiv{
+      text-align: center;
+      i.bannerIcon{
+          font-size: 1000%;
+          color: $color-success;
+      }
+  }
+  .updatedDiv{
+      text-align: center;
+      span.updatedMsg{
+          font-size: 18pt;
+      }
+  }
+  .cancelDiv{
+      text-align: right;
+      i{
+          opacity: 0.75;
+      }
+  }
+}
+
+
+.confirmModalCard{
+  position: relative;
+  top: 25%;
+  z-index: 140;
+  div{
+      text-align: center;
+      i{
+          font-size: 1000%;
+          color: $color-warn;
+      }
+  }
+}
+
+#confirmMessage1{
+  font-size: 22pt;
+}
+
+.btnContainer{
+  text-align: center; //Buttons are inline elements, so this is how you center inside a div
+  margin-top: 15px;
+      #cancelBtn{
+          background-color: $color-gallery;
+          margin-right: 10px;
+      }
+      #confirmBtn{
+          color: white;
+          background-color: $color-warn;
+          margin-left: 10px;
+      }
 }

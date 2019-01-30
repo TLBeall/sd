@@ -8,8 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/Services/auth.service';
 import * as moment from 'moment';
 import { PDFElement } from 'src/app/Models/PDFEelement.model';
-import { element } from 'protractor';
-import { CompileMetadataResolver } from '@angular/compiler';
+import { HttpClient } from '@angular/common/http';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -37,22 +37,30 @@ export class PdfUploadComponent implements OnInit {
   @ViewChild('endDateInput') endDateInput: ElementRef<HTMLInputElement>;
 
 
-  private packageCount = 0;
+  // private packageCount = 0;
+  private pdfCount = 0;
+  private noneCount = 0;
+  private bothCount = 0;
+
   public loading: boolean = true;
   private startDate: any;
   private endDate: any;
-  private tableData: PDFElement[];
+  private tableData;
   private dataSource;
   private pdfType: string[];
   private fileUrl: string;
+  private tableState: number = 3;
+  private selectedFile: File = null;
+  private showSubmittedModal: boolean = false;
+  private showUpdateConfirmModal: boolean = false;
+  private storedFileElement: PDFElement;
 
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
 
 
   MainDisplayedColumns: string[] = ['PackageName', 'Client', 'Date', 'Description', 'Link', 'ButtonControl'];
-  // @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private route: ActivatedRoute, private router: Router, private _authService: AuthService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private _authService: AuthService, private http: HttpClient) { }
 
   ngOnInit() {
     //FOR CLIENT SELECTION
@@ -78,20 +86,27 @@ export class PdfUploadComponent implements OnInit {
 
 
 
+  ////////////////////////////// GETTING AND PROCESSING DATA FOR TABLE /////////////////////////////
   loadPDFData(clients: string, start: string, end: string) {
     this.loading = true;
     this.pdfType = ["PDF", "None"];
     this._authService.getPDFList(clients, start, end).subscribe(data => {
-      this.tableData = data;
-      this.tableData.forEach(element => {
+      this.tableData = new MatTableDataSource(data);
+      this.tableData.data.forEach(element => {
         element.Hidden = false;
         element.ShowControl = false;
       });
       this.defaultSortTable();
-      this.loading = false;
+      this.checkPageState();
       this.countPackages();
+      this.loading = false;
     });
   }
+
+  applyFilter(filterValue: string) {
+    this.tableData.filter = filterValue.trim().toLowerCase();
+  }
+
 
 
   ///////////////////// CLIENT SELECTION / CHIP SETTINGS ///////////////////////////
@@ -160,6 +175,86 @@ export class PdfUploadComponent implements OnInit {
 
 
 
+  ////////////////////// SORTING FUNCTIONS /////////////////////////
+  defaultSortTable() {
+    this.tableData.data = this.tableData.data.sort((a, b) => {
+      const isAsc = 'asc';
+      return this.compare(a.PhaseName, b.PhaseName, isAsc);
+    })
+  }
+
+  SortFunction(sort: Sort, tData: any) {
+    var data = tData.data.slice();
+
+    var sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'PackageName': return this.compare(a.PhaseName, b.PhaseName, isAsc);
+        case 'Client': return this.compare(a.gClientAcronym, b.gClientAcronym, isAsc);
+        case 'Date': return this.compare(a.MailDate, b.MailDate, isAsc);
+        default: return 0;
+      }
+    })
+    this.tableData.data = sortedData;
+  }
+
+  compare(a: any, b: any, isAsc) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+
+
+  //////////////////////////// FILE UPLOAD FUNCTIONS /////////////////////
+  preFileChange(element: PDFElement) {
+    this.storedFileElement = element;
+
+    if (element.HasPDF == false) {
+      this.fileInput.nativeElement.click();
+    } else {
+      this.confirmFileOverwrite();
+    }
+  }
+
+  confirmFileOverwrite() {
+    this.showUpdateConfirmModal = true;
+  }
+
+  fileOverwriteConfirmed() {
+    this.showUpdateConfirmModal = false;
+    this.fileInput.nativeElement.click();
+  }
+
+  //File Input element for browser
+  onFileChange(event: any) {
+    if (event.target.files[0].type == "application/pdf") {
+      const fileName = this.storedFileElement.PhaseID.toString() + ".pdf";
+      this.selectedFile = <File>event.target.files[0];
+      const formData = new FormData();
+      formData.append('caption', this.selectedFile, fileName)
+      this.http.post('https://sd360.sunrisedataservices.com/api/UpLoadPDF', formData)
+        .subscribe(response => {
+          if (response) {
+            console.log(response);
+            this.showSubmittedModal = true;
+            setTimeout(() => {
+              this.showSubmittedModal = false;
+              this.storedFileElement.ShowControl = false;
+              this.storedFileElement.HasPDF = true;
+            }, 1500)
+          }
+        });
+    } else {
+      alert('Only PDFs can be uploaded');
+    }
+  }
+
+  modalCancel() {
+    this.showSubmittedModal = false;
+    this.showUpdateConfirmModal = false;
+  }
+
+
+
   ///////////////////// MISCELANEOUS HELPER/SUPPORT FUNCTIONS /////////////
   getAcronym(Name: string): string {
     var retString: string;
@@ -171,7 +266,7 @@ export class PdfUploadComponent implements OnInit {
     if (this.validateDate() == true) {
       this.loadPDFData(this.convertCLList(), this.convertDate(this.startDate), this.convertDate(this.endDate))
     } else {
-      this.loadPDFData(this.convertCLList(), this.convertDate(this.startDate), this.convertDate(this.endDate))
+      alert('Invalid Date');
     }
   }
 
@@ -208,31 +303,12 @@ export class PdfUploadComponent implements OnInit {
     return moment(date).format("MM/DD/YYYY");
   }
 
-  defaultSortTable() {
-    this.tableData = this.tableData.sort((a, b) => {
-      const isAsc = 'asc';
-      return this.compare(a.PhaseName, b.PhaseName, isAsc);
-    })
-  }
-
-  SortFunction(sort: Sort, tData: PDFElement[]) {
-    var data = tData.slice();
-
-    var sortedData = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'PackageName': return this.compare(a.PhaseName, b.PhaseName, isAsc);
-        case 'Client': return this.compare(a.gClientAcronym, b.gClientAcronym, isAsc);
-        case 'Date': return this.compare(a.MailDate, b.MailDate, isAsc);
-        default: return 0;
-      }
-    })
-
-    this.tableData = sortedData;
-  }
-
-  compare(a: any, b: any, isAsc) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  hoverRow(row: PDFElement) {
+    if (row.Hidden == false && row.ShowControl == false) {
+      row.ShowControl = true;
+    } else if (row.Hidden == false && row.ShowControl == true) {
+      row.ShowControl = false;
+    }
   }
 
   changePDFType(value: string) {
@@ -242,21 +318,22 @@ export class PdfUploadComponent implements OnInit {
     } else {
       this.pdfType.push(value);
     }
+    this.checkPageState();
 
-    if (this.pdfType.includes("PDF") && this.pdfType.includes("None")) {
-      this.tableData.forEach(element => {
+    if (this.tableState == 3) {
+      this.tableData.data.forEach(element => {
         element.Hidden = false;
       });
-    } else if (this.pdfType.includes("PDF")) {
-      this.tableData.forEach(element => {
+    } else if (this.tableState == 1) {
+      this.tableData.data.forEach(element => {
         if (element.HasPDF == true) {
           element.Hidden = false;
         } else {
           element.Hidden = true;
         }
       });
-    } else if (this.pdfType.includes("None")) {
-      this.tableData.forEach(element => {
+    } else if (this.tableState == 2) {
+      this.tableData.data.forEach(element => {
         if (element.HasPDF == false) {
           element.Hidden = false;
         } else {
@@ -264,57 +341,42 @@ export class PdfUploadComponent implements OnInit {
         }
       });
     } else {
-      this.tableData.forEach(element => {
+      this.tableData.data.forEach(element => {
         element.Hidden = true;
       });
     }
-
-    this.countPackages();
   }
 
-  hoverRow(row: PDFElement) {
-    if (row.Hidden == false && row.ShowControl == false) {
-      row.ShowControl = true;
-    } else if (row.Hidden == false && row.ShowControl == true) {
-      row.ShowControl = false;
-    }
+  countPackages() {
+    this.pdfCount = 0;
+    this.noneCount = 0;
+    this.bothCount = 0;
+
+    this.tableData.data.forEach(element => {
+      if (element.HasPDF == true) {
+        this.pdfCount++
+      } else {
+        this.noneCount++
+      }
+    });
+    this.bothCount = this.pdfCount + this.noneCount;
   }
 
-  countPackages(){
-    this.packageCount = 0;
+  checkPageState() {
+    //0 = No rows showing
+    //1 = Rows only with PDF showing
+    //2 = Rows only without PDF showing
+    //3 = Everything showing
 
     if (this.pdfType.includes("PDF") && this.pdfType.includes("None")) {
-      this.tableData.forEach(element => {
-        this.packageCount++;
-      });
-    } else if (this.pdfType.includes("PDF")) {
-      this.tableData.forEach(element => {
-        if (element.HasPDF == true) {
-          this.packageCount++;
-        }
-      });
-    } else if (this.pdfType.includes("None")) {
-      this.tableData.forEach(element => {
-        if (element.HasPDF == false) {
-          this.packageCount++
-        }
-      });
+      this.tableState = 3;
+    } else if (this.pdfType.includes("PDF") && !this.pdfType.includes("None")) {
+      this.tableState = 1
+    } else if (this.pdfType.includes("None") && !this.pdfType.includes("PDF")) {
+      this.tableState = 2;
     } else {
-      this.packageCount = 0;
+      this.tableState = 0;
     }
-
   }
-
-
-  /* File Input element for browser */
-  onFileChange(evt: any) {
-    this.fileUrl = evt.target.files[0].name;
-    var test = 0;
-  }
-
-  // resetFile(){
-  //   this.fileUrl = "";
-  //   this.fileInput.nativeElement.value = null;
-  // }
 
 }

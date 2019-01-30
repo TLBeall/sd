@@ -17,7 +17,7 @@ import { MainReturnsToolbarComponent } from './toolbar/main-returns-toolbar/main
 import { HomePageInternalToolbarComponent } from './toolbar/home-page-internal-toolbar/home-page-internal-toolbar.component';
 import { MatTableModule } from '@angular/material/table';
 import {
-  MatTreeModule, MatSort, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule,
+  MatTreeModule, MatButtonModule, MatIconModule, MatCardModule, MatTabsModule, MatMenuModule, MatToolbarModule,
   MatSortModule, MatProgressSpinnerModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatInputModule,
   MatCheckboxModule, MatProgressBarModule, MatSlideToggleModule, MatAutocompleteModule, MatChipsModule, MatButtonToggleModule,
   MatDialogModule, MatGridListModule, MatTooltipModule, MatRadioModule
@@ -112,7 +112,7 @@ import { PdfUploadComponent } from './Utilities_Pages/pdf-upload/pdf-upload.comp
     MatDialogModule,
     MatGridListModule,
     MatTooltipModule,
-    MatRadioModule
+    MatRadioModule,
   ],
   providers: [
     AuthService,

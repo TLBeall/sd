@@ -340,8 +340,8 @@ export class AuthService {
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
   }
 
- 
-  getPhasebyClient(client: string): Observable<any>  {
+
+  getPhasebyClient(client: string): Observable<any> {
     var Token = "";
     var getURL = " https://sd360.sunrisedataservices.com/api/PhaseListByClient?Client=" + client;
 
@@ -366,7 +366,7 @@ export class AuthService {
     return this.http.put(editURL, { headers: headersForEditAPI });
   }
 
-  getPDFList(CLList: string, startdate: string, enddate: string){
+  getPDFList(CLList: string, startdate: string, enddate: string) {
     var Token = "";
     var getURL = "https://sd360.sunrisedataservices.com/api/BrowsePDF?ClientList=" + CLList + "&From=" + startdate + "&To=" + enddate;
 

@@ -32,16 +32,12 @@ export class PdfUploadComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   clientPlaceholder = "All Clients -- Select Client"
 
-
   @ViewChild('startDateInput') startDateInput: ElementRef<HTMLInputElement>;
   @ViewChild('endDateInput') endDateInput: ElementRef<HTMLInputElement>;
-
-
-  // private packageCount = 0;
+  @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
   private pdfCount = 0;
   private noneCount = 0;
   private bothCount = 0;
-
   public loading: boolean = true;
   private startDate: any;
   private endDate: any;
@@ -54,11 +50,8 @@ export class PdfUploadComponent implements OnInit {
   private showSubmittedModal: boolean = false;
   private showUpdateConfirmModal: boolean = false;
   private storedFileElement: PDFElement;
-
-  @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
-
-
   MainDisplayedColumns: string[] = ['PackageName', 'Client', 'Date', 'Description', 'Link', 'ButtonControl'];
+
 
   constructor(private route: ActivatedRoute, private router: Router, private _authService: AuthService, private http: HttpClient) { }
 

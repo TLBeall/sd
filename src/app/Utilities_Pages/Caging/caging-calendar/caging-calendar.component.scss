@@ -2,6 +2,10 @@
 
 
 //////////////////// SETTINGS FOR ENTIRE PAGE OR ACROSS TIME VIEWS ////////////////
+.buttonArray{
+    font-size: 11px;
+}
+
 .totalsBox{
     p{
         font-weight: bold;
@@ -22,16 +26,28 @@
     width: 100%;
 }
 
+.timeSelectionDiv{
+    margin-left: 20px;
+    display: inline;
+    top: 0;
+}
+
 .defaultButton{
     background-color: $color-blue-default;
     color: $color-white !important;
+    display: inline;
     i{
         font-size: 20pt;
     }
-    &#timeResetBtn{
-        margin-left: 20px;
+}
+
+.yearTravelBtn{
+    display: inline;
+    i{
+        font-size: 20pt;
     }
 }
+
 
 #timeHeader{
     text-align: center;

@@ -28,6 +28,7 @@ export class ExceptionsMainComponent implements OnInit {
   private tableLoading: boolean = true;
   private allInstancesExpanded: boolean = false;
   private selectionMode: boolean = false;
+  private showExceptionBlank = false;
 
 
   public InstanceColumns: string[];
@@ -40,22 +41,27 @@ export class ExceptionsMainComponent implements OnInit {
     this.MailcodeColumns = ['ExpandChild', 'SelectionBox', 'Mailcode', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'ControlChild'];
 
     this._authService.getDailiesExceptions().subscribe(data => {
-      this.exceptionsAggregate = data;
-      this.exceptionsAggregate.forEach(a => {
-        a.Expanded = false;
-        a.showControl = false;
-        a.ExceptionList.forEach(b => {
-          b.showControl = false;
+      if (data.length > 0) {
+        this.showExceptionBlank = false;
+        this.exceptionsAggregate = data;
+        this.exceptionsAggregate.forEach(a => {
+          a.Expanded = false;
+          a.showControl = false;
+          a.ExceptionList.forEach(b => {
+            b.showControl = false;
+          });
+          this.tableLoading = false;
         });
+      } else {
         this.tableLoading = false;
-      });
-      var test = 0;
+        this.showExceptionBlank = true;
+      }
     })
 
   }
 
   ToggleExpansion(element: ExceptionAggregate) {
-    if (element.Expanded == true){
+    if (element.Expanded == true) {
       element.Expanded = false;
     } else {
       element.Expanded = true;

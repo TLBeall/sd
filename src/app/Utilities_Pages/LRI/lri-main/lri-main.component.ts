@@ -26,6 +26,8 @@ export class LriMainComponent implements OnInit {
   private checkedRows: number[] = [];
   private deleteNotation: string;
   private showDeleteModal: boolean = false;
+  private showEmptyMessage: boolean = false;
+  private tableLoading: boolean = false;
 
   MainDisplayedColumns: string[] = ['SelectionBox', 'Date', 'Description', 'Amount', 'ButtonControl'];
 
@@ -51,9 +53,10 @@ export class LriMainComponent implements OnInit {
   }
 
   mainSelectClient(client) {
+    this.tableLoading = true;
+    this.showEmptyMessage = false;
     this.Client = client;
-    var reg = /(?<= - ).*/;
-    var clientAcronym = client.match(reg);
+    var clientAcronym = client.split(" ").splice(-1); 
     this._authService.getListRentalbyClient(clientAcronym[0]).subscribe(data => {
       if (data)
         var temp = this.sortByStartDate(data)
@@ -62,9 +65,10 @@ export class LriMainComponent implements OnInit {
         element.Client = client;
       })
       this.displayTable = true;
+      this.tableLoading = false;
       if (data.length == 0) {
         this.displayTable = false;
-        alert('Client does not have LRI');
+        this.showEmptyMessage = true;
       }
     })
   }

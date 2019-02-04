@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/Services/auth.service';
 import { startWith, map } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent, MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatChipInputEvent, MatAutocompleteSelectedEvent, MatMenuTrigger } from '@angular/material';
 import { trigger, state, transition, animate, style } from '@angular/animations';
 import { CagingDayElement } from 'src/app/Models/CagingDayElement.model';
 import { CagingElement } from 'src/app/Models/CagingElement.model';
@@ -62,6 +62,12 @@ export class CagingCalendarComponent implements OnInit {
   private totalCardCount: number;
   private totalCashCount: number;
   private totalCheckCount: number;
+  private yearArr: number[];
+  private monthDrill: boolean;
+  private monthSelectArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  private storedYear: number;
+  @ViewChild('MonthMenuTrigger') MonthMenu: MatMenuTrigger;
+  @ViewChild('YearMenuTrigger') YearMenu: MatMenuTrigger;
 
   //FOR CHIP SELECTION SETTINGS
   @ViewChild('CLInput') CLInput: ElementRef<HTMLInputElement>;
@@ -123,6 +129,13 @@ export class CagingCalendarComponent implements OnInit {
   private showDeleteModal: boolean = false;
   public ClientColumns: string[];
   public MailcodeColumns: string[];
+  @ViewChild('NonDonorInput') NonDonorInput: ElementRef;
+  @ViewChild('CashCountInput') CashCountInput: ElementRef;
+  @ViewChild('CashAmountInput') CashAmountInput: ElementRef;
+  @ViewChild('CardCountInput') CardCountInput: ElementRef;
+  @ViewChild('CardAmountInput') CardAmountInput: ElementRef;
+  @ViewChild('CheckCountInput') CheckCountInput: ElementRef;
+  @ViewChild('CheckAmountInput') CheckAmountInput: ElementRef;
 
 
   constructor(private route: ActivatedRoute, private router: Router, private _authService: AuthService) { }
@@ -130,7 +143,6 @@ export class CagingCalendarComponent implements OnInit {
   ngOnInit() {
     this.ClientColumns = ['ExpandParent', 'PsuedoSelection', 'Client', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
     this.MailcodeColumns = ['ExpandChild', 'SelectionBox', 'Mailcode', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
-
     this.lockedYear = new Date().getFullYear();
     this.lockedMonth = parseInt(moment().format('M'));
     this.lockedDay = parseInt(moment().format('D'))
@@ -139,6 +151,7 @@ export class CagingCalendarComponent implements OnInit {
     let dateStart = new Date("1/1/2000");
     let dateEnd = new Date("12/31/" + (new Date()).getFullYear().toString());
     this.yvYear = new Date().getFullYear();
+    this.createYearSelection();
 
     this._authService.getClientsFilter(dateStart, dateEnd).subscribe(data => {
       this.CLStrArr = Array.from(new Set(data.map(item => item.gClientName + ' - ' + item.gClientAcronym))).sort();
@@ -149,6 +162,37 @@ export class CagingCalendarComponent implements OnInit {
     });
     this.getYearData(this.convertCLList(), this.yvYear);
     this.getMonthData(this.convertCLList(), this.yvYear, this.lockedMonth);
+  }
+
+  selectYearDrop(year: number) {
+    if (this.timeSelection == "Year") {
+      this.loading = true;
+      this.yvYear = year;
+      this.getYearData(this.convertCLList(), this.yvYear);
+    } else if (this.timeSelection == "Month") {
+      this.monthDrill = true;
+      this.storedYear = year;
+      this.MonthMenu.openMenu();
+    }
+  }
+
+  selectMonthDrop(month: number) {
+    this.loading = true;
+    this.travelingInCalendar = true;
+    this.monthAdjust = 0;
+    this.emptyObjects();
+    this.mvSetDate = this.pad(month) + "-" + "01" + "-" + this.storedYear.toString();
+    this.mvMonth = moment(this.mvSetDate, "MM-DD-YYYY").format('MMMM');
+    this.mvYear = parseInt(moment(this.mvSetDate, "MM-DD-YYYY").format('YYYY'));
+    this.startOfWeek = parseInt(moment(this.mvSetDate, "MM-DD-YYYY").startOf("month").startOf('week').format('D'));
+    this.daysInPreviousMonth = parseInt(moment(this.mvSetDate, "MM-DD-YYYY").subtract(1, "month").endOf("month").format('D'));
+    this.daysInCurrentMonth = parseInt(moment(this.mvSetDate, "MM-DD-YYYY").endOf("month").format('D'));
+    this.endOfLastWeek = parseInt(moment(this.mvSetDate, "MM-DD-YYYY").endOf('month').endOf('week').format('D'));
+    this.getMonthData(this.convertCLList(), this.mvYear, this.getMonthInt(this.mvMonth));
+  }
+
+  monthMenuClosed() {
+    this.monthDrill = false;
   }
 
 
@@ -348,6 +392,7 @@ export class CagingCalendarComponent implements OnInit {
         }
         this.monthArr.push(monthElem);
       });
+      this.determineCalculationType();
       this.loading = false;
     })
   }
@@ -611,7 +656,7 @@ export class CagingCalendarComponent implements OnInit {
     if (this.timeSelection == "Month") {
       this.monthAdjust = 0;
       this.emptyObjects();
-      this.getMonthData(this.convertCLList(), this.lockedYear, this.lockedMonth)
+      this.getMonthData(this.convertCLList(), this.lockedYear, this.lockedMonth);
     } else if (this.timeSelection == "Year") {
       this.yvYear = this.lockedYear;
       this.getYearData(this.convertCLList(), this.lockedYear);
@@ -640,7 +685,8 @@ export class CagingCalendarComponent implements OnInit {
   switchToDay() {
     if (this.firstLoad == true) {
       this.loading = true;
-      this.getMostRecentDay();
+      // this.getMostRecentDay();
+      this.dvDay = this.lockedDay;
       this.dvYear = this.lockedYear;
       this.dvMonth = this.convertMonthName(this.lockedMonth);
       this.getDayData(this.convertCLList(), this.lockedYear, this.lockedMonth, this.dvDay);
@@ -677,6 +723,29 @@ export class CagingCalendarComponent implements OnInit {
     this.getDayData(this.convertCLList(), this.dvYear, this.getMonthInt(this.dvMonth), this.dvDay);
   }
 
+  generatePastYears(){
+    var year = this.yearArr[0]-21;
+    var firstYear = this.yearArr[0];
+    var tempYearArr = []
+    for(year; year < firstYear; year++){
+      tempYearArr.push(year);
+    }
+    tempYearArr.sort();
+    this.yearArr = tempYearArr;
+    // this.YearMenu.openMenu();
+  }
+
+  generateFutureYears(){
+    var year = this.yearArr[20]+21;
+    var firstYear = this.yearArr[20];
+    var tempYearArr = []
+    for(year; year > firstYear; year--){
+      tempYearArr.push(year);
+    }
+    tempYearArr.sort();
+    this.yearArr = tempYearArr; 
+    // this.YearMenu.openMenu();
+  }
 
 
   ///////////////////// CLIENT SELECTION / CHIP SETTINGS ///////////////////////////
@@ -754,13 +823,70 @@ export class CagingCalendarComponent implements OnInit {
   }
 
   editCaging(e: CagingElement) {
+    this.travelingInCalendar = true;
+    e.NonDonors = parseFloat(this.NonDonorInput.nativeElement.value);
+    e.CashCount = parseFloat(this.CashCountInput.nativeElement.value);
+    e.CashAmount = parseFloat(this.CashAmountInput.nativeElement.value);
+    e.CardCount = parseFloat(this.CardCountInput.nativeElement.value);
+    e.CardAmount = parseFloat(this.CardAmountInput.nativeElement.value);
+    e.CheckCount = parseFloat(this.CheckCountInput.nativeElement.value);
+    e.CheckAmount = parseFloat(this.CheckAmountInput.nativeElement.value);
     e.ModifiedDate = new Date;
-    this._authService.editCaging(e, e.CagingID).subscribe();
-    e.editing = false;
-    //Need to add function to update all of the ngModels and totals in the table?
-    this.getDayData(this.convertCLList(), this.dvYear, this.getMonthInt(this.dvMonth), this.dvDay);
-    this.getYearData(this.convertCLList(), this.yvYear);
-    this.getMonthData(this.convertCLList(), this.mvYear, this.getMonthInt(this.mvMonth));
+    e.ModifiedBy = "TempUser";
+    var validity = this.checkEditValidity(e)[0];
+    var message = this.checkEditValidity(e)[1];
+    if (validity == true) {
+      this.loading = true;
+      this._authService.editCaging(e, e.CagingID).subscribe(response => {
+        e.editing = false;
+        //Need to add function to update all of the ngModels and totals in the table?
+        this.getDayData(this.convertCLList(), this.dvYear, this.getMonthInt(this.dvMonth), this.dvDay);
+        this.getYearData(this.convertCLList(), this.yvYear);
+        this.getMonthData(this.convertCLList(), this.mvYear, this.getMonthInt(this.mvMonth));
+        this.loading = false;
+      })
+    } else {
+      let errorMessage = message + "On " + e.MailCode;
+      alert(errorMessage);
+    }
+  }
+
+  checkEditValidity(e: CagingElement): [boolean, string] {
+    var message = ""
+    var errors = 0;
+    if (Number.isNaN(e.NonDonors)) {
+      errors++;
+      message += " Enter NonDonors; "
+    }
+    if (Number.isNaN(e.CashCount)) {
+      errors++;
+      message += " Enter CashCount; "
+    }
+    if (Number.isNaN(e.CashAmount)) {
+      errors++;
+      message += " Enter CashAmount; "
+    }
+    if (Number.isNaN(e.CardCount)) {
+      errors++;
+      message += " Enter CardCount; "
+    }
+    if (Number.isNaN(e.CardAmount)) {
+      errors++;
+      message += " Enter CardAmount; "
+    }
+    if (Number.isNaN(e.CheckCount)) {
+      errors++;
+      message += " Enter CheckCount; "
+    }
+    if (Number.isNaN(e.CheckAmount)) {
+      errors++;
+      message += " Enter CheckAmount; "
+    }
+    if (errors > 0) {
+      return [false, message];
+    } else {
+      return [true, "Input Valid"];
+    }
   }
 
   cancelEdit(e: CagingElement) {
@@ -898,6 +1024,24 @@ export class CagingCalendarComponent implements OnInit {
     return retString;
   }
 
+  createYearSelection() {
+    this.yearArr = [];
+    this.monthDrill = false;
+    this.yearArr.push(this.lockedYear);
+    var i;
+    var aboveDate = this.lockedYear;
+    for (i = 0; i < 10; i++) {
+      aboveDate++;
+      this.yearArr.push(aboveDate);
+    }
+    var belowDate = this.lockedYear
+    for (i = 0; i < 10; i++) {
+      belowDate--;
+      this.yearArr.push(belowDate);
+    }
+    this.yearArr.sort();
+  }
+
   // Used in HTML to set whether a week row has no active days (i.e. it should not render)
   checkActiveWeeks(e: any): boolean {
     let activeDays = 0;
@@ -952,18 +1096,18 @@ export class CagingCalendarComponent implements OnInit {
     }
   }
 
-  getMostRecentDay() {
-    this.dvDay = 0;
-    this.weekList.forEach(a => {
-      a.days.forEach(b => {
-        if (b.selectable == true) {
-          this.dvDay = b.Day;
-        }
-      });
-    });
-    if (this.dvDay == 0)
-      this.dvDay = this.lockedDay;
-  }
+  // getMostRecentDay() {
+  //   this.dvDay = 0;
+  //   this.weekList.forEach(a => {
+  //     a.days.forEach(b => {
+  //       if (b.selectable == true) {
+  //         this.dvDay = b.Day;
+  //       }
+  //     });
+  //   });
+  //   if (this.dvDay == 0)
+  //     this.dvDay = this.lockedDay;
+  // }
 
   public onTabChange(val: string) {
     this.timeSelection = val;

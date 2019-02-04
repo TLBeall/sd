@@ -2,27 +2,31 @@
 <br>
 <div class="container">
   <mat-card class="mat-elevation-z8">
+    <br>
+    <h4>Create Dailies Entry</h4>
+    <br>
+
     <!-- File URL start-->
     <div>
-        <button mat-stroked-button (click)="fileInput.click()" matTooltip="Upload from file" [matTooltipShowDelay]="800"
-          [matTooltipHideDelay]="200">
-          <span>Browse</span>
+      <button mat-stroked-button (click)="fileInput.click()" matTooltip="Upload from file" [matTooltipShowDelay]="800"
+        [matTooltipHideDelay]="200">
+        <span>Browse</span>
+      </button>
+      <input #fileInput type="file" (change)="onFileChange($event)" multiple="false" style="display:none;" />
+      <mat-form-field class="fileUrl">
+        <input type="text" matInput placeholder="File" [value]="fileUrl" (keyup)="determineReset($event)">
+        <button mat-button *ngIf="fileUrl != ''" matSuffix mat-icon-button (click)="resetFile()">
+          <mat-icon>close</mat-icon>
         </button>
-        <input #fileInput type="file" (change)="onFileChange($event)"  multiple="false" style="display:none;" />
-        <mat-form-field class="fileUrl">
-          <input type="text" matInput placeholder="File" [value]="fileUrl" (keyup)="determineReset($event)">
-          <button mat-button *ngIf="fileUrl != ''" matSuffix mat-icon-button (click)="resetFile()">
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
-      <span (click)="showExample()" id="exampleFormat">Example Format</span>
-      <div >
-      <img *ngIf="showEx" src="../../../../assets/exampleLRI.PNG" id="exampleImg"> 
+      </mat-form-field>
     </div>
-      <!-- File URL end-->
-      <br>
-      <br>
+    <span (click)="showExample()" id="exampleFormat">Example Format</span>
+    <div>
+      <img *ngIf="showEx" src="../../../../assets/exampleLRI.PNG" id="exampleImg">
+    </div>
+    <!-- File URL end-->
+    <br>
+    <br>
     <ul>
       <li *ngFor="let element of cagingArr">
         <div class="row">
@@ -47,8 +51,7 @@
                 <!-- Set the "value" (aka the starting value via the ngModel. Using the ngModel because that way it also updates the whitemailElement object-->
                 <mat-form-field appearance="outline" class="mainInputBox">
                   <mat-label>Cage Date</mat-label>
-                  <input required matInput [matDatepicker]="CageDatePick" (dateInput)="changeDate($event)"
-                    [(ngModel)]="element.DateCaged">
+                  <input required matInput [matDatepicker]="CageDatePick" (dateInput)="changeDate($event)" [(ngModel)]="element.DateCaged">
                   <mat-datepicker-toggle matSuffix [for]="CageDatePick"></mat-datepicker-toggle>
                   <mat-datepicker #CageDatePick>
                   </mat-datepicker>

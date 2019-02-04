@@ -1,15 +1,22 @@
 <app-toolbar></app-toolbar>
 <br>
 
-<div class="container" *ngIf="tableLoading == false">
+<div class="container">
   <div class="row">
     <div class="col-11">
       <mat-card class="mat-elevation-z8">
+        <br>
+        <h4>Mailcode Exception Management</h4>
+        <br>
+        <p *ngIf="showExceptionBlank == true">There are currently no mailcode exceptions.</p>
+        <div style="width:100%; height: 4px;">
+          <mat-progress-bar color="accent" mode="indeterminate" *ngIf="tableLoading == true"></mat-progress-bar>
+        </div>
         <!-- <div *ngIf="RawCagingData"> -->
         <!-- ****************************** -->
         <!-- Exceptions parent Table Start -->
         <!-- ****************************** -->
-        <table id="InstanceParentTable" mat-table [dataSource]="this.exceptionsAggregate" multiTemplateDataRows>
+        <table id="InstanceParentTable" mat-table [dataSource]="this.exceptionsAggregate" multiTemplateDataRows *ngIf="tableLoading == false">
           <ng-container matColumnDef="ExpandParent">
             <th mat-header-cell *matHeaderCellDef="let instance" class="expandBtnColumn expBtnTH"></th>
             <td mat-cell *matCellDef="let instance" class="expandBtnColumn">
@@ -72,9 +79,10 @@
           <ng-container matColumnDef="ControlParent">
             <th mat-header-cell *matHeaderCellDef class="controlColumn"></th>
             <td mat-cell *matCellDef="let instance" class="controlColumn">
-                <button mat-icon-button class="controlColumnBtn instanceEditBtn" *ngIf="instance.showControl == true" (click)="navigateToEditInstance(instance)">
-                  <i class="material-icons instanceEditIcon" title="Edit all instances of mailcode exception">edit</i>
-                </button>
+              <button mat-icon-button class="controlColumnBtn instanceEditBtn" *ngIf="instance.showControl == true"
+                (click)="navigateToEditInstance(instance)">
+                <i class="material-icons instanceEditIcon" title="Edit all instances of mailcode exception">edit</i>
+              </button>
             </td>
             <td mat-footer-cell *matFooterCellDef class="controlColumn"></td>
           </ng-container>
@@ -99,8 +107,6 @@
           <ng-container matColumnDef="SelectionBox">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let exceptionElement">
-              <!-- <mat-checkbox (click)="checkSelected(exceptionElement, $event)" (mousedown)="$event.shiftKey ? $event.preventDefault() : null"
-          class="md-checkbox" *ngIf="selectionMode == true"></mat-checkbox> -->
             </td>
             <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
@@ -187,7 +193,6 @@
   </ng-container>
 
 
-
   <tr mat-header-row *matHeaderRowDef="InstanceColumns">
   </tr>
   <tr mat-row class="example-element-row" *matRowDef="let row; columns: InstanceColumns;" (mouseenter)="hoverParentOn(row)"
@@ -195,33 +200,20 @@
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
   <tr mat-footer-row *matFooterRowDef="InstanceColumns"></tr>
   </table>
-  <!-- </div> -->
   </mat-card>
 </div>
 
 
-<div class="col-1">
+<div class="col-1" *ngIf="showExceptionBlank == false">
   <div class="stickyButtons">
     <div class="row">
       <mat-card class="mat-elevation-z8">
-        <!-- <div>
-          <button mat-icon-button (click)="navigateToNew()" title="Add Caging Entry"><i class="material-icons">add_circle</i></button>
-        </div> -->
         <div>
           <button mat-icon-button (click)="expandAllInstance()" [title]="allInstancesExpanded? 'Collapse all Clients':'Expand all Clients'">
             <i class="material-icons" *ngIf="allInstancesExpanded == false">unfold_more</i>
             <i class="material-icons" *ngIf="allInstancesExpanded == true">unfold_less</i>
           </button>
         </div>
-        <!-- <div>
-          <button mat-icon-button (click)="toggleSelection()" [style.color]="selectionMode? '#1279C0' : 'black'"
-            [title]="selectionMode? 'Toggle Off Deletion':'Toggle for Deletion'">
-            <i class="material-icons">list</i>
-          </button>
-        </div> -->
-        <!-- <div>
-          <button mat-icon-button (click)="preDelete($event)" *ngIf="selectionMode"><i class="material-icons">delete</i></button>
-        </div> -->
       </mat-card>
     </div>
   </div>

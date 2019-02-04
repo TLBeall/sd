@@ -6,12 +6,17 @@
 
     <div style="width:96%; margin: 0 auto">
     <br>
+    <div class="row">
+      <div class="col-12">
+        <h4>Package PDF Management</h4>
+      </div>
+    </div>
     <div class="row" *ngIf="loading == false">
       <div class="col-12">
-        <h4 *ngIf="tableState == 0">PDF Reporting on 0 packages</h4>
-        <h4 *ngIf="tableState == 1">PDF Reporting on {{pdfCount}} packages</h4>
-        <h4 *ngIf="tableState == 2">PDF Reporting on {{noneCount}} packages</h4>
-        <h4 *ngIf="tableState == 3">PDF Reporting on {{bothCount}} packages</h4>
+        <h6 *ngIf="tableState == 0">Reporting on 0 packages</h6>
+        <h6 *ngIf="tableState == 1">Reporting on {{pdfCount}} packages</h6>
+        <h6 *ngIf="tableState == 2">Reporting on {{noneCount}} packages</h6>
+        <h6 *ngIf="tableState == 3">Reporting on {{bothCount}} packages</h6>
         <br>
       </div>
     </div>

@@ -9,7 +9,12 @@ export class CagingElement {
     MailCode: string;
     CagingID: number;
     ModifiedDate: Date;
+    ModifiedBy: string;
     MailcodeID: number;
+    DateCaged: Date;
+    EnteredBy: string;
+    EnteredDate: Date;
+
 
     Expanded: boolean;
     TotalDonationAmount: number;

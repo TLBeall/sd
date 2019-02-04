@@ -2,69 +2,82 @@
 <br>
 
 <div class="container">
-  <div class="row">
-    <div class="col-lg-6">
-        <mat-form-field appearance="outline" class="mainInputBox">
-          <mat-label>Client</mat-label>
-          <input aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let client of filteredClientList | async" [value]="client" (click)="mainSelectClient(client)">
-              {{client}}
-            </mat-option>
-          </mat-autocomplete>
-          <mat-icon matSuffix class="dropdownIcon">arrow_drop_down</mat-icon>
-        </mat-form-field>
-      <br>
-    </div>
-  </div>
-
 
   <div class="row">
-    <div class="col-12" *ngIf="!displayTable">
-      <mat-card class="mat-elevation-z8 emptyTableMessage">
-        <h5>Please Select a client</h5>
-      </mat-card>
-    </div>
     <div class="col-11">
-      <table mat-table *ngIf="displayTable" class="mat-elevation-z8" [dataSource]="this.rootWhitemail">
-        <ng-container matColumnDef="SelectionBox">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">
-            <!-- the mousedown event fixes the bug where in google chrome you cant shift click material checkboxes-->
-            <mat-checkbox (click)="checkSelected(element, $event)" (mousedown)="$event.shiftKey ? $event.preventDefault() : null"
-              class="md-checkbox" *ngIf="selectionMode == true"></mat-checkbox>
-            <!-- (click)="$event.shiftKey ? multipleToggle(row, $event) : null" -->
-
-          </td>
-          <td mat-footer-cell *matFooterCellDef></td>
-        </ng-container>
-        <ng-container matColumnDef="Date">
-          <th mat-header-cell *matHeaderCellDef title="Donation Date"> Date </th>
-          <td mat-cell *matCellDef="let element"> {{element.DateCaged|date:'fullDate'}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Non-Donors">
-          <th mat-header-cell *matHeaderCellDef> Non-Donors </th>
-          <td mat-cell *matCellDef="let element"> {{element.NonDonors}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Donors">
-          <th mat-header-cell *matHeaderCellDef title="All donors: cash, card, and credit"> Donors </th>
-          <td mat-cell *matCellDef="let element"> {{element.TotalDonors}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Gross">
-          <th mat-header-cell *matHeaderCellDef title="All donations: cash, card, and credit"> Gross </th>
-          <td mat-cell *matCellDef="let element"> {{element.TotalGross|currency:'USD':'symbol':'1.2-2'}} </td>
-        </ng-container>
-        <ng-container matColumnDef="ButtonControl">
-          <th mat-header-cell *matHeaderCellDef class="ButtonControlCell"> </th>
-          <td mat-cell *matCellDef="let element" class="ButtonControlCell">
-            <button mat-icon-button *ngIf="element.showEditButton" (click)="navigateToEdit(element)"><i class="material-icons">edit</i></button>
-          </td>
-        </ng-container>
+      <mat-card class="mat-elevation-z8">
+        <br>
+        <h4>Whitemail Management<span *ngIf="Client != null"> for {{Client}}</span></h4>
+        <br>
+        <div class="row">
+          <div class="col-lg-6">
+            <mat-form-field appearance="outline" class="mainInputBox">
+              <mat-label>Client</mat-label>
+              <input aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let client of filteredClientList | async" [value]="client" (click)="mainSelectClient(client)">
+                  {{client}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-icon matSuffix class="dropdownIcon">arrow_drop_down</mat-icon>
+            </mat-form-field>
+            <br>
+          </div>
+        </div>
 
 
-        <tr mat-header-row *matHeaderRowDef="MainDisplayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: MainDisplayedColumns;" (mouseenter)="hoverRow(row)" (mouseleave)="hoverLeave(row)"></tr>
-      </table>
+        <div class="row">
+          <div class="col-12" *ngIf="displayTable == false">
+            <h5 id="clientSelectionMessage">Please Select a client</h5>
+          </div>
+          <div class="col-12" *ngIf="showEmptyMessage == true">
+            <br>
+            <h5 id="clientSelectionMessage">Client does not have whitemail</h5>
+          </div>
+          <div style="width:100%; height: 4px;">
+            <mat-progress-bar color="accent" mode="indeterminate" *ngIf="tableLoading == true"></mat-progress-bar>
+          </div>
+          <table mat-table *ngIf="displayTable == true" [dataSource]="this.rootWhitemail">
+            <ng-container matColumnDef="SelectionBox">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element">
+                <!-- the mousedown event fixes the bug where in google chrome you cant shift click material checkboxes-->
+                <mat-checkbox (click)="checkSelected(element, $event)" (mousedown)="$event.shiftKey ? $event.preventDefault() : null"
+                  class="md-checkbox" *ngIf="selectionMode == true"></mat-checkbox>
+                <!-- (click)="$event.shiftKey ? multipleToggle(row, $event) : null" -->
+
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+            <ng-container matColumnDef="Date">
+              <th mat-header-cell *matHeaderCellDef title="Donation Date"> Date </th>
+              <td mat-cell *matCellDef="let element"> {{element.DateCaged|date:'fullDate'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Non-Donors">
+              <th mat-header-cell *matHeaderCellDef> Non-Donors </th>
+              <td mat-cell *matCellDef="let element"> {{element.NonDonors}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Donors">
+              <th mat-header-cell *matHeaderCellDef title="All donors: cash, card, and credit"> Donors </th>
+              <td mat-cell *matCellDef="let element"> {{element.TotalDonors}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Gross">
+              <th mat-header-cell *matHeaderCellDef title="All donations: cash, card, and credit"> Gross </th>
+              <td mat-cell *matCellDef="let element"> {{element.TotalGross|currency:'USD':'symbol':'1.2-2'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="ButtonControl">
+              <th mat-header-cell *matHeaderCellDef class="ButtonControlCell"> </th>
+              <td mat-cell *matCellDef="let element" class="ButtonControlCell">
+                <button mat-icon-button *ngIf="element.showEditButton" (click)="navigateToEdit(element)"><i class="material-icons">edit</i></button>
+              </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="MainDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: MainDisplayedColumns;" (mouseenter)="hoverRow(row)" (mouseleave)="hoverLeave(row)"></tr>
+          </table>
+        </div>
+      </mat-card>
     </div>
 
     <div class="col-1" *ngIf="displayTable">

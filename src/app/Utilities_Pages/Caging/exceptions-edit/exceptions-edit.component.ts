@@ -117,17 +117,17 @@ export class ExceptionsEditComponent implements OnInit {
 
   mainSelectClient(client) {
     this.Client = client;
-    var reg = /(?<= - ).*/;
-    this.clientAcronym = client.match(reg);
+    this.clientAcronym = client.split(" ").splice(-1);
   }
 
   assignMailcodes() {
     if (this.dropdownSelection == 1) {
       if (this.checkMailcode()) {
-        // this._authService.editDailiesExceptions(this.newMailcode, this.idString).subscribe();
+        this._authService.editDailiesExceptions(this.newMailcode, this.idString, null).subscribe();
         this.showSubmittedModal = true;
         setTimeout(() => {
           this.showSubmittedModal = false;
+          this._g.clearCurCache = true;
           this.router.navigate(['exceptions']);
         }, 1500)
       } else {
@@ -135,23 +135,24 @@ export class ExceptionsEditComponent implements OnInit {
       }
     }
     //Need to add client to this and as an optional parameter in the API call. 
-    // else if (this.dropdownSelection == 2) {
-    //   if (this.checkClient()) {
-    //     this._authService.editDailiesExceptions("WM", this.idString).subscribe();
-    // this.showSubmittedModal = true;
-    // setTimeout(() => {
-      //       this.showSubmittedModal = false;
-      //       this.router.navigate(['exceptions']);
-      //     }, 1500)
-      //   } else {
-      //     alert("Invalid Client");
-      //   }
-      // }
-
+    else if (this.dropdownSelection == 2) {
+      if (this.checkClient()) {
+        this._authService.editDailiesExceptions("WM", this.idString, this.clientAcronym).subscribe();
+        this.showSubmittedModal = true;
+        setTimeout(() => {
+          this.showSubmittedModal = false;
+          this._g.clearCurCache = true;
+          this.router.navigate(['exceptions']);
+        }, 1500)
+      } else {
+        alert("Invalid Client");
+      }
     }
 
+  }
+
   checkMailcode(): boolean {
-        if(this.newMailcode != "") {
+    if (this.newMailcode != "") {
       return true;
     } else {
       return false;
@@ -171,21 +172,23 @@ export class ExceptionsEditComponent implements OnInit {
   }
 
   deleteMailcodes() {
-    // this._authService.deleteCaging(this.idString).subscribe();
+    this._authService.deleteCaging(this.idString).subscribe();
     setTimeout(() => {
       this.showDeleteModal = false;
+      this._g.clearCurCache = true;
       this.router.navigate(['exceptions']);
     }, 1500)
   }
 
   modalCancel() {
     this.showSubmittedModal = false;
+    this._g.clearCurCache = true;
     this.router.navigate(['exceptions']);
   }
 
   buildIdString() {
     this.tableData.forEach((e, index) => {
-      if (index == 1) {
+      if (index == 0) {
         this.idString = e.ID.toString();
       } else {
         this.idString = this.idString + "." + e.ID.toString();

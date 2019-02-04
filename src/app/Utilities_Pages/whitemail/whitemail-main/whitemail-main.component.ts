@@ -30,7 +30,8 @@ export class WhitemailMainComponent implements OnInit {
   private showEditButton: boolean = false;
   private showDeleteModal: boolean = false;
   private deleteNotation: string;
-
+  private tableLoading: boolean = false;
+  private showEmptyMessage: boolean = false;
 
   MainDisplayedColumns: string[] = ['SelectionBox', 'Date', 'Non-Donors', 'Donors', 'Gross', 'ButtonControl'];
 
@@ -59,9 +60,10 @@ export class WhitemailMainComponent implements OnInit {
   }
 
   mainSelectClient(client) {
+    this.tableLoading = true;
+    this.showEmptyMessage = false;
     this.Client = client;
-    var reg = /(?<= - ).*/;
-    var clientAcronym = client.match(reg);
+    var clientAcronym = client.split(" ").splice(-1); 
     this._authService.getWhitemailByClient(this.Agency, clientAcronym[0]).subscribe(data => {
       if (data)
         var temp = this.sortByStartDate(data)
@@ -72,9 +74,11 @@ export class WhitemailMainComponent implements OnInit {
         element.Client = client;
       })
       this.displayTable = true;
+      this.tableLoading = false;
       if (data.length == 0) {
         this.displayTable = false;
-        alert('Client does not have white mail');
+        this.showEmptyMessage = true;
+        // alert('Client does not have white mail');
       }
     })
   }

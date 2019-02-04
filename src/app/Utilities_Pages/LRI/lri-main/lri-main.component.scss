@@ -3,7 +3,8 @@
 $selectionColumnShift: 32px;
 
 table {
-    width: 100%;
+    width: 96%;
+    margin: 0 auto;
   }
 
   .mainInputBox{
@@ -11,13 +12,11 @@ table {
     margin: 0 auto;
 }
 
-  .emptyTableMessage{
-      // height: 90vh;
-      background-color: $color-whitesmoke;
-      h5{
-          text-align: center;
-      }
-  }
+#clientSelectionMessage{
+    text-align: center;
+}
+
+
 
   .stickyButtons{
     position: -webkit-sticky; /* Safari */

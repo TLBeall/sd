@@ -351,15 +351,21 @@ export class AuthService {
 
   getDailiesExceptions() {
     var Token = "";
-    var getURL = "https://sd360.sunrisedataservices.com/api/GetDailiesExceptionsX"; //The X is linked to the BB table. Remove X when migration is complete
+    var getURL = "https://sd360.sunrisedataservices.com/api/GetDailiesExceptions"; //The X is linked to the BB table. Remove X when migration is complete
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
   }
 
-  editDailiesExceptions(NewMailCode: string, idString: string) {
+  editDailiesExceptions(NewMailCode: string, idString: string, Client: string) {
     var Token = "";
-    var editURL = "https://sd360.sunrisedataservices.com/api/UpdateDailiesExceptions?NewMailCode=" + NewMailCode + "&ID=" + idString + "&UserName=SHERIF";
+    if (Client == null) {
+      //Setting to a specific mailcode
+      var editURL = "https://sd360.sunrisedataservices.com/api/UpdateDailiesExceptions?NewMailCode=" + NewMailCode + "&ID=" + idString + "&UserName=SHERIF";
+    } else {
+      //Setting to a WM for a client
+      var editURL = "https://sd360.sunrisedataservices.com/api/UpdateDailiesExceptions?NewMailCode=" + NewMailCode + "&ID=" + idString + "&Client=" + Client + "&UserName=SHERIF";
+    }
     // var body = JSON.stringify(object);
 
     var headersForEditAPI = new Headers({ 'Content-Type': 'Application/Json', 'Authorization': 'Bearer ' + Token });

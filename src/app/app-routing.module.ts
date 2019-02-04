@@ -20,7 +20,6 @@ import { IncidentalsNewComponent } from './Utilities_Pages/Incidentals/incidenta
 import { IncidentalsEditComponent } from './Utilities_Pages/Incidentals/incidentals-edit/incidentals-edit.component';
 import { CagingNewComponent } from './Utilities_Pages/Caging/caging-new/caging-new.component';
 import { CagingCalendarComponent } from './Utilities_Pages/Caging/caging-calendar/caging-calendar.component';
-import { UploadPDFComponent } from './Utilities_Pages/upload-pdf/upload-pdf.component';
 import { ExceptionsMainComponent } from './Utilities_Pages/Caging/exceptions-main/exceptions-main.component';
 import { ExceptionsEditComponent } from './Utilities_Pages/Caging/exceptions-edit/exceptions-edit.component';
 import { PdfUploadComponent } from './Utilities_Pages/pdf-upload/pdf-upload.component';
@@ -40,9 +39,6 @@ const routes: Routes = [
   {path: 'lri', component: LriMainComponent },
   {path: 'lri/new', component: LriNewComponent },
   {path: 'lri/edit/:id', component: LriEditComponent, runGuardsAndResolvers: 'always' },
-  {path: 'incidentals', component: IncidentalsMainComponent },
-  {path: 'incidentals/new', component: IncidentalsNewComponent },
-  {path: 'incidentals/edit/:id', component: IncidentalsEditComponent, runGuardsAndResolvers: 'always' },
   {path: 'caging/new', component: CagingNewComponent },
   {path: 'caging/calendar', component: CagingCalendarComponent },
   {path: 'exceptions', component: ExceptionsMainComponent},

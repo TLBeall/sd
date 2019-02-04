@@ -51,16 +51,6 @@ export class NavigationBarComponent {
     this.router.navigate(['lri/new']);
   }
 
-  NavigateToIncidentals(){
-    this._g.clearCurCache = true;
-    this.router.navigate(['incidentals']);
-  }
-
-  NavigateToNewIncidentals(){
-    this._g.clearCurCache = true;
-    this.router.navigate(['incidentals/new']);
-  }
-
   NavigateToNewCaging(){
     this._g.clearCurCache = true;
     this.router.navigate(['caging/new']);

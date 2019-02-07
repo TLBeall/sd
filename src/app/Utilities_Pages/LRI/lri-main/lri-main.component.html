@@ -22,10 +22,29 @@
             </mat-form-field>
             <br>
           </div>
+          <div class="col-md-3">
+            <mat-form-field class="mainInputBox" appearance="outline">
+              <input matInput required #startDateInput (dateInput)="changeDate()" [matDatepicker]="startDatePicker"
+                [(ngModel)]="startDate" placeholder="start date">
+              <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #startDatePicker></mat-datepicker>
+              <mat-hint>Start Date</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field class="mainInputBox" appearance="outline">
+              <input matInput required #endDateInput (dateInput)="changeDate()" [matDatepicker]="endDatePicker" [(ngModel)]="endDate"
+                placeholder="end date">
+              <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #endDatePicker></mat-datepicker>
+              <mat-hint>End Date</mat-hint>
+            </mat-form-field>
+          </div>
         </div>
 
 
         <div class="row">
+          <br>
           <div class="col-12" *ngIf="displayTable == false">
             <h5 id="clientSelectionMessage">Please Select a client</h5>
           </div>

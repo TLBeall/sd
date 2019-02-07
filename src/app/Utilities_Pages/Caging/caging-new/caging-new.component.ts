@@ -25,6 +25,7 @@ export class CagingNewComponent implements OnInit {
   private cagingArr: CagingDailies[];
   private showSubmittedModal: boolean;
   private cagingMessage: string; 
+  private loading: boolean = false;
 
   public ExcelData: any[];
   private fileUrl: string = "";
@@ -167,6 +168,12 @@ export class CagingNewComponent implements OnInit {
     this.loadDefaultValues();
   }
 
+  applyClientToAllRows(client: string){
+    this.cagingArr.forEach(element => {
+      element.Client = client;
+    });
+  }
+
   submitPage() {
     if (this.validationFunction()) {
       this.showSubmittedModal = true;
@@ -215,6 +222,7 @@ export class CagingNewComponent implements OnInit {
   //Excel file read
   /* File Input element for browser */
   onFileChange(evt: any) {
+    this.loading = true;
     this.fileUrl = evt.target.files[0].name;
     // console.log(this.fileInput);
 
@@ -246,29 +254,83 @@ export class CagingNewComponent implements OnInit {
     const wsname: string = wb.SheetNames[0];
     const ws: XLSX.WorkSheet = wb.Sheets[wsname];
 
+    var depositDateCol: number;
+    var mailcodeCol: number;
+    var nonDonorsCol: number;
+    var cashDonorsCol: number;
+    var cashAmountCol: number;
+    var ccDonorsCol: number;
+    var ccAmountCol: number;
+    var checkDonorsCol: number;
+    var checkAmountCol: number;
+
     /* save data */
     this.ExcelData = XLSX.utils.sheet_to_json(ws, { header: 1 });
+    this.ExcelData[0].forEach((element, index) => {
+      let header = element.trim().toLowerCase();
+      switch (header){
+        case "maildate":
+        depositDateCol = index;
+        break;
+        case "depositdate":
+        depositDateCol = index;
+        break;
+        case "cagedate":
+        depositDateCol = index;
+        break;
+        case "mailcode":
+        mailcodeCol = index;
+        break;
+        case "nondonors":
+        nonDonorsCol = index;
+        break;
+        case "donors":
+        cashDonorsCol = index;
+        break;
+        case "amount":
+        cashAmountCol = index;
+        break;
+        case "cashdonors":
+        cashDonorsCol = index;
+        break;
+        case "cashamount":
+        cashAmountCol = index;
+        break;
+        case "ccdonors":
+        ccDonorsCol = index;
+        break;
+        case "ccamount":
+        ccAmountCol = index;
+        break;
+        case "checkdonors":
+        checkDonorsCol = index;
+        break;
+        case "checkamount":
+        checkAmountCol = index;
+        break;
+      }
+    });
 
     //Convert data to be passed to database
     var tempData = this.ExcelData.splice(1); //omitting header of excel file
     var currentDate = new Date();
     tempData.forEach(a => {
-      if (a[0] != null) {
+      if (this.lastRowInFile(a) == false) {
         let cagingElement = new CagingDailies();
         cagingElement.Agency = "HSP";
         // cagingElement.Client = this.convertClient(a[this.fileUrl]);
         cagingElement.MailCodeId = null;
-        cagingElement.DateCaged = this.convertDate(a[0]);
+        cagingElement.DateCaged = this.convertDate(a[depositDateCol]);
         cagingElement.EnteredDate = currentDate;
         cagingElement.ModifiedDate = null;
-        cagingElement.MailCode = a[1];
-        cagingElement.NonDonors = a[2];
-        cagingElement.CashDonors = a[3];
-        cagingElement.CashAmount = a[4];
-        cagingElement.CardDonors = a[5];
-        cagingElement.CardAmount = a[6];
-        cagingElement.CheckDonors = a[7];
-        cagingElement.CheckAmount = a[8];
+        cagingElement.MailCode = a[mailcodeCol];
+        cagingElement.NonDonors = this.fileValueSet(a[nonDonorsCol]);
+        cagingElement.CashDonors = this.fileValueSet(a[cashDonorsCol]);
+        cagingElement.CashAmount = this.fileValueSet(a[cashAmountCol]);
+        cagingElement.CardDonors = this.fileValueSet(a[ccDonorsCol]);
+        cagingElement.CardAmount = this.fileValueSet(a[ccAmountCol]);
+        cagingElement.CheckDonors = this.fileValueSet(a[checkDonorsCol]);
+        cagingElement.CheckAmount = this.fileValueSet(a[checkAmountCol]);
         cagingElement.EnteredBy = "TempUser";
         cagingElement.ModifiedBy = null;
         cagingElement.ClientControl = new FormControl();
@@ -281,8 +343,36 @@ export class CagingNewComponent implements OnInit {
     });
 
     this.determineLast();
+    this.loading = false;
     // this.ref.detectChanges(); //"reloads" the page after the new rows are added from file
   }
+
+  fileValueSet(value: any){
+    if (value == null){
+      return 0;
+    } else {
+      return value;
+    }
+  }
+
+  lastRowInFile(row: any){
+    var rowCheck = 0;
+    if (row[0] == null){
+      rowCheck++;
+    }
+    row.forEach(element => {
+      let str = element.toString().toLowerCase();
+      if (str == "total" || str == "totals"){
+        rowCheck++;
+      }
+    });
+    if (rowCheck > 0){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 
   resetFile(){
     this.fileUrl = "";

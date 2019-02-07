@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from 'src/app/Services/auth.service';
 import { GlobalService } from 'src/app/Services/global.service';
 import { Router } from '@angular/router';
@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { ClientList } from 'src/app/Models/ClientList.model';
 import { CagingDailies } from 'src/app/Models/CagingDailies.model';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-whitemail-main',
@@ -32,6 +34,10 @@ export class WhitemailMainComponent implements OnInit {
   private deleteNotation: string;
   private tableLoading: boolean = false;
   private showEmptyMessage: boolean = false;
+  private startDate: any;
+  private endDate: any;
+  @ViewChild('startDateInput') startDateInput: ElementRef<HTMLInputElement>;
+  @ViewChild('endDateInput') endDateInput: ElementRef<HTMLInputElement>;
 
   MainDisplayedColumns: string[] = ['SelectionBox', 'Date', 'Non-Donors', 'Donors', 'Gross', 'ButtonControl'];
 
@@ -41,6 +47,10 @@ export class WhitemailMainComponent implements OnInit {
   }
 
   ngOnInit() {
+    let current = new Date();
+    let tempStartDate = moment(current, "MM-DD-YYYY").subtract(365, 'd').format("MM-DD-YYYY");
+    this.endDate = new Date();
+    this.startDate = new Date(tempStartDate);
     this._authService.getClientList("All")
       .subscribe(data => {
         this.clientList = data;
@@ -64,7 +74,7 @@ export class WhitemailMainComponent implements OnInit {
     this.showEmptyMessage = false;
     this.Client = client;
     var clientAcronym = client.split(" ").splice(-1); 
-    this._authService.getWhitemailByClient(this.Agency, clientAcronym[0]).subscribe(data => {
+    this._authService.getWhitemailByClient(this.Agency, clientAcronym[0], this.convertDate(this.startDate), this.convertDate(this.endDate)).subscribe(data => {
       if (data)
         var temp = this.sortByStartDate(data)
       this.rootWhitemail = temp;
@@ -81,6 +91,43 @@ export class WhitemailMainComponent implements OnInit {
         // alert('Client does not have white mail');
       }
     })
+  }
+
+  changeDate() {
+    this.tableLoading = true;
+    var clientAcronym = this.Client.split(" ").splice(-1);
+    if (this.validateDate() == true) {
+      this._authService.getWhitemailByClient(this.Agency, clientAcronym[0], this.convertDate(this.startDate), this.convertDate(this.endDate)).subscribe(data =>{
+        if (data)
+        var temp = this.sortByStartDate(data)
+      this.rootWhitemail = temp;
+      this.displayTable = true;
+      this.tableLoading = false;
+      if (data.length == 0) {
+        this.displayTable = false;
+        this.showEmptyMessage = true;
+      }
+      });
+      } else {
+      alert('Invalid Date');
+    }
+  }
+
+  validateDate(): boolean {
+    let tempStartDate = "";
+    let tempEndDate = "";
+    tempStartDate = this.startDateInput.nativeElement.value;
+    tempEndDate = this.endDateInput.nativeElement.value;
+    var reg = /^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/;
+    if (tempStartDate.match(reg) && tempEndDate.match(reg)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  convertDate(date: string) {
+    return moment(date).format("MM/DD/YYYY");
   }
 
   private getTime(date?: Date) {

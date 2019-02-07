@@ -26,6 +26,7 @@ export class LriNewComponent implements OnInit {
   private LRIArray: ListRental[];
   private showSubmittedModal: boolean;
   private LRINumMessage: string;
+  private loading: boolean = false;
 
   public ExcelData: any[];
   private fileUrl: string = "";
@@ -138,6 +139,12 @@ export class LriNewComponent implements OnInit {
     }
   }
 
+  applyClientToAllRows(client: string){
+    this.LRIArray.forEach(element => {
+      element.Client = client;
+    });
+  }
+
   //adds to front end
   addLRIRow() {
     this.loadDefaultValues();
@@ -186,6 +193,7 @@ export class LriNewComponent implements OnInit {
 
   /* File Input element for browser */
   onFileChange(evt: any) {
+    this.loading = true;
     this.fileUrl = evt.target.files[0].name;
     // console.log(this.fileInput);
 
@@ -224,7 +232,7 @@ export class LriNewComponent implements OnInit {
     var tempData = this.ExcelData.splice(3); //omitting header of excel file
     var currentDate = new Date();
     tempData.forEach(a => {
-      if (a[0] != null) {
+      if (this.lastRowInFile(a) == false) {
         let LRIElement = new ListRental();
         LRIElement.Amount = a[3];
         LRIElement.Client = this.convertClient(a[1]);
@@ -244,7 +252,26 @@ export class LriNewComponent implements OnInit {
     });
 
     this.determineLast();
+    this.loading = false;
     // this.ref.detectChanges(); //"reloads" the page after the new rows are added from file
+  }
+
+  lastRowInFile(row: any){
+    var rowCheck = 0;
+    if (row[0] == null){
+      rowCheck++;
+    }
+    row.forEach(element => {
+      let str = element.toString().toLowerCase();
+      if (str == "total" || str == "totals"){
+        rowCheck++;
+      }
+    });
+    if (rowCheck > 0){
+      return true;
+    } else {
+      return false;
+    }
   }
 
   resetFile(){

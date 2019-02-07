@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/Services/auth.service';
 import { startWith, map } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent, MatAutocompleteSelectedEvent, MatMenuTrigger } from '@angular/material';
+import { MatChipInputEvent, MatAutocompleteSelectedEvent, MatMenuTrigger, throwMatDialogContentAlreadyAttachedError } from '@angular/material';
 import { trigger, state, transition, animate, style } from '@angular/animations';
 import { CagingDayElement } from 'src/app/Models/CagingDayElement.model';
 import { CagingElement } from 'src/app/Models/CagingElement.model';
@@ -52,7 +52,6 @@ export class CagingCalendarComponent implements OnInit {
   //PROPERTIES FOR ALL CALENDARS/ENTIRE PAGE
   private timeSelection = "Month";
   public loading: boolean = false;
-  private travelingInCalendar: boolean = false;
   private sumTotalDonorCount: number;
   private sumtotalDonationAmount: number;
   private totalNonDonors: number;
@@ -148,10 +147,21 @@ export class CagingCalendarComponent implements OnInit {
     this.lockedDay = parseInt(moment().format('D'))
     this.loading = true;
     this.CLList = [];
+    this.dvDay = this.lockedDay;
+    this.dvYear = this.lockedYear;
+    this.dvMonth = this.convertMonthName(this.lockedMonth);
+    this.monthAdjust = 0;
+    this.mvMonth = moment().add(this.monthAdjust, 'month').format('MMMM');
+    this.mvYear = parseInt(moment().add(this.monthAdjust, 'month').format('YYYY'));
+    this.startOfWeek = parseInt(moment().add(this.monthAdjust, 'month').startOf("month").startOf('week').format('D'));
+    this.daysInPreviousMonth = parseInt(moment().add(this.monthAdjust, 'month').subtract(1, "month").endOf("month").format('D'));
+    this.daysInCurrentMonth = parseInt(moment().add(this.monthAdjust, 'month').endOf("month").format('D'));
+    this.endOfLastWeek = parseInt(moment().add(this.monthAdjust, 'month').endOf('month').endOf('week').format('D'));
+    this.mvSetDate = this.pad(this.getMonthInt(this.mvMonth)) + "-" + "01" + "-" + this.mvYear.toString();
+    this.yvYear = new Date().getFullYear();
     let dateStart = new Date("1/1/2000");
     let dateEnd = new Date("12/31/" + (new Date()).getFullYear().toString());
-    this.yvYear = new Date().getFullYear();
-    this.createYearSelection();
+    this.generateYearSelection();
 
     this._authService.getClientsFilter(dateStart, dateEnd).subscribe(data => {
       this.CLStrArr = Array.from(new Set(data.map(item => item.gClientName + ' - ' + item.gClientAcronym))).sort();
@@ -162,37 +172,6 @@ export class CagingCalendarComponent implements OnInit {
     });
     this.getYearData(this.convertCLList(), this.yvYear);
     this.getMonthData(this.convertCLList(), this.yvYear, this.lockedMonth);
-  }
-
-  selectYearDrop(year: number) {
-    if (this.timeSelection == "Year") {
-      this.loading = true;
-      this.yvYear = year;
-      this.getYearData(this.convertCLList(), this.yvYear);
-    } else if (this.timeSelection == "Month") {
-      this.monthDrill = true;
-      this.storedYear = year;
-      this.MonthMenu.openMenu();
-    }
-  }
-
-  selectMonthDrop(month: number) {
-    this.loading = true;
-    this.travelingInCalendar = true;
-    this.monthAdjust = 0;
-    this.emptyObjects();
-    this.mvSetDate = this.pad(month) + "-" + "01" + "-" + this.storedYear.toString();
-    this.mvMonth = moment(this.mvSetDate, "MM-DD-YYYY").format('MMMM');
-    this.mvYear = parseInt(moment(this.mvSetDate, "MM-DD-YYYY").format('YYYY'));
-    this.startOfWeek = parseInt(moment(this.mvSetDate, "MM-DD-YYYY").startOf("month").startOf('week').format('D'));
-    this.daysInPreviousMonth = parseInt(moment(this.mvSetDate, "MM-DD-YYYY").subtract(1, "month").endOf("month").format('D'));
-    this.daysInCurrentMonth = parseInt(moment(this.mvSetDate, "MM-DD-YYYY").endOf("month").format('D'));
-    this.endOfLastWeek = parseInt(moment(this.mvSetDate, "MM-DD-YYYY").endOf('month').endOf('week').format('D'));
-    this.getMonthData(this.convertCLList(), this.mvYear, this.getMonthInt(this.mvMonth));
-  }
-
-  monthMenuClosed() {
-    this.monthDrill = false;
   }
 
 
@@ -255,17 +234,6 @@ export class CagingCalendarComponent implements OnInit {
   /////////////////////////// SETTING UP THE MONTH CALENDAR //////////////////////
   generateMonthCalendar() {
     let data = this.monthData;
-
-    if (this.travelingInCalendar == false) {
-      this.mvMonth = moment().add(this.monthAdjust, 'month').format('MMMM');
-      this.mvYear = parseInt(moment().add(this.monthAdjust, 'month').format('YYYY'));
-      this.startOfWeek = parseInt(moment().add(this.monthAdjust, 'month').startOf("month").startOf('week').format('D'));
-      this.daysInPreviousMonth = parseInt(moment().add(this.monthAdjust, 'month').subtract(1, "month").endOf("month").format('D'));
-      this.daysInCurrentMonth = parseInt(moment().add(this.monthAdjust, 'month').endOf("month").format('D'));
-      this.endOfLastWeek = parseInt(moment().add(this.monthAdjust, 'month').endOf('month').endOf('week').format('D'));
-      this.mvSetDate = this.pad(this.getMonthInt(this.mvMonth)) + "-" + "01" + "-" + this.mvYear.toString();
-    }
-
     let count = 42;
     let i = 0;
     let currObj: number;
@@ -319,7 +287,6 @@ export class CagingCalendarComponent implements OnInit {
       i++;
       currObj = parseInt(moment(this.mvSetDate, "MM-DD-YYYY").add(this.monthAdjust, 'month').endOf("month").add(i, 'days').format('D'));
     }
-    this.travelingInCalendar = false;
   }
 
   divideIntoWeek() {
@@ -601,7 +568,6 @@ export class CagingCalendarComponent implements OnInit {
   nextBtn() {
     this.loading = true;
     if (this.timeSelection == "Month") {
-      this.travelingInCalendar = true;
       this.monthAdjust = 1;
       this.emptyObjects();
       this.mvSetDate = this.pad(this.getMonthInt(this.mvMonth)) + "-" + "01" + "-" + this.mvYear.toString();
@@ -627,7 +593,6 @@ export class CagingCalendarComponent implements OnInit {
   previousBtn() {
     this.loading = true;
     if (this.timeSelection == "Month") {
-      this.travelingInCalendar = true;
       this.monthAdjust = -1;
       this.emptyObjects();
       this.mvSetDate = this.pad(this.getMonthInt(this.mvMonth)) + "-" + "01" + "-" + this.mvYear.toString();
@@ -686,9 +651,6 @@ export class CagingCalendarComponent implements OnInit {
     if (this.firstLoad == true) {
       this.loading = true;
       // this.getMostRecentDay();
-      this.dvDay = this.lockedDay;
-      this.dvYear = this.lockedYear;
-      this.dvMonth = this.convertMonthName(this.lockedMonth);
       this.getDayData(this.convertCLList(), this.lockedYear, this.lockedMonth, this.dvDay);
       this.firstLoad = false;
     }
@@ -698,7 +660,6 @@ export class CagingCalendarComponent implements OnInit {
     if (m.selectable == true) {
       m.selected = false;
       this.timeSelection = "Month";
-      this.travelingInCalendar = true;
       this.monthAdjust = 0;
       this.mvMonth = this.convertMonthName(m.Month);
       this.mvYear = this.yvYear;
@@ -723,6 +684,36 @@ export class CagingCalendarComponent implements OnInit {
     this.getDayData(this.convertCLList(), this.dvYear, this.getMonthInt(this.dvMonth), this.dvDay);
   }
 
+  selectYearDrop(year: number) {
+    if (this.timeSelection == "Year") {
+      this.loading = true;
+      this.yvYear = year;
+      this.getYearData(this.convertCLList(), this.yvYear);
+    } else if (this.timeSelection == "Month") {
+      this.monthDrill = true;
+      this.storedYear = year;
+      this.MonthMenu.openMenu();
+    }
+  }
+
+  selectMonthDrop(month: number) {
+    this.loading = true;
+    this.monthAdjust = 0;
+    this.emptyObjects();
+    this.mvSetDate = this.pad(month) + "-" + "01" + "-" + this.storedYear.toString();
+    this.mvMonth = moment(this.mvSetDate, "MM-DD-YYYY").format('MMMM');
+    this.mvYear = parseInt(moment(this.mvSetDate, "MM-DD-YYYY").format('YYYY'));
+    this.startOfWeek = parseInt(moment(this.mvSetDate, "MM-DD-YYYY").startOf("month").startOf('week').format('D'));
+    this.daysInPreviousMonth = parseInt(moment(this.mvSetDate, "MM-DD-YYYY").subtract(1, "month").endOf("month").format('D'));
+    this.daysInCurrentMonth = parseInt(moment(this.mvSetDate, "MM-DD-YYYY").endOf("month").format('D'));
+    this.endOfLastWeek = parseInt(moment(this.mvSetDate, "MM-DD-YYYY").endOf('month').endOf('week').format('D'));
+    this.getMonthData(this.convertCLList(), this.mvYear, this.getMonthInt(this.mvMonth));
+  }
+
+  monthMenuClosed() {
+    this.monthDrill = false;
+  }
+
   generatePastYears(){
     var year = this.yearArr[0]-21;
     var firstYear = this.yearArr[0];
@@ -732,7 +723,6 @@ export class CagingCalendarComponent implements OnInit {
     }
     tempYearArr.sort();
     this.yearArr = tempYearArr;
-    // this.YearMenu.openMenu();
   }
 
   generateFutureYears(){
@@ -744,7 +734,6 @@ export class CagingCalendarComponent implements OnInit {
     }
     tempYearArr.sort();
     this.yearArr = tempYearArr; 
-    // this.YearMenu.openMenu();
   }
 
 
@@ -823,7 +812,6 @@ export class CagingCalendarComponent implements OnInit {
   }
 
   editCaging(e: CagingElement) {
-    this.travelingInCalendar = true;
     e.NonDonors = parseFloat(this.NonDonorInput.nativeElement.value);
     e.CashCount = parseFloat(this.CashCountInput.nativeElement.value);
     e.CashAmount = parseFloat(this.CashAmountInput.nativeElement.value);
@@ -1024,7 +1012,7 @@ export class CagingCalendarComponent implements OnInit {
     return retString;
   }
 
-  createYearSelection() {
+  generateYearSelection() {
     this.yearArr = [];
     this.monthDrill = false;
     this.yearArr.push(this.lockedYear);
@@ -1078,9 +1066,10 @@ export class CagingCalendarComponent implements OnInit {
   }
 
   getMonthInt(m: any) {
+    var test = parseInt(moment().month(m).format("M"));
     return parseInt(moment().month(m).format("M"));
   }
-
+ 
   emptyObjects() {
     if (this.timeSelection == "Month") {
       this.days = [];

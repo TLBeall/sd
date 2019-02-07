@@ -27,6 +27,16 @@ ul{
     }
 }
 
+.loading{
+    opacity: 0.4;
+    pointer-events:none;
+}
+
+.loaded{
+    opacity: 1.0;
+    pointer-events: all;
+}
+
 //Shifts the $ sign in the input boxes up to line up with the input text
 ::ng-deep .mat-form-field-prefix{
     position: relative !important;

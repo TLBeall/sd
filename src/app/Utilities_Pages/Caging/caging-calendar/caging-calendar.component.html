@@ -9,8 +9,6 @@
       'col-12': timeSelection != 'Day'
     }">
       <mat-card class="mat-elevation-z8">
-
-
         <br>
         <div class="row">
           <div class="col-xs-12 col-sm-10 col-md-7 col-lg-5">
@@ -43,7 +41,7 @@
             <ng-container *ngIf="timeSelection == 'Year'">
               <div class="timeSelectionDiv" *ngIf="monthDrill == false">
                 <button mat-button [matMenuTriggerFor]="YearMenu" #YearMenuTrigger="matMenuTrigger" class="defaultButton"
-                  (menuOpened)="createYearSelection()">Select
+                  (menuOpened)="generateYearSelection()">Select
                   Date</button>
                 <mat-menu #YearMenu="matMenu">
                   <div class="container">
@@ -66,12 +64,11 @@
                 </mat-menu>
               </div>
             </ng-container>
-            <!-- <button mat-flat-button class="defaultButton" id="timeResetBtn" *ngIf="timeSelection == 'Year'" (click)="returnDefault()">{{lockedYear}}</button> -->
             <!--MONTH SELECTION -->
             <ng-container *ngIf="timeSelection == 'Month'">
               <div class="timeSelectionDiv" *ngIf="monthDrill == false">
                 <button mat-button [matMenuTriggerFor]="YearMenu" #YearMenuTrigger="matMenuTrigger" class="defaultButton"
-                  (menuOpened)="createYearSelection()">Select
+                  (menuOpened)="generateYearSelection()">Select
                   Date</button>
                 <mat-menu #YearMenu="matMenu">
                   <div class="container">
@@ -107,8 +104,7 @@
                 </mat-menu>
               </div>
             </ng-container>
-            <!-- <button mat-flat-button class="defaultButton" id="timeResetBtn" *ngIf="timeSelection == 'Month'" (click)="returnDefault()">{{convertMonthName(lockedMonth)}},
-              {{lockedYear}}</button> -->
+            {{lockedYear}}</button> -->
             <div class="timeSelectionDiv" *ngIf="timeSelection == 'Day'">
               <ng-container>
                 <mat-form-field>
@@ -124,14 +120,6 @@
             <h3 *ngIf="timeSelection == 'Month'">{{mvMonth}} {{mvYear}}</h3>
             <h3 *ngIf="timeSelection == 'Day'">{{dvMonth}} {{dvDay}}, {{dvYear}}</h3>
           </div>
-
-
-
-
-
-
-
-
           <div class="col-md-4">
             <div style="float:right;" [ngClass]="loading? 'loading' : 'loaded'">
               <mat-button-toggle-group class="timeSelectionGroup" #group="matButtonToggleGroup" (change)="onTabChange(group.value)"
@@ -143,8 +131,6 @@
             </div>
           </div>
         </div>
-        <!-- background-color: rgba(18,121,192, 0.25); -->
-
         <div style="width:100%; height: 4px;">
           <mat-progress-bar color="accent" mode="indeterminate" *ngIf="loading == true"></mat-progress-bar>
         </div>
@@ -221,7 +207,6 @@
               <br>
             </div>
           </ng-container>
-
 
 
 
@@ -438,6 +423,7 @@
           </ng-container>
 
 
+
           <!-- TOTALS SECTION AT BOTTOM OF YEAR AND MONTH CALENDAR-->
           <ng-container *ngIf="loading == false">
             <div class="row" *ngIf="timeSelection == 'Year' || timeSelection == 'Month'">
@@ -533,7 +519,6 @@
                 <ng-container matColumnDef="Client">
                   <th mat-header-cell *matHeaderCellDef class="mailLevelColumn">Client</th>
                   <td mat-cell *matCellDef="let client" class="mailLevelColumn"><span>
-                      <!-- [ngClass]="element.Expanded? 'mcRowExpanded':'mcRowCollapsed'" -->
                       {{client.Client}} </span></td>
                   <td mat-footer-cell *matFooterCellDef class="mailLevelColumn">Totals</td>
                 </ng-container>
@@ -587,9 +572,6 @@
                   <td mat-cell *matCellDef="let client" class="controlColumn"><span [ngClass]="client.Expanded? 'rowCollapsed': 'rowExpanded'"></span></td>
                   <td mat-footer-cell *matFooterCellDef class="controlColumn"></td>
                 </ng-container>
-
-
-
                 <!-- *********************************** -->
                 <!-- Mailcode date breakdown Table Start -->
                 <!-- *********************************** -->
@@ -643,7 +625,6 @@
                   <td mat-cell *matCellDef="let cageElement">
                     <div *ngIf="cageElement.editing == true" class="elementInput">
                       <span>$</span>
-                      <!-- (blur)="updateValue(cageElement, $event, 'Cash')" -->
                       <input required type="number" matInput [value]="cageElement.CashAmount|number:'1.2-2'"
                         #CashAmountInput class="form-control">
                     </div>
@@ -666,7 +647,6 @@
                   <td mat-cell *matCellDef="let cageElement">
                     <div *ngIf="cageElement.editing == true" class="elementInput">
                       <span>$</span>
-                      <!-- (blur)="updateValue(cageElement, $event, 'Card')" -->
                       <input required type="number" matInput [value]="cageElement.CardAmount" #CardAmountInput class="form-control">
                     </div>
                     <span *ngIf="cageElement.editing == false">{{cageElement.CardAmount|currency:'USD':'symbol':'1.2-2'}}</span>
@@ -688,7 +668,6 @@
                   <td mat-cell *matCellDef="let cageElement">
                     <div *ngIf="cageElement.editing == true" class="elementInput">
                       <span>$</span>
-                      <!-- (blur)="updateValue(cageElement, $event, 'Check')" -->
                       <input required type="number" matInput [value]="cageElement.CheckAmount|number:'1.2-2'"
                         #CheckAmountInput class="form-control">
                     </div>
@@ -737,7 +716,6 @@
           </ng-container>
 
 
-
           <tr mat-header-row *matHeaderRowDef="ClientColumns">
           </tr>
           <tr mat-row class="example-element-row" *matRowDef="let row; columns: ClientColumns;"></tr>
@@ -748,7 +726,6 @@
         <br>
         <br>
     </div>
-
   </div>
   </mat-card>
 </div>

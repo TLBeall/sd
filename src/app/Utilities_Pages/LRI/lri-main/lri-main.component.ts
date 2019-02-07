@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from 'src/app/Services/auth.service';
 import { GlobalService } from 'src/app/Services/global.service';
 import { Router } from '@angular/router';
@@ -7,6 +7,8 @@ import { startWith, map } from 'rxjs/operators';
 import { ClientList } from 'src/app/Models/ClientList.model';
 import { FormControl } from '@angular/forms';
 import { ListRental } from 'src/app/Models/ListRental.model';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-lri-main',
@@ -28,12 +30,20 @@ export class LriMainComponent implements OnInit {
   private showDeleteModal: boolean = false;
   private showEmptyMessage: boolean = false;
   private tableLoading: boolean = false;
+  private startDate: any;
+  private endDate: any;
+  @ViewChild('startDateInput') startDateInput: ElementRef<HTMLInputElement>;
+  @ViewChild('endDateInput') endDateInput: ElementRef<HTMLInputElement>;
 
   MainDisplayedColumns: string[] = ['SelectionBox', 'Date', 'Description', 'Amount', 'ButtonControl'];
 
   constructor(private _authService: AuthService, private _g: GlobalService, private router: Router) { }
 
   ngOnInit() {
+    let current = new Date();
+    let tempStartDate = moment(current, "MM-DD-YYYY").subtract(365, 'd').format("MM-DD-YYYY");
+    this.endDate = new Date();
+    this.startDate = new Date(tempStartDate);
     this._authService.getClientList("All")
       .subscribe(data => {
         this.clientList = data;
@@ -57,7 +67,7 @@ export class LriMainComponent implements OnInit {
     this.showEmptyMessage = false;
     this.Client = client;
     var clientAcronym = client.split(" ").splice(-1); 
-    this._authService.getListRentalbyClient(clientAcronym[0]).subscribe(data => {
+    this._authService.getListRentalbyClient(clientAcronym[0], this.convertDate(this.startDate), this.convertDate(this.endDate)).subscribe(data => {
       if (data)
         var temp = this.sortByStartDate(data)
       this.rootLRI = temp;
@@ -71,6 +81,43 @@ export class LriMainComponent implements OnInit {
         this.showEmptyMessage = true;
       }
     })
+  }
+
+  changeDate() {
+    this.tableLoading = true;
+    var clientAcronym = this.Client.split(" ").splice(-1);
+    if (this.validateDate() == true) {
+      this._authService.getListRentalbyClient(clientAcronym[0], this.convertDate(this.startDate), this.convertDate(this.endDate)).subscribe(data =>{
+        if (data)
+        var temp = this.sortByStartDate(data)
+      this.rootLRI = temp;
+      this.displayTable = true;
+      this.tableLoading = false;
+      if (data.length == 0) {
+        this.displayTable = false;
+        this.showEmptyMessage = true;
+      }
+      });
+      } else {
+      alert('Invalid Date');
+    }
+  }
+
+  validateDate(): boolean {
+    let tempStartDate = "";
+    let tempEndDate = "";
+    tempStartDate = this.startDateInput.nativeElement.value;
+    tempEndDate = this.endDateInput.nativeElement.value;
+    var reg = /^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/;
+    if (tempStartDate.match(reg) && tempEndDate.match(reg)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  convertDate(date: string) {
+    return moment(date).format("MM/DD/YYYY");
   }
 
   private getTime(date?: Date) {

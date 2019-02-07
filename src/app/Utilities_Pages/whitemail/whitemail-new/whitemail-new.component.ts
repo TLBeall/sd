@@ -157,6 +157,12 @@ export class WhitemailNewComponent implements OnInit {
     this.loadDefaultValues();
   }
 
+  applyClientToAllRows(client: string){
+    this.whitemailArr.forEach(element => {
+      element.Client = client;
+    });
+  }
+
 
   addWhitemail() {
     if (this.validationFunction()) {

@@ -5,13 +5,17 @@
 <div class="container">
   <mat-card class="mat-elevation-z8">
       <br>
-      <h4>Create LRI</h4>
+      <h4>Create LRI Entry</h4>
       <br>
+      <div style="width:100%; height: 4px;">
+          <mat-progress-bar color="accent" mode="indeterminate" *ngIf="loading == true"></mat-progress-bar>
+        </div>
+        <div [ngClass]="loading? 'loading' : 'loaded'">
     <!-- File URL start-->
     <div>
       <button mat-stroked-button (click)="fileInput.click()" matTooltip="Upload from file" [matTooltipShowDelay]="800"
         [matTooltipHideDelay]="200">
-        <span>Browse</span>
+        <span>Upload</span>
       </button>
       <input #fileInput type="file" (change)="onFileChange($event)"  multiple="false" style="display:none;" />
       <mat-form-field class="fileUrl">
@@ -29,7 +33,7 @@
     <br>
     <br>
     <ul>
-      <li *ngFor="let element of LRIArray">
+      <li *ngFor="let element of LRIArray; let i = index" [attr.data-index]="i">
         <div class="row">
           <div class="col-lg-11 objectColumn">
             <div class="row">
@@ -46,6 +50,9 @@
                   <mat-icon matSuffix class="dropdownIcon">arrow_drop_down</mat-icon>
                 </mat-form-field>
               </div>
+              <div class="col-lg-2" *ngIf="i == 0 && element.Client != null && LRIArray.length > 1">
+                  <button mat-button (click)="applyClientToAllRows(element.Client)" title="Apply client selection across all entries">Apply to all <i class="material-icons">ballot</i></button>
+                </div>
               <div class="col-lg-4">
                 <!-- Set the "value" (aka the starting value via the ngModel. Using the ngModel because that way it also updates the whitemailElement object-->
                 <mat-form-field appearance="outline" class="mainInputBox">
@@ -78,7 +85,7 @@
 
           <div class="col-lg-1 buttonColumn">
             <div class="row">
-              <div class="col-lg-12">
+              <div class="col-lg-12" *ngIf="LRIArray.length > 1">
                 <button mat-icon-button matTooltip="Delete row" [matTooltipShowDelay]="800" [matTooltipHideDelay]="200"><i
                     class="material-icons" (click)="deleteRow(element)">delete</i></button>
               </div>
@@ -96,6 +103,7 @@
     <div class="btnContainer">
       <button id="submitBtn" mat-raised-button (click)="addLRI()">Submit</button>
     </div>
+  </div>
   </mat-card>
 </div>
 

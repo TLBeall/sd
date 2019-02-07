@@ -1,149 +1,160 @@
 <app-toolbar></app-toolbar>
 <br>
 <div class="container">
+
   <mat-card class="mat-elevation-z8">
     <br>
-    <h4>Create Dailies Entry</h4>
+    <h4>Create Caging Entry</h4>
     <br>
+    <div style="width:100%; height: 4px;">
+      <mat-progress-bar color="accent" mode="indeterminate" *ngIf="loading == true"></mat-progress-bar>
+    </div>
+    <div [ngClass]="loading? 'loading' : 'loaded'">
 
-    <!-- File URL start-->
-    <div>
-      <button mat-stroked-button (click)="fileInput.click()" matTooltip="Upload from file" [matTooltipShowDelay]="800"
-        [matTooltipHideDelay]="200">
-        <span>Browse</span>
-      </button>
-      <input #fileInput type="file" (change)="onFileChange($event)" multiple="false" style="display:none;" />
-      <mat-form-field class="fileUrl">
-        <input type="text" matInput placeholder="File" [value]="fileUrl" (keyup)="determineReset($event)">
-        <button mat-button *ngIf="fileUrl != ''" matSuffix mat-icon-button (click)="resetFile()">
-          <mat-icon>close</mat-icon>
+      <!-- File URL start-->
+      <div>
+        <button mat-stroked-button (click)="fileInput.click()" matTooltip="Upload from file" [matTooltipShowDelay]="800"
+          [matTooltipHideDelay]="200">
+          <span>Upload</span>
         </button>
-      </mat-form-field>
-    </div>
-    <span (click)="showExample()" id="exampleFormat">Example Format</span>
-    <div>
-      <img *ngIf="showEx" src="../../../../assets/exampleLRI.PNG" id="exampleImg">
-    </div>
-    <!-- File URL end-->
-    <br>
-    <br>
-    <ul>
-      <li *ngFor="let element of cagingArr">
-        <div class="row">
-          <div class="col-lg-11 objectColumn">
-            <div class="row">
-              <div class="col-lg-6">
-                <mat-form-field appearance="outline" class="mainInputBox">
-                  <mat-label>Client</mat-label>
-                  <input required aria-label="Number" matInput [formControl]="element.ClientControl" [matAutocomplete]="auto"
-                    [(ngModel)]="element.Client" #client>
-                  <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let client of filteredClientList | async" [value]="client">
-                      {{client}}
-                    </mat-option>
-                  </mat-autocomplete>
-                  <mat-icon matSuffix class="dropdownIcon">arrow_drop_down</mat-icon>
-                </mat-form-field>
+        <input #fileInput type="file" (change)="onFileChange($event)" multiple="false" style="display:none;" />
+        <mat-form-field class="fileUrl">
+          <input type="text" matInput placeholder="File" [value]="fileUrl" (keyup)="determineReset($event)">
+          <button mat-button *ngIf="fileUrl != ''" matSuffix mat-icon-button (click)="resetFile()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <button mat-button><a href="../../../../assets/Caging-Upload-Example.csv">Example Format </a><i class="material-icons">save_alt</i></button>
+      <div>
+        <img *ngIf="showEx" src="../../../../assets/exampleLRI.PNG" id="exampleImg">
+      </div>
+      <!-- File URL end-->
+      <br>
+      <br>
+      <ul>
+        <li *ngFor="let element of cagingArr; let i = index" [attr.data-index]="i">
+          <div class="row">
+            <div class="col-lg-11 objectColumn">
+              <div class="row">
+                <div class="col-lg-6">
+                  <mat-form-field appearance="outline" class="mainInputBox">
+                    <mat-label>Client</mat-label>
+                    <input required aria-label="Number" matInput [formControl]="element.ClientControl"
+                      [matAutocomplete]="auto" [(ngModel)]="element.Client" #client>
+                    <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option *ngFor="let client of filteredClientList | async" [value]="client">
+                        {{client}}
+                      </mat-option>
+                    </mat-autocomplete>
+                    <mat-icon matSuffix class="dropdownIcon">arrow_drop_down</mat-icon>
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-2" *ngIf="i == 0 && element.Client != null && cagingArr.length > 1">
+                  <button mat-button (click)="applyClientToAllRows(element.Client)" title="Apply client selection across all entries">Apply
+                    to all <i class="material-icons">ballot</i></button>
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-4">
-                <!-- Set the "value" (aka the starting value via the ngModel. Using the ngModel because that way it also updates the whitemailElement object-->
-                <mat-form-field appearance="outline" class="mainInputBox">
-                  <mat-label>Cage Date</mat-label>
-                  <input required matInput [matDatepicker]="CageDatePick" (dateInput)="changeDate($event)" [(ngModel)]="element.DateCaged">
-                  <mat-datepicker-toggle matSuffix [for]="CageDatePick"></mat-datepicker-toggle>
-                  <mat-datepicker #CageDatePick>
-                  </mat-datepicker>
-                  <!-- (dateInput)="validateDate($event)" -->
-                </mat-form-field>
+              <div class="row">
+                <div class="col-lg-4">
+                  <!-- Set the "value" (aka the starting value via the ngModel. Using the ngModel because that way it also updates the whitemailElement object-->
+                  <mat-form-field appearance="outline" class="mainInputBox">
+                    <mat-label>Cage Date</mat-label>
+                    <input required matInput [matDatepicker]="CageDatePick" (dateInput)="changeDate($event)"
+                      [(ngModel)]="element.DateCaged">
+                    <mat-datepicker-toggle matSuffix [for]="CageDatePick"></mat-datepicker-toggle>
+                    <mat-datepicker #CageDatePick>
+                    </mat-datepicker>
+                    <!-- (dateInput)="validateDate($event)" -->
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-4">
+                  <mat-form-field appearance="outline" class="mainInputBox">
+                    <mat-label>Mailcode</mat-label>
+                    <input required matInput placeholder="Mailcode" [(ngModel)]="element.MailCode">
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-2">
+                  <mat-form-field appearance="outline" class="mainInputBox">
+                    <mat-label>Non-Donors</mat-label>
+                    <input required matInput placeholder="Non-donors" [(ngModel)]="element.NonDonors">
+                  </mat-form-field>
+                </div>
               </div>
-              <div class="col-lg-4">
-                <mat-form-field appearance="outline" class="mainInputBox">
-                  <mat-label>Mailcode</mat-label>
-                  <input required matInput placeholder="Mailcode" [(ngModel)]="element.MailCode">
-                </mat-form-field>
-              </div>
-              <div class="col-lg-2">
-                <mat-form-field appearance="outline" class="mainInputBox">
-                  <mat-label>Non-Donors</mat-label>
-                  <input required matInput placeholder="Non-donors" [(ngModel)]="element.NonDonors">
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-4">
-                <div class="row">
-                  <div class="col-6">
-                    <mat-form-field appearance="outline" class="mainInputBox">
-                      <mat-label>Cash Donors</mat-label>
-                      <input required matInput [(ngModel)]="element.CashDonors">
-                    </mat-form-field>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-6">
+                      <mat-form-field appearance="outline" class="mainInputBox">
+                        <mat-label>Cash Donors</mat-label>
+                        <input required matInput [(ngModel)]="element.CashDonors">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                      <mat-form-field appearance="outline" class="mainInputBox">
+                        <mat-label>Cash Amount</mat-label>
+                        <span matPrefix>$</span>
+                        <input required matInput [ngModel]="element.CashAmount|number:'1.2-2'" (blur)="updateElement($event, 'cash', element)">
+                      </mat-form-field>
+                    </div>
                   </div>
-                  <div class="col-6">
-                    <mat-form-field appearance="outline" class="mainInputBox">
-                      <mat-label>Cash Amount</mat-label>
-                      <span matPrefix>$</span>
-                      <input required matInput [ngModel]="element.CashAmount|number:'1.2-2'" (blur)="updateElement($event, 'cash', element)">
-                    </mat-form-field>
+                </div>
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-6">
+                      <mat-form-field appearance="outline" class="mainInputBox">
+                        <mat-label>Check Donors</mat-label>
+                        <input required matInput [(ngModel)]="element.CheckDonors">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                      <mat-form-field appearance="outline" class="mainInputBox">
+                        <mat-label>Check Amount</mat-label>
+                        <span matPrefix>$</span>
+                        <input required matInput [ngModel]="element.CheckAmount|number:'1.2-2'" (blur)="updateElement($event, 'check', element)">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-6">
+                      <mat-form-field appearance="outline" class="mainInputBox">
+                        <mat-label>Card Donors</mat-label>
+                        <input required matInput [(ngModel)]="element.CardDonors">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                      <mat-form-field appearance="outline" class="mainInputBox">
+                        <mat-label>Card Amount</mat-label>
+                        <span matPrefix>$</span>
+                        <input required matInput [ngModel]="element.CardAmount|number:'1.2-2'" (blur)="updateElement($event, 'card', element)">
+                      </mat-form-field>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="col-lg-4">
-                <div class="row">
-                  <div class="col-6">
-                    <mat-form-field appearance="outline" class="mainInputBox">
-                      <mat-label>Check Donors</mat-label>
-                      <input required matInput [(ngModel)]="element.CheckDonors">
-                    </mat-form-field>
-                  </div>
-                  <div class="col-6">
-                    <mat-form-field appearance="outline" class="mainInputBox">
-                      <mat-label>Check Amount</mat-label>
-                      <span matPrefix>$</span>
-                      <input required matInput [ngModel]="element.CheckAmount|number:'1.2-2'" (blur)="updateElement($event, 'check', element)">
-                    </mat-form-field>
-                  </div>
+            </div>
+            <div class="col-lg-1 buttonColumn">
+              <div class="row">
+                <div class="col-lg-12" *ngIf="cagingArr.length > 1">
+                  <button mat-icon-button matTooltip="Delete row" [matTooltipShowDelay]="1000" [matTooltipHideDelay]="200"><i
+                      class="material-icons" (click)="deleteRow(element)">delete</i></button>
                 </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="row">
-                  <div class="col-6">
-                    <mat-form-field appearance="outline" class="mainInputBox">
-                      <mat-label>Card Donors</mat-label>
-                      <input required matInput [(ngModel)]="element.CardDonors">
-                    </mat-form-field>
-                  </div>
-                  <div class="col-6">
-                    <mat-form-field appearance="outline" class="mainInputBox">
-                      <mat-label>Card Amount</mat-label>
-                      <span matPrefix>$</span>
-                      <input required matInput [ngModel]="element.CardAmount|number:'1.2-2'" (blur)="updateElement($event, 'card', element)">
-                    </mat-form-field>
-                  </div>
+                <div class="col-lg-12">
+                  <button mat-icon-button matTooltip="Add new row" [matTooltipShowDelay]="1000" [matTooltipHideDelay]="200"
+                    *ngIf="element.isLast" (click)="addRow()"><i class="material-icons">add_box</i></button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-lg-1 buttonColumn">
-            <div class="row">
-              <div class="col-lg-12">
-                <button mat-icon-button matTooltip="Delete row" [matTooltipShowDelay]="1000" [matTooltipHideDelay]="200"><i
-                    class="material-icons" (click)="deleteRow(element)">delete</i></button>
-              </div>
-              <div class="col-lg-12">
-                <button mat-icon-button matTooltip="Add new row" [matTooltipShowDelay]="1000" [matTooltipHideDelay]="200"
-                  *ngIf="element.isLast" (click)="addRow()"><i class="material-icons">add_box</i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <hr>
-      </li>
-    </ul>
+          <hr>
+        </li>
+      </ul>
 
-    <div class="btnContainer">
-      <button id="submitBtn" mat-raised-button (click)="submitPage()">Submit</button>
+      <div class="btnContainer">
+        <button id="submitBtn" mat-raised-button (click)="submitPage()">Submit</button>
+      </div>
     </div>
   </mat-card>
 </div>

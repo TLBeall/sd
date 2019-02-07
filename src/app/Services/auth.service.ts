@@ -186,9 +186,8 @@ export class AuthService {
       element.ClientControl = null;
       element.isLast = null;
       element.beenModified = null;
-      var tempclient = element.Client;
-      var reg = /(?<= - ).*/;
-      element.Client = (tempclient.match(reg)).toString();
+      var tempclient = element.Client.split(" ").splice(-1);
+      element.Client = tempclient.toString(); 
     });
     var Token = "";
     var createDailiesURL = "https://sd360.sunrisedataservices.com/api/CreateDailies";
@@ -201,9 +200,9 @@ export class AuthService {
     return this.http.post(createDailiesURL, body, { headers: headersForCreateDailiesAPI });
   }
 
-  getWhitemailByClient(Agency: string, Client: string) {
+  getWhitemailByClient(Agency: string, Client: string, startdate: string, enddate: string) {
     var Token = "";
-    var getURL = "https://sd360.sunrisedataservices.com/api/GetDailies?Agency=" + Agency + "&Client=" + Client + "&MailCode=WM&Skip=0&RequestedCount=100";
+    var getURL = "https://sd360.sunrisedataservices.com/api/GetDailies?Agency=" + Agency + "&Client=" + Client + "&MailCode=WM&From=" + startdate + "&To=" + enddate;
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
@@ -224,9 +223,11 @@ export class AuthService {
     return this.http.put(editURL, body, { headers: headersForEditAPI });
   }
 
-  getListRentalbyClient(client: string) {
+  getListRentalbyClient(client: string, startdate: string, enddate: string) {
     var Token = "";
-    var getURL = "https://sd360.sunrisedataservices.com/api/GetLRI?Client=" + client + "&Skip=0&RequestedCount=1000";
+    // var getURL = "https://sd360.sunrisedataservices.com/api/GetLRI?Client=" + client + "&Skip=0&RequestedCount=1000";
+    var getURL = "https://sd360.sunrisedataservices.com/api/GetLRI?Client=" + client + "&From=" + startdate + "&To=" + enddate + "&Transaction=true";
+
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
@@ -238,9 +239,8 @@ export class AuthService {
       element.ClientControl = null;
       element.isLast = null;
       element.beenModified = null;
-      var tempclient = element.Client;
-      var reg = /(?<= - ).*/;
-      element.Client = (tempclient.match(reg)).toString();
+      var tempclient = element.Client.split(" ").splice(-1);
+      element.Client = tempclient.toString(); 
       var tempDate = (element.LRIDate).toDateString();
       element.LRIDate = new Date(tempDate);
     });
@@ -301,9 +301,8 @@ export class AuthService {
       element.ClientControl = null;
       element.isLast = null;
       element.beenModified = null;
-      var tempclient = element.Client;
-      var reg = /(?<= - ).*/;
-      element.Client = (tempclient.match(reg)).toString();
+      var tempclient = element.Client.split(" ").splice(-1);
+      element.Client = tempclient.toString(); 
       var tempDate = (element.IncidenceDate).toDateString();
       element.IncidenceDate = new Date(tempDate);
     });
@@ -351,7 +350,7 @@ export class AuthService {
 
   getDailiesExceptions() {
     var Token = "";
-    var getURL = "https://sd360.sunrisedataservices.com/api/GetDailiesExceptions"; //The X is linked to the BB table. Remove X when migration is complete
+    var getURL = "https://sd360.sunrisedataservices.com/api/GetDailiesExceptionsX"; //The X is linked to the BB table. Remove X when migration is complete
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));

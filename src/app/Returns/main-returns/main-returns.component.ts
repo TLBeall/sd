@@ -30,6 +30,11 @@ export class ReturnsComponent {
 
   title = 'SD360-Reporting-Angular';
 
+  private loadingTime: string = "";
+  private navStart: number = 0;
+  private navEnd: number = 0;
+
+
   private route: any;
   private startDate: any;
   private endDate: any;
@@ -72,326 +77,18 @@ export class ReturnsComponent {
   @ViewChild('startDateInput') startDateInput: ElementRef<HTMLInputElement>;
   @ViewChild('endDateInput') endDateInput: ElementRef<HTMLInputElement>;
   @ViewChild('CLInput') CLInput: ElementRef<HTMLInputElement>;
-  @ViewChild('MTInput') MTInput: ElementRef<HTMLInputElement>;
-  @ViewChild('CAInput') CAInput: ElementRef<HTMLInputElement>;
-  @ViewChild('PHInput') PHInput: ElementRef<HTMLInputElement>;
+
 
   private CLStrArr: string[] = new Array<string>();
   private CLControl = new FormControl();
   private CLList: string[] = []; //clients in main returns
   private CLfilteredOptions: Observable<string[]>;
 
-  private MTStrArr: string[] = new Array<string>();
-  private MTControl = new FormControl();
-  private MTList: string[] = [];
-  private MTfilteredOptions: Observable<string[]>;
-
-  private CAStrArr: string[] = new Array<string>();
-  private CAControl = new FormControl();
-  private CAList: string[] = [];
-  private CAfilteredOptions: Observable<string[]>;
-
-  private PHStrArr: string[] = new Array<string>();
-  private PHControl = new FormControl();
-  private PHList: string[] = [];
-  private PHfilteredOptions: Observable<string[]>;
-
-  // private CagingArr: CagingDailies[] = new Array<CagingDailies>();
-  // private CageRec: CagingDailies;
-
   constructor(route: ActivatedRoute, private _authService: AuthService, private _g: GlobalService, private router: Router) {
     this.route = route;
-   
-    // this.CageRec = new CagingDailies();
-    // this.CageRec.Agency = "HSP";    
-    // this.CageRec.Client = "ACRU";
-    // this.CageRec.DonationDate = new Date();
-    // this.CageRec.MailCodeId = 0;
-    // this.CageRec.MailCode = "WM";
-    // this.CageRec.NonDonors = 25;
-    // this.CageRec.CashDonors = 25;
-    // this.CageRec.CardDonors = 25;
-    // this.CageRec.UnspecifiedDonors = 25;
-    // this.CageRec.CashAmount = 25;
-    // this.CageRec.CardAmount = 25;
-    // this.CageRec.CheckAmount = 25;
-    // this.CageRec.UnspecifiedAmount = 25;
-    // this.CageRec.EnteredDate = new Date();
-    // this.CageRec.ModifiedDate = new Date();
-    // this.CageRec.DateCaged = new Date();
-    // this.CagingArr.push(this.CageRec);
-    // _authService.createCagingDailies(this.CagingArr).subscribe();
   }
-
-  //CHIP FILTER START
-  private CL_filter(name: string): string[] {
-    if (name == null)
-      return null;
-    const filterValue = name.toLowerCase();
-    return this.CLStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
-  }
-  private MT_filter(name: string): string[] {
-    if (name == null)
-      return null;
-    const filterValue = name.toLowerCase();
-    return this.MTStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
-  }
-  private CA_filter(name: string): string[] {
-    if (name == null)
-      return null;
-    const filterValue = name.toLowerCase();
-    return this.CAStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
-  }
-  private PH_filter(name: string): string[] {
-    if (name == null)
-      return null;
-    const filterValue = name.toLowerCase();
-    return this.PHStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
-  }
-
-  //CHIP ADD START
-  CL_Add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-    if ((value || '').trim()) {
-      this.CLList.push(value.trim());
-    }
-    if (input) {
-      input.value = '';
-    }
-    this.CLControl.setValue(null);
-  }
-  MT_Add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-    if ((value || '').trim()) {
-      this.MTList.push(value.trim());
-    }
-    if (input) {
-      input.value = '';
-    }
-    this.MTControl.setValue(null);
-  }
-  CA_Add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-    if ((value || '').trim()) {
-      this.CAList.push(value.trim());
-    }
-    if (input) {
-      input.value = '';
-    }
-    this.CAControl.setValue(null);
-  }
-  PH_Add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-    if ((value || '').trim()) {
-      this.PHList.push(value.trim());
-    }
-    if (input) {
-      input.value = '';
-    }
-    this.PHControl.setValue(null);
-  }
-
-  //CHIP REMOVE START
-  CL_Remove(listowner: string): void {
-    const index = this.CLList.indexOf(listowner);
-    if (index >= 0) {
-      this.CLList.splice(index, 1);
-    }
-  }
-  MT_Remove(listmanager: string): void {
-    const index = this.MTList.indexOf(listmanager);
-    if (index >= 0) {
-      this.MTList.splice(index, 1);
-    }
-  }
-  CA_Remove(recency: string): void {
-    const index = this.CAList.indexOf(recency);
-    if (index >= 0) {
-      this.CAList.splice(index, 1);
-    }
-  }
-  PH_Remove(client: string): void {
-    const index = this.PHList.indexOf(client);
-    if (index >= 0) {
-      this.PHList.splice(index, 1);
-    }
-  }
-
-  //CHIP DROPDOWN SELECTED START
-  CL_Selected(event: MatAutocompleteSelectedEvent): void {
-    if (!this.CLList.includes(this.getAcronym(event.option.viewValue)))
-    {
-      this.CLList.push(this.getAcronym(event.option.viewValue));
-      this._authService.getMailTypeFilter(this.getAcronym(event.option.viewValue), this.startDate, this.endDate).subscribe(data => {
-        this.MTStrArr = Array.from(new Set(data.map(item => item))).sort();
-        this.MTStrArr.forEach(p => this.MTList.push(p));          
-        this.MTfilteredOptions =  this.MTControl.valueChanges.pipe(
-          startWith(null),
-          map((mailType: string | null) => mailType ? this.MT_filter(mailType) : this.MTStrArr.slice())
-        );
-      });
-
-      this._authService.getCampaignFilterByClients(this.getAcronym(event.option.viewValue), this.startDate, this.endDate).subscribe(data => {
-        this.CAStrArr = Array.from(new Set(data.map(item => item))).sort();
-        this.CAStrArr.forEach(p => this.CAList.push(p));          
-        this.CAfilteredOptions =  this.CAControl.valueChanges.pipe(
-          startWith(null),
-          map((campaign: string | null) => campaign ? this.MT_filter(campaign) : this.CAStrArr.slice())
-        );
-      });     
-      
-      this._authService.getPhaseFilterByClients(this.getAcronym(event.option.viewValue), this.startDate, this.endDate).subscribe(data => {
-        this.PHStrArr = Array.from(new Set(data.map(item => item))).sort();
-        this.PHStrArr.forEach(p => this.PHList.push(p));            
-        this.PHfilteredOptions =  this.PHControl.valueChanges.pipe(
-          startWith(null),
-          map((phase: string | null) => phase ? this.MT_filter(phase) : this.PHStrArr.slice())
-        );
-      });         
-
-    }
-    this.CLInput.nativeElement.value = '';
-    this.CLControl.setValue(null);
-    this.CLfilteredOptions = this.CLControl.valueChanges.pipe(
-      startWith(null),
-      map((client: string | null) => client ? this.CL_filter(client) : this.CLStrArr.slice())
-    );
-    this.CLInput.nativeElement.blur();
-  }
-  MT_Selected(event: MatAutocompleteSelectedEvent): void {
-    if (!this.MTList.includes(this.getAcronym(event.option.viewValue)))
-      this.MTList.push(this.getAcronym(event.option.viewValue));
-    this.MTInput.nativeElement.value = '';
-    this.MTControl.setValue(null);
-    this.MTfilteredOptions = this.MTControl.valueChanges.pipe(
-      startWith(null),
-      map((mailtype: string | null) => mailtype ? this.MT_filter(mailtype) : this.MTStrArr.slice())
-    );
-    this.MTInput.nativeElement.blur();
-  }
-  CA_Selected(event: MatAutocompleteSelectedEvent): void {
-    if (!this.CAList.includes(this.getAcronym(event.option.viewValue)))
-      this.CAList.push(this.getAcronym(event.option.viewValue));
-    this.CAInput.nativeElement.value = '';
-    this.CAControl.setValue(null);
-    this.CAfilteredOptions = this.CAControl.valueChanges.pipe(
-      startWith(null),
-      map((campaign: string | null) => campaign ? this.CA_filter(campaign) : this.CAStrArr.slice())
-    );
-    this.CAInput.nativeElement.blur();
-  }
-  PH_Selected(event: MatAutocompleteSelectedEvent): void {
-    if (!this.PHList.includes(this.getAcronym(event.option.viewValue)))
-      this.PHList.push(this.getAcronym(event.option.viewValue));
-    this.PHInput.nativeElement.value = '';
-    this.PHControl.setValue(null);
-    this.PHfilteredOptions = this.PHControl.valueChanges.pipe(
-      startWith(null),
-      map((phase: string | null) => phase ? this.PH_filter(phase) : this.PHStrArr.slice())
-    );
-    this.PHInput.nativeElement.blur();
-  }
-
-  // add(event: MatChipInputEvent): void {
-  //   const input = event.input;
-  //   const value = event.value;
-
-  //   // Add our client
-  //   if ((value || '').trim()) {
-  //     this.clients.push(value.trim().toUpperCase());
-  //   }
-
-  //   // Reset the input value
-  //   if (input) {
-  //     input.value = '';
-  //   }
-
-  //   this.clientControl.setValue(null);
-  // }
-
-  // remove(client: string): void {
-  //   const index = this.clients.indexOf(client);
-
-  //   if (index >= 0) {
-  //     this.clients.splice(index, 1);
-  //   }
-  // }
-
-  // selected(event: MatAutocompleteSelectedEvent): void {
-  //   if (!this.clients.includes(this.getAcronym(event.option.viewValue)))
-  //     this.clients.push(this.getAcronym(event.option.viewValue));
-  //   this.clientListInput.nativeElement.value = '';
-  //   this.clientControl.setValue(null);
-  //   this.filteredOptions = this.clientControl.valueChanges.pipe(
-  //     startWith(null),
-  //     map((client: string | null) => client ? this._filter(client) : this.ClientStrArr.slice())
-  //   );
-  //   this.clientListInput.nativeElement.blur();
-  // }
-
-  // private _filter(name: string): string[] {
-  //   if (name == null)
-  //     return null;
-  //   const filterValue = name.toLowerCase();
-  //   return this.ClientStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
-  // }
-
-  // ngOnInit() {
-
-  //   this.pageReady = false;
-  //   this.clients = [];
-  //   this.route.params.subscribe(params => {
-  //     if (!params['client'])
-  //     {
-  //       this.rootReturns = null;
-  //       this.pageReady = true;
-  //       this.startDate = new Date("1/1/" + (new Date()).getFullYear().toString());
-  //       this.endDate = new Date("12/31/" + (new Date()).getFullYear().toString());
-  //     }
-  //     else
-  //       this.LoadValues(params['client'], params['from'], params['to']);
-  //     if (params['client'])
-  //       this._authService.getReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
-  //         if (data) {
-  //           this.rootReturns = data;
-  //           this.rootReturns = this._g.SetLastElements(this.rootReturns);
-  //           this.rootReturns = this._g.ExpandAll(this.rootReturns);
-  //           this.pageReady = true;
-  //           var i = 0;
-  //           while (this.rootReturns[i]) {
-  //             this.CheckLevel(this.rootReturns[i], true);
-  //             i = i + 1;
-  //           }
-  //           var calculations = this._g.CalculateSummaries(this.rootReturns);
-  //           this.rootReturns = calculations.rootReturns;
-  //           this.grandTotal = calculations.grandTotal;
-  //         }
-  //       });
-
-  //     this._authService.getClientList("All")
-  //       .subscribe(data => {
-  //         this.ClientArr = data;
-  //         this.ClientStrArr = [];
-  //         this.ClientArr.forEach(p => { this.ClientStrArr.push(p.gClientName + ' - ' + p.gClientAcronym) });
-  //         this.filteredOptions = this.clientControl.valueChanges
-  //           .pipe(
-  //             startWith(''),
-  //             map(value => this._filter(value))
-  //           );
-  //         if (params['client'] && (this.clients.length != this.selectedClients.length)) {
-  //           this.clients = [];
-  //           this.selectedClients.forEach(p => this.clients.push(p));
-  //         }
-  //       });
-  //   });
-  // }
 
   ngOnInit() {
-
     this.pageReady = false;
     this.CLList = [];
 
@@ -413,34 +110,7 @@ export class ReturnsComponent {
           );
         });
                 
-      if (params['client']) {
-        this._authService.getMailTypeFilter(params['client'], this.startDate, this.endDate).subscribe(data => {
-          this.MTStrArr = Array.from(new Set(data.map(item => item))).sort();
-          this.MTStrArr.forEach(p => this.MTList.push(p));          
-          this.MTfilteredOptions =  this.MTControl.valueChanges.pipe(
-            startWith(null),
-            map((mailType: string | null) => mailType ? this.MT_filter(mailType) : this.MTStrArr.slice())
-          );
-        });
-
-        this._authService.getCampaignFilterByClients(params['client'], this.startDate, this.endDate).subscribe(data => {
-          this.CAStrArr = Array.from(new Set(data.map(item => item))).sort();
-          this.CAStrArr.forEach(p => this.CAList.push(p));          
-          this.CAfilteredOptions =  this.CAControl.valueChanges.pipe(
-            startWith(null),
-            map((campaign: string | null) => campaign ? this.MT_filter(campaign) : this.CAStrArr.slice())
-          );
-        });     
-        
-        this._authService.getPhaseFilterByClients(params['client'], this.startDate, this.endDate).subscribe(data => {
-          this.PHStrArr = Array.from(new Set(data.map(item => item))).sort();
-          this.PHStrArr.forEach(p => this.PHList.push(p));            
-          this.PHfilteredOptions =  this.PHControl.valueChanges.pipe(
-            startWith(null),
-            map((phase: string | null) => phase ? this.MT_filter(phase) : this.PHStrArr.slice())
-          );
-        });         
-        
+      if (params['client']) {        
         this._authService.getReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
           if (data) {
             this.rootReturns = data;
@@ -456,25 +126,59 @@ export class ReturnsComponent {
             this.rootReturns = calculations.rootReturns;
             this.grandTotal = calculations.grandTotal;    
           }
+          this._authService.getLRIforReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
+            var test = data;
+            console.log(test);
+          })
         });
       }
-
-      // this._authService.getClientList("All")
-      //   .subscribe(data => {
-      //     this.ClientArr = data;
-      //     this.CLStrArr = [];
-      //     this.ClientArr.forEach(p => { this.CLStrArr.push(p.gClientName + ' - ' + p.gClientAcronym) });
-      //     this.CLfilteredOptions = this.CLControl.valueChanges
-      //       .pipe(
-      //         startWith(''),
-      //         map(value => this.CL_filter(value))
-      //       );
-      //     if (params['client'] && (this.CLList.length != this.selectedClients.length)) {
-      //       this.CLList = [];
-      //       this.selectedClients.forEach(p => this.CLList.push(p));
-      //     }
-      //   });
     });
+  }
+
+
+  //CHIP FILTER START
+  private CL_filter(name: string): string[] {
+    if (name == null)
+      return null;
+    const filterValue = name.toLowerCase();
+    return this.CLStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
+  }
+
+  //CHIP ADD START
+  CL_Add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) {
+      this.CLList.push(value.trim());
+    }
+    if (input) {
+      input.value = '';
+    }
+    this.CLControl.setValue(null);
+  }
+
+  //CHIP REMOVE START
+  CL_Remove(listowner: string): void {
+    const index = this.CLList.indexOf(listowner);
+    if (index >= 0) {
+      this.CLList.splice(index, 1);
+    }
+  }
+
+  //CHIP DROPDOWN SELECTED START
+  CL_Selected(event: MatAutocompleteSelectedEvent): void {
+    if (!this.CLList.includes(this.getAcronym(event.option.viewValue)))
+    {
+      this.CLList.push(this.getAcronym(event.option.viewValue));
+
+    }
+    this.CLInput.nativeElement.value = '';
+    this.CLControl.setValue(null);
+    this.CLfilteredOptions = this.CLControl.valueChanges.pipe(
+      startWith(null),
+      map((client: string | null) => client ? this.CL_filter(client) : this.CLStrArr.slice())
+    );
+    this.CLInput.nativeElement.blur();
   }
 
   getAcronym(Name: string): string {

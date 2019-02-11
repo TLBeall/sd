@@ -12,6 +12,8 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { CagingDailies } from 'src/app/Models/CagingDailies.model';
+import * as moment from 'moment';
+import { LRIClient } from 'src/app/Models/ReturnsLRIClient.model';
 
 @Component({
   selector: 'app-main-returns',
@@ -57,6 +59,8 @@ export class ReturnsComponent {
   private tempStartDate;
   private tempEndDate;
   // private customPage: bool = true;
+  private LRITableData: LRIClient[];
+  private clientIndex: number;
 
   //For chip selection settings
   visible = true;
@@ -72,6 +76,8 @@ export class ReturnsComponent {
   campaignDisplayedColumns: string[] = ['Expand', 'selectionBox', 'CampaignName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'GPP', 'Cost', 'CLM', 'Net', 'NLM', 'CPD', 'IO'];
   phaseDisplayedColumns: string[] = ['Expand', 'selectionBox', 'PhaseName', 'PseudoDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'GPP', 'Cost', 'CLM', 'Net', 'NLM', 'CPD', 'IO'];
   mailListDisplayedColumns: string[] = ['PseudoExpand', 'selectionBox', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'GPP', 'Cost', 'CLM', 'Net', 'NLM', 'CPD', 'IO'];
+
+  LRIColumns: string[] = ['LRIDate', 'LRIAmount', 'LRICumulative'];
 
   // @ViewChild('clientListInput') clientListInput: ElementRef<HTMLInputElement>;
   @ViewChild('startDateInput') startDateInput: ElementRef<HTMLInputElement>;
@@ -102,34 +108,53 @@ export class ReturnsComponent {
       else
         this.LoadValues(params['client'], params['mailtype'], params['campaign'], params['phase'], params['startdate'], params['enddate']);
 
-        this._authService.getClientsFilter(this.startDate, this.endDate).subscribe(data => {
-          this.CLStrArr = Array.from(new Set(data.map(item => item.gClientName + ' - ' + item.gClientAcronym))).sort();
-          this.CLfilteredOptions =  this.CLControl.valueChanges.pipe(
-            startWith(null),
-            map((client: string | null) => client ? this.CL_filter(client) : this.CLStrArr.slice())
-          );
-        });
-                
-      if (params['client']) {        
+      this._authService.getClientsFilter(this.startDate, this.endDate).subscribe(data => {
+        this.CLStrArr = Array.from(new Set(data.map(item => item.gClientName + ' - ' + item.gClientAcronym))).sort();
+        this.CLfilteredOptions = this.CLControl.valueChanges.pipe(
+          startWith(null),
+          map((client: string | null) => client ? this.CL_filter(client) : this.CLStrArr.slice())
+        );
+      });
+
+      if (params['client']) {
         this._authService.getReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
           if (data) {
             this.rootReturns = data;
             this.rootReturns = this._g.SetLastElements(this.rootReturns);
             this.rootReturns = this._g.ExpandAll(this.rootReturns);
             this.pageReady = true;
-            var i = 0;
-            while (this.rootReturns[i]) {
-              this.CheckLevel(this.rootReturns[i], true);
-              i = i + 1;
+            this.clientIndex = 0;
+            while (this.rootReturns[this.clientIndex]) {
+              this.CheckLevel(this.rootReturns[this.clientIndex], true);
+              this.clientIndex = this.clientIndex + 1;
             }
             var calculations = this._g.CalculateSummaries(this.rootReturns);
             this.rootReturns = calculations.rootReturns;
-            this.grandTotal = calculations.grandTotal;    
+            this.grandTotal = calculations.grandTotal;
           }
-          this._authService.getLRIforReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
-            var test = data;
-            console.log(test);
-          })
+          this._authService.getLRIforReturns(params['client'], this.startDate, this.endDate).subscribe(data2 => {
+            // this.LRITableData = [];
+            // data2.forEach((a, index) => {
+            //   var temp = data2[index].LRIlist;
+            //   this.TotalLRI = data2[index].Amount;
+            //   console.log(temp);
+            //   temp.forEach(b => {
+            //     b.Month = moment(b.Month, 'M').format('MMMM');
+            //   });
+            //   this.LRITableData = this.LRITableData.push(temp);
+            // })
+            // this.LRITableData = [];
+            var temp: LRIClient[];
+            temp = data2;
+            temp.forEach(a => {
+              a.LRIlist.forEach(b => {
+                b.Month = moment(b.Month, 'M').format('MMMM');
+              });
+            });
+            var test = 0
+            this.LRITableData = temp;
+          });
+
         });
       }
     });
@@ -167,8 +192,7 @@ export class ReturnsComponent {
 
   //CHIP DROPDOWN SELECTED START
   CL_Selected(event: MatAutocompleteSelectedEvent): void {
-    if (!this.CLList.includes(this.getAcronym(event.option.viewValue)))
-    {
+    if (!this.CLList.includes(this.getAcronym(event.option.viewValue))) {
       this.CLList.push(this.getAcronym(event.option.viewValue));
 
     }
@@ -208,14 +232,14 @@ export class ReturnsComponent {
 
   NavigateToListGross(PackageCode: string, Phase: string, MailCode: string) {
     this._g.clearCurCache = true;
-    var PhaseNumber = Phase.replace(PackageCode,'').replace('ph','');
+    var PhaseNumber = Phase.replace(PackageCode, '').replace('ph', '');
     this._g.clearCurCache = true;
     this.router.navigate(['listgross' + '/' + PackageCode + '/' + PhaseNumber + '/' + MailCode]);
   }
 
-  NavigateToPhaseGross(PackageCode: string, Phase: string){
+  NavigateToPhaseGross(PackageCode: string, Phase: string) {
     this._g.clearCurCache = true;
-    var PhaseNumber = Phase.replace(PackageCode,'').replace('ph','');
+    var PhaseNumber = Phase.replace(PackageCode, '').replace('ph', '');
     this._g.clearCurCache = true;
     this.router.navigate(['phasegross' + '/' + PackageCode + '/' + PhaseNumber]);
   }
@@ -406,7 +430,7 @@ export class ReturnsComponent {
           if (b.Measure["Selected"] == false || b.Measure["Indeterminate"])
             allcampSelected = false;
           if (b.Measure["Selected"] == true || b.Measure["Indeterminate"])
-           allcampUnselected = false;
+            allcampUnselected = false;
         })
         if ((!allcampSelected) && (!allcampUnselected))
           a.Measure["Indeterminate"] = true;
@@ -518,7 +542,7 @@ export class ReturnsComponent {
         if (this.ReadyToCollapseAll(Element))
           this.NextLevel(Element, Element);
         data = Element.slice();
-       break;
+        break;
       }
       case "MailTypeList": {
         if (this.ReadyToCollapseAll(Element.MailTypeList))

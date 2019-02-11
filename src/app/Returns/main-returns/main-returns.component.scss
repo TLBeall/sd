@@ -24,6 +24,10 @@ table {
   }
 }
 
+.LRITable{
+  width: 80%;
+  margin-left:47px;
+}
 
 //Controls hover and selected for the rows
 tr.example-element-row:not(.example-expanded-row):hover {
@@ -319,6 +323,11 @@ font-weight: bolder;
   }
 }
 
+.utilityHeader{
+  font-size:($font-leader*1.1);
+  font-weight:bold;
+  margin-left:47px;
+}
 
 //Controls the styling of the rows when they are unchecked by the toggle filter
 .selectionBoxUnchecked{

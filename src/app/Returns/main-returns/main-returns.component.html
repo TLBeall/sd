@@ -25,7 +25,7 @@
         <ng-container matColumnDef="Client">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="mailLevelColumn testColumn" [ngClass]="this.rootReturns[0].Measure.Expanded?'headerCollapsed':'headerExpanded'">
                 <span>Client</span></th>
-            <td mat-cell *matCellDef="let client" class="mailLevelColumn">
+            <td mat-cell *matCellDef="let client;" class="mailLevelColumn">
                 <span class="allCollapseHeader" [ngClass]="{
                         'font-client-lg': GetVisibilityStyle(! client.Measure.Expanded) == 'collapse',
                         'font-sm': GetVisibilityStyle(! client.Measure.Expanded) == 'visible'
@@ -1235,8 +1235,41 @@
     }"></tr>
 </table>
 </div>
-
 </div>
+
+
+<!-- TEST PUTTING LRI BELOW HERE-->
+<div *ngIf="mailType.Measure.IsLast == true">
+<br>
+<br>
+<span class="utilityHeader">LRI</span>
+<table *ngIf="LRITableData" class="LRITable" mat-table [dataSource]="LRITableData[clientIndex].LRIlist">
+    <ng-container matColumnDef="LRIDate">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let element"> {{element.Month}}, {{element.Year}} </td>
+        <td mat-footer-cell *matFooterCellDef>Total LRI</td>
+      </ng-container>
+      <ng-container matColumnDef="LRIAmount">
+        <th mat-header-cell *matHeaderCellDef>Amount</th>
+        <td mat-cell *matCellDef="let element"> {{element.Amount|currency}} </td>
+        <td mat-footer-cell *matFooterCellDef>{{LRITableData[0].Amount|currency}}</td>
+      </ng-container>
+      <ng-container matColumnDef="LRICumulative">
+        <th mat-header-cell *matHeaderCellDef>Cumulative</th>
+        <td mat-cell *matCellDef="let element"> {{element.Cumulative|currency}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="LRIColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: LRIColumns;"></tr>
+  <tr mat-footer-row *matFooterRowDef="LRIColumns"></tr>
+</table>
+<br>
+<br>
+</div>
+<!-- TEST PUTTING LRI ABOVE HERE-->
+
+
 </td>
 </ng-container>
 <tr mat-header-row [ngStyle]="{'visibility':client.MailTypeList[0].Measure.Expanded?'collapse':'visible' }"
@@ -1260,7 +1293,7 @@
 </ng-container>
 <tr mat-header-row [ngStyle]="{'visibility':this.rootReturns[0].Measure.Expanded?'collapse':'visible' }"
     *matHeaderRowDef="clientDisplayedColumns"></tr>
-<tr mat-row *matRowDef="let client; columns: clientDisplayedColumns;" class="example-element-row" [ngClass]="{
+<tr mat-row *matRowDef="let client; columns: clientDisplayedColumns" class="example-element-row" [ngClass]="{
             'example-expanded-row': client.Measure.Expanded,
             'selectionBoxUnchecked': client.Measure.Selected == false
         }">

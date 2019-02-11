@@ -64,6 +64,16 @@ export class AuthService {
     return this.http.get(GetReturnsAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
   }
 
+  getLRIforReturns(client: string, startdate: Date, enddate: Date) {
+    var Token = "";
+    var getURL = "https://sd360.sunrisedataservices.com/api/GetLRI?ClientList=" + client + "&From=" + startdate.toLocaleDateString() + "&To=" + enddate.toLocaleDateString();
+
+    var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
+    return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
+  }
+
+  getWMforReturns
+
   getClientsFilter(startDate: Date, endDate: Date): Observable<ClientList[]> { // all clients within a date range
     var Token = "";
     var GetClientFilterAPI = "https://sd360.sunrisedataservices.com/api/GetClientFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString();
@@ -226,14 +236,6 @@ export class AuthService {
   getListRentalbyClient(client: string, startdate: string, enddate: string) {
     var Token = "";
     var getURL = "https://sd360.sunrisedataservices.com/api/GetLRI?Client=" + client + "&From=" + startdate + "&To=" + enddate + "&Transaction=true";
-
-    var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
-    return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
-  }
-
-  getLRIforReturns(client: string, startdate: Date, enddate: Date) {
-    var Token = "";
-    var getURL = "https://sd360.sunrisedataservices.com/api/GetLRI?ClientList=" + client + "&From=" + startdate.toLocaleDateString() + "&To=" + enddate.toLocaleDateString();
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));

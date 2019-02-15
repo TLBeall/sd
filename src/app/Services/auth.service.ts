@@ -19,6 +19,9 @@ import { CagingDailies } from '../Models/CagingDailies.model';
 import { ListRental } from '../Models/ListRental.model';
 import { FormControl } from '@angular/forms';
 import { Incidental } from '../Models/Incidentals.model';
+import { ReturnsClientLRI } from '../Models/ReturnsClientLRI.model';
+import { ReturnsClientWM } from '../Models/ReturnsClientWM.model';
+import { ReturnsClientInc } from '../Models/ReturnsClientInc.model';
 // import { LoaderService } from '../loader/loader.service';
 
 @Injectable()
@@ -56,7 +59,7 @@ export class AuthService {
     return this.http.get(GetReturnsAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
   }
 
-  getReturns(clients: string, startDate: Date, endDate: Date): Observable<RootReturns> {
+  getReturns(clients: string, startDate: Date, endDate: Date): Observable<RootReturns[]> {
     var Token = "";
     var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/Returns?Clients=" + clients + "&startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&mailTypes=&campaigns=&phases=";
 
@@ -64,7 +67,7 @@ export class AuthService {
     return this.http.get(GetReturnsAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
   }
 
-  getLRIforReturns(client: string, startdate: Date, enddate: Date) {
+  getLRIforReturns(client: string, startdate: Date, enddate: Date): Observable<ReturnsClientLRI[]> {
     var Token = "";
     var getURL = "https://sd360.sunrisedataservices.com/api/GetLRI?ClientList=" + client + "&From=" + startdate.toLocaleDateString() + "&To=" + enddate.toLocaleDateString();
 
@@ -72,7 +75,21 @@ export class AuthService {
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
   }
 
-  getWMforReturns
+  getWMforReturns(client: string, startdate: Date, enddate: Date): Observable<ReturnsClientWM[]> {
+    var Token = "";
+    var getURL = "https://sd360.sunrisedataservices.com/api/GetWM?ClientList=" + client + "&From=" + startdate.toLocaleDateString() + "&To=" + enddate.toLocaleDateString();
+
+    var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
+    return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
+  }
+
+  getIncforReturns(client: string, startdate: Date, enddate: Date): Observable<ReturnsClientInc[]> {
+    var Token = "";
+    var getURL = "https://sd360.sunrisedataservices.com/api/GetIncidentals?ClientList=" + client + "&From=" + startdate.toLocaleDateString() + "&To=" + enddate.toLocaleDateString();
+
+    var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
+    return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
+  }
 
   getClientsFilter(startDate: Date, endDate: Date): Observable<ClientList[]> { // all clients within a date range
     var Token = "";

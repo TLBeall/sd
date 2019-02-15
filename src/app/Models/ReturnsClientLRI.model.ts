@@ -1,7 +1,8 @@
 import { ReturnsLRIElement } from './ReturnsLRIElement.model';
 
-export class LRIClient {
+export class ReturnsClientLRI {
      Amount: number;
      Client: string;
      LRIlist: ReturnsLRIElement[];
+     Expanded: boolean;
 }

@@ -13,7 +13,11 @@ import { startWith, map } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { CagingDailies } from 'src/app/Models/CagingDailies.model';
 import * as moment from 'moment';
-import { LRIClient } from 'src/app/Models/ReturnsLRIClient.model';
+import { ReturnsClientLRI } from 'src/app/Models/ReturnsClientLRI.model';
+import { ReturnsClientWM } from 'src/app/Models/ReturnsClientWM.model';
+import { ReturnsClientInc } from 'src/app/Models/ReturnsClientInc.model';
+import { IncidentalMonthData } from 'src/app/Models/ReturnsIncidentalMonthData.model';
+
 
 @Component({
   selector: 'app-main-returns',
@@ -36,14 +40,13 @@ export class ReturnsComponent {
   private navStart: number = 0;
   private navEnd: number = 0;
 
-
   private route: any;
   private startDate: any;
   private endDate: any;
   private pageReady: boolean = false;
   private selectedClients: string[] = new Array<string>();
   private clientName: string;
-  private rootReturns: RootReturns;
+  private rootReturns: RootReturns[];
   private toolsOpened: Boolean;
   private demoOpened: Boolean;
   private starttimer: number = 0;
@@ -59,8 +62,12 @@ export class ReturnsComponent {
   private tempStartDate;
   private tempEndDate;
   // private customPage: bool = true;
-  private LRITableData: LRIClient[];
-  private clientIndex: number;
+
+  private LRITableData: ReturnsClientLRI[];
+  private WMTableData: ReturnsClientWM[];
+  private IncidentalsTableData: ReturnsClientInc[];
+  private IncidentalsTableTypeData: IncidentalMonthData[];
+  private psuedoTable = [0]; // Used for the parent utility tables so that they only instantiate 1 row (the summary row)
 
   //For chip selection settings
   visible = true;
@@ -78,6 +85,10 @@ export class ReturnsComponent {
   mailListDisplayedColumns: string[] = ['PseudoExpand', 'selectionBox', 'MailCode', 'MailDescription', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'GPP', 'Cost', 'CLM', 'Net', 'NLM', 'CPD', 'IO'];
 
   LRIColumns: string[] = ['LRIDate', 'LRIAmount', 'LRICumulative'];
+  WMColumns: string[] = ['WMDate', 'WMNon', 'WMDonors', 'WMGross', 'WMAvg'];
+  IncByDateColumns: string[] = ['ExpandIncType', 'IncDate', 'IncMonthAmount'];
+  IncTypeColumns: string[] = ['EmptyIncType', 'IncType', 'IncTypeAmount']
+  IncCollapsedColumns: string[] = ['IncUtiltyType', 'IncUtilityAmount'];
 
   // @ViewChild('clientListInput') clientListInput: ElementRef<HTMLInputElement>;
   @ViewChild('startDateInput') startDateInput: ElementRef<HTMLInputElement>;
@@ -108,6 +119,7 @@ export class ReturnsComponent {
       else
         this.LoadValues(params['client'], params['mailtype'], params['campaign'], params['phase'], params['startdate'], params['enddate']);
 
+      //GET LIST OF CLIENTS FOR DROPDOWN
       this._authService.getClientsFilter(this.startDate, this.endDate).subscribe(data => {
         this.CLStrArr = Array.from(new Set(data.map(item => item.gClientName + ' - ' + item.gClientAcronym))).sort();
         this.CLfilteredOptions = this.CLControl.valueChanges.pipe(
@@ -116,43 +128,80 @@ export class ReturnsComponent {
         );
       });
 
+      //GET MAIN RETURNS
       if (params['client']) {
         this._authService.getReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
           if (data) {
+            var count = 0;
             this.rootReturns = data;
             this.rootReturns = this._g.SetLastElements(this.rootReturns);
             this.rootReturns = this._g.ExpandAll(this.rootReturns);
+            this.rootReturns.forEach(client => {
+              client.Index = count;
+              count++;
+            });
             this.pageReady = true;
-            this.clientIndex = 0;
-            while (this.rootReturns[this.clientIndex]) {
-              this.CheckLevel(this.rootReturns[this.clientIndex], true);
-              this.clientIndex = this.clientIndex + 1;
+            var i = 0;
+            while (this.rootReturns[i]) {
+              this.CheckLevel(this.rootReturns[i], true);
+              i = i + 1;
             }
             var calculations = this._g.CalculateSummaries(this.rootReturns);
             this.rootReturns = calculations.rootReturns;
             this.grandTotal = calculations.grandTotal;
           }
-          this._authService.getLRIforReturns(params['client'], this.startDate, this.endDate).subscribe(data2 => {
-            // this.LRITableData = [];
-            // data2.forEach((a, index) => {
-            //   var temp = data2[index].LRIlist;
-            //   this.TotalLRI = data2[index].Amount;
-            //   console.log(temp);
-            //   temp.forEach(b => {
-            //     b.Month = moment(b.Month, 'M').format('MMMM');
-            //   });
-            //   this.LRITableData = this.LRITableData.push(temp);
-            // })
-            // this.LRITableData = [];
-            var temp: LRIClient[];
-            temp = data2;
+
+          //GET LRI
+          this._authService.getLRIforReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
+            var temp: ReturnsClientLRI[];
+            temp = data;
             temp.forEach(a => {
+              a.Expanded = false;
               a.LRIlist.forEach(b => {
                 b.Month = moment(b.Month, 'M').format('MMMM');
               });
             });
-            var test = 0
             this.LRITableData = temp;
+          });
+
+          //GET WM
+          this._authService.getWMforReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
+            var temp: ReturnsClientWM[];
+            temp = data;
+            temp.forEach(a => {
+              a.Expanded = false;
+              a.WMs.forEach(b => {
+                b.Month = moment(b.Month, 'M').format('MMMM');
+              });
+            });
+            this.WMTableData = temp;
+          });
+
+          //GET Incidentals
+          this._authService.getIncforReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
+            var temp: ReturnsClientInc[];
+            var tempType: IncidentalMonthData[] = [];
+            temp = data;
+            temp.forEach(a => {
+              a.Expanded = false;
+              a.Incidentals.forEach((b, index) => {
+                b.Expanded = false;
+                b.Index = index;
+                b.Month = moment(b.Month, 'M').format('MMMM');
+              });
+              tempType = a.Incidentals;
+            });
+
+            this.IncidentalsTableData = temp;
+            this.IncidentalsTableTypeData = tempType;
+            var test = 0;
+            // temp = data3;
+            // temp.forEach(a => {
+            //   a.WMs.forEach(b => {
+            //     b.Month = moment(b.Month, 'M').format('MMMM');
+            //   });
+            // });
+            // this.WMTableData = temp;
           });
 
         });
@@ -520,6 +569,14 @@ export class ReturnsComponent {
   ToggleExpansion(Element: any) {
     if (Element.Measure)
       Element.Measure.Expanded = !Element.Measure.Expanded;
+  }
+
+  ToggleIncExpansion(instance: IncidentalMonthData) {
+    instance.Expanded = !instance.Expanded;
+  }
+
+  ToggleUtilityExpansion(table: any){
+    table.Expanded = !table.Expanded;
   }
 
   onResults(ReturnedResults: any): any {

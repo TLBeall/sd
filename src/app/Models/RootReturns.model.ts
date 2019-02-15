@@ -5,4 +5,5 @@ export class RootReturns {
     Client: string;
     MailTypeList:MailTypeReturns[];
     Measure:Returns;
+    Index: number;
 }

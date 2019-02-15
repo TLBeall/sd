@@ -4,6 +4,7 @@ $btnColumnShift: 46px; //used to control the left column for both parent and chi
 $selectionColumnShift: 32px;
 
 
+
 table {
   width: 100%;
   //Controls the font sizing in all of the tables
@@ -24,9 +25,18 @@ table {
   }
 }
 
-.LRITable{
-  width: 80%;
-  margin-left:47px;
+.utilityTable{
+  width: 50%;
+}
+
+.utilityControlTable{
+  tr{
+    .btnTD{
+      width: 47px;
+      padding: 0;
+      vertical-align: top;
+    }
+  }
 }
 
 //Controls hover and selected for the rows
@@ -132,6 +142,14 @@ tr.example-element-row:not(.example-expanded-row):active {
   border-bottom: 1px solid $color-gainsboro;
 }
 
+.rowCollapsed{
+  display: none;
+}
+
+.rowExpanded{
+  display: inline;
+}
+
 //controls the psuedo description column found in parent tables (to help alignment with child table)
 .descriptionColumn{
   width: 20vw;
@@ -143,6 +161,24 @@ tr.example-element-row:not(.example-expanded-row):active {
     width: 30vw;
     min-width: 30vw;
   }
+}
+
+.utilityLabelColumn{
+  width: 275px;
+  min-width: 275px;
+}
+
+th.utilityLabelColumn{
+  padding-left: 0px !important;
+}
+
+td.utilityLabelColumn{
+  padding-left: 8px !important;
+}
+
+.utilityIncColumn{
+  width: 325px;
+  min-width: 325px;
 }
 
 //Controls the exchange flag column across all tables
@@ -326,7 +362,7 @@ font-weight: bolder;
 .utilityHeader{
   font-size:($font-leader*1.1);
   font-weight:bold;
-  margin-left:47px;
+  margin-left:8px;
 }
 
 //Controls the styling of the rows when they are unchecked by the toggle filter

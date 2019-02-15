@@ -1238,36 +1238,261 @@
 </div>
 
 
-<!-- TEST PUTTING LRI BELOW HERE-->
 <div *ngIf="mailType.Measure.IsLast == true">
-<br>
-<br>
-<span class="utilityHeader">LRI</span>
-<table *ngIf="LRITableData" class="LRITable" mat-table [dataSource]="LRITableData[clientIndex].LRIlist">
-    <ng-container matColumnDef="LRIDate">
-        <th mat-header-cell *matHeaderCellDef>Date</th>
-        <td mat-cell *matCellDef="let element"> {{element.Month}}, {{element.Year}} </td>
-        <td mat-footer-cell *matFooterCellDef>Total LRI</td>
-      </ng-container>
-      <ng-container matColumnDef="LRIAmount">
-        <th mat-header-cell *matHeaderCellDef>Amount</th>
-        <td mat-cell *matCellDef="let element"> {{element.Amount|currency}} </td>
-        <td mat-footer-cell *matFooterCellDef>{{LRITableData[0].Amount|currency}}</td>
-      </ng-container>
-      <ng-container matColumnDef="LRICumulative">
-        <th mat-header-cell *matHeaderCellDef>Cumulative</th>
-        <td mat-cell *matCellDef="let element"> {{element.Cumulative|currency}} </td>
-        <td mat-footer-cell *matFooterCellDef></td>
-      </ng-container>
+    <!-- TEST PUTTING Incidentals BELOW HERE-->
+    <br>
+    <br>
+    <table class="utilityControlTable" *ngIf="IncidentalsTableData">
+        <tr>
+            <td class="btnTD">
+                <button mat-icon-button (click)="ToggleUtilityExpansion(IncidentalsTableData[client.Index])" class="returnsExpCollBtn">
+                    <i class="material-icons md-elevation-z6" [ngClass]="IncidentalsTableData[client.Index].Expanded?'mi_arrow_drop_down':'mi_arrow_right'"></i>
+                </button>
+            </td>
+            <td>
+                <div *ngIf="IncidentalsTableData[client.Index].Expanded == false">
+                    <table class="utilityTable" mat-table [dataSource]="psuedoTable">
+                        <ng-container matColumnDef="IncUtiltyType">
+            <th mat-header-cell *matHeaderCellDef class="utilityLabelColumn">Utility</th>
+            <td mat-cell *matCellDef="let element" class="utilityLabelColumn">Incidental Costs</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+            <ng-container matColumnDef="IncUtilityAmount">
+                <th mat-header-cell *matHeaderCellDef>Amount</th>
+                <td mat-cell *matCellDef="let element" class="negative">-{{IncidentalsTableData[client.Index].Amount|currency:'USD':'symbol':'1.2-2'}}</td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="LRIColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: LRIColumns;"></tr>
-  <tr mat-footer-row *matFooterRowDef="LRIColumns"></tr>
+        <tr mat-header-row *matHeaderRowDef="IncCollapsedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: IncCollapsedColumns;"></tr>
+    </table>
+</div>
+<div *ngIf="IncidentalsTableData[client.Index].Expanded == true">
+    <span class="utilityHeader">Incidental Costs</span>
+    <!-- ****************************** -->
+    <!-- Incidentals parent Table Start (list of months) -->
+    <!-- ****************************** -->
+    <table class="utilityTable" mat-table [dataSource]="IncidentalsTableData[client.Index].Incidentals"
+        multiTemplateDataRows>
+        <ng-container matColumnDef="ExpandIncType">
+            <th mat-header-cell *matHeaderCellDef="let instance" class="expandBtnColumn"></th>
+            <td mat-cell *matCellDef="let instance" class="expandBtnColumn">
+                <button mat-icon-button (click)="ToggleIncExpansion(instance)" class="returnsExpCollBtn">
+                    <i class="material-icons md-elevation-z6" [ngClass]="instance.Expanded?'mi_arrow_drop_down':'mi_arrow_right'"></i>
+                </button>
+            </td>
+            <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"> </td>.
+        </ng-container>
+        <ng-container matColumnDef="IncDate">
+            <th mat-header-cell *matHeaderCellDef class="utilityIncColumn"> Date </th>
+            <td mat-cell *matCellDef="let instance" class="utilityIncColumn"><span>
+                    {{instance.Month}}, {{instance.Year}} </span></td>
+            <td mat-footer-cell *matFooterCellDef class="utilityIncColumn"> Total Incidentals </td>
+        </ng-container>
+        <ng-container matColumnDef="IncMonthAmount">
+            <th mat-header-cell *matHeaderCellDef> Amount </th>
+            <td mat-cell *matCellDef="let instance"><span [ngClass]="instance.Expanded? 'rowCollapsed': 'rowExpanded'" class="negative">-{{instance.Amount|currency:'USD':'symbol':'1.2-2'}}</span></td>
+            <td mat-footer-cell *matFooterCellDef class="negative">-{{IncidentalsTableData[client.Index].Amount|currency:'USD':'symbol':'1.2-2'}}</td>
+        </ng-container>
+
+        <!-- ******************************************************************** -->
+        <!-- Incidentals Child Table Start (list of incidental charges - by type) -->
+        <!-- ********************************************************************* -->
+        <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let instance" [attr.colspan]="IncByDateColumns.length">
+                <div class="example-element-detail" [@detailExpand]="instance.Expanded?'expanded':'collapsed'"
+                    [style.height]="instance.Expanded?'unset':'0 !important'">
+                    <div style="width:100%">
+                        <table mat-table [dataSource]="IncidentalsTableData[client.Index].Incidentals[instance.Index].Accounts">
+                            <ng-container matColumnDef="EmptyIncType">
+            <th mat-header-cell *matHeaderCellDef class="expandBtnColumn"></th>
+            <td mat-cell *matCellDef="let type" class="expandBtnColumn"></td>
+            <td mat-footer-cell *matFooterCellDef class="expandBtnColumn"></td>
+        </ng-container>
+        <ng-container matColumnDef="IncType">
+            <th mat-header-cell *matHeaderCellDef class="utilityIncColumn"> Type </th>
+            <td mat-cell *matCellDef="let type" class="utilityIncColumn"><span>{{type.AccountName}}</span></td>
+            <td mat-footer-cell *matFooterCellDef class="utilityIncColumn">Total</td>
+        </ng-container>
+        <ng-container matColumnDef="IncTypeAmount">
+            <th mat-header-cell *matHeaderCellDef> Amount </th>
+            <td mat-cell *matCellDef="let type">
+                <span class="negative">-{{type.Amount|currency:'USD':'symbol':'1.2-2'}}</span>
+            </td>
+            <td mat-footer-cell *matFooterCellDef class="negative">-{{IncidentalsTableData[client.Index].Incidentals[instance.Index].Amount|currency:'USD':'symbol':'1.2-2'}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="IncTypeColumns"></tr>
+        <tr mat-row class="example-element-row childRow" *matRowDef="let row; columns: IncTypeColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="IncTypeColumns"></tr>
+    </table>
+    <br>
+</div>
+</div>
+</td>
+</ng-container>
+
+<tr mat-header-row *matHeaderRowDef="IncByDateColumns">
+</tr>
+<tr mat-row class="example-element-row" *matRowDef="let row; columns: IncByDateColumns;"></tr>
+<!-- <tr mat-row *matRowDef="let row; columns: IncByDateColumns" class="example-detail-row"></tr> -->
+<tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+<tr mat-footer-row *matFooterRowDef="IncByDateColumns"></tr>
 </table>
+</div>
+</td>
+</tr>
+</table>
+<!-- TEST PUTTING Incidentals ABOVE HERE-->
+
+<br>
+<!-- TEST PUTTING LRI BELOW HERE-->
+<table class="utilityControlTable" *ngIf="LRITableData">
+    <tr>
+        <td class="btnTD">
+            <button mat-icon-button (click)="ToggleUtilityExpansion(LRITableData[client.Index])" class="returnsExpCollBtn">
+                <i class="material-icons md-elevation-z6" [ngClass]="LRITableData[client.Index].Expanded?'mi_arrow_drop_down':'mi_arrow_right'"></i>
+            </button>
+        </td>
+        <td>
+            <div *ngIf="LRITableData[client.Index].Expanded == false">
+                <table class="utilityTable" mat-table [dataSource]="psuedoTable">
+                    <ng-container matColumnDef="LRIDate">
+        <th mat-header-cell *matHeaderCellDef class="utilityLabelColumn">Utility</th>
+        <td mat-cell *matCellDef="let element" class="utilityLabelColumn">List Rental Income</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="LRIAmount">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td mat-cell *matCellDef="let element">{{LRITableData[client.Index].Amount|currency:'USD':'symbol':'1.2-2'}}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="LRICumulative">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element"></td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="LRIColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: LRIColumns;"></tr>
+</table>
+</div>
+<div *ngIf="LRITableData[client.Index].Expanded == true">
+    <span class="utilityHeader">List Rental Income</span>
+    <table class="utilityTable" mat-table [dataSource]="LRITableData[client.Index].LRIlist">
+        <ng-container matColumnDef="LRIDate">
+            <th mat-header-cell *matHeaderCellDef class="utilityLabelColumn">Date</th>
+            <td mat-cell *matCellDef="let element" class="utilityLabelColumn"> {{element.Month}}, {{element.Year}} </td>
+            <td mat-footer-cell *matFooterCellDef class="utilityLabelColumn">Total LRI</td>
+        </ng-container>
+        <ng-container matColumnDef="LRIAmount">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td mat-cell *matCellDef="let element"> {{element.Amount|currency:'USD':'symbol':'1.2-2'}} </td>
+            <td mat-footer-cell *matFooterCellDef>{{LRITableData[client.Index].Amount|currency:'USD':'symbol':'1.2-2'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="LRICumulative">
+            <th mat-header-cell *matHeaderCellDef>Cumulative</th>
+            <td mat-cell *matCellDef="let element"> {{element.Cumulative|currency:'USD':'symbol':'1.2-2'}} </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="LRIColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: LRIColumns;" class="example-element-row"></tr>
+        <tr mat-footer-row *matFooterRowDef="LRIColumns"></tr>
+    </table>
+</div>
+</td>
+</tr>
+</table>
+<!-- TEST PUTTING LRI ABOVE HERE-->
+
+<!-- TEST PUTTING WM BELOW HERE-->
+<br>
+<table class="utilityControlTable" *ngIf="WMTableData">
+    <tr>
+        <td class="btnTD">
+            <button mat-icon-button (click)="ToggleUtilityExpansion(WMTableData[client.Index])" class="returnsExpCollBtn">
+                <i class="material-icons md-elevation-z6" [ngClass]="WMTableData[client.Index].Expanded?'mi_arrow_drop_down':'mi_arrow_right'"></i>
+            </button>
+        </td>
+        <td>
+            <div *ngIf="WMTableData[client.Index].Expanded == false">
+                <table class="utilityTable" mat-table [dataSource]="psuedoTable">
+                    <ng-container matColumnDef="WMDate">
+        <th mat-header-cell *matHeaderCellDef class="utilityLabelColumn">Utility</th>
+        <td mat-cell *matCellDef="let element" class="utilityLabelColumn">Whitemail Income</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="WMNon">
+            <th mat-header-cell *matHeaderCellDef>Non-Donors</th>
+            <td mat-cell *matCellDef="let element"> {{WMTableData[client.Index].NonDonors|number}} </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="WMDonors">
+            <th mat-header-cell *matHeaderCellDef>Donors</th>
+            <td mat-cell *matCellDef="let element"> {{WMTableData[client.Index].Donors|number}} </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="WMGross">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td mat-cell *matCellDef="let element"> {{WMTableData[client.Index].Gross|currency:'USD':'symbol':'1.2-2'}}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="WMAvg">
+            <th mat-header-cell *matHeaderCellDef>Avg</th>
+            <td mat-cell *matCellDef="let element">{{WMTableData[client.Index].Average|currency:'USD':'symbol':'1.2-2'}}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="WMColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: WMColumns;"></tr>
+</table>
+</div>
+<div *ngIf="WMTableData[client.Index].Expanded == true">
+    <span class="utilityHeader">Whitemail Income</span>
+    <table class="utilityTable" mat-table [dataSource]="WMTableData[client.Index].WMs">
+        <ng-container matColumnDef="WMDate">
+            <th mat-header-cell *matHeaderCellDef class="utilityLabelColumn">Date</th>
+            <td mat-cell *matCellDef="let element" class="utilityLabelColumn"> {{element.Month}}, {{element.Year}} </td>
+            <td mat-footer-cell *matFooterCellDef class="utilityLabelColumn">Total Whitemail</td>
+        </ng-container>
+        <ng-container matColumnDef="WMNon">
+            <th mat-header-cell *matHeaderCellDef>Non-Donors</th>
+            <td mat-cell *matCellDef="let element"> {{element.NonDonors}} </td>
+            <td mat-footer-cell *matFooterCellDef> {{WMTableData[client.Index].NonDonors|number}} </td>
+        </ng-container>
+        <ng-container matColumnDef="WMDonors">
+            <th mat-header-cell *matHeaderCellDef>Donors</th>
+            <td mat-cell *matCellDef="let element"> {{element.Donors}} </td>
+            <td mat-footer-cell *matFooterCellDef> {{WMTableData[client.Index].Donors|number}} </td>
+        </ng-container>
+        <ng-container matColumnDef="WMGross">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td mat-cell *matCellDef="let element"> {{element.Gross|currency:'USD':'symbol':'1.2-2'}} </td>
+            <td mat-footer-cell *matFooterCellDef> {{WMTableData[client.Index].Gross|currency:'USD':'symbol':'1.2-2'}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="WMAvg">
+            <th mat-header-cell *matHeaderCellDef>Avg</th>
+            <td mat-cell *matCellDef="let element"> {{element.Average|currency:'USD':'symbol':'1.2-2'}} </td>
+            <td mat-footer-cell *matFooterCellDef>
+                {{WMTableData[client.Index].Average|currency:'USD':'symbol':'1.2-2'}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="WMColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: WMColumns;" class="example-element-row"></tr>
+        <tr mat-footer-row *matFooterRowDef="WMColumns"></tr>
+    </table>
+</div>
+</td>
+
+</tr>
+</table>
+<!-- TEST PUTTING WM ABOVE HERE-->
 <br>
 <br>
 </div>
-<!-- TEST PUTTING LRI ABOVE HERE-->
+
 
 
 </td>

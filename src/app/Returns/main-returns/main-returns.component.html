@@ -1239,7 +1239,9 @@
 
 
 <div *ngIf="mailType.Measure.IsLast == true">
-    <!-- TEST PUTTING Incidentals BELOW HERE-->
+    <!-- ****************************** -->
+    <!-- INCIDENTALS BELOW HERE-->
+    <ng-container *ngIf="this.IncidentalsTableData.length != 0">
     <br>
     <br>
     <table class="utilityControlTable" *ngIf="IncidentalsTableData">
@@ -1343,11 +1345,16 @@
 </td>
 </tr>
 </table>
-<!-- TEST PUTTING Incidentals ABOVE HERE-->
+</ng-container>
+<!-- INCIDENTALS ABOVE HERE-->
+<!-- ****************************** -->
 
+
+<!-- ****************************** -->
+<!-- LRI BELOW HERE-->
+<ng-container *ngIf="LRITableData.length != 0">
 <br>
-<!-- TEST PUTTING LRI BELOW HERE-->
-<table class="utilityControlTable" *ngIf="LRITableData">
+<table class="utilityControlTable">
     <tr>
         <td class="btnTD">
             <button mat-icon-button (click)="ToggleUtilityExpansion(LRITableData[client.Index])" class="returnsExpCollBtn">
@@ -1404,9 +1411,14 @@
 </td>
 </tr>
 </table>
-<!-- TEST PUTTING LRI ABOVE HERE-->
+</ng-container>
+<!-- LRI ABOVE HERE-->
+<!-- ****************************** -->
 
-<!-- TEST PUTTING WM BELOW HERE-->
+
+<!-- ****************************** -->
+<!-- WHITEMAIL BELOW HERE-->
+<ng-container *ngIf="WMTableData.length != 0">
 <br>
 <table class="utilityControlTable" *ngIf="WMTableData">
     <tr>
@@ -1488,9 +1500,11 @@
 
 </tr>
 </table>
-<!-- TEST PUTTING WM ABOVE HERE-->
 <br>
 <br>
+</ng-container>
+<!-- WHITEMAIL ABOVE HERE-->
+<!-- ****************************** -->
 </div>
 
 

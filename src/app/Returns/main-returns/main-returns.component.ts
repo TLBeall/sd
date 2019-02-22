@@ -59,8 +59,12 @@ export class ReturnsComponent {
   // private clientControl = new FormControl();
   // private clients: string[] = [];
   // private filteredOptions: Observable<string[]>;
+  private LRITotal: number = 0;
+  private WMTotal: number = 0;
+  private INCTotal: number = 0;
   private tempStartDate;
   private tempEndDate;
+
   // private customPage: bool = true;
 
   private LRITableData: ReturnsClientLRI[];
@@ -140,7 +144,6 @@ export class ReturnsComponent {
               client.Index = count;
               count++;
             });
-            this.pageReady = true;
             var i = 0;
             while (this.rootReturns[i]) {
               this.CheckLevel(this.rootReturns[i], true);
@@ -149,61 +152,83 @@ export class ReturnsComponent {
             var calculations = this._g.CalculateSummaries(this.rootReturns);
             this.rootReturns = calculations.rootReturns;
             this.grandTotal = calculations.grandTotal;
+            this.pageReady = true;
+
           }
 
           //GET LRI
+          this.LRITableData = [];
           this._authService.getLRIforReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
             var temp: ReturnsClientLRI[];
             temp = data;
-            temp.forEach(a => {
-              a.Expanded = false;
-              a.LRIlist.forEach(b => {
-                b.Month = moment(b.Month, 'M').format('MMMM');
+            if (temp.length != 0) {
+              temp.forEach(a => {
+                this.LRITotal += a.Amount;
+                a.Expanded = false;
+                a.LRIlist.forEach(b => {
+                  b.Month = moment(b.Month, 'M').format('MMMM');
+                });
               });
-            });
+            }
             this.LRITableData = temp;
+            if (this.LRITableData.length > 0) {
+              this.rootReturns.forEach(element => {
+                element.Measure.Net = element.Measure.Net + this.LRITableData[element.Index].Amount;
+              });
+            }
+            this.grandTotal.Net = this.grandTotal.Net + this.LRITotal;
           });
 
           //GET WM
+          this.WMTableData = [];
           this._authService.getWMforReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
             var temp: ReturnsClientWM[];
             temp = data;
-            temp.forEach(a => {
-              a.Expanded = false;
-              a.WMs.forEach(b => {
-                b.Month = moment(b.Month, 'M').format('MMMM');
+            if (temp.length != 0) {
+              temp.forEach(a => {
+                this.WMTotal += a.Gross;
+                a.Expanded = false;
+                a.WMs.forEach(b => {
+                  b.Month = moment(b.Month, 'M').format('MMMM');
+                });
               });
-            });
+            }
             this.WMTableData = temp;
+            if (this.WMTableData.length > 0) {
+              this.rootReturns.forEach(element => {
+                element.Measure.Net = element.Measure.Net + this.WMTableData[element.Index].Gross;
+              });
+            }
+            this.grandTotal.Net = this.grandTotal.Net + this.WMTotal;
           });
 
           //GET Incidentals
+          this.IncidentalsTableData = [];
           this._authService.getIncforReturns(params['client'], this.startDate, this.endDate).subscribe(data => {
             var temp: ReturnsClientInc[];
             var tempType: IncidentalMonthData[] = [];
             temp = data;
-            temp.forEach(a => {
-              a.Expanded = false;
-              a.Incidentals.forEach((b, index) => {
-                b.Expanded = false;
-                b.Index = index;
-                b.Month = moment(b.Month, 'M').format('MMMM');
+            if (temp.length != 0) {
+              temp.forEach(a => {
+                this.INCTotal += a.Amount;
+                a.Expanded = false;
+                a.Incidentals.forEach((b, index) => {
+                  b.Expanded = false;
+                  b.Index = index;
+                  b.Month = moment(b.Month, 'M').format('MMMM');
+                });
+                tempType = a.Incidentals;
               });
-              tempType = a.Incidentals;
-            });
-
+            }
             this.IncidentalsTableData = temp;
             this.IncidentalsTableTypeData = tempType;
-            var test = 0;
-            // temp = data3;
-            // temp.forEach(a => {
-            //   a.WMs.forEach(b => {
-            //     b.Month = moment(b.Month, 'M').format('MMMM');
-            //   });
-            // });
-            // this.WMTableData = temp;
+            if (this.IncidentalsTableData.length > 0) {
+              this.rootReturns.forEach(element => {
+                element.Measure.Net = element.Measure.Net - this.IncidentalsTableData[element.Index].Amount;
+              });
+            }
+            this.grandTotal.Net = this.grandTotal.Net - this.INCTotal;
           });
-
         });
       }
     });
@@ -424,7 +449,19 @@ export class ReturnsComponent {
     this.RefreshChecks();
     var calculations = this._g.CalculateSummaries(this.rootReturns);
     this.rootReturns = calculations.rootReturns;
+    this.rootReturns.forEach(element => {
+      if (this.LRITableData.length > 0) {
+        element.Measure.Net = element.Measure.Net + this.LRITableData[element.Index].Amount
+      }
+      if (this.WMTableData.length > 0) {
+        element.Measure.Net = element.Measure.Net + this.WMTableData[element.Index].Gross
+      }
+      if (this.IncidentalsTableData.length > 0) {
+        element.Measure.Net = element.Measure.Net - this.IncidentalsTableData[element.Index].Amount;
+      }
+    });
     this.grandTotal = calculations.grandTotal;
+    this.grandTotal.Net = this.grandTotal.Net + this.LRITotal + this.WMTotal - this.INCTotal;
   }
 
   RefreshChecks() {
@@ -575,7 +612,7 @@ export class ReturnsComponent {
     instance.Expanded = !instance.Expanded;
   }
 
-  ToggleUtilityExpansion(table: any){
+  ToggleUtilityExpansion(table: any) {
     table.Expanded = !table.Expanded;
   }
 

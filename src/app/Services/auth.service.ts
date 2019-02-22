@@ -61,7 +61,10 @@ export class AuthService {
 
   getReturns(clients: string, startDate: Date, endDate: Date): Observable<RootReturns[]> {
     var Token = "";
-    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/Returns?Clients=" + clients + "&startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&mailTypes=&campaigns=&phases=";
+    //OLD
+    // var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/Returns?Clients=" + clients + "&startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&mailTypes=&campaigns=&phases=";
+    //NEW
+    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/Returns?Clients=." + clients + ".&startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString();
 
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetReturnsAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));

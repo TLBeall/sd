@@ -18,32 +18,32 @@ import { ClientList } from 'src/app/Models/ClientList.model';
 })
 export class ExceptionsEditComponent implements OnInit {
 
-  private exceptionsAggregate: ExceptionAggregate;
-  private exceptionsElement: ExceptionElement;
-  private tableData: ExceptionElement[];
-  private tableTotal: ExceptionElement;
-  private instanceNumber: number;
-  private mcIstanceMessage: string;
-  private wmInstanceMessage: string;
-  private deleteInstanceMessage: string;
-  private headerMessage: string;
-  private newMailcode: string = "";
-  private dropdownSelection: number = null;
-  private idString: string = "";
-  private deleteNotation: string;
-  private showDeleteModal: boolean = false;
-  private showSubmittedModal: boolean = false;
+  public exceptionsAggregate: ExceptionAggregate;
+  public exceptionsElement: ExceptionElement;
+  public tableData: ExceptionElement[];
+  public tableTotal: ExceptionElement;
+  public instanceNumber: number;
+  public mcIstanceMessage: string;
+  public wmInstanceMessage: string;
+  public deleteInstanceMessage: string;
+  public headerMessage: string;
+  public newMailcode: string = "";
+  public dropdownSelection: number = null;
+  public idString: string = "";
+  public deleteNotation: string;
+  public showDeleteModal: boolean = false;
+  public showSubmittedModal: boolean = false;
 
   public InstanceColumns: string[];
 
   myControl = new FormControl();
-  private clientList: ClientList[];
-  private ClientStrArr: string[] = new Array<string>();
-  private filteredClientList: Observable<string[]>;
-  private Client: string;
-  private clientAcronym: string = "";
+  public clientList: ClientList[];
+  public ClientStrArr: string[] = new Array<string>();
+  public filteredClientList: Observable<string[]>;
+  public Client: string;
+  public clientAcronym: string = "";
 
-  constructor(private route: ActivatedRoute, private router: Router, private _authService: AuthService, private _g: GlobalService) {
+  constructor(public route: ActivatedRoute, public router: Router, public _authService: AuthService, public _g: GlobalService) {
     if (_g.exceptionInstanceElem) {
       this.tableData = _g.exceptionInstanceElem.ExceptionList;
       this.instanceNumber = this.tableData.length;
@@ -109,7 +109,7 @@ export class ExceptionsEditComponent implements OnInit {
     }
   }
 
-  private _filter(value: string): string[] {
+  public _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.ClientStrArr.filter(option => option.toLowerCase().includes(filterValue));

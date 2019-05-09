@@ -18,28 +18,28 @@ type AOA = ListRental[];
 })
 export class LriNewComponent implements OnInit {
 
-  private clientList: ClientList[];
-  private filteredClientList: Observable<string[]>;
-  private ClientStrArr: string[] = new Array<string>();
+  public clientList: ClientList[];
+  public filteredClientList: Observable<string[]>;
+  public ClientStrArr: string[] = new Array<string>();
 
-  private LRIElement: ListRental;
-  private LRIArray: ListRental[];
-  private showSubmittedModal: boolean;
-  private LRINumMessage: string;
-  private loading: boolean = false;
+  public LRIElement: ListRental;
+  public LRIArray: ListRental[];
+  public showSubmittedModal: boolean;
+  public LRINumMessage: string;
+  public loading: boolean = false;
 
   public ExcelData: any[];
-  private fileUrl: string = "";
-  private exampleLRI = false;
+  public fileUrl: string = "";
+  public exampleLRI = false;
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
 
 
   constructor(
-    private _authService: AuthService,
-    private route: ActivatedRoute,
-    private _g: GlobalService,
-    private router: Router,
-    private ref: ChangeDetectorRef) {
+    public _authService: AuthService,
+    public route: ActivatedRoute,
+    public _g: GlobalService,
+    public router: Router,
+    public ref: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -114,7 +114,7 @@ export class LriNewComponent implements OnInit {
     });
   }
 
-  private _filter(value: string): string[] {
+  public _filter(value: string): string[] {
     var filterValue;
     if (value != null) {
       filterValue = value.toLowerCase();

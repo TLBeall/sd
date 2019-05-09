@@ -13,13 +13,13 @@ export class AppComponent implements OnInit {
   title = 'SD360-Reporting-Angular';
   public currentWindowWidth: number;
   public WidthService: any;
-  private _isPopState = false;
-  private _routeScrollPositions: { [url: string]: number } = {};
-  private _deferredRestore = false;
+  public _isPopState = false;
+  public _routeScrollPositions: { [url: string]: number } = {};
+  public _deferredRestore = false;
 
-  constructor(private _g: GlobalService, @Inject(PLATFORM_ID) private platformId: Object,
-    private router: Router,
-    private locStrat: LocationStrategy) {
+  constructor(public _g: GlobalService, @Inject(PLATFORM_ID) public platformId: Object,
+  public router: Router,
+  public locStrat: LocationStrategy) {
   }
 
   ngOnInit() {
@@ -29,11 +29,11 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private saveScroll(url) {
+  public saveScroll(url) {
     this._routeScrollPositions[url] = window.pageYOffset;
   }
 
-  private restoreScroll(url) {
+  public restoreScroll(url) {
     const savedScroll = this._routeScrollPositions[url];
     if (savedScroll === undefined) {
       // no saved scroll position for this url :(
@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
   }
 
 
-  private addScrollTopListeners() {
+  public addScrollTopListeners() {
     // force scroll position at top of page when route changes through routerLink navigation
     //  (and not when it changes through browser back/forward)
     //  https://github.com/angular/angular/issues/10929#issuecomment-372265497

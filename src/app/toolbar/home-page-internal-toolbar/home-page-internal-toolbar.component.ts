@@ -22,7 +22,7 @@ export class HomePageInternalToolbarComponent implements OnInit {
     public alphabetSelection: string;
 
 
-    constructor(private _g: GlobalService) {
+    constructor(public _g: GlobalService) {
     }
 
 

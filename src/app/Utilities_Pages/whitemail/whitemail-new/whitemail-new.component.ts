@@ -16,18 +16,18 @@ import { CagingDailies } from 'src/app/Models/CagingDailies.model';
 })
 export class WhitemailNewComponent implements OnInit {
 
-  private clientList: ClientList[];
-  private filteredClientList: Observable<string[]>;
-  private ClientStrArr: string[] = new Array<string>();
+  public clientList: ClientList[];
+  public filteredClientList: Observable<string[]>;
+  public ClientStrArr: string[] = new Array<string>();
   myControl = new FormControl();
 
-  private whitemailElement: CagingDailies;
-  private whitemailArr: CagingDailies[];
-  private showSubmittedModal: boolean;
-  private WMMessage: string;  
+  public whitemailElement: CagingDailies;
+  public whitemailArr: CagingDailies[];
+  public showSubmittedModal: boolean;
+  public WMMessage: string;  
 
 
-  constructor(private _authService: AuthService, private route: ActivatedRoute, private _g: GlobalService, private router: Router) {
+  constructor(public _authService: AuthService, public route: ActivatedRoute, public _g: GlobalService, public router: Router) {
 
   }
 
@@ -138,7 +138,7 @@ export class WhitemailNewComponent implements OnInit {
     }
   }
 
-  private _filter(value: string): string[] {
+  public _filter(value: string): string[] {
     var filterValue;
     if (value != null){
     filterValue = value.toLowerCase();

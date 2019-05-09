@@ -29,8 +29,8 @@ export class AuthService {
 
   AccessToken: string = "";
   constructor(
-    private http: Http
-    // private loaderService: LoaderService
+    public http: Http
+    // public loaderService: LoaderService
   ) { }
 
   getToken(Username: string, Password: string): Observable<TokenParams> {

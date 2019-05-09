@@ -20,29 +20,29 @@ import * as moment from 'moment';
 export class WhitemailMainComponent implements OnInit {
 
   myControl = new FormControl();
-  private clientList: ClientList[];
-  private rootWhitemail: CagingDailies[];
-  private ClientStrArr: string[] = new Array<string>();
-  private filteredClientList: Observable<string[]>;
-  private Client: string;
-  private Agency: string = "HSP";
-  private displayTable: boolean = false;
-  private selectionMode: boolean = false;
-  private checkedRows: number[] = [];
-  private showEditButton: boolean = false;
-  private showDeleteModal: boolean = false;
-  private deleteNotation: string;
-  private tableLoading: boolean = false;
-  private showEmptyMessage: boolean = false;
-  private startDate: any;
-  private endDate: any;
+  public clientList: ClientList[];
+  public rootWhitemail: CagingDailies[];
+  public ClientStrArr: string[] = new Array<string>();
+  public filteredClientList: Observable<string[]>;
+  public Client: string;
+  public Agency: string = "HSP";
+  public displayTable: boolean = false;
+  public selectionMode: boolean = false;
+  public checkedRows: number[] = [];
+  public showEditButton: boolean = false;
+  public showDeleteModal: boolean = false;
+  public deleteNotation: string;
+  public tableLoading: boolean = false;
+  public showEmptyMessage: boolean = false;
+  public startDate: any;
+  public endDate: any;
   @ViewChild('startDateInput') startDateInput: ElementRef<HTMLInputElement>;
   @ViewChild('endDateInput') endDateInput: ElementRef<HTMLInputElement>;
 
   MainDisplayedColumns: string[] = ['SelectionBox', 'Date', 'Non-Donors', 'Donors', 'Gross', 'ButtonControl'];
 
 
-  constructor(private _authService: AuthService, private _g: GlobalService, private router: Router) {
+  constructor(public _authService: AuthService, public _g: GlobalService, public router: Router) {
 
   }
 
@@ -63,7 +63,7 @@ export class WhitemailMainComponent implements OnInit {
       });
   }
 
-  private _filter(value: string): string[] {
+  public _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.ClientStrArr.filter(option => option.toLowerCase().includes(filterValue));
@@ -130,7 +130,7 @@ export class WhitemailMainComponent implements OnInit {
     return moment(date).format("MM/DD/YYYY");
   }
 
-  private getTime(date?: Date) {
+  public getTime(date?: Date) {
     return date != null ? new Date(date).getTime() : 0;
   }
 

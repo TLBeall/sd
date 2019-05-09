@@ -1591,7 +1591,8 @@
 
         <br>
         <div class="center-align">
-            <button mat-raised-button color="accent" [disabled]="clients == '' || !validateDate()" (click)="applyChanges()">
+            <button mat-raised-button color="accent" (click)="applyChanges()">
+                    <!-- [disabled]="clients == '' || !validateDate()" -->
                 Search </button>
         </div>
         <br>

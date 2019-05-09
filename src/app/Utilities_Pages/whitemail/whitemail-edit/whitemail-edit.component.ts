@@ -15,18 +15,18 @@ import { AuthService } from 'src/app/Services/auth.service';
 })
 export class WhitemailEditComponent implements OnInit {
 
-  private id: number;
-  private whitemailElement: CagingDailies;
-  private clientList: ClientList[];
-  private filteredClientList: Observable<string[]>;
-  private ClientStrArr: string[] = new Array<string>();
+  public id: number;
+  public whitemailElement: CagingDailies;
+  public clientList: ClientList[];
+  public filteredClientList: Observable<string[]>;
+  public ClientStrArr: string[] = new Array<string>();
   myControl = new FormControl();
-  private Client: string;
-  private testDate;
-  private showSubmittedModal: boolean = false;
+  public Client: string;
+  public testDate;
+  public showSubmittedModal: boolean = false;
 
 
-  constructor(private _authService: AuthService, private route: ActivatedRoute, private _g: GlobalService, private router: Router) {
+  constructor(public _authService: AuthService, public route: ActivatedRoute, public _g: GlobalService, public router: Router) {
     //Reinitializes the edit page every time we navigate to it
     //This allows modified data to immediately show
     router.events.subscribe(event => {
@@ -61,7 +61,7 @@ export class WhitemailEditComponent implements OnInit {
       });
   }
 
-  private _filter(value: string): string[] {
+  public _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.ClientStrArr.filter(option => option.toLowerCase().includes(filterValue));

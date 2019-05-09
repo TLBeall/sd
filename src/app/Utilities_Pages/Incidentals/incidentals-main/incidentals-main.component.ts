@@ -15,23 +15,23 @@ import { Observable } from 'rxjs';
   styleUrls: ['./incidentals-main.component.scss']
 })
 export class IncidentalsMainComponent implements OnInit {
-  private clientControl = new FormControl();
-  private clientList: ClientList[];
-  private rootIncidentals: Incidental[];
-  private ClientStrArr: string[] = new Array<string>();
-  private filteredClientList: Observable<string[]>;
-  private Client: string;
+  public clientControl = new FormControl();
+  public clientList: ClientList[];
+  public rootIncidentals: Incidental[];
+  public ClientStrArr: string[] = new Array<string>();
+  public filteredClientList: Observable<string[]>;
+  public Client: string;
 
-  private displayTable: boolean = false;
-  private selectionMode: boolean = false;
-  private checkedRows: number[] = [];
-  private showEditButton: boolean = false;
-  private showDeleteModal: boolean = false;
-  private deleteNotation: string;
+  public displayTable: boolean = false;
+  public selectionMode: boolean = false;
+  public checkedRows: number[] = [];
+  public showEditButton: boolean = false;
+  public showDeleteModal: boolean = false;
+  public deleteNotation: string;
 
   MainDisplayedColumns: string[] = ['SelectionBox', 'Date', 'Description', 'Amount', 'Audit', 'ButtonControl'];
 
-  constructor(private _authService: AuthService, private _g: GlobalService, private router: Router) { }
+  constructor(public _authService: AuthService, public _g: GlobalService, public router: Router) { }
 
   ngOnInit() {
     this._authService.getClientList("All")
@@ -46,7 +46,7 @@ export class IncidentalsMainComponent implements OnInit {
       });
   }
 
-  private _filter(value: string): string[] {
+  public _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.ClientStrArr.filter(option => option.toLowerCase().includes(filterValue));
@@ -72,7 +72,7 @@ export class IncidentalsMainComponent implements OnInit {
     })
   }
 
-  private getTime(date?: Date) {
+  public getTime(date?: Date) {
     return date != null ? new Date(date).getTime() : 0;
   }
 

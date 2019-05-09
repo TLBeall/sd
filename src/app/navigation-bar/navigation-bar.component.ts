@@ -12,7 +12,7 @@ export class NavigationBarComponent {
   navbarOpen = false;
   route: any;
   router: any;
-  constructor(route: ActivatedRoute, router: Router, private _g: GlobalService) {
+  constructor(route: ActivatedRoute, router: Router, public _g: GlobalService) {
     this.route = route;
     this.router = router;
   }

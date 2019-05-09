@@ -22,16 +22,16 @@ import { MatTableDataSource } from '@angular/material';
 
 })
 export class PhaseGrossComponent implements OnInit {
-  private route: any;
-  private pageReady: boolean = false;
-  private PackageCode: string;
-  private PhaseNumber: string;
-  private PhaseGross: PhaseGross;
-  private dateTableVis: boolean = true;
-  private mailcodeTableVis: boolean = false;
-  private rowExpanded: boolean = false;
-  private CurrentTab: string = "date";
-  private allExpanded: boolean = false;
+  public route: any;
+  public pageReady: boolean = false;
+  public PackageCode: string;
+  public PhaseNumber: string;
+  public PhaseGross: PhaseGross;
+  public dateTableVis: boolean = true;
+  public mailcodeTableVis: boolean = false;
+  public rowExpanded: boolean = false;
+  public CurrentTab: string = "date";
+  public allExpanded: boolean = false;
 
 
   dateColumns: string[] = ['Date', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
@@ -39,7 +39,7 @@ export class PhaseGrossComponent implements OnInit {
 
   
 
-  constructor(private _authService: AuthService, route: ActivatedRoute, private _g: GlobalService) {
+  constructor(public _authService: AuthService, route: ActivatedRoute, public _g: GlobalService) {
     this.route = route;
   }
 
@@ -75,7 +75,7 @@ export class PhaseGrossComponent implements OnInit {
     this.PhaseNumber = phaseNumber;
   }
 
-  private getTime(date?: Date) {
+  public getTime(date?: Date) {
     return date != null ? new Date(date).getTime() : 0;
   }
 

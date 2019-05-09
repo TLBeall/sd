@@ -49,7 +49,8 @@
       <div class="col-lg-2">
         <mat-form-field appearance="outline" class="mainInputBox">
           <mat-label>Non-Donors</mat-label>
-          <input type="number" required matInput placeholder="Non-donors" [(ngModel)]="whitemailElement.NonDonors" (blur)="updateTotal()">
+          <input type="number" required matInput placeholder="Non-donors" [(ngModel)]="whitemailElement.NonDonors">
+          <!-- (blur)="updateTotal()" -->
         </mat-form-field>
       </div>
     </div>

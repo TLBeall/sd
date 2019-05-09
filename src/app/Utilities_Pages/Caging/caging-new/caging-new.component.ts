@@ -16,23 +16,23 @@ import * as XLSX from 'xlsx';
 })
 export class CagingNewComponent implements OnInit {
 
-  private clientList: ClientList[];
-  private filteredClientList: Observable<string[]>;
-  private ClientStrArr: string[] = new Array<string>();
+  public clientList: ClientList[];
+  public filteredClientList: Observable<string[]>;
+  public ClientStrArr: string[] = new Array<string>();
   myControl = new FormControl();
 
-  private cagingElement: CagingDailies;
-  private cagingArr: CagingDailies[];
-  private showSubmittedModal: boolean;
-  private cagingMessage: string; 
-  private loading: boolean = false;
+  public cagingElement: CagingDailies;
+  public cagingArr: CagingDailies[];
+  public showSubmittedModal: boolean;
+  public cagingMessage: string; 
+  public loading: boolean = false;
 
   public ExcelData: any[];
-  private fileUrl: string = "";
-  private showEx = false;
+  public fileUrl: string = "";
+  public showEx = false;
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
 
-  constructor(private _authService: AuthService, private route: ActivatedRoute, private _g: GlobalService, private router: Router) { }
+  constructor(public _authService: AuthService, public route: ActivatedRoute, public _g: GlobalService, public router: Router) { }
 
   ngOnInit() {
     this.cagingArr = [];
@@ -52,7 +52,7 @@ export class CagingNewComponent implements OnInit {
       });
   }
 
-  private _filter(value: string): string[] {
+  public _filter(value: string): string[] {
     var filterValue;
     if (value != null){
     filterValue = value.toLowerCase();

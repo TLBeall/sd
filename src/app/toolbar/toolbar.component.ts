@@ -16,7 +16,7 @@ export class ToolbarComponent implements OnInit {
   // public toolbar: ElementRef<any>;
 
 
-  constructor(private _router: Router) {
+  constructor(public _router: Router) {
     this.location = _router.url;
   }
 

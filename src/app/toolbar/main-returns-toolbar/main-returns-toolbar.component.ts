@@ -23,7 +23,7 @@ export class MainReturnsToolbarComponent implements OnInit {
     this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft - 150), behavior: 'smooth' });
   }
 
-  constructor(private _g: GlobalService) {
+  constructor(public _g: GlobalService) {
    }
 
   ngOnInit() {

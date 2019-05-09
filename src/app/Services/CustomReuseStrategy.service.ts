@@ -11,7 +11,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
 
   public handlers: { [key: string]: DetachedRouteHandle } = {};
 
-  constructor(private c: GlobalService) {
+  constructor(public c: GlobalService) {
   }
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {

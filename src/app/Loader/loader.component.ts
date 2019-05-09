@@ -12,7 +12,7 @@ export class LoaderComponent implements OnInit {
   showLoader: boolean;
 
     constructor(
-        private loaderService: LoaderService) {
+        public loaderService: LoaderService) {
     }
 
     ngOnInit() {

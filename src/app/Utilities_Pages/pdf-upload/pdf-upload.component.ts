@@ -20,10 +20,10 @@ export class PdfUploadComponent implements OnInit {
 
   //FOR CHIP SELECTION SETTINGS
   @ViewChild('CLInput') CLInput: ElementRef<HTMLInputElement>;
-  private CLStrArr: string[] = new Array<string>();
-  private CLControl = new FormControl();
-  private CLList: string[] = []; //clients in main returns
-  private CLfilteredOptions: Observable<string[]>;
+  public CLStrArr: string[] = new Array<string>();
+  public CLControl = new FormControl();
+  public CLList: string[] = []; //clients in main returns
+  public CLfilteredOptions: Observable<string[]>;
   visible = true;
   selectable = true;
   removable = true;
@@ -34,25 +34,25 @@ export class PdfUploadComponent implements OnInit {
   @ViewChild('startDateInput') startDateInput: ElementRef<HTMLInputElement>;
   @ViewChild('endDateInput') endDateInput: ElementRef<HTMLInputElement>;
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
-  private pdfCount = 0;
-  private noneCount = 0;
-  private bothCount = 0;
+  public pdfCount = 0;
+  public noneCount = 0;
+  public bothCount = 0;
   public loading: boolean = true;
-  private startDate: any;
-  private endDate: any;
-  private tableData;
-  private dataSource;
-  private pdfType: string[];
-  private fileUrl: string;
-  private tableState: number = 3;
-  private selectedFile: File = null;
-  private showSubmittedModal: boolean = false;
-  private showUpdateConfirmModal: boolean = false;
-  private storedFileElement: PDFElement;
+  public startDate: any;
+  public endDate: any;
+  public tableData;
+  public dataSource;
+  public pdfType: string[];
+  public fileUrl: string;
+  public tableState: number = 3;
+  public selectedFile: File = null;
+  public showSubmittedModal: boolean = false;
+  public showUpdateConfirmModal: boolean = false;
+  public storedFileElement: PDFElement;
   MainDisplayedColumns: string[] = ['PackageName', 'Client', 'Date', 'Description', 'Link', 'ButtonControl'];
 
 
-  constructor(private route: ActivatedRoute, private router: Router, private _authService: AuthService, private http: HttpClient) { }
+  constructor(public route: ActivatedRoute, public router: Router, public _authService: AuthService, public http: HttpClient) { }
 
   ngOnInit() {
     //FOR CLIENT SELECTION
@@ -103,7 +103,7 @@ export class PdfUploadComponent implements OnInit {
 
   ///////////////////// CLIENT SELECTION / CHIP SETTINGS ///////////////////////////
   //CHIP FILTER START
-  private CL_filter(name: string): string[] {
+  public CL_filter(name: string): string[] {
     if (name == null)
       return null;
     const filterValue = name.toLowerCase();

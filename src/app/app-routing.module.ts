@@ -4,11 +4,11 @@ import {Routes, RouterModule, RouteReuseStrategy} from '@angular/router';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { InternalHomePageComponent } from './internal-home-page/internal-home-page.component';
-import { ReturnsComponent } from './Returns/main-returns/main-returns.component';
+import { ReturnsComponent } from './returns/main-returns/main-returns.component';
 import { ListPerformanceComponent } from './returns/Subviews/list-performance/list-performance.component';
 import { CustomReuseStrategy } from './Services/CustomReuseStrategy.service';
-import { ListGrossComponent } from './Returns/Subviews/list-gross/list-gross.component';
-import { PhaseGrossComponent } from './Returns/Subviews/phase-gross/phase-gross.component';
+import { ListGrossComponent } from './returns/Subviews/list-gross/list-gross.component';
+import { PhaseGrossComponent } from './returns/Subviews/phase-gross/phase-gross.component';
 import { WhitemailMainComponent } from './Utilities_Pages/whitemail/whitemail-main/whitemail-main.component';
 import { WhitemailNewComponent } from './Utilities_Pages/whitemail/whitemail-new/whitemail-new.component';
 import { WhitemailEditComponent } from './Utilities_Pages/whitemail/whitemail-edit/whitemail-edit.component';

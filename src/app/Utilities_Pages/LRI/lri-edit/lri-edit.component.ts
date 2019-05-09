@@ -15,16 +15,16 @@ import { startWith, map } from 'rxjs/operators';
 })
 export class LriEditComponent implements OnInit {
 
-  private LRIElement: ListRental;
-  private id: number;
-  private clientList: ClientList[];
-  private filteredClientList: Observable<string[]>;
-  private ClientStrArr: string[] = new Array<string>();
-  private myControl = new FormControl();
-  private showSubmittedModal: boolean = false;
+  public LRIElement: ListRental;
+  public id: number;
+  public clientList: ClientList[];
+  public filteredClientList: Observable<string[]>;
+  public ClientStrArr: string[] = new Array<string>();
+  public myControl = new FormControl();
+  public showSubmittedModal: boolean = false;
 
 
-  constructor(private _authService: AuthService, private route: ActivatedRoute, private _g: GlobalService, private router: Router) {
+  constructor(public _authService: AuthService, public route: ActivatedRoute, public _g: GlobalService, public router: Router) {
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.ngOnInit();
@@ -55,7 +55,7 @@ export class LriEditComponent implements OnInit {
       });
   }
 
-  private _filter(value: string): string[] {
+  public _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.ClientStrArr.filter(option => option.toLowerCase().includes(filterValue));

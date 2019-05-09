@@ -15,20 +15,20 @@ import { FormControl } from '@angular/forms';
 })
 export class IncidentalsNewComponent implements OnInit {
 
-  private clientList: ClientList[];
-  private filteredClientList: Observable<string[]>;
-  private ClientStrArr: string[] = new Array<string>();
+  public clientList: ClientList[];
+  public filteredClientList: Observable<string[]>;
+  public ClientStrArr: string[] = new Array<string>();
 
-  private IncidentalElement: Incidental;
-  private IncidentalArray: Incidental[];
-  private showSubmittedModal: boolean;
-  private IncidentalNumMessage: string;
+  public IncidentalElement: Incidental;
+  public IncidentalArray: Incidental[];
+  public showSubmittedModal: boolean;
+  public IncidentalNumMessage: string;
 
   constructor(
-    private _authService: AuthService,
-    private route: ActivatedRoute,
-    private _g: GlobalService,
-    private router: Router) {
+    public _authService: AuthService,
+    public route: ActivatedRoute,
+    public _g: GlobalService,
+    public router: Router) {
   }
 
   ngOnInit() {
@@ -99,7 +99,7 @@ export class IncidentalsNewComponent implements OnInit {
     });
   }
 
-  private _filter(value: string): string[] {
+  public _filter(value: string): string[] {
     var filterValue;
     if (value != null) {
       filterValue = value.toLowerCase();

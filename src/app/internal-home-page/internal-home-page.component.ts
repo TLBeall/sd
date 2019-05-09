@@ -31,7 +31,7 @@ export class InternalHomePageComponent implements OnInit {
     public size_xs = this._g.size_xs;
     public pageReady: boolean = false;
 
-    constructor(private _authService: AuthService, private _g: GlobalService, private router:Router) {
+    constructor(public _authService: AuthService, public _g: GlobalService, public router:Router) {
         this.currentYear = (new Date()).getFullYear();
     }
 

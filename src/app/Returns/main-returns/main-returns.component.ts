@@ -36,42 +36,43 @@ export class ReturnsComponent {
 
   title = 'SD360-Reporting-Angular';
 
-  private loadingTime: string = "";
-  private navStart: number = 0;
-  private navEnd: number = 0;
+  public loadingTime: string = "";
+  public navStart: number = 0;
+  public navEnd: number = 0;
 
-  private route: any;
-  private startDate: any;
-  private endDate: any;
-  private pageReady: boolean = false;
-  private selectedClients: string[] = new Array<string>();
-  private clientName: string;
-  private rootReturns: RootReturns[];
-  private toolsOpened: Boolean;
-  private demoOpened: Boolean;
-  private starttimer: number = 0;
-  private endtimer: number = 0;
-  private hide: Boolean = false;
-  private visibility: string = "hidden";
-  private ClientArr: ClientList[];
-  // private ClientStrArr: string[] = new Array<string>();
-  private grandTotal: any;
-  // private clientControl = new FormControl();
-  // private clients: string[] = [];
-  // private filteredOptions: Observable<string[]>;
-  private LRITotal: number = 0;
-  private WMTotal: number = 0;
-  private INCTotal: number = 0;
-  private tempStartDate;
-  private tempEndDate;
+  public route: any;
+  public startDate: any;
+  public endDate: any;
+  public pageReady: boolean = false;
+  public selectedClients: string[] = new Array<string>();
+  public clientName: string;
+  public rootReturns: RootReturns[];
+  public toolsOpened: Boolean;
+  public demoOpened: Boolean;
+  public starttimer: number = 0;
+  public endtimer: number = 0;
+  public hide: Boolean = false;
+  public visibility: string = "hidden";
+  public ClientArr: ClientList[];
+  public selectionMode: Boolean = false;
+  // public ClientStrArr: string[] = new Array<string>();
+  public grandTotal: any;
+  // public clientControl = new FormControl();
+  // public clients: string[] = [];
+  // public filteredOptions: Observable<string[]>;
+  public LRITotal: number = 0;
+  public WMTotal: number = 0;
+  public INCTotal: number = 0;
+  public tempStartDate;
+  public tempEndDate;
 
-  // private customPage: bool = true;
+  // public customPage: bool = true;
 
-  private LRITableData: ReturnsClientLRI[];
-  private WMTableData: ReturnsClientWM[];
-  private IncidentalsTableData: ReturnsClientInc[];
-  private IncidentalsTableTypeData: IncidentalMonthData[];
-  private psuedoTable = [0]; // Used for the parent utility tables so that they only instantiate 1 row (the summary row)
+  public LRITableData: ReturnsClientLRI[];
+  public WMTableData: ReturnsClientWM[];
+  public IncidentalsTableData: ReturnsClientInc[];
+  public IncidentalsTableTypeData: IncidentalMonthData[];
+  public psuedoTable = [0]; // Used for the parent utility tables so that they only instantiate 1 row (the summary row)
 
   //For chip selection settings
   visible = true;
@@ -100,12 +101,12 @@ export class ReturnsComponent {
   @ViewChild('CLInput') CLInput: ElementRef<HTMLInputElement>;
 
 
-  private CLStrArr: string[] = new Array<string>();
-  private CLControl = new FormControl();
-  private CLList: string[] = []; //clients in main returns
-  private CLfilteredOptions: Observable<string[]>;
+  public CLStrArr: string[] = new Array<string>();
+  public CLControl = new FormControl();
+  public CLList: string[] = []; //clients in main returns
+  public CLfilteredOptions: Observable<string[]>;
 
-  constructor(route: ActivatedRoute, private _authService: AuthService, private _g: GlobalService, private router: Router) {
+  constructor(route: ActivatedRoute, public _authService: AuthService, public _g: GlobalService, public router: Router) {
     this.route = route;
   }
 
@@ -236,7 +237,7 @@ export class ReturnsComponent {
 
 
   //CHIP FILTER START
-  private CL_filter(name: string): string[] {
+  public CL_filter(name: string): string[] {
     if (name == null)
       return null;
     const filterValue = name.toLowerCase();

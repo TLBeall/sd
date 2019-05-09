@@ -50,30 +50,30 @@ export class Week {
 })
 export class CagingCalendarComponent implements OnInit {
   //PROPERTIES FOR ALL CALENDARS/ENTIRE PAGE
-  private timeSelection = "Month";
+  public timeSelection = "Month";
   public loading: boolean = false;
-  private sumTotalDonorCount: number;
-  private sumtotalDonationAmount: number;
-  private totalNonDonors: number;
-  private totalCardAmount: number;
-  private totalCashAmount: number;
-  private totalCheckAmount: number;
-  private totalCardCount: number;
-  private totalCashCount: number;
-  private totalCheckCount: number;
-  private yearArr: number[];
-  private monthDrill: boolean;
-  private monthSelectArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  private storedYear: number;
+  public sumTotalDonorCount: number;
+  public sumtotalDonationAmount: number;
+  public totalNonDonors: number;
+  public totalCardAmount: number;
+  public totalCashAmount: number;
+  public totalCheckAmount: number;
+  public totalCardCount: number;
+  public totalCashCount: number;
+  public totalCheckCount: number;
+  public yearArr: number[];
+  public monthDrill: boolean;
+  public monthSelectArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  public storedYear: number;
   @ViewChild('MonthMenuTrigger') MonthMenu: MatMenuTrigger;
   @ViewChild('YearMenuTrigger') YearMenu: MatMenuTrigger;
 
   //FOR CHIP SELECTION SETTINGS
   @ViewChild('CLInput') CLInput: ElementRef<HTMLInputElement>;
-  private CLStrArr: string[] = new Array<string>();
-  private CLControl = new FormControl();
-  private CLList: string[] = []; //clients in main returns
-  private CLfilteredOptions: Observable<string[]>;
+  public CLStrArr: string[] = new Array<string>();
+  public CLControl = new FormControl();
+  public CLList: string[] = []; //clients in main returns
+  public CLfilteredOptions: Observable<string[]>;
   visible = true;
   selectable = true;
   removable = true;
@@ -82,50 +82,50 @@ export class CagingCalendarComponent implements OnInit {
   clientPlaceholder = "All Clients -- Select Client"
 
   //PROPERTIES FOR YEAR VIEW
-  private yvYear: number = 0;
-  private yearData: any;
-  private lockedYear: number;
-  private monthArr: CagingYearElement[];
-  private quarterArr: CagingYearElement[];
-  private monthStrings = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-  private quarters = [1, 2, 3, 4];
+  public yvYear: number = 0;
+  public yearData: any;
+  public lockedYear: number;
+  public monthArr: CagingYearElement[];
+  public quarterArr: CagingYearElement[];
+  public monthStrings = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  public quarters = [1, 2, 3, 4];
 
   //PROPERTIES FOR MONTH VIEW
-  private lockedMonth: number;
+  public lockedMonth: number;
   public monthData: CagingMonthElement[];
-  private daysName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  private days: CagingMonthElement[] = [];
-  private monthAdjust: number = 0;
-  private mvSetDate: any;
-  private mvMonth: string;
-  private mvYear: number;
-  private startOfWeek: number;
-  private daysInPreviousMonth: number;
-  private daysInCurrentMonth: number;
-  private endOfLastWeek: number;
-  private week1: Week;
-  private week2: Week;
-  private week3: Week;
-  private week4: Week;
-  private week5: Week;
-  private week6: Week;
-  private weekList: Week[];
+  public daysName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  public days: CagingMonthElement[] = [];
+  public monthAdjust: number = 0;
+  public mvSetDate: any;
+  public mvMonth: string;
+  public mvYear: number;
+  public startOfWeek: number;
+  public daysInPreviousMonth: number;
+  public daysInCurrentMonth: number;
+  public endOfLastWeek: number;
+  public week1: Week;
+  public week2: Week;
+  public week3: Week;
+  public week4: Week;
+  public week5: Week;
+  public week6: Week;
+  public weekList: Week[];
 
   //PROPERTIES FOR DAY VIEW
-  private lockedDay: number;
-  private dvSetDate: any;
-  private dayClientArr: CagingDayElement[];
-  private firstLoad: boolean = true;
-  private RawCagingData: CagingElement;
-  private dvDay: number;
-  private dvMonth: string;
-  private dvYear: number;
-  private allClientsExpanded: boolean = false;
-  private selectionMode: boolean = false;
-  private checkedRows: number[];
-  private tableLoading: boolean;
-  private deleteNotation: string;
-  private showDeleteModal: boolean = false;
+  public lockedDay: number;
+  public dvSetDate: any;
+  public dayClientArr: CagingDayElement[];
+  public firstLoad: boolean = true;
+  public RawCagingData: CagingElement;
+  public dvDay: number;
+  public dvMonth: string;
+  public dvYear: number;
+  public allClientsExpanded: boolean = false;
+  public selectionMode: boolean = false;
+  public checkedRows: number[];
+  public tableLoading: boolean;
+  public deleteNotation: string;
+  public showDeleteModal: boolean = false;
   public ClientColumns: string[];
   public MailcodeColumns: string[];
   @ViewChild('NonDonorInput') NonDonorInput: ElementRef;
@@ -137,7 +137,7 @@ export class CagingCalendarComponent implements OnInit {
   @ViewChild('CheckAmountInput') CheckAmountInput: ElementRef;
 
 
-  constructor(private route: ActivatedRoute, private router: Router, private _authService: AuthService) { }
+  constructor(public route: ActivatedRoute, public router: Router, public _authService: AuthService) { }
 
   ngOnInit() {
     this.ClientColumns = ['ExpandParent', 'PsuedoSelection', 'Client', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
@@ -788,7 +788,7 @@ export class CagingCalendarComponent implements OnInit {
 
   ///////////////////// CLIENT SELECTION / CHIP SETTINGS ///////////////////////////
   //CHIP FILTER START
-  private CL_filter(name: string): string[] {
+  public CL_filter(name: string): string[] {
     if (name == null)
       return null;
     const filterValue = name.toLowerCase();

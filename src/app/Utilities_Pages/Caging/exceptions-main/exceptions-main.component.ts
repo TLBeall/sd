@@ -23,18 +23,18 @@ import { GlobalService } from 'src/app/Services/global.service';
 })
 export class ExceptionsMainComponent implements OnInit {
 
-  private rawData: any;
-  private exceptionsAggregate: ExceptionAggregate[];
-  private tableLoading: boolean = true;
-  private allInstancesExpanded: boolean = false;
-  private selectionMode: boolean = false;
-  private showExceptionBlank = false;
+  public rawData: any;
+  public exceptionsAggregate: ExceptionAggregate[];
+  public tableLoading: boolean = true;
+  public allInstancesExpanded: boolean = false;
+  public selectionMode: boolean = false;
+  public showExceptionBlank = false;
 
 
   public InstanceColumns: string[];
   public MailcodeColumns: string[];
 
-  constructor(private route: ActivatedRoute, private router: Router, private _authService: AuthService, private _g: GlobalService) { }
+  constructor(public route: ActivatedRoute, public router: Router, public _authService: AuthService, public _g: GlobalService) { }
 
   ngOnInit() {
     this.InstanceColumns = ['ExpandParent', 'PsuedoSelection', 'Instance', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'ControlParent'];

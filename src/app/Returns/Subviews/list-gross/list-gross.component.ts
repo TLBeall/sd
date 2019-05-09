@@ -12,21 +12,21 @@ import { summaryFileName } from '@angular/compiler/src/aot/util';
   styleUrls: ['./list-gross.component.scss']
 })
 export class ListGrossComponent implements OnInit {
-  private route: any;
-  private pageReady: boolean = false;
-  private PackageCode: string;
-  private PhaseNumber: string;
-  private MailCode: string;
-  private Client:string;
-  private ClientName:string;
-  private PackageName:string;
-  private PhaseTitle:string;
-  private Description:string;
+  public route: any;
+  public pageReady: boolean = false;
+  public PackageCode: string;
+  public PhaseNumber: string;
+  public MailCode: string;
+  public Client:string;
+  public ClientName:string;
+  public PackageName:string;
+  public PhaseTitle:string;
+  public Description:string;
   public ListGrossArr: ListGross[];
 
   displayedColumns: string[] = ['Date', 'NonDonors', 'CashDonors', 'CashGross', 'CardDonors', 'CardGross', 'CheckDonors', 'CheckGross', 'TotalDonors', 'TotalGross'];
 
-  constructor(private _authService: AuthService, route: ActivatedRoute, private _g: GlobalService) {
+  constructor(public _authService: AuthService, route: ActivatedRoute, public _g: GlobalService) {
     this.route = route;
     
   }
@@ -64,7 +64,7 @@ export class ListGrossComponent implements OnInit {
     return this.ListGrossArr.map(t => t[measure]).reduce((acc, value) => acc + value, 0);
   }
 
-  private getTime(date?: Date) {
+  public getTime(date?: Date) {
     return date != null ? new Date(date).getTime() : 0;
   }
 

@@ -16,23 +16,23 @@ import { Observable } from 'rxjs';
   styleUrls: ['./incidentals-edit.component.scss']
 })
 export class IncidentalsEditComponent implements OnInit {
-  private id: number;
-  private IncidentalsElement: Incidental;
-  private auditStatus: string;
-  private showAuditUndoModal: boolean = false;
+  public id: number;
+  public IncidentalsElement: Incidental;
+  public auditStatus: string;
+  public showAuditUndoModal: boolean = false;
 
-  private clientList: ClientList[];
-  private filteredClientList: Observable<string[]>;
-  private ClientStrArr: string[] = new Array<string>();
-  private clientControl = new FormControl();
+  public clientList: ClientList[];
+  public filteredClientList: Observable<string[]>;
+  public ClientStrArr: string[] = new Array<string>();
+  public clientControl = new FormControl();
 
-  private showSubmittedModal: boolean;
+  public showSubmittedModal: boolean;
 
 
   @ViewChild('trueRadio') trueRadio: any;
   @ViewChild('falseRadio') falseRadio: any;
 
-  constructor(private _authService: AuthService, private route: ActivatedRoute, private _g: GlobalService, private router: Router) {
+  constructor(public _authService: AuthService, public route: ActivatedRoute, public _g: GlobalService, public router: Router) {
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.ngOnInit();
@@ -63,7 +63,7 @@ export class IncidentalsEditComponent implements OnInit {
       });
   }
 
-  private _filter(value: string): string[] {
+  public _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.ClientStrArr.filter(option => option.toLowerCase().includes(filterValue));

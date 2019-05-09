@@ -50,7 +50,7 @@ export class ListPerformanceComponent implements OnInit {
   //chip selection settings end
 
 
-  private route: any;
+  public route: any;
   public ListOwner: string = '';
   public ListManager: string = '';
   public Recency: string = '';
@@ -58,7 +58,7 @@ export class ListPerformanceComponent implements OnInit {
   public endDate: any;
   public pageReady: boolean = false;
   public ListPerformanceArr: ListPerformance[];
-  private Summary: Returns;
+  public Summary: Returns;
 
   columnsToDisplay: string[] = ['Expand', 'selectionBox', 'ListOwner', 'ListManager', 'RecencyString', 'Client', 'Phase', 'MailCode', 'ExchangeFlag', 'Mailed', 'Caged', 'Quantity', 'NonDonors', 'Donors', 'NewDonors', 'RSP', 'AVG', 'Gross', 'GPP', 'Cost', 'CLM', 'Net', 'NLM', 'CPD', 'IO'];
   packageColumns: string[] = ['None','PackageHeader','PackageMailed', 'PackageCaged', 'PackageQuantity', 'PackageDonors', 'PackageNonDonors', 'PackageNewDonors', 'PackageRSP', 'PackageAVG', 'PackageCPD', 'PackageGross', 'PackageNet', 'PackageCost', 'PackageGPP', 'PackageNLM', 'PackageCLM', 'PackageIO'];
@@ -70,28 +70,28 @@ export class ListPerformanceComponent implements OnInit {
   @ViewChild('RecInput') RecInput: ElementRef<HTMLInputElement>; //Rec = List Recency
   @ViewChild('ClInput') ClInput: ElementRef<HTMLInputElement>; //Cl = Client
 
-  private LOStrArr: string[] = new Array<string>();
-  private LOControl = new FormControl();
-  private LOList: string[] = []; //clients in main returns
-  private LOfilteredOptions: Observable<string[]>;
+  public LOStrArr: string[] = new Array<string>();
+  public LOControl = new FormControl();
+  public LOList: string[] = []; //clients in main returns
+  public LOfilteredOptions: Observable<string[]>;
 
-  private LMStrArr: string[] = new Array<string>();
-  private LMControl = new FormControl();
-  private LMList: string[] = [];
-  private LMfilteredOptions: Observable<string[]>;
+  public LMStrArr: string[] = new Array<string>();
+  public LMControl = new FormControl();
+  public LMList: string[] = [];
+  public LMfilteredOptions: Observable<string[]>;
 
-  private RecStrArr: string[] = new Array<string>();
-  private RecControl = new FormControl();
-  private RecList: string[] = [];
-  private RecfilteredOptions: Observable<string[]>;
+  public RecStrArr: string[] = new Array<string>();
+  public RecControl = new FormControl();
+  public RecList: string[] = [];
+  public RecfilteredOptions: Observable<string[]>;
 
-  private ClStrArr: string[] = new Array<string>();
-  private ClControl = new FormControl();
-  private ClList: string[] = [];
-  private ClfilteredOptions: Observable<string[]>;
+  public ClStrArr: string[] = new Array<string>();
+  public ClControl = new FormControl();
+  public ClList: string[] = [];
+  public ClfilteredOptions: Observable<string[]>;
 
 
-  constructor(private _authService: AuthService, route: ActivatedRoute, private _g: GlobalService) {
+  constructor(public _authService: AuthService, route: ActivatedRoute, public _g: GlobalService) {
     this.route = route;
   }
 
@@ -101,25 +101,25 @@ export class ListPerformanceComponent implements OnInit {
     return retString;
   }
 
-  private LO_filter(name: string): string[] {
+  public LO_filter(name: string): string[] {
     if (name == null)
       return null;
     const filterValue = name.toLowerCase();
     return this.LOStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
   }
-  private LM_filter(name: string): string[] {
+  public LM_filter(name: string): string[] {
     if (name == null)
       return null;
     const filterValue = name.toLowerCase();
     return this.LMStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
   }
-  private Rec_filter(name: string): string[] {
+  public Rec_filter(name: string): string[] {
     if (name == null)
       return null;
     const filterValue = name.toLowerCase();
     return this.RecStrArr.filter(option => option.toLowerCase().indexOf(filterValue) >= 0);
   }
-  private Cl_filter(name: string): string[] {
+  public Cl_filter(name: string): string[] {
     if (name == null)
       return null;
     const filterValue = name.toLowerCase();

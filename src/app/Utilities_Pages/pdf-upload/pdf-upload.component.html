@@ -106,7 +106,7 @@
               </mat-menu>
             </th>
             <td mat-cell *matCellDef="let element">
-              <a *ngIf="element.HasPDF == true" href="https://sd360.sunrisedataservices.com/api/LoadPDF?PhaseID={{element.PhaseID}}"
+              <a *ngIf="element.HasPDF == true" href="https://example.com/api/LoadPDF?PhaseID={{element.PhaseID}}"
                 target="_blank"><i class="material-icons">launch</i></a>
               <span *ngIf="element.HasPDF == false">None</span>
             </td>

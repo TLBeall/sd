@@ -223,7 +223,7 @@ export class PdfUploadComponent implements OnInit {
       this.selectedFile = <File>event.target.files[0];
       const formData = new FormData();
       formData.append('caption', this.selectedFile, fileName)
-      this.http.post('https://sd360.sunrisedataservices.com/api/UpLoadPDF', formData)
+      this.http.post('https://example.com/api/UpLoadPDF', formData)
         .subscribe(response => {
           if (response) {
             console.log(response);

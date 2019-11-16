@@ -34,7 +34,7 @@ export class AuthService {
   ) { }
 
   getToken(Username: string, Password: string): Observable<TokenParams> {
-    var TokenAPI = "https://sd360.sunrisedataservices.com/token";
+    var TokenAPI = "https://example.com/token";
     var headersForTokenAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     var data = "grant_type=password&username=" + Username + "&password=" + Password;
     return this.http.post(TokenAPI, data, { headers: headersForTokenAPI }).pipe(map(res => res.json()));
@@ -42,18 +42,14 @@ export class AuthService {
 
   getClientList(pYear: string): Observable<ClientList[]> {
     var Token = "";
-    var GetListAPI = "https://sd360.sunrisedataservices.com/api/getClientList?Year=" + pYear;
-    //this.getToken("nls@sunrisedataservices.com","NLSjkas!@%kd15jf%#$@")
-    //.subscribe(data => {
-    //  Token = data.access_token
-    //});
+    var GetListAPI = "https://example.com/api/getClientList?Year=" + pYear;
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetListAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
   }
 
   getPackageReturns(packagePhase: string): Observable<any> {
     var Token = "";
-    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/PackageReturns?PackagePhase=" + packagePhase;
+    var GetReturnsAPI = "https://example.com/api/PackageReturns?PackagePhase=" + packagePhase;
 
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetReturnsAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
@@ -61,10 +57,7 @@ export class AuthService {
 
   getReturns(clients: string, startDate: Date, endDate: Date): Observable<RootReturns[]> {
     var Token = "";
-    //OLD
-    // var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/Returns?Clients=" + clients + "&startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&mailTypes=&campaigns=&phases=";
-    //NEW
-    var GetReturnsAPI = "https://sd360.sunrisedataservices.com/api/Returns?Clients=." + clients + ".&startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString();
+    var GetReturnsAPI = "https://example.com/api/Returns?Clients=." + clients + ".&startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString();
 
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetReturnsAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
@@ -72,7 +65,7 @@ export class AuthService {
 
   getLRIforReturns(client: string, startdate: Date, enddate: Date): Observable<ReturnsClientLRI[]> {
     var Token = "";
-    var getURL = "https://sd360.sunrisedataservices.com/api/GetLRI?ClientList=" + client + "&From=" + startdate.toLocaleDateString() + "&To=" + enddate.toLocaleDateString();
+    var getURL = "https://example.com/api/GetLRI?ClientList=" + client + "&From=" + startdate.toLocaleDateString() + "&To=" + enddate.toLocaleDateString();
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
@@ -80,7 +73,7 @@ export class AuthService {
 
   getWMforReturns(client: string, startdate: Date, enddate: Date): Observable<ReturnsClientWM[]> {
     var Token = "";
-    var getURL = "https://sd360.sunrisedataservices.com/api/GetWM?ClientList=" + client + "&From=" + startdate.toLocaleDateString() + "&To=" + enddate.toLocaleDateString();
+    var getURL = "https://example.com/api/GetWM?ClientList=" + client + "&From=" + startdate.toLocaleDateString() + "&To=" + enddate.toLocaleDateString();
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
@@ -88,7 +81,7 @@ export class AuthService {
 
   getIncforReturns(client: string, startdate: Date, enddate: Date): Observable<ReturnsClientInc[]> {
     var Token = "";
-    var getURL = "https://sd360.sunrisedataservices.com/api/GetIncidentals?ClientList=" + client + "&From=" + startdate.toLocaleDateString() + "&To=" + enddate.toLocaleDateString();
+    var getURL = "https://example.com/api/GetIncidentals?ClientList=" + client + "&From=" + startdate.toLocaleDateString() + "&To=" + enddate.toLocaleDateString();
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
@@ -96,7 +89,7 @@ export class AuthService {
 
   getClientsFilter(startDate: Date, endDate: Date): Observable<ClientList[]> { // all clients within a date range
     var Token = "";
-    var GetClientFilterAPI = "https://sd360.sunrisedataservices.com/api/GetClientFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString();
+    var GetClientFilterAPI = "https://example.com/api/GetClientFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString();
 
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetClientFilterAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
@@ -104,7 +97,7 @@ export class AuthService {
 
   getMailTypeFilter(clients: string, startDate: Date, endDate: Date): Observable<string[]> { // all mailtypes for the provided list of clients within date range
     var Token = "";
-    var GetMailTypeFilterAPI = "https://sd360.sunrisedataservices.com/api/GetMailTypeFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&clients=" + clients;
+    var GetMailTypeFilterAPI = "https://example.com/api/GetMailTypeFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&clients=" + clients;
 
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetMailTypeFilterAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
@@ -112,7 +105,7 @@ export class AuthService {
 
   getCampaignFilterByClients(clients: string, startDate: Date, endDate: Date): Observable<string[]> {
     var Token = "";
-    var GetCampaignFilterAPI = "https://sd360.sunrisedataservices.com/api/GetCampaignFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&clients=" + clients;
+    var GetCampaignFilterAPI = "https://example.com/api/GetCampaignFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&clients=" + clients;
 
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetCampaignFilterAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
@@ -120,7 +113,7 @@ export class AuthService {
 
   getCampaignFilterByMailType(client: string, mailType: string, startDate: Date, endDate: Date): Observable<string[]> {
     var Token = "";
-    var GetCampaignFilterAPI = "https://sd360.sunrisedataservices.com/api/GetCampaignFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&client=" + client + "&mailtype =" + mailType;
+    var GetCampaignFilterAPI = "https://example.com/api/GetCampaignFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&client=" + client + "&mailtype =" + mailType;
 
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetCampaignFilterAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
@@ -128,7 +121,7 @@ export class AuthService {
 
   getPhaseFilterByClients(clients: string, startDate: Date, endDate: Date): Observable<string[]> {
     var Token = "";
-    var GetPhaseFilterAPI = "https://sd360.sunrisedataservices.com/api/GetPhaseFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&clients=" + clients;
+    var GetPhaseFilterAPI = "https://example.com/api/GetPhaseFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&clients=" + clients;
 
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetPhaseFilterAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
@@ -136,7 +129,7 @@ export class AuthService {
 
   getPhaseFilterByMailType(client: string, mailType: string, startDate: Date, endDate: Date): Observable<string[]> {
     var Token = "";
-    var GetPhaseFilterAPI = "https://sd360.sunrisedataservices.com/api/GetPhaseFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&client=" + client + "&mailtype=" + mailType;
+    var GetPhaseFilterAPI = "https://example.com/api/GetPhaseFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&client=" + client + "&mailtype=" + mailType;
 
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetPhaseFilterAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
@@ -144,7 +137,7 @@ export class AuthService {
 
   getPhaseFilterByCampaign(client: string, campaign: string, startDate: Date, endDate: Date): Observable<string[]> {
     var Token = "";
-    var GetPhaseFilterAPI = "https://sd360.sunrisedataservices.com/api/GetPhaseFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&client=" + client + "&mailtype=&campaign=" + campaign;
+    var GetPhaseFilterAPI = "https://example.com/api/GetPhaseFilter?startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString() + "&client=" + client + "&mailtype=&campaign=" + campaign;
 
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetPhaseFilterAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
@@ -152,7 +145,7 @@ export class AuthService {
 
   getPerformanceHierarchy(): Observable<PerformanceHierarchy[]> {
     var Token = "";
-    var GetLPAPI = "https://sd360.sunrisedataservices.com/api/GetListPerformanceHierarchy";
+    var GetLPAPI = "https://example.com/api/GetListPerformanceHierarchy";
 
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetLPAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
@@ -160,7 +153,7 @@ export class AuthService {
 
   getListOwners(): Observable<ListOwner[]> {
     var Token = "";
-    var GetLOAPI = "https://sd360.sunrisedataservices.com/api/GetListOwners";
+    var GetLOAPI = "https://example.com/api/GetListOwners";
 
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetLOAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
@@ -168,7 +161,7 @@ export class AuthService {
 
   getListManagers(): Observable<ListManager[]> {
     var Token = "";
-    var GetLMAPI = "https://sd360.sunrisedataservices.com/api/GetListOwners";
+    var GetLMAPI = "https://example.com/api/GetListOwners";
 
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetLMAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
@@ -176,7 +169,7 @@ export class AuthService {
 
   getSegments(): Observable<Segment[]> {
     var Token = "";
-    var GetSegAPI = "https://sd360.sunrisedataservices.com/api/GetSegments";
+    var GetSegAPI = "https://example.com/api/GetSegments";
 
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetSegAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
@@ -188,7 +181,7 @@ export class AuthService {
     if (ListOwners == '_') ListOwners = '';
     if (ListManagers == '_') ListManagers = '';
     if (Segments == '_') Segments = '';
-    var ListPerformanceAPI = "https://sd360.sunrisedataservices.com/api/ListPerformance?ListOwners=" + ListOwners + "&ListManagers=" + ListManagers + "&Segments=" + Segments + "&Clients=" + Clients + "&startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString();
+    var ListPerformanceAPI = "https://example.com/api/ListPerformance?ListOwners=" + ListOwners + "&ListManagers=" + ListManagers + "&Segments=" + Segments + "&Clients=" + Clients + "&startdate=" + startDate.toLocaleDateString() + "&enddate=" + endDate.toLocaleDateString();
 
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(ListPerformanceAPI, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
@@ -196,7 +189,7 @@ export class AuthService {
 
   getListGross(PackageCode: string, PhaseNumber: string, MailCode: string): Observable<any> {
     var Token = "";
-    var GetListGross = "https://sd360.sunrisedataservices.com/api/getListGross?PackageCode=" + PackageCode + "&PhaseNumber=" + PhaseNumber + "&MailCode=" + MailCode;
+    var GetListGross = "https://example.com/api/getListGross?PackageCode=" + PackageCode + "&PhaseNumber=" + PhaseNumber + "&MailCode=" + MailCode;
 
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetListGross, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
@@ -204,7 +197,7 @@ export class AuthService {
 
   getPhaseGross(PackageCode: string, PhaseNumber: string): Observable<any> {
     var Token = "";
-    var GetPhaseGross = "https://sd360.sunrisedataservices.com/api/getpackagegross?PackageCode=" + PackageCode + "&PhaseNumber=" + PhaseNumber;
+    var GetPhaseGross = "https://example.com/api/getpackagegross?PackageCode=" + PackageCode + "&PhaseNumber=" + PhaseNumber;
     var headersForGetListAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(GetPhaseGross, { headers: headersForGetListAPI }).pipe(map(res => res.json()));
   }
@@ -220,7 +213,7 @@ export class AuthService {
       element.Client = tempclient.toString(); 
     });
     var Token = "";
-    var createDailiesURL = "https://sd360.sunrisedataservices.com/api/CreateDailies";
+    var createDailiesURL = "https://example.com/api/CreateDailies";
     var body = JSON.stringify(DailiesRecord);
     //Resets the client control - the observable would otherwise throw an error back on the subscription in the parent component because a FormControl cannot be null/not have a name
     DailiesRecord.forEach(element => {
@@ -232,7 +225,7 @@ export class AuthService {
 
   getWhitemailByClient(Agency: string, Client: string, startdate: string, enddate: string) {
     var Token = "";
-    var getURL = "https://sd360.sunrisedataservices.com/api/GetDailies?Agency=" + Agency + "&Client=" + Client + "&MailCode=WM&From=" + startdate + "&To=" + enddate;
+    var getURL = "https://example.com/api/GetDailies?Agency=" + Agency + "&Client=" + Client + "&MailCode=WM&From=" + startdate + "&To=" + enddate;
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
@@ -240,13 +233,13 @@ export class AuthService {
 
   deleteCaging(idString: string) {
     var Token = "";
-    var deleteURL = "https://sd360.sunrisedataservices.com/api/DeleteDailies?ID=" + idString;
+    var deleteURL = "https://example.com/api/DeleteDailies?ID=" + idString;
     return this.http.delete(deleteURL);
   }
 
   editCaging(object: any, id: number) {
     var Token = "";
-    var editURL = "https://sd360.sunrisedataservices.com/api/EditDailies?ID=" + id;
+    var editURL = "https://example.com/api/EditDailies?ID=" + id;
     var body = JSON.stringify(object);
 
     var headersForEditAPI = new Headers({ 'Content-Type': 'Application/Json', 'Authorization': 'Bearer ' + Token });
@@ -255,7 +248,7 @@ export class AuthService {
 
   getListRentalbyClient(client: string, startdate: string, enddate: string) {
     var Token = "";
-    var getURL = "https://sd360.sunrisedataservices.com/api/GetLRI?Client=" + client + "&From=" + startdate + "&To=" + enddate + "&Transaction=true";
+    var getURL = "https://example.com/api/GetLRI?Client=" + client + "&From=" + startdate + "&To=" + enddate + "&Transaction=true";
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
@@ -275,7 +268,7 @@ export class AuthService {
 
 
     var Token = "";
-    var createURL = "https://sd360.sunrisedataservices.com/api/CreateLRI";
+    var createURL = "https://example.com/api/CreateLRI";
     var body = JSON.stringify(LRIArray);
     //Resets the client control - the observable would otherwise throw an error back on the subscription in the parent component because a FormControl cannot be null/not have a name
     LRIArray.forEach(element => {
@@ -287,13 +280,13 @@ export class AuthService {
 
   deleteLRI(LRIStrArr: string) {
     var Token = "";
-    var deleteURL = "https://sd360.sunrisedataservices.com/api/DeleteLRI?ID=" + LRIStrArr;
+    var deleteURL = "https://example.com/api/DeleteLRI?ID=" + LRIStrArr;
     return this.http.delete(deleteURL);
   }
 
   editLRIRow(LRIElement: ListRental, id: number) {
     var Token = "";
-    var editURL = "https://sd360.sunrisedataservices.com/api/EditLRI?ID=" + id;
+    var editURL = "https://example.com/api/EditLRI?ID=" + id;
     var body = JSON.stringify(LRIElement);
 
     var headersForEditAPI = new Headers({ 'Content-Type': 'Application/Json', 'Authorization': 'Bearer ' + Token });
@@ -302,7 +295,7 @@ export class AuthService {
 
   getIncidentalsByClient(Client: string) {
     var Token = "";
-    var getURL = "https://sd360.sunrisedataservices.com/api/GetIncidentals?Client=" + Client + "&Skip=0&RequestedCount=100";
+    var getURL = "https://example.com/api/GetIncidentals?Client=" + Client + "&Skip=0&RequestedCount=100";
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
@@ -310,13 +303,13 @@ export class AuthService {
 
   deleteIncidentals(tempStrArr: string) {
     var Token = "";
-    var deleteURL = "https://sd360.sunrisedataservices.com/api/DeleteIncidentals?ID=" + tempStrArr;
+    var deleteURL = "https://example.com/api/DeleteIncidentals?ID=" + tempStrArr;
     return this.http.delete(deleteURL);
   }
 
   editIncidentalRow(IncidentalsElement: Incidental, id: number) {
     var Token = "";
-    var editURL = "https://sd360.sunrisedataservices.com/api/EditIncidental?ID=" + id;
+    var editURL = "https://example.com/api/EditIncidental?ID=" + id;
     var body = JSON.stringify(IncidentalsElement);
 
     var headersForEditAPI = new Headers({ 'Content-Type': 'Application/Json', 'Authorization': 'Bearer ' + Token });
@@ -337,7 +330,7 @@ export class AuthService {
 
 
     var Token = "";
-    var createURL = "https://sd360.sunrisedataservices.com/api/CreateIncidentals";
+    var createURL = "https://example.com/api/CreateIncidentals";
     var body = JSON.stringify(IncidentalArray);
     //Resets the client control - the observable would otherwise throw an error back on the subscription in the parent component because a FormControl cannot be null/not have a name
     IncidentalArray.forEach(element => {
@@ -350,9 +343,9 @@ export class AuthService {
   getCagingCalendarData(ClientList: string, Year: number, Month: number, Day: number) {
     var Token = "";
     if (Day == null && Month == null) {
-      var getURL = "https://sd360.sunrisedataservices.com/api/CagingCalendar?ClientList=" + ClientList + "&Year=" + Year;
+      var getURL = "https://example.com/api/CagingCalendar?ClientList=" + ClientList + "&Year=" + Year;
     } else if (Day == null) {
-      var getURL = "https://sd360.sunrisedataservices.com/api/CagingCalendar?ClientList=" + ClientList + "&Year=" + Year + "&Month=" + Month;
+      var getURL = "https://example.com/api/CagingCalendar?ClientList=" + ClientList + "&Year=" + Year + "&Month=" + Month;
     } else {
       let CL;
       if (ClientList == "") {
@@ -360,7 +353,7 @@ export class AuthService {
       } else {
         CL = ClientList;
       }
-      var getURL = "https://sd360.sunrisedataservices.com/api/CagingCalendar?ClientList=" + CL + "&Date=" + Month + "/" + Day + "/" + Year;
+      var getURL = "https://example.com/api/CagingCalendar?ClientList=" + CL + "&Date=" + Month + "/" + Day + "/" + Year;
     }
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
@@ -370,7 +363,7 @@ export class AuthService {
 
   getPhasebyClient(client: string): Observable<any> {
     var Token = "";
-    var getURL = " https://sd360.sunrisedataservices.com/api/PhaseListByClient?Client=" + client;
+    var getURL = " https://example.com/api/PhaseListByClient?Client=" + client;
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
@@ -378,7 +371,7 @@ export class AuthService {
 
   getDailiesExceptions() {
     var Token = "";
-    var getURL = "https://sd360.sunrisedataservices.com/api/GetDailiesExceptionsX"; //The X is linked to the BB table. Remove X when migration is complete
+    var getURL = "https://example.com/api/GetDailiesExceptionsX"; //The X is linked to the BB table. Remove X when migration is complete
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
@@ -388,10 +381,10 @@ export class AuthService {
     var Token = "";
     if (Client == null) {
       //Setting to a specific mailcode
-      var editURL = "https://sd360.sunrisedataservices.com/api/UpdateDailiesExceptions?NewMailCode=" + NewMailCode + "&ID=" + idString + "&UserName=SHERIF";
+      var editURL = "https://example.com/api/UpdateDailiesExceptions?NewMailCode=" + NewMailCode + "&ID=" + idString + "&UserName=SHERIF";
     } else {
       //Setting to a WM for a client
-      var editURL = "https://sd360.sunrisedataservices.com/api/UpdateDailiesExceptions?NewMailCode=" + NewMailCode + "&ID=" + idString + "&Client=" + Client + "&UserName=SHERIF";
+      var editURL = "https://example.com/api/UpdateDailiesExceptions?NewMailCode=" + NewMailCode + "&ID=" + idString + "&Client=" + Client + "&UserName=SHERIF";
     }
     // var body = JSON.stringify(object);
 
@@ -401,7 +394,7 @@ export class AuthService {
 
   getPDFList(CLList: string, startdate: string, enddate: string) {
     var Token = "";
-    var getURL = "https://sd360.sunrisedataservices.com/api/BrowsePDF?ClientList=" + CLList + "&From=" + startdate + "&To=" + enddate;
+    var getURL = "https://example.com/api/BrowsePDF?ClientList=" + CLList + "&From=" + startdate + "&To=" + enddate;
 
     var headersForGetAPI = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + Token });
     return this.http.get(getURL, { headers: headersForGetAPI }).pipe(map(res => res.json()));
